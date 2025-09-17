@@ -13,6 +13,7 @@ public class PlayerClimb : MonoBehaviour
     [SerializeField] float climbCheckDistance = 0.5f;
     [SerializeField] Vector2 maxClimbSpeed = new(2,3);
     [SerializeField] Vector2 climbAcceleration = new(5, 5);
+    [SerializeField] Vector2 climbDeceleration = new(15, 15);
     RaycastHit climbableHit;
     Vector3 velocity;
     [SerializeField] bool climbableInFront;
@@ -87,6 +88,7 @@ public class PlayerClimb : MonoBehaviour
         // Convert velocity to local space
         velocity = transform.InverseTransformDirection(rb.linearVelocity);
         velocity.z = 0; // No forward/backward movement while climbing
+        
         // Move when there is input
         if (playerMovement.moveInput != Vector2.zero)
         {
@@ -102,14 +104,15 @@ public class PlayerClimb : MonoBehaviour
             velocity.y = Mathf.Clamp(velocity.y, -maxClimbSpeed.y, maxClimbSpeed.y);
             velocity.x = Mathf.Clamp(velocity.x, -maxClimbSpeed.x, maxClimbSpeed.x);
         }
-        else
-        {
-            // Decelerate to a stop when no input
-            velocity.y = Mathf.Lerp(velocity.y, 0f, 2 * maxClimbSpeed.y * Time.fixedDeltaTime);
-            velocity.x = Mathf.Lerp(velocity.x, 0f, 2 * maxClimbSpeed.x * Time.fixedDeltaTime);
-        }
+        
+        // Decelerate to a stop when no input
+        if(playerMovement.moveInput.y == 0)
+            velocity.y = Mathf.Lerp(velocity.y, 0f, climbDeceleration.y * Time.fixedDeltaTime);
+        if(playerMovement.moveInput.x == 0)
+            velocity.x = Mathf.Lerp(velocity.x, 0f, climbDeceleration.x * Time.fixedDeltaTime);
 
         var clampedVelocity = transform.TransformDirection(velocity);
+        
         // Apply clamped velocity
         rb.linearVelocity = clampedVelocity;
     }
