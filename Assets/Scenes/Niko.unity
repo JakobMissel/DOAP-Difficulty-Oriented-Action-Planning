@@ -2650,11 +2650,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844050151}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &896157035 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8582726492726603851, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-  m_PrefabInstance: {fileID: 7980162816909603947}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &938016884
 GameObject:
   m_ObjectHideFlags: 0
@@ -4957,7 +4952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 13.96
       objectReference: {fileID: 0}
     - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4990,26 +4985,6 @@ PrefabInstance:
     - target: {fileID: 1890421074633751972, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_Name
       value: PlayerGroup + Cameras
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102563979380609836, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-      propertyPath: currentStamina
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2102563979380609836, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-      propertyPath: rotationSmoothTime
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 2380347027267552697, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-      propertyPath: fateDuration
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2380347027267552697, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-      propertyPath: cameraTransform
-      value: 
-      objectReference: {fileID: 896157035}
-    - target: {fileID: 4457036944227876312, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

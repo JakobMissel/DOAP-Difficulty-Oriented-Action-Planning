@@ -41,14 +41,16 @@ public class PlayerClimb : MonoBehaviour
         currentStamina = maxStamina;
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
+        // Subscribe to input events
         playerInput.actions["Climb"].performed += OnClimb;
         playerInput.actions["Climb"].canceled += OnClimb;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
+        // Unsubscribe from input events
         playerInput.actions["Climb"].performed -= OnClimb;
         playerInput.actions["Climb"].canceled -= OnClimb;
     }

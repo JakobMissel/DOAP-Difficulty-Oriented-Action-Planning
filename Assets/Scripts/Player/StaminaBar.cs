@@ -15,6 +15,7 @@ public class StaminaBar : MonoBehaviour
         image = GetComponent<Image>();
         color = image.color;
         transparentColor = new Color(color.r, color.g, color.b, 0);
+        image.color = transparentColor;
     }
     
     void Update()

@@ -38,19 +38,17 @@ public class PlayerMovement : MonoBehaviour
 
     void OnEnable()
     {
-        // Subscribe to input events
         playerInput.actions["Move"].performed += OnMove;
         playerInput.actions["Move"].canceled += OnMove;
     }
 
     void OnDisable()
     {
-        // Unsubscribe from input events
         playerInput.actions["Move"].performed -= OnMove;
         playerInput.actions["Move"].canceled -= OnMove;
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         Rotate();
     }
@@ -62,7 +60,6 @@ public class PlayerMovement : MonoBehaviour
 
     void OnMove(InputAction.CallbackContext ctx)
     {
-        // Read movement input
         moveInput = ctx.ReadValue<Vector2>();
     }
 
