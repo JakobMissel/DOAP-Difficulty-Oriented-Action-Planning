@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground")]
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float groundCheckDistance = 0.1f;
+    [SerializeField] float groundCheckRadius = 0.3f;
+    [SerializeField] float groundCheckHeight = 0.1f;
     bool isGrounded;
 
     [Header("Rotation")]
@@ -67,11 +69,6 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         if(!canMove) return;
-        if (rb == null)
-        {
-            print($"No rigidbody on {gameObject}.");
-            return;
-        }
 
         // Convert velocity to local space
         velocity = transform.InverseTransformDirection(rb.linearVelocity);
@@ -90,8 +87,8 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(forceX * (moveAcceleration.x * Time.deltaTime), ForceMode.VelocityChange);
 
             // Clamp velocity
-            velocity.z = Mathf.Clamp(velocity.z, -currentZSpeed, currentZSpeed);
-            velocity.x = Mathf.Clamp(velocity.x, -currentXSpeed, currentXSpeed);
+            velocity.z = Mathf.Clamp(velocity.z, -maxMoveSpeed.z, maxMoveSpeed.z);
+            velocity.x = Mathf.Clamp(velocity.x, -maxMoveSpeed.x, maxMoveSpeed.x);
         }
         else
         {
@@ -128,21 +125,16 @@ public class PlayerMovement : MonoBehaviour
             currentXSpeed = 0;
     }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
-        // Raycast down to check if grounded
-        return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer);
+        return Physics.CheckBox(transform.position + Vector3.down * groundCheckDistance, new Vector3(groundCheckRadius, groundCheckHeight, groundCheckRadius), Quaternion.identity, groundLayer);
     }
 
 
     void Rotate()
     {
         if (!canRotate) return;
-        if (rb == null)
-        {
-            print($"No rigidbody on {gameObject}.");
-            return;
-        }
+
         // Lock or unlock cursor based on setting
         if (lockCursor && Cursor.lockState != CursorLockMode.Locked)
         {
@@ -165,6 +157,6 @@ public class PlayerMovement : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundCheckDistance);
+        Gizmos.DrawWireCube(transform.position + Vector3.down * groundCheckDistance, new Vector3(groundCheckRadius * 2, groundCheckHeight, groundCheckRadius * 2));
     }
 }
