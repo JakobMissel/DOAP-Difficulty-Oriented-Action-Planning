@@ -60,6 +60,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   groundCheckDistance: 0.55
+  groundCheckRadius: 0.3
+  groundCheckHeight: 0.1
   orientation: {fileID: 3031174256242528971}
   smoothTime: 0.15
   lockCursor: 1
@@ -82,12 +84,14 @@ MonoBehaviour:
     m_Bits: 128
   sphereCastRadius: 0.4
   climbCheckDistance: 0.5
+  stickToWallForce: 0.2
   maxClimbSpeed: {x: 2, y: 3}
   climbAcceleration: {x: 5, y: 5}
   climbDeceleration: {x: 15, y: 15}
   maxStamina: 5
   staminaDrainRate: 1
-  currentStamina: 5
+  currentStamina: 0
+  rotationSmoothTime: 0.03
   climbButtonHeld: 0
   onWall: 0
   isClimbing: 0
@@ -1235,7 +1239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerClimb: {fileID: 2102563979380609836}
-  cameraTransform: {fileID: 0}
+  cameraTransform: {fileID: 8582726492726603851}
+  fateDuration: 1
 --- !u!1 &5142159340385273627
 GameObject:
   m_ObjectHideFlags: 0
