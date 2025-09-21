@@ -4982,6 +4982,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1556531864547972901, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: throwGravity
+      value: -9.81
+      objectReference: {fileID: 0}
     - target: {fileID: 1890421074633751972, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_Name
       value: PlayerGroup + Cameras

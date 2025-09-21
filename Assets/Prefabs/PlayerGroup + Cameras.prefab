@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 8080000086657084796}
   - component: {fileID: 2102563979380609836}
   - component: {fileID: 1556531864547972901}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -275,16 +275,17 @@ MonoBehaviour:
   throwableLayer:
     serializedVersion: 2
     m_Bits: 192
-  throwablePrefab: {fileID: 0}
+  throwablePrefab: {fileID: 3324499282234042989, guid: 4f095dd128b351046b612c2b46430e5a, type: 3}
   throwPoint: {fileID: 2546500491673317410}
   throwLineRenderer: {fileID: 8510499292484297988}
-  segmentCount: 200
-  segmentLength: 0.02
+  segmentCount: 5000
+  segmentLength: 0.001
   hitAreaPrefab: {fileID: 6162094839392932173, guid: 8f4172c8814d0ee4aaa06753b448ff91, type: 3}
-  hitRadius: 0.2
+  hitRadius: 0.1
   hitDistance: 0.2
   throwForce: 7
-  throwGravity: -9.81
+  throwGravity: -15.03
+  throwCooldown: 1
   isAiming: 0
 --- !u!1 &535821266594528566
 GameObject:
