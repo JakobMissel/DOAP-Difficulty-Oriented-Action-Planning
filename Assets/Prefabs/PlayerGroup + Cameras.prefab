@@ -284,7 +284,7 @@ MonoBehaviour:
   hitRadius: 0.1
   hitDistance: 0.2
   throwForce: 7
-  throwGravity: -15.03
+  throwGravity: -9.81
   throwCooldown: 1
   isAiming: 0
 --- !u!1 &535821266594528566
