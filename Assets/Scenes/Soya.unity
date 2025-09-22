@@ -1111,7 +1111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 465788150}
   m_Layer: 0
-  m_Name: Diningroom_Marker
+  m_Name: GuardPost_DiningRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1645,7 +1645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 614844113}
   m_Layer: 0
-  m_Name: Hallway_Marker
+  m_Name: GuardPost_Hallway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3116,7 +3116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1162953934}
   m_Layer: 0
-  m_Name: Kitchen_Marker
+  m_Name: GuardPost_Kitchen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3500,7 +3500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1277657391}
   m_Layer: 0
-  m_Name: RoomMarkers
+  m_Name: GuardPost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3869,7 +3869,7 @@ GameObject:
   - component: {fileID: 1427757978}
   - component: {fileID: 1427757982}
   m_Layer: 0
-  m_Name: Parent1
+  m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4221,7 +4221,7 @@ GameObject:
   - component: {fileID: 1514721679}
   - component: {fileID: 1514721684}
   m_Layer: 0
-  m_Name: Timmy
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4375,7 +4375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1548997304}
   m_Layer: 0
-  m_Name: Parentsroom_Marker
+  m_Name: GuardPost_LivingRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4406,7 +4406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1612493311}
   m_Layer: 0
-  m_Name: TimmysRoom_Marker
+  m_Name: GuardPost_SmallRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4979,7 +4979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1713467034}
   m_Layer: 0
-  m_Name: Entrance_Marker
+  m_Name: GuardPost_Entrance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5010,7 +5010,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1728361053}
   m_Layer: 0
-  m_Name: Bathroom_Marker
+  m_Name: GuardPost_Corridor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5259,7 +5259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1797095507}
   m_Layer: 0
-  m_Name: Livingroom_Marker
+  m_Name: GuardPost_MainRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
