@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
+using System.Collections.Generic;
+using System;
+using UnityEngine.UI;
+
 
 public class PlayerThrow : MonoBehaviour
 {
@@ -12,7 +16,7 @@ public class PlayerThrow : MonoBehaviour
     [SerializeField] LayerMask throwableLayer;
     [Header("Thrown Object")]
     [SerializeField] Transform throwStartPoint;
-    [SerializeField] public GameObject throwablePrefab;
+    [SerializeField] public List<GameObject> throwablePrefabsList = new();
     [SerializeField] public int ammoCount;
     [Header("Throw Visualization")]
     [SerializeField] LineRenderer throwLineRenderer;
@@ -34,6 +38,15 @@ public class PlayerThrow : MonoBehaviour
     RaycastHit currentHit;
 
     [HideInInspector] public bool isAiming = false;
+
+    // Player throw Action
+    public static Action<int> ammoUpdate;
+    public static void OnAmmoUpdate(int ammo) => ammoUpdate?.Invoke(ammo);
+
+    public static Action<Sprite> spriteUpdate;
+    public static void OnSpriteUpdate(Sprite sprite) => spriteUpdate?.Invoke(sprite);
+
+
 
     void Awake()
     {
@@ -67,7 +80,8 @@ public class PlayerThrow : MonoBehaviour
         if (!isAiming || !canThrow || ammoCount <= 0) return;
         canThrow = false;
         SpawnThrownObject();
-        ammoCount--;
+        ammoCount = throwablePrefabsList.Count;
+        UpdateUICall();
     }
 
     void OnAim(InputAction.CallbackContext ctx)
@@ -88,7 +102,9 @@ public class PlayerThrow : MonoBehaviour
 
     void SpawnThrownObject()
     {
-        GameObject thrownObject = Instantiate(throwablePrefab, throwStartPoint.position, Quaternion.identity);
+        var thrownObjectFromList = throwablePrefabsList[0].gameObject;
+        var thrownObject = Instantiate(thrownObjectFromList, throwStartPoint.position, Quaternion.identity);
+        throwablePrefabsList.Remove(thrownObjectFromList);
         thrownObject.GetComponent<Rigidbody>().linearVelocity = throwDirection * throwForce;
     }
 
@@ -163,8 +179,6 @@ public class PlayerThrow : MonoBehaviour
     /// <summary>
     /// Account for different angles of impact by checking all directions to find the closest hit point
     /// </summary>
-    /// <param name="currentPosition"></param>
-    /// <returns></returns>
     Vector3 SetHitPosition(Vector3 currentPosition)
     {
         RaycastHit hit;
@@ -205,5 +219,27 @@ public class PlayerThrow : MonoBehaviour
             return hit.point;
         }
         return currentPosition;
+    }
+
+    /// <summary>
+    /// Adds the specified throwable object to the list a given number of times.
+    /// </summary>
+    public void AddThrowable(GameObject throwableOject, int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            throwablePrefabsList.Add(throwableOject);
+        }
+        ammoCount = throwablePrefabsList.Count;
+        UpdateUICall();
+    }
+
+    void UpdateUICall()
+    {
+        if (throwablePrefabsList.Count > 0)
+            OnSpriteUpdate(throwablePrefabsList[0].GetComponent<ThrownObject>().thrownObjectImage);
+        else
+            OnSpriteUpdate(null); 
+        OnAmmoUpdate(ammoCount);
     }
 }

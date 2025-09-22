@@ -4,10 +4,12 @@ public class NoiseArea : MonoBehaviour
 {
     [SerializeField] public Transform noiseArea;
     [SerializeField] public Transform noiseCenter;
-    [HideInInspector] public float noiseRadius = 5f;
+    [HideInInspector] public float noiseRadius;
 
-    void Awake()
+    public void SetScale(float scale)
     {
-        noiseArea.localScale = new Vector3(noiseRadius, noiseRadius, noiseRadius);
+        var newScale = noiseArea.localScale;
+        newScale.Set(scale, scale, scale);
+        noiseArea.localScale = newScale;
     }
 }

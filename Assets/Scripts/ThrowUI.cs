@@ -4,22 +4,45 @@ using UnityEngine.UI;
 
 public class ThrowUI : MonoBehaviour
 {
-    PlayerThrow playerThrow;
     [SerializeField] TextMeshProUGUI throwAmmunition;
     [SerializeField] Image throwImage;
+    Sprite defaultSprite;
 
     void Awake()
     {
-        playerThrow = GameObject.FindWithTag("Player").GetComponent<PlayerThrow>();
+        throwAmmunition.text = "";
+        defaultSprite = throwImage.sprite;
     }
 
-    void Start()
+    void OnEnable()
     {
-            
+        PlayerThrow.ammoUpdate += UpdateAmmo;
+        PlayerThrow.spriteUpdate += UpdateSprite;
     }
 
-    void Update()
+    void OnDisable()
     {
-        throwAmmunition.text = playerThrow.ammoCount.ToString();
+        PlayerThrow.ammoUpdate -= UpdateAmmo;
+        PlayerThrow.spriteUpdate -= UpdateSprite;
+    }
+
+    void UpdateAmmo(int ammo)
+    {
+        if (ammo == 0)
+        {
+            throwAmmunition.text = "";
+            return;
+        }
+        throwAmmunition.text = ammo.ToString();
+    }
+
+    void UpdateSprite(Sprite sprite)
+    {
+        if (sprite == null)
+        {
+            throwImage.sprite = defaultSprite;
+            return;
+        }
+        throwImage.sprite = sprite;
     }
 }

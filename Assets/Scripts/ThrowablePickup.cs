@@ -10,8 +10,7 @@ public class ThrowablePickup : Pickup
     {
         if(other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerThrow>().throwablePrefab = thrownObjectPrefab;
-            other.GetComponent<PlayerThrow>().ammoCount += ammoCount;
+            other.GetComponent<PlayerThrow>().AddThrowable(thrownObjectPrefab, ammoCount);
             Destroy(gameObject);
         }
     }

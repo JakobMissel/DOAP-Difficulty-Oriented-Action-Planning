@@ -1,16 +1,22 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThrownObject : MonoBehaviour
 {
     [SerializeField] GameObject noiseAreaPrefab;
+    [SerializeField] public Sprite thrownObjectImage;
     [SerializeField] float noiseRadius = 5f;
+    [SerializeField] bool destroyOnImpact = false;
     bool hasCollided = false;
 
     void OnCollisionEnter(Collision collision)
     {
         if (hasCollided) return;
         hasCollided = true;
-        GameObject noiseArea = Instantiate(noiseAreaPrefab, transform.position, Quaternion.identity);
-        noiseArea.GetComponent<NoiseArea>().noiseRadius = noiseRadius;
+        GameObject noiseArea = null;
+        noiseArea = Instantiate(noiseAreaPrefab, transform.position, Quaternion.identity);
+        noiseArea.GetComponent<NoiseArea>().SetScale(noiseRadius);
+        if(!destroyOnImpact || !gameObject) return;
+        Destroy(gameObject);
     }
 }

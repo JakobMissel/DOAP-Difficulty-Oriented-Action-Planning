@@ -15,6 +15,7 @@ public class DestroyWithDelay : MonoBehaviour
         lifeTimer += Time.deltaTime;
         if (lifeTimer >= lifeTime)
         {
+            if(!gameObject) return;
             Destroy(gameObject);
         }
     }
