@@ -11,7 +11,6 @@ public class ThrownObject : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // On first collision create a noise area and destroy the object if destroyOnImpact is true.
         if (hasCollided) return;
         hasCollided = true;
         GameObject noiseArea = null;
