@@ -11,8 +11,9 @@ public class PlayerThrow : MonoBehaviour
     [SerializeField] Vector3 aimOffset = new(0,1.5f,0);
     [SerializeField] LayerMask throwableLayer;
     [Header("Thrown Object")]
-    [SerializeField] GameObject throwablePrefab;
     [SerializeField] Transform throwStartPoint;
+    [SerializeField] public GameObject throwablePrefab;
+    [SerializeField] public int ammoCount;
     [Header("Throw Visualization")]
     [SerializeField] LineRenderer throwLineRenderer;
     [SerializeField] int segmentCount = 5000;
@@ -63,9 +64,10 @@ public class PlayerThrow : MonoBehaviour
 
     void OnThrow(InputAction.CallbackContext ctx)
     {
-        if (!isAiming || !canThrow) return;
+        if (!isAiming || !canThrow || ammoCount <= 0) return;
         canThrow = false;
         SpawnThrownObject();
+        ammoCount--;
     }
 
     void OnAim(InputAction.CallbackContext ctx)
