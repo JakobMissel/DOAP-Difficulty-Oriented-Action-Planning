@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public class PlayerThrow : MonoBehaviour
 {
     PlayerInput playerInput;
     [Header("Aiming")]
-    [SerializeField] Transform cameraTransform;
+    [SerializeField] CinemachineCamera freeLookCamera;
+    [SerializeField] CinemachineCamera aimCamera;
     [SerializeField] Vector3 aimOffset = new(0,1.5f,0);
     [SerializeField] LayerMask throwableLayer;
     [Header("Thrown Object")]
     [SerializeField] GameObject throwablePrefab;
-    [SerializeField] Transform throwPoint;
+    [SerializeField] Transform throwStartPoint;
     [Header("Throw Visualization")]
     [SerializeField] LineRenderer throwLineRenderer;
     [SerializeField] int segmentCount = 5000;
@@ -25,6 +27,7 @@ public class PlayerThrow : MonoBehaviour
     [SerializeField] float throwCooldown = 1f;
     float cooldownTimer = 0f;
     bool canThrow = true;
+    bool resetCamera;
 
     Vector3 throwDirection;
     RaycastHit currentHit;
@@ -83,23 +86,28 @@ public class PlayerThrow : MonoBehaviour
 
     void SpawnThrownObject()
     {
-        GameObject thrownObject = Instantiate(throwablePrefab, throwPoint.position, Quaternion.identity);
+        GameObject thrownObject = Instantiate(throwablePrefab, throwStartPoint.position, Quaternion.identity);
         thrownObject.GetComponent<Rigidbody>().linearVelocity = throwDirection * throwForce;
     }
 
     void VisualizeThrowLine()
     {
-        if (isAiming && canThrow)
+        if (isAiming)
         {
+            // Set the camera to aim
+            resetCamera = false;
+            aimCamera.Priority = 1;
+            freeLookCamera.Priority = 0;
+
             // Show the throw line
             throwLineRenderer.enabled = true;
 
             // Set up the line renderer count and positions
             throwLineRenderer.positionCount = segmentCount;
-            throwDirection = cameraTransform.forward + aimOffset;
+            throwDirection = freeLookCamera.transform.forward + aimOffset;
 
             // Calculate the throw trajectory
-            Vector3 currentPosition = throwPoint.position;
+            Vector3 currentPosition = throwStartPoint.position;
             Vector3 currentVelocity = throwDirection * throwForce;
 
             // Iterate through each segment to calculate positions
@@ -120,6 +128,10 @@ public class PlayerThrow : MonoBehaviour
                     hitArea.SetActive(true);
                     hitArea.transform.position = SetHitPosition(currentPosition);
                     hitArea.transform.rotation = Quaternion.FromToRotation(Vector3.up, currentHit.normal);
+                    
+                    // Set look target of the aim camera
+                    aimCamera.LookAt = hitArea.transform;
+                    
                     break;
                 }
                 else
@@ -128,10 +140,21 @@ public class PlayerThrow : MonoBehaviour
         }
         else
         {
-            // Hide the throw line and hit area when not aiming
-            throwLineRenderer.positionCount = 0;
-            throwLineRenderer.enabled = false;
-            hitArea.SetActive(false);
+            if(!resetCamera && !isAiming)
+            {
+                // Set the camera to free look and reset look target
+                resetCamera = true;
+                aimCamera.Priority = 0;
+                freeLookCamera.Priority = 1;
+                freeLookCamera.GetComponent<CinemachineOrbitalFollow>().VerticalAxis.Value = 27;
+            }
+            if(!isAiming)
+            {
+                // Hide the throw line and hit area when not aiming
+                throwLineRenderer.positionCount = 0;
+                throwLineRenderer.enabled = false;
+                hitArea.SetActive(false);
+            }
         }
     }
 
