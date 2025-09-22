@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
+        Move(maxMoveSpeed, moveAcceleration, moveDeceleration);
     }
 
     void OnMove(InputAction.CallbackContext ctx)
@@ -63,14 +63,14 @@ public class PlayerMovement : MonoBehaviour
         moveInput = ctx.ReadValue<Vector2>();
     }
 
-    void Move()
+    void Move(Vector3 maxSpeed, Vector3 acceleration, Vector3 deceleration)
     {
         if(!canMove) return;
 
         // Convert velocity to local space
         velocity = transform.InverseTransformDirection(rb.linearVelocity);
 
-        GetCurrentSpeed();
+        GetCurrentSpeed(maxSpeed);
 
         // Move when there is input
         if (moveInput != Vector2.zero)
@@ -80,19 +80,19 @@ public class PlayerMovement : MonoBehaviour
             var forceX = orientation.right * moveInput.x * currentXSpeed;
 
             // Apply forces
-            rb.AddForce(forceZ * (moveAcceleration.z * Time.deltaTime), ForceMode.VelocityChange);
-            rb.AddForce(forceX * (moveAcceleration.x * Time.deltaTime), ForceMode.VelocityChange);
+            rb.AddForce(forceZ * (acceleration.z * Time.deltaTime), ForceMode.VelocityChange);
+            rb.AddForce(forceX * (acceleration.x * Time.deltaTime), ForceMode.VelocityChange);
 
             // Clamp velocity
-            velocity.z = Mathf.Clamp(velocity.z, -maxMoveSpeed.z, maxMoveSpeed.z);
-            velocity.x = Mathf.Clamp(velocity.x, -maxMoveSpeed.x, maxMoveSpeed.x);
+            velocity.z = Mathf.Clamp(velocity.z, -maxSpeed.z, maxSpeed.z);
+            velocity.x = Mathf.Clamp(velocity.x, -maxSpeed.x, maxSpeed.x);
         }
-        else
-        {
-            // Decelerate to a stop when no input
-            velocity.z = Mathf.Lerp(velocity.z, 0f, moveDeceleration.z * Time.fixedDeltaTime);
-            velocity.x = Mathf.Lerp(velocity.x, 0f, moveDeceleration.x * Time.fixedDeltaTime);
-        }
+
+        // Decelerate to a stop when no input
+        if (moveInput.y == 0)
+            velocity.z = Mathf.Lerp(velocity.z, 0f, deceleration.z * Time.fixedDeltaTime);
+        if (moveInput.x == 0)
+            velocity.x = Mathf.Lerp(velocity.x, 0f, deceleration.x * Time.fixedDeltaTime);
 
         // Preserve Y velocity
         var velocityY = rb.linearVelocity.y;
@@ -105,19 +105,19 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = clampedVelocity;
     }
 
-    void GetCurrentSpeed()
+    void GetCurrentSpeed(Vector3 maxSpeed)
     {
         // Forward/backward movement
         if (moveInput.y < 0)
-            currentZSpeed = maxMoveSpeed.z / 2;
+            currentZSpeed = maxSpeed.z / 2;
         else if (moveInput.y > 0)
-            currentZSpeed = maxMoveSpeed.z;
+            currentZSpeed = maxSpeed.z;
         else
             currentZSpeed = 0;
 
         // Side to side movement
         if (moveInput.x != 0)
-            currentXSpeed = maxMoveSpeed.x;
+            currentXSpeed = maxSpeed.x;
         else
             currentXSpeed = 0;
     }
