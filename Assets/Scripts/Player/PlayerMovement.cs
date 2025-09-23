@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool canRotate = true;
     float smoothAngle;
     float targetAngle;
+    bool isAiming;
 
     void Awake()
     {
@@ -40,12 +41,14 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput.actions["Move"].performed += OnMove;
         playerInput.actions["Move"].canceled += OnMove;
+        PlayerThrow.aimStatus += OnAimStatus;
     }
 
     void OnDisable()
     {
         playerInput.actions["Move"].performed -= OnMove;
         playerInput.actions["Move"].canceled -= OnMove;
+        PlayerThrow.aimStatus -= OnAimStatus;
     }
 
     void LateUpdate()
@@ -146,9 +149,14 @@ public class PlayerMovement : MonoBehaviour
 
         // Rotate player to match camera's Y rotation if moving
         var cameraYRotation = orientation.rotation.eulerAngles.y;
-        if (moveInput == Vector2.zero) return;
+        if (moveInput == Vector2.zero && !isAiming) return;
             targetAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, cameraYRotation, ref smoothAngle, smoothTime);
         rb.MoveRotation(Quaternion.Euler(0, targetAngle, 0) * Quaternion.Euler(transform.forward));
+    }
+
+    void OnAimStatus(bool aimStatus)
+    {
+        isAiming = aimStatus;
     }
 
     void OnDrawGizmosSelected()
