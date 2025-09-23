@@ -10,6 +10,7 @@ public class PlayerThrow : MonoBehaviour
 {
     PlayerInput playerInput;
     [Header("Aiming")]
+    [SerializeField] FollowTransform orientation;
     [SerializeField] CinemachineCamera freeLookCamera;
     [SerializeField] CinemachineCamera aimCamera;
     [SerializeField] Vector3 aimOffset = new(0,1.5f,0);
@@ -39,7 +40,10 @@ public class PlayerThrow : MonoBehaviour
 
     [HideInInspector] public bool isAiming = false;
 
-    // Player throw Action
+    // Player throw Actions
+    public static Action<bool> aimStatus;
+    public static void OnAimStatus(bool isAiming) => aimStatus?.Invoke(isAiming);
+
     public static Action<int> ammoUpdate;
     public static void OnAmmoUpdate(int ammo) => ammoUpdate?.Invoke(ammo);
 
@@ -87,6 +91,7 @@ public class PlayerThrow : MonoBehaviour
     void OnAim(InputAction.CallbackContext ctx)
     {
         isAiming = ctx.ReadValueAsButton();
+        OnAimStatus(isAiming);
     }
 
     void ThrowCooldown()
@@ -116,6 +121,7 @@ public class PlayerThrow : MonoBehaviour
             resetCamera = false;
             aimCamera.Priority = 1;
             freeLookCamera.Priority = 0;
+            orientation.SetRotationTarget(aimCamera.transform);
 
             // Show the throw line
             throwLineRenderer.enabled = true;
@@ -164,6 +170,7 @@ public class PlayerThrow : MonoBehaviour
                 resetCamera = true;
                 aimCamera.Priority = 0;
                 freeLookCamera.Priority = 1;
+                orientation.SetRotationTarget(freeLookCamera.transform);
                 freeLookCamera.GetComponent<CinemachineOrbitalFollow>().VerticalAxis.Value = 27;
             }
             if(!isAiming)

@@ -7,8 +7,9 @@ public class FollowTransform : MonoBehaviour
     [SerializeField] bool transformRotationX;
     [SerializeField] bool transformRotationY;
     [SerializeField] bool transformRotationZ;
-    [SerializeField] Transform rotationTarget;
+    [SerializeField] public Transform rotationTarget;
     [SerializeField] Vector3 rotationOffset;
+
     void Update()
     {
         if (transformPosition)
@@ -24,5 +25,10 @@ public class FollowTransform : MonoBehaviour
                 newRotation.z = rotationTarget.eulerAngles.z;
             transform.eulerAngles = newRotation + rotationOffset;
         }
+    }
+
+    public void SetRotationTarget(Transform target)
+    {
+        rotationTarget = target;
     }
 }

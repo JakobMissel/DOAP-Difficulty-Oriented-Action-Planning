@@ -270,14 +270,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afa7b08d5e00da4180f5e02f68462e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  orientation: {fileID: 1895043897693395786}
   freeLookCamera: {fileID: 6930326203637836040}
   aimCamera: {fileID: 608654547908472919}
   aimOffset: {x: 0, y: 1.5, z: 0}
   throwableLayer:
     serializedVersion: 2
     m_Bits: 192
-  throwablePrefab: {fileID: 3324499282234042989, guid: 4f095dd128b351046b612c2b46430e5a, type: 3}
   throwStartPoint: {fileID: 2546500491673317410}
+  throwablePrefabsList: []
+  ammoCount: 0
   throwLineRenderer: {fileID: 8510499292484297988}
   segmentCount: 5000
   segmentLength: 0.001
@@ -286,7 +288,7 @@ MonoBehaviour:
   hitDistance: 0.2
   throwForce: 7
   throwGravity: -9.81
-  throwCooldown: 1
+  throwCooldown: 0.1
   isAiming: 0
 --- !u!1 &535821266594528566
 GameObject:
@@ -1515,10 +1517,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5535205840818440892}
   - component: {fileID: 608654547908472919}
-  - component: {fileID: 7175490699016528737}
   - component: {fileID: 1316929377407512968}
   - component: {fileID: 4941817795685931007}
-  - component: {fileID: 3772969457831112928}
+  - component: {fileID: 3608675040296934743}
+  - component: {fileID: 5223574231185926531}
   m_Layer: 0
   m_Name: Aim Camera
   m_TagString: Untagged
@@ -1534,8 +1536,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5498059178547709633}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2806589, y: -0.5261428, z: 0.18928912, w: 0.7801116}
-  m_LocalPosition: {x: 2.840657, y: 2.0865889, z: -0.94592285}
+  m_LocalRotation: {x: 0.36965373, y: 0, z: 0, w: 0.9291696}
+  m_LocalPosition: {x: 0.5, y: 1.9000001, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1584,69 +1586,6 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
---- !u!114 &7175490699016528737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5498059178547709633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b5d7c088409d9a40b7b09aa707777f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetOffset: {x: 0, y: 0, z: 0}
-  TrackerSettings:
-    BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
-    AngularDampingMode: 0
-    RotationDamping: {x: 1, y: 1, z: 1}
-    QuaternionDamping: 1
-  OrbitStyle: 1
-  Radius: 10
-  Orbits:
-    Top:
-      Radius: 2
-      Height: 3
-    Center:
-      Radius: 3
-      Height: 0
-    Bottom:
-      Radius: 2
-      Height: 0
-    SplineCurvature: 0.7
-  RecenteringTarget: 3
-  HorizontalAxis:
-    Value: -67.99504
-    Center: 0
-    Range: {x: -180, y: 180}
-    Wrap: 1
-    Recentering:
-      Enabled: 0
-      Wait: 1
-      Time: 2
-    Restrictions: 0
-  VerticalAxis:
-    Value: 35
-    Center: 17.5
-    Range: {x: -10, y: 45}
-    Wrap: 0
-    Recentering:
-      Enabled: 0
-      Wait: 1
-      Time: 2
-    Restrictions: 0
-  RadialAxis:
-    Value: 1
-    Center: 1
-    Range: {x: 1, y: 1}
-    Wrap: 1
-    Recentering:
-      Enabled: 0
-      Wait: 1
-      Time: 2
-    Restrictions: 0
 --- !u!114 &1316929377407512968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1693,49 +1632,36 @@ MonoBehaviour:
   SuppressInputWhileBlending: 1
   IgnoreTimeScale: 0
   m_ControllerManager:
-    Controllers:
-    - Name: Look Orbit X
-      Owner: {fileID: 7175490699016528737}
-      Enabled: 1
-      Input:
-        InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
-        Gain: 1
-        LegacyInput: 
-        LegacyGain: 1
-        CancelDeltaTime: 0
-      InputValue: 0
-      Driver:
-        AccelTime: 0.2
-        DecelTime: 0.2
-    - Name: Look Orbit Y
-      Owner: {fileID: 7175490699016528737}
-      Enabled: 0
-      Input:
-        InputAction: {fileID: -5630151704836100654, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
-        Gain: -1
-        LegacyInput: 
-        LegacyGain: 1
-        CancelDeltaTime: 0
-      InputValue: -0
-      Driver:
-        AccelTime: 0.2
-        DecelTime: 0.2
-    - Name: Orbit Scale
-      Owner: {fileID: 7175490699016528737}
-      Enabled: 1
-      Input:
-        InputAction: {fileID: 5082991133974614888, guid: 1d6e640e716dc4ff6989b73d02023f2b, type: 3}
-        Gain: -1
-        LegacyInput: 
-        LegacyGain: 1
-        CancelDeltaTime: 0
-      InputValue: -0
-      Driver:
-        AccelTime: 0
-        DecelTime: 0
+    Controllers: []
   PlayerIndex: -1
   AutoEnableInputs: 1
---- !u!114 &3772969457831112928
+--- !u!114 &3608675040296934743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5498059178547709633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625c14eee3ad46c99df7c7c891ef668a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damping: {x: 0.1, y: 0.5, z: 0.3}
+  ShoulderOffset: {x: 0, y: 1.5, z: 0}
+  VerticalArmLength: 0.4
+  CameraSide: 1
+  CameraDistance: 2
+  AvoidObstacles:
+    Enabled: 0
+    CollisionFilter:
+      serializedVersion: 2
+      m_Bits: 1
+    IgnoreTag: 
+    CameraRadius: 0.2
+    DampingIntoCollision: 0
+    DampingFromCollision: 0.5
+--- !u!114 &5223574231185926531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1758,7 +1684,7 @@ MonoBehaviour:
       Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 99, y: 99}
+  Damping: {x: 0.5, y: 0.5}
   Lookahead:
     Enabled: 0
     Time: 0
