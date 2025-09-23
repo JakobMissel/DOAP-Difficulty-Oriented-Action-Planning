@@ -44,6 +44,9 @@ public class PlayerThrow : MonoBehaviour
     public static Action<bool> aimStatus;
     public static void OnAimStatus(bool isAiming) => aimStatus?.Invoke(isAiming);
 
+    public static Action<CinemachineCamera> changedCamera;
+    public static void OnChangedCamera(CinemachineCamera newCamera) => changedCamera?.Invoke(newCamera);
+
     public static Action<int> ammoUpdate;
     public static void OnAmmoUpdate(int ammo) => ammoUpdate?.Invoke(ammo);
 
@@ -121,7 +124,7 @@ public class PlayerThrow : MonoBehaviour
             resetCamera = false;
             aimCamera.Priority = 1;
             freeLookCamera.Priority = 0;
-            orientation.SetRotationTarget(aimCamera.transform);
+            OnChangedCamera(aimCamera);
 
             // Show the throw line
             throwLineRenderer.enabled = true;
@@ -170,7 +173,7 @@ public class PlayerThrow : MonoBehaviour
                 resetCamera = true;
                 aimCamera.Priority = 0;
                 freeLookCamera.Priority = 1;
-                orientation.SetRotationTarget(freeLookCamera.transform);
+                OnChangedCamera(freeLookCamera);
                 freeLookCamera.GetComponent<CinemachineOrbitalFollow>().VerticalAxis.Value = 27;
             }
             if(!isAiming)

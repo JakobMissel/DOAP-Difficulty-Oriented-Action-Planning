@@ -1,7 +1,9 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class FollowTransform : MonoBehaviour
 {
+    [SerializeField] bool subscribeToCameraChange;
     [SerializeField] bool transformPosition = true;
     [SerializeField] Transform positionTarget;
     [SerializeField] bool transformRotationX;
@@ -9,6 +11,18 @@ public class FollowTransform : MonoBehaviour
     [SerializeField] bool transformRotationZ;
     [SerializeField] public Transform rotationTarget;
     [SerializeField] Vector3 rotationOffset;
+
+    void OnEnable()
+    {
+        if(subscribeToCameraChange)
+            PlayerThrow.changedCamera += SetNewCamera;
+    }
+
+    void OnDisable()
+    {
+        if(subscribeToCameraChange)
+            PlayerThrow.changedCamera -= SetNewCamera;        
+    }
 
     void Update()
     {
@@ -27,8 +41,8 @@ public class FollowTransform : MonoBehaviour
         }
     }
 
-    public void SetRotationTarget(Transform target)
+    void SetNewCamera(CinemachineCamera target)
     {
-        rotationTarget = target;
+        rotationTarget = target.transform;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     PlayerInput playerInput;
     Rigidbody rb;
+    [SerializeField] Animator animator;
     [Header("Move")]
     [SerializeField] Vector3 maxMoveSpeed = new(3, 0, 4);
     [SerializeField] Vector3 moveAcceleration = new(5, 0, 5);
@@ -15,12 +17,16 @@ public class PlayerMovement : MonoBehaviour
     float currentZSpeed;
     float currentXSpeed;
 
+    [Header("Sneak")]
+    [SerializeField] Vector3 maxSneakMoveSpeed = new(1, 0, 1.5f);
+    [SerializeField] Vector3 sneakMoveAcceleration = new(10, 0, 10);
+    [SerializeField] Vector3 sneakMoveDeceleration = new(6, 0, 6);
+
     [Header("Ground")]
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float groundCheckDistance = 0.1f;
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] float groundCheckHeight = 0.1f;
-    bool isGrounded;
 
     [Header("Rotation")]
     [SerializeField] Transform orientation;
@@ -30,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     float smoothAngle;
     float targetAngle;
     bool isAiming;
+    bool isSneaking;
 
     void Awake()
     {
@@ -42,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         playerInput.actions["Move"].performed += OnMove;
         playerInput.actions["Move"].canceled += OnMove;
         PlayerThrow.aimStatus += OnAimStatus;
+        PlayerSneak.sneakStatus += OnSneakStatus;
     }
 
     void OnDisable()
@@ -49,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         playerInput.actions["Move"].performed -= OnMove;
         playerInput.actions["Move"].canceled -= OnMove;
         PlayerThrow.aimStatus -= OnAimStatus;
+        PlayerSneak.sneakStatus -= OnSneakStatus;
     }
 
     void LateUpdate()
@@ -58,7 +67,10 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
+        if (isSneaking)
+            Move(maxSneakMoveSpeed, sneakMoveAcceleration, sneakMoveDeceleration);
+        else
+            Move(maxMoveSpeed, moveAcceleration, moveDeceleration);
     }
 
     void OnMove(InputAction.CallbackContext ctx)
@@ -66,14 +78,14 @@ public class PlayerMovement : MonoBehaviour
         moveInput = ctx.ReadValue<Vector2>();
     }
 
-    void Move()
+    void Move(Vector3 maxSpeed, Vector3 acceleration, Vector3 deceleration)
     {
         if(!canMove) return;
 
         // Convert velocity to local space
         velocity = transform.InverseTransformDirection(rb.linearVelocity);
 
-        GetCurrentSpeed();
+        GetCurrentSpeed(maxSpeed);
 
         // Move when there is input
         if (moveInput != Vector2.zero)
@@ -83,19 +95,24 @@ public class PlayerMovement : MonoBehaviour
             var forceX = orientation.right * moveInput.x * currentXSpeed;
 
             // Apply forces
-            rb.AddForce(forceZ * (moveAcceleration.z * Time.deltaTime), ForceMode.VelocityChange);
-            rb.AddForce(forceX * (moveAcceleration.x * Time.deltaTime), ForceMode.VelocityChange);
+            rb.AddForce(forceZ * (acceleration.z * Time.deltaTime), ForceMode.VelocityChange);
+            rb.AddForce(forceX * (acceleration.x * Time.deltaTime), ForceMode.VelocityChange);
 
             // Clamp velocity
-            velocity.z = Mathf.Clamp(velocity.z, -maxMoveSpeed.z, maxMoveSpeed.z);
-            velocity.x = Mathf.Clamp(velocity.x, -maxMoveSpeed.x, maxMoveSpeed.x);
+            velocity.z = Mathf.Clamp(velocity.z, -maxSpeed.z, maxSpeed.z);
+            velocity.x = Mathf.Clamp(velocity.x, -maxSpeed.x, maxSpeed.x);
+
+            animator.SetBool("isWalking", true);
+            animator.SetFloat("Velocity", currentXSpeed > currentZSpeed ? currentXSpeed : currentZSpeed);
         }
         else
-        {
-            // Decelerate to a stop when no input
-            velocity.z = Mathf.Lerp(velocity.z, 0f, moveDeceleration.z * Time.fixedDeltaTime);
-            velocity.x = Mathf.Lerp(velocity.x, 0f, moveDeceleration.x * Time.fixedDeltaTime);
-        }
+            animator.SetBool("isWalking", false);
+
+
+        if (moveInput.y == 0)
+            velocity.z = Mathf.Lerp(velocity.z, 0f, deceleration.z * Time.fixedDeltaTime);
+        if (moveInput.x == 0)
+            velocity.x = Mathf.Lerp(velocity.x, 0f, deceleration.x * Time.fixedDeltaTime);
 
         // Preserve Y velocity
         var velocityY = rb.linearVelocity.y;
@@ -108,19 +125,19 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = clampedVelocity;
     }
 
-    void GetCurrentSpeed()
+    void GetCurrentSpeed(Vector3 maxSpeed)
     {
         // Forward/backward movement
         if (moveInput.y < 0)
-            currentZSpeed = maxMoveSpeed.z / 2;
+            currentZSpeed = maxSpeed.z / 2;
         else if (moveInput.y > 0)
-            currentZSpeed = maxMoveSpeed.z;
+            currentZSpeed = maxSpeed.z;
         else
             currentZSpeed = 0;
 
         // Side to side movement
         if (moveInput.x != 0)
-            currentXSpeed = maxMoveSpeed.x;
+            currentXSpeed = maxSpeed.x;
         else
             currentXSpeed = 0;
     }
@@ -157,6 +174,11 @@ public class PlayerMovement : MonoBehaviour
     void OnAimStatus(bool aimStatus)
     {
         isAiming = aimStatus;
+    }
+
+    void OnSneakStatus(bool isSneaking)
+    {
+        this.isSneaking = isSneaking;
     }
 
     void OnDrawGizmosSelected()
