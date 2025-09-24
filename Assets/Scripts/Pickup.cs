@@ -9,12 +9,20 @@ public class Pickup : MonoBehaviour
     [SerializeField][Tooltip("Should the pickup rotate around itself?")] protected bool rotate = true;
     [SerializeField][Tooltip("The rotation speed of the pickup. \nDefault: 100")] protected float rotationSpeed = 100;
     float initialY;
-    float distance;
-    [Header("Pickup")]
+    [Header("Audio")]
+    [SerializeField] GameObject audioGameObject;
     [SerializeField] AudioClip audioClip;
+    GameObject newAudioGameObject;
+    [Header("Interactable")]
     [SerializeField] bool canBepickedUp = true;
+    [SerializeField] public bool buttonRequired;
+    [SerializeField] public bool holdRequired;
+    [SerializeField] float holdDuration;
+    [SerializeField] public bool buttonHeld;
+    [HideInInspector] public bool buttonPressed;
+    public float holdTime;
 
-    private void Awake()
+    void Awake()
     {
         initialY = transform.position.y;
     }
@@ -24,20 +32,50 @@ public class Pickup : MonoBehaviour
         if (!canBepickedUp) return;
         if (other.CompareTag("Player"))
         {
-            ActivatePickup(other.gameObject);
+            if (buttonRequired)
+            {
+                PlayerInteract.OnAddPickup(this);
+            }
+            else
+                ActivatePickup(other);
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && buttonRequired)
+        {
+            if(buttonPressed)
+                ActivatePickup(other);
+            if (holdRequired)
+            {
+                HoldButton(other);
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (!canBepickedUp) return;
+        if (other.CompareTag("Player") && buttonRequired)
+        {
+            PlayerInteract.OnRemovePickup(this);
+            buttonHeld = false;
+            holdTime = 0;
         }
     }
 
     /// <summary>
-    /// Activates the pickup, plays a sound (on the player's parent's Audio Source component) if given an audio clip, and finally destroys it.
+    /// Activates the pickup, plays a sound if given an audio clip, and finally destroys the pickup.
     /// </summary>
-    /// <param name="player"></param>
-    protected virtual void ActivatePickup(GameObject player)
+    protected virtual void ActivatePickup(Collider other)
     {
-        if (audioClip != null)
+        if (audioClip)
         {
-            player.GetComponentInParent<AudioSource>().PlayOneShot(audioClip);
+            audioGameObject.GetComponent<AudioSource>().clip = audioClip;
+            newAudioGameObject = Instantiate(audioGameObject, transform.position, Quaternion.identity);
         }
+        PlayerInteract.OnRemovePickup(this);
         Destroy(gameObject);
     }
 
@@ -49,10 +87,6 @@ public class Pickup : MonoBehaviour
     /// <summary>
     /// Animates the pickup by moving it up and down and/or rotating it, depending on the parameters.
     /// </summary>
-    /// <param name="verticalAnimation"></param>
-    /// <param name="verticalSpeed"></param>
-    /// <param name="rotate"></param>
-    /// <param name="rotationSpeed"></param>
     void Animate(bool verticalAnimation, float verticalSpeed, bool rotate, float rotationSpeed)
     {
         if (verticalAnimation)
@@ -64,7 +98,6 @@ public class Pickup : MonoBehaviour
     /// <summary>
     /// Rotates the pickup around itself.
     /// </summary>
-    /// <param name="speed"></param>
     void Rotate(float speed)
     {
         transform.Rotate(Vector3.up * speed * Time.deltaTime);
@@ -73,10 +106,29 @@ public class Pickup : MonoBehaviour
     /// <summary>
     /// Moves the pickup up and down in a sine wave pattern.
     /// </summary>
-    /// <param name="speed"></param>
     void MoveUpAndDown(float speed)
     {
         float y = Mathf.PingPong(Time.time * speed, verticalHeight) + initialY;
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
+    }
+
+    void HoldButton(Collider other)
+    {
+        if (!canBepickedUp) return;
+        if (buttonHeld)
+        {
+            holdTime += Time.deltaTime;
+            if (holdTime >= holdDuration)
+            {
+                ActivatePickup(other);
+                canBepickedUp = false;   
+            }
+        }
+        else
+        {
+            holdTime -= Time.deltaTime;
+            if(holdTime <= 0)
+                holdTime = 0;
+        }
     }
 }
