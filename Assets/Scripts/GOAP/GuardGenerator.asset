@@ -29,15 +29,20 @@ MonoBehaviour:
     worldSensors: []
     worldKeys:
     - <Name>k__BackingField: AtPatrolTarget
-      fullName: Assets.Scripts.GOAP.AtPatrolTarget, Assembly-CSharp, Version=0.0.0.0,
+      fullName: Assets.Scripts.GOAP.WorldKeys.AtPatrolTarget, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtPatrolTarget.cs
       <Id>k__BackingField: AtPatrolTarget-404e4569-252e-4957-a0a5-2246a9774ba8
     - <Name>k__BackingField: IsAlert
-      fullName: Assets.Scripts.GOAP.IsAlert, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      fullName: Assets.Scripts.GOAP.WorldKeys.IsAlert, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/IsAlert.cs
       <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+    - <Name>k__BackingField: PatrolCount
+      fullName: Assets.Scripts.GOAP.WorldKeys.PatrolCount, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/PatrolCount.cs
+      <Id>k__BackingField: PatrolCount-e6877c4b-28f8-4a4c-b4f2-a327d841030d
     targetSensors:
     - <Name>k__BackingField: PatrolTargetSensor
       fullName: Assets.Scripts.GOAP.Sensors.PatrolTargetSensor, Assembly-CSharp,
