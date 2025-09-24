@@ -37,8 +37,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Distance_Max_Edge: 0.2
-    - _Distance_Min_Edge: 0.1
+    - _Distance_Max_Edge: 0.5
+    - _Distance_Min_Edge: 0.2
     - _Normal_Max_Edge: 0.7
     - _Normal_Min_Edge: 0.2
     - _Outline_Width: 2
