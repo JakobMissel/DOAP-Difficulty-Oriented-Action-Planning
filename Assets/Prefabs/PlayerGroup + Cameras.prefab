@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5097753656340743170}
   - component: {fileID: 78563814346975692}
   - component: {fileID: 5046527116031148795}
+  - component: {fileID: 2501327311718919843}
   - component: {fileID: 8080000086657084796}
   - component: {fileID: 1159024978606011456}
   - component: {fileID: 2102563979380609836}
@@ -89,10 +90,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.3
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &5046527116031148795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +204,20 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2501327311718919843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378007007463572359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda9735d708ce74458fc2cbad9e8ad8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactDistance: 4
+  interactButton: {fileID: 0}
 --- !u!114 &8080000086657084796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +243,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   groundCheckDistance: 0.55
-  groundCheckRadius: 0.3
+  groundCheckRadius: 0.15
   groundCheckHeight: 0.1
   orientation: {fileID: 3031174256242528971}
   smoothTime: 0.15
@@ -265,8 +280,8 @@ MonoBehaviour:
   climbableLayer:
     serializedVersion: 2
     m_Bits: 128
-  sphereCastRadius: 0.4
-  climbCheckDistance: 0.5
+  sphereCastRadius: 0.14
+  climbCheckDistance: 0.3
   stickToWallForce: 0.2
   maxClimbSpeed: {x: 2, y: 3}
   climbAcceleration: {x: 5, y: 5}
@@ -1384,6 +1399,7 @@ GameObject:
   - component: {fileID: 6862163885146901824}
   - component: {fileID: 6702777874770751522}
   - component: {fileID: 3742481427451417325}
+  - component: {fileID: 8936428360211673120}
   m_Layer: 5
   m_Name: StaminaBar
   m_TagString: Untagged
@@ -1399,7 +1415,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4115214609737515444}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1461,8 +1477,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerClimb: {fileID: 2102563979380609836}
-  cameraTransform: {fileID: 8582726492726603851}
   fateDuration: 1
+--- !u!114 &8936428360211673120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115214609737515444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bd9f20a7460a5c4a99b20b7e46085fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5498059178547709633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2018,7 +2045,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8440090710898492510}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

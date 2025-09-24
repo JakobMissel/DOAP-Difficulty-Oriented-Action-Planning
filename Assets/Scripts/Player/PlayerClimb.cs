@@ -86,6 +86,7 @@ public class PlayerClimb : MonoBehaviour
 
     bool WallCheck()
     {
+        // Do something else than sphere cast at some point - at the moment it is a bit unreliable for some reason 
         if (Physics.SphereCast(transform.position, sphereCastRadius, orientation.forward, out climbableHit, climbCheckDistance, climbableLayer))
         {
             return true;

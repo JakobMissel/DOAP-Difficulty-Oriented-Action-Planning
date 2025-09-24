@@ -1,4 +1,3 @@
-using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +5,6 @@ public class StaminaBar : MonoBehaviour
 {
     Image image;
     [SerializeField] PlayerClimb playerClimb;
-    [SerializeField] Transform cameraTransform;
     [SerializeField] float fateDuration = 1f;
     float time;
     Color color;
@@ -19,20 +17,8 @@ public class StaminaBar : MonoBehaviour
         image.color = transparentColor;
     }
 
-    void OnEnable()
-    {
-        PlayerThrow.changedCamera += NewLookTarget;    
-    }
-
-    void OnDisable()
-    {
-        PlayerThrow.changedCamera += NewLookTarget;
-    }
-
-
     void Update()
     {
-        transform.LookAt(transform.position + cameraTransform.forward);
         UpdateStaminaBar();
     }
 
@@ -49,10 +35,5 @@ public class StaminaBar : MonoBehaviour
             image.color = Color.Lerp(image.color, transparentColor, time);
         }
         image.fillAmount = playerClimb.currentStamina / playerClimb.maxStamina;
-    }
-
-    void NewLookTarget(CinemachineCamera camera)
-    {
-        cameraTransform = camera.transform;
     }
 }

@@ -167,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
         // Rotate player to match camera's Y rotation if moving
         var cameraYRotation = orientation.rotation.eulerAngles.y;
         if (moveInput == Vector2.zero && !isAiming) return;
-            targetAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, cameraYRotation, ref smoothAngle, smoothTime);
+        targetAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, cameraYRotation, ref smoothAngle, smoothTime);
         rb.MoveRotation(Quaternion.Euler(0, targetAngle, 0) * Quaternion.Euler(transform.forward));
     }
 

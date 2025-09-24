@@ -45,7 +45,6 @@ public class PlayerInteract : MonoBehaviour
     {
         ShowInteractButton(ClosestPickup());
         if (!ClosestPickup()) return;
-        print(ClosestPickup().holdTime);
     }
 
     void Interact(InputAction.CallbackContext ctx)
