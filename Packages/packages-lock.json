@@ -19,7 +19,7 @@
     },
     "com.unity.burst": {
       "version": "1.8.24",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
@@ -63,7 +63,7 @@
       "dependencies": {}
     },
     "com.unity.ide.rider": {
-      "version": "3.0.36",
+      "version": "3.0.38",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -230,7 +230,7 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.9.7",
+      "version": "1.9.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {

@@ -337,6 +337,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83716249}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &113801566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 113801567}
+  - component: {fileID: 113801568}
+  m_Layer: 0
+  m_Name: GuardAgentTypeConfig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &113801567
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113801566}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 762530951}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &113801568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113801566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7044da18d78c47469224931fa3687980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 9a47b0776074bfd42bccf22c954a1d1b, type: 2}
+  runner: {fileID: 762530949}
 --- !u!1 &170448625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,7 +1158,7 @@ GameObject:
   - component: {fileID: 465788150}
   m_Layer: 0
   m_Name: GuardPost_DiningRoom
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1646,7 +1692,7 @@ GameObject:
   - component: {fileID: 614844113}
   m_Layer: 0
   m_Name: GuardPost_Hallway
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1774,6 +1820,66 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712035864}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &762530948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 762530951}
+  - component: {fileID: 762530949}
+  - component: {fileID: 762530950}
+  m_Layer: 0
+  m_Name: GOAP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &762530949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762530948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19925b6b65787cf439172e5e095b51fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  configInitializer: {fileID: 0}
+  agentTypeConfigFactories: []
+--- !u!114 &762530950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762530948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed2f3e5164f4b4383d4f2ed55b4dd9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &762530951
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762530948}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.720335, y: -35.790398, z: 2.2798033}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 113801567}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &858314665
 GameObject:
   m_ObjectHideFlags: 0
@@ -3117,7 +3223,7 @@ GameObject:
   - component: {fileID: 1162953934}
   m_Layer: 0
   m_Name: GuardPost_Kitchen
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3868,9 +3974,12 @@ GameObject:
   - component: {fileID: 1427757979}
   - component: {fileID: 1427757978}
   - component: {fileID: 1427757982}
+  - component: {fileID: 1427757985}
+  - component: {fileID: 1427757984}
+  - component: {fileID: 1427757983}
   m_Layer: 0
   m_Name: Guard
-  m_TagString: Untagged
+  m_TagString: Agent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3988,6 +4097,52 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1427757983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427757977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b807ff6078f43c08a483d63dd5fe02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1427757984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427757977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72344165e2cc41da93476bb1aa2cdd4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <LoggerConfig>k__BackingField:
+    <DebugMode>k__BackingField: 1
+    <MaxLogSize>k__BackingField: 20
+  <AgentTypeBehaviour>k__BackingField: {fileID: 113801568}
+  <DistanceMultiplier>k__BackingField: 1
+--- !u!114 &1427757985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427757977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cef53d855ccf0b46bcf004b27c4a52a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ActionProviderBase>k__BackingField: {fileID: 1427757984}
+  isPaused: 0
+  <LoggerConfig>k__BackingField:
+    <DebugMode>k__BackingField: 1
+    <MaxLogSize>k__BackingField: 20
 --- !u!1 &1429947158
 GameObject:
   m_ObjectHideFlags: 0
@@ -4376,7 +4531,7 @@ GameObject:
   - component: {fileID: 1548997304}
   m_Layer: 0
   m_Name: GuardPost_LivingRoom
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4407,7 +4562,7 @@ GameObject:
   - component: {fileID: 1612493311}
   m_Layer: 0
   m_Name: GuardPost_SmallRoom
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4980,7 +5135,7 @@ GameObject:
   - component: {fileID: 1713467034}
   m_Layer: 0
   m_Name: GuardPost_Entrance
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5011,7 +5166,7 @@ GameObject:
   - component: {fileID: 1728361053}
   m_Layer: 0
   m_Name: GuardPost_Corridor
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5260,7 +5415,7 @@ GameObject:
   - component: {fileID: 1797095507}
   m_Layer: 0
   m_Name: GuardPost_MainRoom
-  m_TagString: Untagged
+  m_TagString: Waypoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5638,6 +5793,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1923289169}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1929769256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1929769258}
+  - component: {fileID: 1929769257}
+  m_Layer: 0
+  m_Name: GuardAgentTypeBehaviour
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1929769257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929769256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7044da18d78c47469224931fa3687980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 9a47b0776074bfd42bccf22c954a1d1b, type: 2}
+  runner: {fileID: 762530949}
+--- !u!4 &1929769258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929769256}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.720335, y: -35.790398, z: 2.2798033}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1952373030
 GameObject:
   m_ObjectHideFlags: 0
@@ -5974,3 +6175,5 @@ SceneRoots:
   - {fileID: 987958168}
   - {fileID: 1427757981}
   - {fileID: 359398809}
+  - {fileID: 762530951}
+  - {fileID: 1929769258}
