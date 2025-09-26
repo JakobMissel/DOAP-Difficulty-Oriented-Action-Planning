@@ -1,15 +1,18 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerInteract : MonoBehaviour
 {
     PlayerInput playerInput;
     [SerializeField] float interactDistance = 4f;
     [SerializeField] GameObject interactButton;
+    [SerializeField] Image interactImage;
+    [SerializeField] TextMeshProUGUI displayName;
     List<Pickup> pickups = new();
-    bool buttonHeld;
 
     public static Action<InputAction.CallbackContext> playerInteract;
     public static void OnPlayerInteract(InputAction.CallbackContext cxt) => playerInteract?.Invoke(cxt);
@@ -43,23 +46,24 @@ public class PlayerInteract : MonoBehaviour
 
     void Update()
     {
-        ShowInteractButton(ClosestPickup());
-        if (!ClosestPickup()) return;
+        ShowInteractGraphic(ClosestPickup());
+        FillInteractGraphic(ClosestPickup());
     }
 
     void Interact(InputAction.CallbackContext ctx)
     {
-        OnPlayerInteract(ctx);
+        ResetGraphics();
+
         if (!ClosestPickup() || !pickups.Contains(ClosestPickup())) return;
         Pickup pickup = ClosestPickup().GetComponent<Pickup>();
-        if (pickup.holdRequired)
-        {
+        
+        OnPlayerInteract(ctx);
+
+        // Send button status to closest pickup
+        if (pickup.HoldRequired)
             pickup.buttonHeld = ctx.ReadValueAsButton();
-        }
         else
-        {
             pickup.buttonPressed = ctx.ReadValueAsButton();
-        }
     }
 
     Pickup ClosestPickup()
@@ -79,9 +83,30 @@ public class PlayerInteract : MonoBehaviour
         return closestPickup;
     }
 
-    void ShowInteractButton(bool pickupAvailable)
+
+    void ShowInteractGraphic(Pickup pickup)
     {
-        interactButton.SetActive(pickupAvailable);
+        if (!interactButton) return;
+        interactButton.SetActive(pickup);
+        if (!pickup || !displayName) return;
+        displayName.text = pickup.DisplayName;
+    }
+
+    void FillInteractGraphic(Pickup pickup)
+    {
+        if (!interactImage) return;
+        if(pickup)
+            interactImage.fillAmount = Mathf.Lerp(0, 1, pickup.HoldTime/pickup.HoldDuration);
+        else
+            interactImage.fillAmount = 0;
+    }
+
+    void ResetGraphics()
+    {
+        if(interactImage)
+            interactImage.fillAmount = 0;
+        if(displayName)
+            displayName.text = "";
     }
 
     public void AddPickup(Pickup pickup)

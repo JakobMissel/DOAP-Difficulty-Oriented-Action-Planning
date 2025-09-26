@@ -2,12 +2,16 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
+    [Header("UI")]
+    [SerializeField] [Tooltip("Text that is displayed when close enough to interact with pickup.")] [Multiline] string displayName;
+    public string DisplayName => displayName;
+
     [Header("\"Animation\"")]
     [SerializeField][Tooltip("Should the pickup move vertically?")] protected bool verticalAnimation = true;
-    [SerializeField][Tooltip("The vertical speed of the pickup. \nDefault: 2")] protected float verticalSpeed = 2;
-    [SerializeField][Tooltip("The height of the vertical movement. \nDefault: 0.5")] protected float verticalHeight = 0.5f;
+    [SerializeField][Tooltip("The vertical speed of the pickup.")] protected float verticalSpeed = 2;
+    [SerializeField][Tooltip("The height of the vertical movement.")] protected float verticalHeight = 0.5f;
     [SerializeField][Tooltip("Should the pickup rotate around itself?")] protected bool rotate = true;
-    [SerializeField][Tooltip("The rotation speed of the pickup. \nDefault: 100")] protected float rotationSpeed = 100;
+    [SerializeField][Tooltip("The rotation speed of the pickup.")] protected float rotationSpeed = 100;
     float initialY;
     [Header("Audio")]
     [SerializeField] GameObject audioGameObject;
@@ -15,12 +19,18 @@ public class Pickup : MonoBehaviour
     GameObject newAudioGameObject;
     [Header("Interactable")]
     [SerializeField] bool canBepickedUp = true;
-    [SerializeField] public bool buttonRequired;
-    [SerializeField] public bool holdRequired;
+    [SerializeField] bool buttonRequired;
+    [SerializeField] bool holdRequired;
     [SerializeField] float holdDuration;
-    [SerializeField] public bool buttonHeld;
+    float holdTime;
     [HideInInspector] public bool buttonPressed;
-    public float holdTime;
+    [HideInInspector] public bool buttonHeld;
+    public bool ButtonRequired => buttonRequired;
+    public bool HoldRequired => holdRequired;
+    public float HoldDuration => holdDuration;
+    public float HoldTime => holdTime;
+
+
 
     void Awake()
     {

@@ -67,7 +67,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3113f9d71797711459d6549043b2b699, type: 2}
-  - {fileID: -876546973899608171, guid: eb02883fd9582d14796f96089fc4bf4a, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fab6747c6e8624cb5a941455f4a114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayName: 
   verticalAnimation: 1
   verticalSpeed: 0.5
   verticalHeight: 0.5
@@ -133,8 +133,7 @@ MonoBehaviour:
   buttonRequired: 1
   holdRequired: 1
   holdDuration: 1
-  buttonHeld: 0
   buttonPressed: 0
-  holdTime: 0
+  buttonHeld: 0
   thrownObjectPrefab: {fileID: 3324499282234042989, guid: 0f9058b54b5056545bd6c75f3c02caab, type: 3}
   ammoCount: 5

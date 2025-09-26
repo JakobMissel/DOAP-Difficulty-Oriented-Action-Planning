@@ -67,7 +67,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 44d3f5fd0a5dee5498c095bd0e932a6c, type: 2}
-  - {fileID: -876546973899608171, guid: eb02883fd9582d14796f96089fc4bf4a, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122,13 +121,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fab6747c6e8624cb5a941455f4a114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayName: 
   verticalAnimation: 1
   verticalSpeed: 0.5
   verticalHeight: 0.5
   rotate: 1
   rotationSpeed: 50
-  canBepickedUp: 1
   audioGameObject: {fileID: 2840963429894322711, guid: f33f6e2ec70e4c942b820c095de920ed, type: 3}
   audioClip: {fileID: 8300000, guid: 0ba8af16801dbf94e887f4f03b19bfae, type: 3}
+  canBepickedUp: 1
+  buttonRequired: 0
+  holdRequired: 0
+  holdDuration: 0
+  buttonPressed: 0
+  buttonHeld: 0
   thrownObjectPrefab: {fileID: 3324499282234042989, guid: 4f095dd128b351046b612c2b46430e5a, type: 3}
   ammoCount: 5
