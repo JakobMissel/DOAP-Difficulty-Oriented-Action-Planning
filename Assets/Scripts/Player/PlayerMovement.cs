@@ -6,14 +6,14 @@ public class PlayerMovement : MonoBehaviour
 {
     PlayerInput playerInput;
     Rigidbody rb;
-    [SerializeField] Animator animator;
     [Header("Move")]
     [SerializeField] Vector3 maxMoveSpeed = new(3, 0, 4);
     [SerializeField] Vector3 moveAcceleration = new(5, 0, 5);
     [SerializeField] Vector3 moveDeceleration = new(6, 0, 6);
+    [SerializeField] float diagonalDampener = 0.75f;
     [HideInInspector] public bool canMove = true;
     [HideInInspector] public Vector2 moveInput;
-    Vector3 velocity;
+    public Vector3 velocity;
     float currentZSpeed;
     float currentXSpeed;
 
@@ -98,16 +98,14 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(forceZ * (acceleration.z * Time.deltaTime), ForceMode.VelocityChange);
             rb.AddForce(forceX * (acceleration.x * Time.deltaTime), ForceMode.VelocityChange);
 
-            // Clamp velocity
-            velocity.z = Mathf.Clamp(velocity.z, -maxSpeed.z, maxSpeed.z);
+            // Clamp velocity (adjust for diagonal movement)
+            if(moveInput.x == 0)
+                velocity.z = Mathf.Clamp(velocity.z, -maxSpeed.z, maxSpeed.z);
+            else
+                velocity.z = Mathf.Clamp(velocity.z, -maxSpeed.z * diagonalDampener, maxSpeed.z * diagonalDampener);
             velocity.x = Mathf.Clamp(velocity.x, -maxSpeed.x, maxSpeed.x);
 
-            animator.SetBool("isWalking", true);
-            animator.SetFloat("Velocity", currentXSpeed > currentZSpeed ? currentXSpeed : currentZSpeed);
         }
-        else
-            animator.SetBool("isWalking", false);
-
 
         if (moveInput.y == 0)
             velocity.z = Mathf.Lerp(velocity.z, 0f, deceleration.z * Time.fixedDeltaTime);

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlayerSneak : MonoBehaviour
 {
     PlayerInput playerInput;
-    [SerializeField] Animator animator;
     [Header("UI")]
     [SerializeField] Image vignette;
     [SerializeField] float fateDuration = 1.0f;
@@ -14,7 +13,6 @@ public class PlayerSneak : MonoBehaviour
     float time;
     Color startColor;
     Color transparentColor;
-
 
     public static Action<bool> sneakStatus;
     public static void OnSneakStatus(bool isSneaking) => sneakStatus?.Invoke(isSneaking);
@@ -43,8 +41,6 @@ public class PlayerSneak : MonoBehaviour
     {
         isSneaking = context.ReadValueAsButton();
         OnSneakStatus(isSneaking);
-        if(isSneaking)
-            animator.Play("StartSneak");
     }
 
     void Update()
@@ -58,13 +54,11 @@ public class PlayerSneak : MonoBehaviour
         {
             time += Time.deltaTime / fateDuration;
             vignette.color = Color.Lerp(vignette.color, startColor, time);
-            animator.SetBool("isSneaking", true);
         }
         else
         {
             time = 0;
             vignette.color = transparentColor;
-            animator.SetBool("isSneaking", false);
         }
     }
 }

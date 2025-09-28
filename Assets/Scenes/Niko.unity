@@ -171,6 +171,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -232,6 +244,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -403,6 +427,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -580,6 +616,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -746,6 +794,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 3 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -807,6 +867,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -879,6 +951,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1052,9 +1136,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1114,9 +1210,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1174,6 +1282,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1233,9 +1353,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1294,6 +1426,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1347,9 +1491,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1408,6 +1564,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1465,6 +1633,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1475,6 +1655,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1066562530044901153, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
   m_PrefabInstance: {fileID: 339353329}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &349614016 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1475904319445533258, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+  m_PrefabInstance: {fileID: 7980162816909603947}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &364722065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4398957818134730461, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
@@ -1637,9 +1828,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1699,9 +1902,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1881,6 +2096,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1939,9 +2166,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2109,6 +2348,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2165,6 +2416,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2228,6 +2491,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2284,6 +2559,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2479,6 +2766,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 3 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2654,6 +2953,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 2 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3068,6 +3379,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3239,6 +3562,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3301,6 +3636,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 3 (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3362,6 +3709,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3643,6 +4002,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3814,6 +4185,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3981,9 +4364,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4041,6 +4436,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4349,6 +4756,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4406,6 +4825,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (20)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4462,6 +4893,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4608,6 +5051,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4892,6 +5347,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 2 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5322,6 +5789,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5565,6 +6044,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 3 (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5627,6 +6118,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5683,6 +6186,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5746,6 +6261,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5802,6 +6329,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 2 (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6088,6 +6627,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5806160878603500994, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -6158,6 +6709,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6214,6 +6777,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 2 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6283,9 +6858,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6343,6 +6930,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6519,6 +7118,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6711,6 +7322,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6767,6 +7390,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6842,6 +7477,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 3 (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6900,9 +7547,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7066,9 +7725,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7126,6 +7797,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7637,6 +8320,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7708,6 +8403,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 2 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7875,6 +8582,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7936,6 +8655,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8078,6 +8809,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 3 (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8145,6 +8888,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8203,9 +8958,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8263,6 +9030,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8322,9 +9101,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8454,6 +9245,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8609,6 +9412,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8670,6 +9485,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8838,9 +9665,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8898,6 +9737,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8960,6 +9811,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9094,9 +9957,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9260,9 +10135,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9330,6 +10217,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 2 (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9701,6 +10600,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9757,6 +10668,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9873,7 +10796,7 @@ Transform:
   m_GameObject: {fileID: 1726766939}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 3.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9893,16 +10816,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f453da8816e876a439beea1658b8afb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLayer:
+  obstacleLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 192
+  playerOffset: {x: 0, y: 0, z: 0}
   eyes: {fileID: 1902757420}
   exclamationMark: {fileID: 1828459121}
   hFieldOfView: 100
   vFieldOfView: 100
   viewDistance: 10
-  sightOffset: {x: 0, y: -0.55, z: 0}
-  rayCount: 10
+  sightRotationOffset: {x: 0, y: -0.55, z: 0}
+  rayCount: 6
 --- !u!1001 &1733114462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9951,9 +10875,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10011,6 +10947,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10070,9 +11018,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10437,9 +11397,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10611,6 +11583,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 4 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10781,6 +11765,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11002,15 +11998,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+--- !u!1 &1926339513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 378007007463572359, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+  m_PrefabInstance: {fileID: 7980162816909603947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1926339524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926339513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 055379c2007546744b8541d0b13e3c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookAtInteract: 1
+  lookDistance: 8
+  lookSpeed: 1
+  headTrackerSourceObject: {fileID: 2053431049}
+  headTracker: {fileID: 349614016}
 --- !u!4 &1935672342 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1066562530044901153, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
@@ -11067,6 +12097,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11479,9 +12521,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11536,9 +12590,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11597,6 +12663,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11653,6 +12731,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 2 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11715,6 +12805,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11783,11 +12885,28 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2 (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+--- !u!1 &2053431049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5264564540463092312, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+  m_PrefabInstance: {fileID: 7980162816909603947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2062972681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11839,6 +12958,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 3 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11912,6 +13043,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 3 (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11973,6 +13116,18 @@ PrefabInstance:
     - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 4 (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: 62a77624474f1a94db0f2afe1291d39f, type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12314,9 +13469,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12375,6 +13542,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ThrowablePickup 2_
       objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1069019480100512321, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554744787771765443, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12393,6 +13572,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1451033645573515651, guid: 1bf8cbeb65bc1354e8c81b3d59bce3ae, type: 3}
+      propertyPath: m_Size.x
+      value: 0.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451033645573515651, guid: 1bf8cbeb65bc1354e8c81b3d59bce3ae, type: 3}
+      propertyPath: m_Size.y
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451033645573515651, guid: 1bf8cbeb65bc1354e8c81b3d59bce3ae, type: 3}
+      propertyPath: m_Size.z
+      value: 1.25
+      objectReference: {fileID: 0}
     - target: {fileID: 4962144413100065484, guid: 1bf8cbeb65bc1354e8c81b3d59bce3ae, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.965
@@ -12437,6 +13628,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Painting1
       objectReference: {fileID: 0}
+    - target: {fileID: 8516857907534096583, guid: 1bf8cbeb65bc1354e8c81b3d59bce3ae, type: 3}
+      propertyPath: m_TagString
+      value: POI
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12450,13 +13645,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 161738075007168883, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b3e3836e5071f5148a5e29b22010c98c, type: 2}
     - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.58
       objectReference: {fileID: 0}
     - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12498,6 +13697,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerGroup + Cameras
       objectReference: {fileID: 0}
+    - target: {fileID: 2102563979380609836, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: sphereCastRadius
+      value: 0.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102563979380609836, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: detectionOffset.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102563979380609836, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: detectionOffset.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102563979380609836, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: climbCheckDistance
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2501327311718919843, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: displayName
       value: 
@@ -12510,10 +13725,61 @@ PrefabInstance:
       propertyPath: interactButton
       value: 
       objectReference: {fileID: 1327319008}
+    - target: {fileID: 3608675040296934743, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: ShoulderOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535205840818440892, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535205840818440892, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.95408916
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535205840818440892, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2995228
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: groundCheckRadius
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: moveDeceleration.x
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: moveDeceleration.z
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: groundCheckDistance
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: maxSneakMoveSpeed.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: maxSneakMoveSpeed.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: sneakMoveDeceleration.x
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: sneakMoveDeceleration.z
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 378007007463572359, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 1926339524}
   m_SourcePrefab: {fileID: 100100000, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
 --- !u!1001 &8775763064674653902
 PrefabInstance:
@@ -12563,9 +13829,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6449146804877301451, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+      propertyPath: m_TagString
+      value: POI
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

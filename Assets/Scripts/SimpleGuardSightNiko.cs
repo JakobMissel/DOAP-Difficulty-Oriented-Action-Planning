@@ -1,14 +1,16 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SimpleGuardSightNiko : MonoBehaviour
 {
-    [SerializeField] LayerMask playerLayer;
+    [SerializeField] LayerMask obstacleLayer;
+    [SerializeField] Vector3 playerOffset = new Vector3(0, 1, 0);
     [SerializeField] Transform eyes;
     [SerializeField] GameObject exclamationMark;
     [SerializeField] float hFieldOfView = 100f;
     [SerializeField] float vFieldOfView = 100f;
     [SerializeField] float viewDistance = 10f;
-    [SerializeField] Vector3 sightOffset = new(0,-0.55f,0);
+    [SerializeField] [Tooltip("*** DOES NOT WORK *** Gives the detection cone an angle.")]Vector3 sightRotationOffset = new(0,-0.55f,0);
     GameObject player;
     bool playerHit;
 
@@ -26,31 +28,46 @@ public class SimpleGuardSightNiko : MonoBehaviour
 
     void LookForPlayer()
     {
-        var direction = (player.transform.position - (eyes.position)).normalized;
+        exclamationMark.SetActive(playerHit);
+        Quaternion sightRotation = Quaternion.Euler(sightRotationOffset);
+        var direction = (player.transform.position + playerOffset - eyes.position).normalized;
         var distance = Vector3.Distance(player.transform.position, eyes.position);
-        
+
         if (distance <= viewDistance)
         {
             // Get the angle to the player ignoring the y-axis
-            var flatEyeForward = new Vector3(eyes.forward.x, 0, eyes.forward.z).normalized;
+            var forwardRotation = eyes.forward + sightRotationOffset;
+            var flatEyeForward = new Vector3(forwardRotation.x, 0, forwardRotation.z).normalized;
             var flatDirection = new Vector3(direction.x, 0, direction.z).normalized;
-            
-            var horizontalAngle = Vector3.Angle(flatEyeForward, flatDirection);
-            var verticalAngle = Vector3.Angle(eyes.forward + sightOffset, direction) - horizontalAngle;
+
+            //var horizontalAngle = Vector3.Angle(flatEyeForward, flatDirection);
+            var horizontalAngle = Vector3.Angle(Vector3.ProjectOnPlane(forwardRotation, Vector3.up), Vector3.ProjectOnPlane(direction, Vector3.up));
+
+            // Get the angle to the player ignoring the x-axis
+            var verticalEyeForward = new Vector3(0, forwardRotation.y, forwardRotation.z).normalized;
+            var verticalDirection = new Vector3(0, direction.y, direction.z).normalized;
+
+            //var verticalAngle = Vector3.Angle(verticalEyeForward, verticalDirection);
+            var verticalAngle = Vector3.Angle(Vector3.ProjectOnPlane(forwardRotation, eyes.right), Vector3.ProjectOnPlane(direction, eyes.right));
+
+            print(verticalAngle);
             
             if (horizontalAngle <= hFieldOfView / 2 && Mathf.Abs(verticalAngle) <= vFieldOfView / 2)
-            { 
+            {
                 // Check for line of sight
-                if(Physics.Raycast(eyes.position, direction, distance, playerLayer))
+                if (Physics.Raycast(eyes.position, direction, distance, obstacleLayer))
                 {
-                    playerHit = true;
-                    PlayerSpotted();
+                    playerHit = false;
+                    return;
                 }
+                playerHit = true;
+                PlayerSpotted();
             }
             else
                 playerHit = false;
         }
-        exclamationMark.SetActive(playerHit);
+        else
+            playerHit = false;
     }
 
     void PlayerSpotted()
@@ -72,7 +89,7 @@ public class SimpleGuardSightNiko : MonoBehaviour
                 float horizontalAngle = horizontalPercent * (hFieldOfView / 2);
 
                 Quaternion rotation = Quaternion.Euler(verticalAngle, horizontalAngle, 0);
-                Vector3 direction = rotation * eyes.forward + sightOffset;
+                Vector3 direction = rotation * eyes.forward + sightRotationOffset;
 
                 Gizmos.DrawRay(eyes.position, direction.normalized * viewDistance);
             }
@@ -83,6 +100,6 @@ public class SimpleGuardSightNiko : MonoBehaviour
             Gizmos.color = Color.green;
         else
             Gizmos.color = Color.blue;
-        Gizmos.DrawLine(eyes.position, player.transform.position);
+        Gizmos.DrawLine(eyes.position, player.transform.position + playerOffset);
     }
 }

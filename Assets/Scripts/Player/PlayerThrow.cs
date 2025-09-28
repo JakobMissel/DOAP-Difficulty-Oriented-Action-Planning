@@ -40,12 +40,15 @@ public class PlayerThrow : MonoBehaviour
 
     [HideInInspector] public bool isAiming = false;
 
-    // Player throw Actions
+
     public static Action<bool> aimStatus;
     public static void OnAimStatus(bool isAiming) => aimStatus?.Invoke(isAiming);
 
     public static Action<CinemachineCamera> changedCamera;
     public static void OnChangedCamera(CinemachineCamera newCamera) => changedCamera?.Invoke(newCamera);
+
+    public static Action<GameObject> sethitArea;
+    public static void OnSetHitArea(GameObject hitArea) => sethitArea?.Invoke(hitArea);
 
     public static Action<int> ammoUpdate;
     public static void OnAmmoUpdate(int ammo) => ammoUpdate?.Invoke(ammo);
@@ -62,6 +65,7 @@ public class PlayerThrow : MonoBehaviour
         hitArea.SetActive(false);
         throwGravity = Physics.gravity.y;
     }
+
     void OnEnable()
     {
         playerInput.actions["Throw"].performed += OnThrow;
@@ -95,6 +99,7 @@ public class PlayerThrow : MonoBehaviour
     {
         isAiming = ctx.ReadValueAsButton();
         OnAimStatus(isAiming);
+        OnSetHitArea(hitArea);
     }
 
     void ThrowCooldown()

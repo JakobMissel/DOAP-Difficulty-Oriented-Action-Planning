@@ -2,16 +2,21 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerInteract : MonoBehaviour
 {
     PlayerInput playerInput;
+    [Header("Distance")]
     [SerializeField] float interactDistance = 4f;
+    float currentDistance;
+    [Header("UI")]
+    [SerializeField] TextMeshProUGUI displayName;
     [SerializeField] GameObject interactButton;
     [SerializeField] Image interactImage;
-    [SerializeField] TextMeshProUGUI displayName;
+    
     List<Pickup> pickups = new();
 
     public static Action<InputAction.CallbackContext> playerInteract;
@@ -74,9 +79,9 @@ public class PlayerInteract : MonoBehaviour
         {
             if (!pickup) continue;
             float distance = Vector3.Distance(transform.position, pickup.transform.position);
-            if (distance < minDistance)
+            if (currentDistance < minDistance)
             {
-                minDistance = distance;
+                minDistance = currentDistance;
                 closestPickup = pickup;
             }
         }
