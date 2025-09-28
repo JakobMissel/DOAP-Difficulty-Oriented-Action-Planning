@@ -23,17 +23,17 @@ namespace Assets.Scripts.GOAP.Actions
             if (TryGetValidTargetPosition(data, out var pos))
             {
                 agent.SetDestination(pos);
-                Debug.Log($"[PatrolAction] {mono.Transform.name} starting patrol towards {pos}");
+                // Debug.Log($"[PatrolAction] {mono.Transform.name} starting patrol towards {pos}");
             }
             else
             {
-                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no valid target to patrol to!");
+                // Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no valid target to patrol to!");
             }
         }
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            Debug.Log($"[PatrolAction] {mono.Transform.name} Perform tick. RemDist={agent.remainingDistance}, StopDist={agent.stoppingDistance}, PathPending={agent.pathPending}");
+            // Debug.Log($"[PatrolAction] {mono.Transform.name} Perform tick. RemDist={agent.remainingDistance}, StopDist={agent.stoppingDistance}, PathPending={agent.pathPending}");
 
 
             if (!TryGetValidTargetPosition(data, out var pos))
@@ -44,7 +44,7 @@ namespace Assets.Scripts.GOAP.Actions
 
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             {
-                Debug.Log($"[PatrolAction] {mono.Transform.name} reached patrol target at {pos}");
+                // Debug.Log($"[PatrolAction] {mono.Transform.name} reached patrol target at {pos}");
                 return ActionRunState.Completed; // ✅ triggers End()
             }
 

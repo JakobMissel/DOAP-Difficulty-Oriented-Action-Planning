@@ -32,8 +32,8 @@ MonoBehaviour:
       <Id>k__BackingField: PatrolTarget-5130fbfe-0ad5-40ab-8a91-944b5c63c997
     properties:
       rid: 3255850196213956800
-    baseCost: 1
-    stoppingDistance: 1
+    baseCost: 2
+    stoppingDistance: 3
     validateTarget: 0
     requiresTarget: 1
     validateConditions: 0
