@@ -32,9 +32,6 @@ namespace Assets.Scripts.GOAP.Sensors
 
             Debug.Log($"[PlayerTargetSensor-3] In range={inRange}, Dist={dist}, Player={player}");
 
-            if (!inRange)
-                return null;
-
             if (existingTarget is TransformTarget t)
                 return t.SetTransform(player);
             

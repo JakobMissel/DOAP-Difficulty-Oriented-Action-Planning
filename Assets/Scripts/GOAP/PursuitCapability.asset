@@ -19,8 +19,8 @@ MonoBehaviour:
     baseCost: 1
     conditions:
     - worldKey:
-        <Name>k__BackingField: IsAlert
-        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+        <Name>k__BackingField: AtPlayerTarget
+        <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
       comparison: 2
       amount: 0
   actions:
@@ -38,7 +38,12 @@ MonoBehaviour:
     requiresTarget: 1
     validateConditions: 1
     moveMode: 1
-    conditions: []
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: IsAlert
+        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+      comparison: 2
+      amount: 0
     effects:
     - worldKey:
         <Name>k__BackingField: AtPlayerTarget
