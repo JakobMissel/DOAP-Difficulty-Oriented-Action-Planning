@@ -1831,7 +1831,6 @@ GameObject:
   - component: {fileID: 762530951}
   - component: {fileID: 762530949}
   - component: {fileID: 762530950}
-  - component: {fileID: 762530952}
   m_Layer: 0
   m_Name: GOAP
   m_TagString: Untagged
@@ -1880,18 +1879,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &762530952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 762530948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7ce65d0dd94325aaad6f99a5b79f51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &858314665
 GameObject:
   m_ObjectHideFlags: 0
@@ -3990,7 +3977,6 @@ GameObject:
   - component: {fileID: 1427757984}
   - component: {fileID: 1427757983}
   - component: {fileID: 1427757986}
-  - component: {fileID: 1427757987}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Agent
@@ -4167,18 +4153,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45d7d4b9faec4ef7b9951ec8e8222510, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1427757987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1427757977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7ce65d0dd94325aaad6f99a5b79f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1429947158

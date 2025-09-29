@@ -13,17 +13,13 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         private void Awake()
         {
-            this.goap = FindObjectOfType<GoapBehaviour>();
+            this.goap = FindAnyObjectByType<GoapBehaviour>();
             this.agent = this.GetComponent<AgentBehaviour>();
             this.provider = this.GetComponent<GoapActionProvider>();
-            
-            // This only applies sto the code demo
-            if (this.provider.AgentTypeBehaviour == null)
-                this.provider.AgentType = this.goap.GetAgentType("ScriptDemoAgent");
         }
         private void Start()
         {
-            this.provider.RequestGoal<PatrolGoal>();
+            this.provider.RequestGoal<PatrolGoal, PursuitGoal>();
         }
         
     }

@@ -23,11 +23,6 @@ MonoBehaviour:
         <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
       comparison: 2
       amount: 0
-    - worldKey:
-        <Name>k__BackingField: AtPlayerTarget
-        <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
-      comparison: 2
-      amount: 0
   actions:
   - action:
       <Name>k__BackingField: PursuitAction
@@ -37,12 +32,12 @@ MonoBehaviour:
       <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
     properties:
       rid: 3255850240427688181
-    baseCost: 1
-    stoppingDistance: 2
-    validateTarget: 0
+    baseCost: 3
+    stoppingDistance: 1.5
+    validateTarget: 1
     requiresTarget: 1
-    validateConditions: 0
-    moveMode: 0
+    validateConditions: 1
+    moveMode: 1
     conditions: []
     effects:
     - worldKey:

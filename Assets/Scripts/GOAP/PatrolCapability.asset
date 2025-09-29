@@ -23,6 +23,11 @@ MonoBehaviour:
         <Id>k__BackingField: PatrolCount-e6877c4b-28f8-4a4c-b4f2-a327d841030d
       comparison: 3
       amount: 1
+    - worldKey:
+        <Name>k__BackingField: AtPatrolTarget
+        <Id>k__BackingField: AtPatrolTarget-404e4569-252e-4957-a0a5-2246a9774ba8
+      comparison: 3
+      amount: 1
   actions:
   - action:
       <Name>k__BackingField: PatrolAction
@@ -32,13 +37,18 @@ MonoBehaviour:
       <Id>k__BackingField: PatrolTarget-5130fbfe-0ad5-40ab-8a91-944b5c63c997
     properties:
       rid: 3255850196213956800
-    baseCost: 2
-    stoppingDistance: 3
-    validateTarget: 0
+    baseCost: 1
+    stoppingDistance: 0.5
+    validateTarget: 1
     requiresTarget: 1
-    validateConditions: 0
+    validateConditions: 1
     moveMode: 1
-    conditions: []
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: AtPatrolTarget
+        <Id>k__BackingField: AtPatrolTarget-404e4569-252e-4957-a0a5-2246a9774ba8
+      comparison: 3
+      amount: 0
     effects:
     - worldKey:
         <Name>k__BackingField: PatrolCount

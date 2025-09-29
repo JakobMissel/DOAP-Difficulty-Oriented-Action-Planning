@@ -22,6 +22,10 @@ namespace Assets.Scripts.GOAP.Actions
         {
             if (agent == null)
                 agent = mono.Transform.GetComponent<NavMeshAgent>();
+            
+            agent.isStopped = false;
+            agent.updateRotation = true;
+            agent.updatePosition = true;
 
             Debug.Log($"[PursuitAction] {mono.Transform.name} chasing {data.Target?.Position}");
         }
@@ -33,6 +37,7 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
+            // Latest position of the target
             agent.SetDestination(data.Target.Position);
 
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
