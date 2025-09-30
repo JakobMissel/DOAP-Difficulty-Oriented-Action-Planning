@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875fbfa2d1734285b353878b31467c98, type: 3}
+  m_Name: RechargeCapability
+  m_EditorClassIdentifier: 
+  goals:
+  - goal:
+      <Name>k__BackingField: RechargeGoal
+      <Id>k__BackingField: Recharge-b6a22d6b-bcb7-43b9-8de2-24d37fb909f8
+    baseCost: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: Energy
+        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
+      comparison: 1
+      amount: 0
+  actions:
+  - action:
+      <Name>k__BackingField: RechargeAction
+      <Id>k__BackingField: Recharge-760e34a2-b02a-4d32-9256-4193d18e9447
+    target:
+      <Name>k__BackingField: RechargeTarget
+      <Id>k__BackingField: RechargeTarget-7696443c-a02f-4c6f-b405-29f3256c68ff
+    properties:
+      rid: 7318612842565599295
+    baseCost: 4
+    stoppingDistance: 1
+    validateTarget: 1
+    requiresTarget: 1
+    validateConditions: 1
+    moveMode: 1
+    conditions: []
+    effects:
+    - worldKey:
+        <Name>k__BackingField: Energy
+        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
+      effect: 1
+  worldSensors:
+  - sensor:
+      <Name>k__BackingField: EnergySensor
+      <Id>k__BackingField: EnergySensor-a4da1183-e27a-4159-83bd-fb49f2ea3f2a
+    worldKey:
+      <Name>k__BackingField: Energy
+      <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
+  targetSensors:
+  - sensor:
+      <Name>k__BackingField: RechargeTargetSensor
+      <Id>k__BackingField: RechargeTargetSensor-d75bc583-1396-4c22-a928-5c77e9a1bdaa
+    targetKey:
+      <Name>k__BackingField: RechargeTarget
+      <Id>k__BackingField: RechargeTarget-7696443c-a02f-4c6f-b405-29f3256c68ff
+  multiSensors: []
+  generatorScriptable: {fileID: 11400000, guid: 0422e7a0a8d2c3a43bf617285bc969b5, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7318612842565599295
+      type: {class: EmptyActionProperties, ns: CrashKonijn.Agent.Runtime, asm: CrashKonijn.Agent.Runtime}
+      data: 

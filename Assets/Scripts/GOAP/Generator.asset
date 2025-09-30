@@ -25,6 +25,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/PursuitGoal.cs
       <Id>k__BackingField: Pursuit-af07faca-6667-4b98-a05e-f325473a3447
+    - <Name>k__BackingField: RechargeGoal
+      fullName: Assets.Scripts.GOAP.Goals.RechargeGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/RechargeGoal.cs
+      <Id>k__BackingField: Recharge-b6a22d6b-bcb7-43b9-8de2-24d37fb909f8
     actions:
     - <Name>k__BackingField: PatrolAction
       fullName: Assets.Scripts.GOAP.Actions.PatrolAction, Assembly-CSharp, Version=0.0.0.0,
@@ -36,12 +41,22 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Actions/PursuitAction.cs
       <Id>k__BackingField: Pursuit-67f97c9c-9d66-42ce-853c-133448c53402
+    - <Name>k__BackingField: RechargeAction
+      fullName: Assets.Scripts.GOAP.Actions.RechargeAction, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/RechargeAction.cs
+      <Id>k__BackingField: Recharge-760e34a2-b02a-4d32-9256-4193d18e9447
     worldSensors:
     - <Name>k__BackingField: AlertSensor
       fullName: Assets.Scripts.GOAP.Sensors.AlertSensor, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AlertSensor.cs
       <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
+    - <Name>k__BackingField: EnergySensor
+      fullName: Assets.Scripts.GOAP.Sensors.EnergySensor, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/EnergySensor.cs
+      <Id>k__BackingField: EnergySensor-a4da1183-e27a-4159-83bd-fb49f2ea3f2a
     worldKeys:
     - <Name>k__BackingField: AtPatrolTarget
       fullName: Assets.Scripts.GOAP.WorldKeys.AtPatrolTarget, Assembly-CSharp, Version=0.0.0.0,
@@ -53,6 +68,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtPlayerTarget.cs
       <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+    - <Name>k__BackingField: Energy
+      fullName: Assets.Scripts.GOAP.WorldKeys.Energy, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/Energy.cs
+      <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
     - <Name>k__BackingField: IsAlert
       fullName: Assets.Scripts.GOAP.WorldKeys.IsAlert, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -74,6 +94,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/PlayerTargetSensor.cs
       <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
+    - <Name>k__BackingField: RechargeTargetSensor
+      fullName: Assets.Scripts.GOAP.Sensors.RechargeTargetSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/RechargeTargetSensor.cs
+      <Id>k__BackingField: RechargeTargetSensor-d75bc583-1396-4c22-a928-5c77e9a1bdaa
     targetKeys:
     - <Name>k__BackingField: PatrolTarget
       fullName: Assets.Scripts.GOAP.TargetKeys.PatrolTarget, Assembly-CSharp, Version=0.0.0.0,
@@ -85,4 +110,9 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/TargetKeys/PlayerTarget.cs
       <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
+    - <Name>k__BackingField: RechargeTarget
+      fullName: Assets.Scripts.GOAP.TargetKeys.RechargeTarget, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/TargetKeys/RechargeTarget.cs
+      <Id>k__BackingField: RechargeTarget-7696443c-a02f-4c6f-b405-29f3256c68ff
     multiSensors: []

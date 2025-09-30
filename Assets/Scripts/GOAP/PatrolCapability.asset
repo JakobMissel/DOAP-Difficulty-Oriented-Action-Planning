@@ -41,8 +41,13 @@ MonoBehaviour:
     conditions:
     - worldKey:
         <Name>k__BackingField: IsAlert
-        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+        <Id>k__BackingField: 
       comparison: 1
+      amount: 0
+    - worldKey:
+        <Name>k__BackingField: Energy
+        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
+      comparison: 2
       amount: 0
     effects:
     - worldKey:
