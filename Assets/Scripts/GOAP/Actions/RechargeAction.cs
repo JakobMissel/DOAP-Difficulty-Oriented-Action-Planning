@@ -70,7 +70,7 @@ namespace Assets.Scripts.GOAP.Actions
                 float currentEnergy = energy.CurrentEnergy;
                 Debug.Log($"[RechargeAction] Recharging... Energy: {currentEnergy:0.00}/{energy.MaxEnergy}");
                 
-                if (currentEnergy >= 100f)  // Complete at 90 to give margin
+                if (currentEnergy >= 100f)  // Complete at 100
                 {
                     Debug.Log("[RechargeAction] Recharged enough! Completing action.");
                     return ActionRunState.Completed;
