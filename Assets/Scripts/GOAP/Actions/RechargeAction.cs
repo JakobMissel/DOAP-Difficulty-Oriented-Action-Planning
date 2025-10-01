@@ -1,0 +1,95 @@
+using CrashKonijn.Agent.Core;
+using CrashKonijn.Goap.Runtime;
+using UnityEngine;
+using UnityEngine.AI;
+using Assets.Scripts.GOAP.Behaviours;
+
+namespace Assets.Scripts.GOAP.Actions
+{
+    [GoapId("Recharge-760e34a2-b02a-4d32-9256-4193d18e9447")]
+    public class RechargeAction : GoapActionBase<RechargeAction.Data>
+    {
+        private NavMeshAgent navAgent;
+        private EnergyBehaviour energy;
+        private bool hasReachedStation = false;
+
+        public class Data : IActionData
+        {
+            public ITarget Target { get; set; }
+        }
+
+        public override void Created()
+        {
+        }
+
+        public override void Start(IMonoAgent mono, Data data)
+        {
+            if (navAgent == null)
+                navAgent = mono.Transform.GetComponent<NavMeshAgent>();
+
+            if (energy == null)
+                energy = mono.Transform.GetComponent<EnergyBehaviour>();
+
+            hasReachedStation = false;
+
+            if (navAgent != null && data.Target != null && data.Target.IsValid())
+            {
+                navAgent.isStopped = false;
+                navAgent.SetDestination(data.Target.Position);
+                Debug.Log($"[RechargeAction] Started - moving to station at {data.Target.Position}");
+            }
+        }
+
+        public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
+        {
+            if (navAgent == null || data.Target == null || !data.Target.IsValid())
+                return ActionRunState.Stop;
+
+            // First check if we've reached the station
+            if (!hasReachedStation)
+            {
+                navAgent.SetDestination(data.Target.Position);
+
+                if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance + 0.5f)
+                {
+                    hasReachedStation = true;
+                    navAgent.isStopped = true;
+                    
+                    if (energy != null)
+                        energy.SetRecharging(true);
+                    
+                    Debug.Log("[RechargeAction] Reached station! Starting recharge.");
+                }
+                
+                return ActionRunState.Continue;
+            }
+
+            // We're at the station - check if recharged
+            if (energy != null)
+            {
+                float currentEnergy = energy.CurrentEnergy;
+                Debug.Log($"[RechargeAction] Recharging... Energy: {currentEnergy:0.00}/{energy.MaxEnergy}");
+                
+                if (currentEnergy >= 100f)  // Complete at 100
+                {
+                    Debug.Log("[RechargeAction] Recharged enough! Completing action.");
+                    return ActionRunState.Completed;
+                }
+            }
+
+            return ActionRunState.Continue;
+        }
+
+        public override void End(IMonoAgent mono, Data data)
+        {
+            if (energy != null)
+                energy.SetRecharging(false);
+
+            if (navAgent != null)
+                navAgent.isStopped = false;
+
+            hasReachedStation = false;
+            Debug.Log("[RechargeAction] Ended");
+        }
+    }
+}

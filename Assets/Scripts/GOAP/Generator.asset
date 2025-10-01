@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0857b2a53377458ebec6c4b1179e3c5a, type: 3}
+  m_Name: Generator
+  m_EditorClassIdentifier: 
+  nameSpace: Assets.Scripts.GOAP
+  scripts:
+    goals:
+    - <Name>k__BackingField: PatrolGoal
+      fullName: Assets.Scripts.GOAP.Goals.PatrolGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/PatrolGoal.cs
+      <Id>k__BackingField: Patrol-a8bfeed9-45eb-443f-972b-6d14b7b05a20
+    - <Name>k__BackingField: PursuitGoal
+      fullName: Assets.Scripts.GOAP.Goals.PursuitGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/PursuitGoal.cs
+      <Id>k__BackingField: Pursuit-af07faca-6667-4b98-a05e-f325473a3447
+    - <Name>k__BackingField: RechargeGoal
+      fullName: Assets.Scripts.GOAP.Goals.RechargeGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/RechargeGoal.cs
+      <Id>k__BackingField: Recharge-b6a22d6b-bcb7-43b9-8de2-24d37fb909f8
+    actions:
+    - <Name>k__BackingField: PatrolAction
+      fullName: Assets.Scripts.GOAP.Actions.PatrolAction, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/PatrolAction.cs
+      <Id>k__BackingField: Patrol-7a350849-db29-4d18-9bb8-70adcb964707
+    - <Name>k__BackingField: PursuitAction
+      fullName: Assets.Scripts.GOAP.Actions.PursuitAction, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/PursuitAction.cs
+      <Id>k__BackingField: Pursuit-67f97c9c-9d66-42ce-853c-133448c53402
+    - <Name>k__BackingField: RechargeAction
+      fullName: Assets.Scripts.GOAP.Actions.RechargeAction, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/RechargeAction.cs
+      <Id>k__BackingField: Recharge-760e34a2-b02a-4d32-9256-4193d18e9447
+    worldSensors:
+    - <Name>k__BackingField: AlertSensor
+      fullName: Assets.Scripts.GOAP.Sensors.AlertSensor, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AlertSensor.cs
+      <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
+    - <Name>k__BackingField: AtRechargeStationSensor
+      fullName: Assets.Scripts.GOAP.Sensors.AtRechargeStationSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AtRechargeStationSensor.cs
+      <Id>k__BackingField: AtRechargeStationSensor-bc4891f5-9f4c-433e-8a18-995894a9a9d7
+    - <Name>k__BackingField: EnergySensor
+      fullName: Assets.Scripts.GOAP.Sensors.EnergySensor, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/EnergySensor.cs
+      <Id>k__BackingField: EnergySensor-a4da1183-e27a-4159-83bd-fb49f2ea3f2a
+    worldKeys:
+    - <Name>k__BackingField: AtPatrolTarget
+      fullName: Assets.Scripts.GOAP.WorldKeys.AtPatrolTarget, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtPatrolTarget.cs
+      <Id>k__BackingField: AtPatrolTarget-404e4569-252e-4957-a0a5-2246a9774ba8
+    - <Name>k__BackingField: AtPlayerTarget
+      fullName: Assets.Scripts.GOAP.WorldKeys.AtPlayerTarget, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtPlayerTarget.cs
+      <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+    - <Name>k__BackingField: AtRechargeStation
+      fullName: Assets.Scripts.GOAP.WorldKeys.AtRechargeStation, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtRechargeStation.cs
+      <Id>k__BackingField: AtRechargeStation-40a2850d-48e2-4996-8a89-86fa022f2f72
+    - <Name>k__BackingField: Energy
+      fullName: Assets.Scripts.GOAP.WorldKeys.Energy, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/Energy.cs
+      <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
+    - <Name>k__BackingField: IsAlert
+      fullName: Assets.Scripts.GOAP.WorldKeys.IsAlert, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/IsAlert.cs
+      <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+    - <Name>k__BackingField: PatrolCount
+      fullName: Assets.Scripts.GOAP.WorldKeys.PatrolCount, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/PatrolCount.cs
+      <Id>k__BackingField: PatrolCount-e6877c4b-28f8-4a4c-b4f2-a327d841030d
+    targetSensors:
+    - <Name>k__BackingField: PatrolTargetSensor
+      fullName: Assets.Scripts.GOAP.Sensors.PatrolTargetSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/PatrolTargetSensor.cs
+      <Id>k__BackingField: PatrolTargetSensor-19d1c6d2-77c7-4e3f-b8cf-123456789abc
+    - <Name>k__BackingField: PlayerTargetSensor
+      fullName: Assets.Scripts.GOAP.Sensors.PlayerTargetSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/PlayerTargetSensor.cs
+      <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
+    - <Name>k__BackingField: RechargeTargetSensor
+      fullName: Assets.Scripts.GOAP.Sensors.RechargeTargetSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/RechargeTargetSensor.cs
+      <Id>k__BackingField: RechargeTargetSensor-d75bc583-1396-4c22-a928-5c77e9a1bdaa
+    targetKeys:
+    - <Name>k__BackingField: PatrolTarget
+      fullName: Assets.Scripts.GOAP.TargetKeys.PatrolTarget, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/TargetKeys/PatrolTarget.cs
+      <Id>k__BackingField: PatrolTarget-5130fbfe-0ad5-40ab-8a91-944b5c63c997
+    - <Name>k__BackingField: PlayerTarget
+      fullName: Assets.Scripts.GOAP.TargetKeys.PlayerTarget, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/TargetKeys/PlayerTarget.cs
+      <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
+    - <Name>k__BackingField: RechargeTarget
+      fullName: Assets.Scripts.GOAP.TargetKeys.RechargeTarget, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/TargetKeys/RechargeTarget.cs
+      <Id>k__BackingField: RechargeTarget-7696443c-a02f-4c6f-b405-29f3256c68ff
+    multiSensors: []

@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875fbfa2d1734285b353878b31467c98, type: 3}
+  m_Name: PursuitCapability
+  m_EditorClassIdentifier: 
+  goals:
+  - goal:
+      <Name>k__BackingField: PursuitGoal
+      <Id>k__BackingField: Pursuit-af07faca-6667-4b98-a05e-f325473a3447
+    baseCost: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: AtPlayerTarget
+        <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+      comparison: 2
+      amount: 0
+  actions:
+  - action:
+      <Name>k__BackingField: PursuitAction
+      <Id>k__BackingField: Pursuit-67f97c9c-9d66-42ce-853c-133448c53402
+    target:
+      <Name>k__BackingField: PlayerTarget
+      <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
+    properties:
+      rid: 3255850240427688181
+    baseCost: 3
+    stoppingDistance: 1.5
+    validateTarget: 1
+    requiresTarget: 1
+    validateConditions: 1
+    moveMode: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: IsAlert
+        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+      comparison: 2
+      amount: 0
+    - worldKey:
+        <Name>k__BackingField: Energy
+        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
+      comparison: 2
+      amount: 0
+    effects:
+    - worldKey:
+        <Name>k__BackingField: AtPlayerTarget
+        <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+      effect: 1
+  worldSensors:
+  - sensor:
+      <Name>k__BackingField: AlertSensor
+      <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
+    worldKey:
+      <Name>k__BackingField: IsAlert
+      <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+  targetSensors:
+  - sensor:
+      <Name>k__BackingField: PlayerTargetSensor
+      <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
+    targetKey:
+      <Name>k__BackingField: PlayerTarget
+      <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
+  multiSensors: []
+  generatorScriptable: {fileID: 11400000, guid: 0422e7a0a8d2c3a43bf617285bc969b5, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3255850240427688181
+      type: {class: EmptyActionProperties, ns: CrashKonijn.Agent.Runtime, asm: CrashKonijn.Agent.Runtime}
+      data: 

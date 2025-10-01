@@ -9,10 +9,11 @@
         "GUID:4d9088d80ac84f52b9b07421f95af69c"
     ],
     "includePlatforms": [
-        "Editor"
+        "Editor",
+        "WindowsStandalone64"
     ],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
