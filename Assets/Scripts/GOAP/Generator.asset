@@ -52,6 +52,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AlertSensor.cs
       <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
+    - <Name>k__BackingField: AtRechargeStationSensor
+      fullName: Assets.Scripts.GOAP.Sensors.AtRechargeStationSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AtRechargeStationSensor.cs
+      <Id>k__BackingField: AtRechargeStationSensor-bc4891f5-9f4c-433e-8a18-995894a9a9d7
     - <Name>k__BackingField: EnergySensor
       fullName: Assets.Scripts.GOAP.Sensors.EnergySensor, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -68,6 +73,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtPlayerTarget.cs
       <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+    - <Name>k__BackingField: AtRechargeStation
+      fullName: Assets.Scripts.GOAP.WorldKeys.AtRechargeStation, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtRechargeStation.cs
+      <Id>k__BackingField: AtRechargeStation-40a2850d-48e2-4996-8a89-86fa022f2f72
     - <Name>k__BackingField: Energy
       fullName: Assets.Scripts.GOAP.WorldKeys.Energy, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null

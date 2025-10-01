@@ -1,49 +1,27 @@
 using CrashKonijn.Agent.Core;
-using CrashKonijn.Goap.Core; // IActionReceiver, IComponentReference
-using CrashKonijn.Goap.Runtime; // LocalWorldSensorBase
+using CrashKonijn.Goap.Core;
+using CrashKonijn.Goap.Runtime;
 using UnityEngine;
+using Assets.Scripts.GOAP.Behaviours;
 
 namespace Assets.Scripts.GOAP.Sensors
 {
     [GoapId("EnergySensor-a4da1183-e27a-4159-83bd-fb49f2ea3f2a")]
     public class EnergySensor : LocalWorldSensorBase
     {
-        [SerializeField] private float maxEnergy = 100f;
-        [SerializeField] private float drainRate = 2f;     // per second
-        [SerializeField] private float rechargeRate = 10f; // per second
+        public override void Created() { }
+        public override void Update() { }
 
-        private float currentEnergy;
-        private bool isRecharging;
-
-        public override void Created()
-        {
-            currentEnergy = maxEnergy;
-        }
-
-        public override void Update()
-        {
-            float dt = Time.deltaTime;
-
-            if (isRecharging)
-            {
-                currentEnergy += rechargeRate * dt;
-                if (currentEnergy >= maxEnergy)
-                {
-                    currentEnergy = maxEnergy;
-                    isRecharging = false;
-                }
-            }
-            else
-            {
-                currentEnergy -= drainRate * dt;
-                if (currentEnergy < 0f)
-                    currentEnergy = 0f;
-            }
-        }
         public override SenseValue Sense(IActionReceiver agent, IComponentReference refs)
         {
-            return new SenseValue((int)currentEnergy);
+            var energyBehaviour = refs.GetCachedComponent<EnergyBehaviour>();
+            if (energyBehaviour == null)
+            {
+                Debug.LogWarning("[EnergySensor] EnergyBehaviour not found on agent!");
+                return new SenseValue(0);
+            }
+
+            return new SenseValue((int)energyBehaviour.CurrentEnergy);
         }
-        public void SetRecharging(bool value) => isRecharging = value;
     }
 }

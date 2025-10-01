@@ -23,10 +23,14 @@ namespace Assets.Scripts.GOAP.Sensors
             if (station == null)
                 return null;
 
-            if (existingTarget is TransformTarget t)
-                return t.SetTransform(station);
+            Vector3 pos = station.position;
+            if (UnityEngine.AI.NavMesh.SamplePosition(pos, out var hit, 5f, UnityEngine.AI.NavMesh.AllAreas))
+                pos = hit.position;
 
-            return new TransformTarget(station);
+            if (existingTarget is PositionTarget t)
+                return t.SetPosition(pos);
+
+            return new PositionTarget(pos);
         }
     }
 }
