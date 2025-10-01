@@ -1,0 +1,105 @@
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class SimpleGuardSightNiko : MonoBehaviour
+{
+    [SerializeField] LayerMask obstacleLayer;
+    [SerializeField] Vector3 playerOffset = new Vector3(0, 1, 0);
+    [SerializeField] Transform eyes;
+    [SerializeField] GameObject exclamationMark;
+    [SerializeField] float hFieldOfView = 100f;
+    [SerializeField] float vFieldOfView = 100f;
+    [SerializeField] float viewDistance = 10f;
+    [SerializeField] [Tooltip("*** DOES NOT WORK *** Gives the detection cone an angle.")]Vector3 sightRotationOffset = new(0,-0.55f,0);
+    GameObject player;
+    bool playerHit;
+
+    [Header("Gizmo")]
+    [SerializeField] [Range(3,50)] int rayCount;
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    void Update()
+    {
+        LookForPlayer();
+    }
+
+    void LookForPlayer()
+    {
+        exclamationMark.SetActive(playerHit);
+        Quaternion sightRotation = Quaternion.Euler(sightRotationOffset);
+        var direction = (player.transform.position + playerOffset - eyes.position).normalized;
+        var distance = Vector3.Distance(player.transform.position, eyes.position);
+
+        if (distance <= viewDistance)
+        {
+            // Get the angle to the player ignoring the y-axis
+            var forwardRotation = eyes.forward + sightRotationOffset;
+            var flatEyeForward = new Vector3(forwardRotation.x, 0, forwardRotation.z).normalized;
+            var flatDirection = new Vector3(direction.x, 0, direction.z).normalized;
+
+            //var horizontalAngle = Vector3.Angle(flatEyeForward, flatDirection);
+            var horizontalAngle = Vector3.Angle(Vector3.ProjectOnPlane(forwardRotation, Vector3.up), Vector3.ProjectOnPlane(direction, Vector3.up));
+
+            // Get the angle to the player ignoring the x-axis
+            var verticalEyeForward = new Vector3(0, forwardRotation.y, forwardRotation.z).normalized;
+            var verticalDirection = new Vector3(0, direction.y, direction.z).normalized;
+
+            //var verticalAngle = Vector3.Angle(verticalEyeForward, verticalDirection);
+            var verticalAngle = Vector3.Angle(Vector3.ProjectOnPlane(forwardRotation, eyes.right), Vector3.ProjectOnPlane(direction, eyes.right));
+
+            print(verticalAngle);
+            
+            if (horizontalAngle <= hFieldOfView / 2 && Mathf.Abs(verticalAngle) <= vFieldOfView / 2)
+            {
+                // Check for line of sight
+                if (Physics.Raycast(eyes.position, direction, distance, obstacleLayer))
+                {
+                    playerHit = false;
+                    return;
+                }
+                playerHit = true;
+                PlayerSpotted();
+            }
+            else
+                playerHit = false;
+        }
+        else
+            playerHit = false;
+    }
+
+    void PlayerSpotted()
+    {
+        print("Gotcha!!");
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        for (int y = -rayCount / 2; y <= rayCount / 2; y++)
+        {
+            float verticalPercent = (float)y / (rayCount / 2);
+            float verticalAngle = verticalPercent * (vFieldOfView / 2);
+
+            for (int x = -rayCount / 2; x <= rayCount / 2; x++)
+            {
+                float horizontalPercent = (float)x / (rayCount / 2);
+                float horizontalAngle = horizontalPercent * (hFieldOfView / 2);
+
+                Quaternion rotation = Quaternion.Euler(verticalAngle, horizontalAngle, 0);
+                Vector3 direction = rotation * eyes.forward + sightRotationOffset;
+
+                Gizmos.DrawRay(eyes.position, direction.normalized * viewDistance);
+            }
+        }
+
+        if (!player) return;
+        if (playerHit)
+            Gizmos.color = Color.green;
+        else
+            Gizmos.color = Color.blue;
+        Gizmos.DrawLine(eyes.position, player.transform.position + playerOffset);
+    }
+}

@@ -6,12 +6,9 @@ public class ThrowablePickup : Pickup
     [SerializeField] GameObject thrownObjectPrefab;
     [SerializeField] int ammoCount = 5;
 
-    void OnTriggerEnter(Collider other)
+    protected override void ActivatePickup(Collider other)
     {
-        if(other.CompareTag("Player"))
-        {
-            other.GetComponent<PlayerThrow>().AddThrowable(thrownObjectPrefab, ammoCount);
-            Destroy(gameObject);
-        }
+        other.GetComponent<PlayerThrow>().AddThrowable(thrownObjectPrefab, ammoCount);
+        base.ActivatePickup(other);
     }
 }

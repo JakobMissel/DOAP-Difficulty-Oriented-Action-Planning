@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,8 @@ public class PlayerClimb : MonoBehaviour
     [Header("Detection")]
     [SerializeField] float sphereCastRadius = 0.3f;
     [SerializeField] float climbCheckDistance = 0.5f;
+    [SerializeField] Vector3 detectionOffset;
+
     [Header("Speed")]
     [SerializeField] float stickToWallForce = 0.2f;
     [SerializeField] Vector2 maxClimbSpeed = new(2,3);
@@ -32,6 +35,9 @@ public class PlayerClimb : MonoBehaviour
     [SerializeField] bool climbButtonHeld;
     [SerializeField] public bool onWall;
     [SerializeField] bool isClimbing;
+
+    public static Action<bool> climbStatus;
+    public static void OnClimbStatus(bool isClimbing) => climbStatus?.Invoke(isClimbing);
 
     void Awake()
     {
@@ -72,6 +78,7 @@ public class PlayerClimb : MonoBehaviour
         }
         DepleteStamina();
         RegenerateStamina();
+        OnClimbStatus(isClimbing);
     }
 
     void FixedUpdate()
@@ -86,7 +93,8 @@ public class PlayerClimb : MonoBehaviour
 
     bool WallCheck()
     {
-        if (Physics.SphereCast(transform.position, sphereCastRadius, orientation.forward, out climbableHit, climbCheckDistance, climbableLayer))
+        // Do something else than sphere cast at some point - at the moment it is a bit unreliable for some reason 
+        if (Physics.SphereCast(transform.position + detectionOffset, sphereCastRadius, orientation.forward, out climbableHit, climbCheckDistance, climbableLayer))
         {
             return true;
         }
@@ -169,6 +177,6 @@ public class PlayerClimb : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + orientation.forward * climbCheckDistance, sphereCastRadius);
+        Gizmos.DrawWireSphere((transform.position + detectionOffset) + orientation.forward * climbCheckDistance, sphereCastRadius);
     }
 }

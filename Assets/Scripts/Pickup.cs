@@ -2,19 +2,37 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
+    [Header("UI")]
+    [SerializeField] [Tooltip("Text that is displayed when close enough to interact with pickup.")] [Multiline] string displayName;
+    public string DisplayName => displayName;
+
     [Header("\"Animation\"")]
     [SerializeField][Tooltip("Should the pickup move vertically?")] protected bool verticalAnimation = true;
-    [SerializeField][Tooltip("The vertical speed of the pickup. \nDefault: 2")] protected float verticalSpeed = 2;
-    [SerializeField][Tooltip("The height of the vertical movement. \nDefault: 0.5")] protected float verticalHeight = 0.5f;
+    [SerializeField][Tooltip("The vertical speed of the pickup.")] protected float verticalSpeed = 2;
+    [SerializeField][Tooltip("The height of the vertical movement.")] protected float verticalHeight = 0.5f;
     [SerializeField][Tooltip("Should the pickup rotate around itself?")] protected bool rotate = true;
-    [SerializeField][Tooltip("The rotation speed of the pickup. \nDefault: 100")] protected float rotationSpeed = 100;
+    [SerializeField][Tooltip("The rotation speed of the pickup.")] protected float rotationSpeed = 100;
     float initialY;
-    float distance;
-    [Header("Pickup")]
+    [Header("Audio")]
+    [SerializeField] GameObject audioGameObject;
     [SerializeField] AudioClip audioClip;
+    GameObject newAudioGameObject;
+    [Header("Interactable")]
     [SerializeField] bool canBepickedUp = true;
+    [SerializeField] bool buttonRequired;
+    [SerializeField] bool holdRequired;
+    [SerializeField] float holdDuration;
+    float holdTime;
+    [HideInInspector] public bool buttonPressed;
+    [HideInInspector] public bool buttonHeld;
+    public bool ButtonRequired => buttonRequired;
+    public bool HoldRequired => holdRequired;
+    public float HoldDuration => holdDuration;
+    public float HoldTime => holdTime;
 
-    private void Awake()
+
+
+    void Awake()
     {
         initialY = transform.position.y;
     }
@@ -24,20 +42,50 @@ public class Pickup : MonoBehaviour
         if (!canBepickedUp) return;
         if (other.CompareTag("Player"))
         {
-            ActivatePickup(other.gameObject);
+            if (buttonRequired)
+            {
+                PlayerInteract.OnAddPickup(this);
+            }
+            else
+                ActivatePickup(other);
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && buttonRequired)
+        {
+            if(buttonPressed)
+                ActivatePickup(other);
+            if (holdRequired)
+            {
+                HoldButton(other);
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (!canBepickedUp) return;
+        if (other.CompareTag("Player") && buttonRequired)
+        {
+            PlayerInteract.OnRemovePickup(this);
+            buttonHeld = false;
+            holdTime = 0;
         }
     }
 
     /// <summary>
-    /// Activates the pickup, plays a sound (on the player's parent's Audio Source component) if given an audio clip, and finally destroys it.
+    /// Activates the pickup, plays a sound if given an audio clip, and finally destroys the pickup.
     /// </summary>
-    /// <param name="player"></param>
-    protected virtual void ActivatePickup(GameObject player)
+    protected virtual void ActivatePickup(Collider other)
     {
-        if (audioClip != null)
+        if (audioClip)
         {
-            player.GetComponentInParent<AudioSource>().PlayOneShot(audioClip);
+            audioGameObject.GetComponent<AudioSource>().clip = audioClip;
+            newAudioGameObject = Instantiate(audioGameObject, transform.position, Quaternion.identity);
         }
+        PlayerInteract.OnRemovePickup(this);
         Destroy(gameObject);
     }
 
@@ -49,10 +97,6 @@ public class Pickup : MonoBehaviour
     /// <summary>
     /// Animates the pickup by moving it up and down and/or rotating it, depending on the parameters.
     /// </summary>
-    /// <param name="verticalAnimation"></param>
-    /// <param name="verticalSpeed"></param>
-    /// <param name="rotate"></param>
-    /// <param name="rotationSpeed"></param>
     void Animate(bool verticalAnimation, float verticalSpeed, bool rotate, float rotationSpeed)
     {
         if (verticalAnimation)
@@ -64,7 +108,6 @@ public class Pickup : MonoBehaviour
     /// <summary>
     /// Rotates the pickup around itself.
     /// </summary>
-    /// <param name="speed"></param>
     void Rotate(float speed)
     {
         transform.Rotate(Vector3.up * speed * Time.deltaTime);
@@ -73,10 +116,29 @@ public class Pickup : MonoBehaviour
     /// <summary>
     /// Moves the pickup up and down in a sine wave pattern.
     /// </summary>
-    /// <param name="speed"></param>
     void MoveUpAndDown(float speed)
     {
         float y = Mathf.PingPong(Time.time * speed, verticalHeight) + initialY;
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
+    }
+
+    void HoldButton(Collider other)
+    {
+        if (!canBepickedUp) return;
+        if (buttonHeld)
+        {
+            holdTime += Time.deltaTime;
+            if (holdTime >= holdDuration)
+            {
+                ActivatePickup(other);
+                canBepickedUp = false;   
+            }
+        }
+        else
+        {
+            holdTime -= Time.deltaTime;
+            if(holdTime <= 0)
+                holdTime = 0;
+        }
     }
 }
