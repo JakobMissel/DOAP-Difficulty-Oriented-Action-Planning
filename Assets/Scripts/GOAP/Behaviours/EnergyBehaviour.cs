@@ -8,8 +8,8 @@ namespace Assets.Scripts.GOAP.Behaviours
     public class EnergyBehaviour : MonoBehaviour
     {
         [SerializeField] private float maxEnergy = 100f;
-        [SerializeField] private float drainRate = 15f;
-        [SerializeField] private float rechargeRate = 10f;
+        [SerializeField] private float drainRate = 2f;
+        [SerializeField] private float rechargeRate = 8f;
 
         private float currentEnergy;
         private bool isRecharging;
