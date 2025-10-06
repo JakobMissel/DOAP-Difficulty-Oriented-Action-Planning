@@ -19,7 +19,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         }
         private void Start()
         {
-            this.provider.RequestGoal<PatrolGoal, PursuitGoal, RechargeGoal>();
+            this.provider.RequestGoal<PatrolGoal, PursuitGoal, RechargeGoal, CatchGoal>();
         }
         
     }

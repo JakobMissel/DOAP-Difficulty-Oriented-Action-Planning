@@ -9,8 +9,12 @@ namespace Assets.Scripts.GOAP.Actions
     public class PursuitAction : GoapActionBase<PursuitAction.Data>
     {
         private NavMeshAgent agent;
-        // This method is called when the action is created
-        // This method is optional and can be removed
+        
+        // Timer constants
+        private const float CLOSE_RANGE_DISTANCE = 5.0f;
+        private const float CLOSE_RANGE_CATCH_TIME = 5.0f;
+        private const float TIMER_DECAY_SPEED = 1.0f;
+
         public override void Created()
         {
         }
@@ -26,6 +30,9 @@ namespace Assets.Scripts.GOAP.Actions
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
+            
+            // Reset the close range timer when starting pursuit
+            data.CloseRangeTimer = 0f;
 
             Debug.Log($"[PursuitAction] {mono.Transform.name} chasing {data.Target?.Position}");
         }
@@ -41,20 +48,49 @@ namespace Assets.Scripts.GOAP.Actions
             agent.SetDestination(data.Target.Position);
 
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
-            if (dist < 1.5f) // "caught" player
+
+            // Use a generous distance check that considers the agent's stopping distance
+            float catchDistance = Mathf.Max(1.5f, agent.stoppingDistance + 0.5f);
+    
+            if (dist <= catchDistance)
             {
-                Debug.Log($"[PursuitAction] {mono.Transform.name} Player caught!");
+                Debug.Log($"[PursuitAction] {mono.Transform.name} Player caught! Distance: {dist:F2}, Catch Distance: {catchDistance:F2}");
                 return ActionRunState.Completed;
+            }
+            
+            // Close range timer logic
+            if (dist <= CLOSE_RANGE_DISTANCE)
+            {
+                // Player is within close range - increment timer
+                data.CloseRangeTimer += Time.deltaTime;
+                Debug.Log($"[PursuitAction] Player in close range ({dist:F1}m) - Timer: {data.CloseRangeTimer:F1}s/{CLOSE_RANGE_CATCH_TIME}s");
+                
+                if (data.CloseRangeTimer >= CLOSE_RANGE_CATCH_TIME)
+                {
+                    Debug.Log($"[PursuitAction] {mono.Transform.name} Player caught by close range timer!");
+                    return ActionRunState.Completed;
+                }
+            }
+            else
+            {
+                // Player is now out of range - decrease timer in incremental steps
+                if (data.CloseRangeTimer > 0f)
+                {
+                    data.CloseRangeTimer -= Time.deltaTime * TIMER_DECAY_SPEED;
+                    data.CloseRangeTimer = Mathf.Max(0f, data.CloseRangeTimer); // Don't go below 0
+                    Debug.Log($"[PursuitAction] Player out of close range ({dist:F1}m) - Timer decaying: {data.CloseRangeTimer:F1}s");
+                }
             }
 
             return ActionRunState.Continue;
         }
 
-        // The action class itself must be stateless!
+        // The action class itself must be stateless
         // All data should be stored in the data class
         public class Data : IActionData
         {
             public ITarget Target { get; set; }
+            public float CloseRangeTimer { get; set; } = 0f;
         }
     }
 }
