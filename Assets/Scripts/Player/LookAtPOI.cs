@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -7,7 +5,6 @@ public class LookAtPOI : MonoBehaviour
 {
     [SerializeField] bool lookAtInteract;
     [SerializeField] float lookDistance = 10f;
-    [SerializeField] float lookSpeed = 1f;
     [SerializeField] GameObject headTrackerSourceObject;
     [SerializeField] Rig headTracker;
     GameObject hitArea;

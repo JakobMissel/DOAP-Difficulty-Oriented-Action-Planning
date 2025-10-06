@@ -5088,7 +5088,7 @@ GameObject:
   - component: {fileID: 771148253}
   m_Layer: 7
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Climbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7746,6 +7746,46 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
+--- !u!1 &1235235538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7833065518557522739, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+  m_PrefabInstance: {fileID: 7980162816909603947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1235235541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235235538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1c32a8ed136cb84a9f281befaeceab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftTarget: {fileID: 1431088524}
+  rightTarget: {fileID: 1520769756}
+--- !u!65 &1235235542
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235235538}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 0.7}
+  m_Center: {x: 0, y: 1.08, z: 0.42}
 --- !u!1001 &1241930289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9189,6 +9229,11 @@ Transform:
   - {fileID: 1085234199}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1431088524 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7775773077219946126, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+  m_PrefabInstance: {fileID: 7980162816909603947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1431686549 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4398957818134730461, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
@@ -9909,6 +9954,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1518097909}
   m_CullTransparentMesh: 1
+--- !u!1 &1520769756 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1888316953157660477, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+  m_PrefabInstance: {fileID: 7980162816909603947}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1522668183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11437,7 +11487,7 @@ GameObject:
   - component: {fileID: 1866086157}
   m_Layer: 7
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Climbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12038,7 +12088,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookAtInteract: 1
   lookDistance: 8
-  lookSpeed: 1
   headTrackerSourceObject: {fileID: 2053431049}
   headTracker: {fileID: 349614016}
 --- !u!4 &1935672342 stripped
@@ -12379,7 +12428,7 @@ GameObject:
   - component: {fileID: 1964001593}
   m_Layer: 7
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Climbable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13741,6 +13790,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.x
       value: 0.2995228
       objectReference: {fileID: 0}
+    - target: {fileID: 7833065518557522739, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_Name
+      value: Arms IK
+      objectReference: {fileID: 0}
     - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: groundCheckRadius
       value: 0.2
@@ -13780,6 +13833,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 378007007463572359, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       insertIndex: 4
       addedObject: {fileID: 1926339524}
+    - targetCorrespondingSourceObject: {fileID: 7833065518557522739, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1235235541}
+    - targetCorrespondingSourceObject: {fileID: 7833065518557522739, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1235235542}
   m_SourcePrefab: {fileID: 100100000, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
 --- !u!1001 &8775763064674653902
 PrefabInstance:
