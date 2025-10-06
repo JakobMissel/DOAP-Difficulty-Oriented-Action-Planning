@@ -35,22 +35,19 @@ public class SimpleGuardSightNiko : MonoBehaviour
 
         if (distance <= viewDistance)
         {
-            // Get the angle to the player ignoring the y-axis
+            // Get the angle to the player in relation to the up vector
             var forwardRotation = eyes.forward + sightRotationOffset;
-            var flatEyeForward = new Vector3(forwardRotation.x, 0, forwardRotation.z).normalized;
-            var flatDirection = new Vector3(direction.x, 0, direction.z).normalized;
+            var horizontalEyeForward = Vector3.ProjectOnPlane(forwardRotation, Vector3.up);
+            var hortizontalDirection = Vector3.ProjectOnPlane(direction, Vector3.up);
 
-            //var horizontalAngle = Vector3.Angle(flatEyeForward, flatDirection);
-            var horizontalAngle = Vector3.Angle(Vector3.ProjectOnPlane(forwardRotation, Vector3.up), Vector3.ProjectOnPlane(direction, Vector3.up));
+            var horizontalAngle = Vector3.Angle(horizontalEyeForward, hortizontalDirection);
 
-            // Get the angle to the player ignoring the x-axis
-            var verticalEyeForward = new Vector3(0, forwardRotation.y, forwardRotation.z).normalized;
-            var verticalDirection = new Vector3(0, direction.y, direction.z).normalized;
+            // Get the angle of the player in relation to the right vector of the eyes
+            var verticalEyeForward = Vector3.ProjectOnPlane(forwardRotation, eyes.right);
+            var verticalDirection = Vector3.ProjectOnPlane(direction, eyes.right);
 
-            //var verticalAngle = Vector3.Angle(verticalEyeForward, verticalDirection);
-            var verticalAngle = Vector3.Angle(Vector3.ProjectOnPlane(forwardRotation, eyes.right), Vector3.ProjectOnPlane(direction, eyes.right));
+            var verticalAngle = Vector3.Angle(verticalEyeForward, verticalDirection);
 
-            print(verticalAngle);
             
             if (horizontalAngle <= hFieldOfView / 2 && Mathf.Abs(verticalAngle) <= vFieldOfView / 2)
             {
