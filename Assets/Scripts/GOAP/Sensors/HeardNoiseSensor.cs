@@ -1,25 +1,25 @@
+// Assets/Scripts/GOAP/Sensors/HeardNoiseSensor.cs
 using CrashKonijn.Agent.Core;
-using CrashKonijn.Goap.Runtime;
 using CrashKonijn.Goap.Core;
+using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 
 namespace Assets.Scripts.GOAP.Sensors
 {
-    [GoapId("PlayerCaughtSensor-83f83d17-c674-43cb-87ea-70ac8807c4be")]
-    public class PlayerCaughtSensor : LocalWorldSensorBase
+    [GoapId("HeardNoiseSensor-40920bcf-96e7-4bab-b863-1d2b153581a4")]
+    public class HeardNoiseSensor : LocalWorldSensorBase
     {
         public override void Created() { }
         public override void Update() { }
-        
+
         public override SenseValue Sense(IActionReceiver agent, IComponentReference refs)
         {
-            // This sensor reads from a behaviour component that tracks if the player was caught
             var brain = refs.GetCachedComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
-            if (brain != null && brain.IsPlayerCaught)
+            if (brain != null && brain.HasHeardNoise)
             {
                 return new SenseValue(1); // true
             }
-            
+
             return new SenseValue(0); // false
         }
     }

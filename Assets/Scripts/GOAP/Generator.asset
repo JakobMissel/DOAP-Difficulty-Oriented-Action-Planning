@@ -15,6 +15,16 @@ MonoBehaviour:
   nameSpace: Assets.Scripts.GOAP
   scripts:
     goals:
+    - <Name>k__BackingField: CatchGoal
+      fullName: Assets.Scripts.GOAP.Goals.CatchGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/CatchGoal.cs
+      <Id>k__BackingField: Catch-96a2599f-b52e-40f8-92ac-b13a4b6c03a2
+    - <Name>k__BackingField: InvestigateNoiseGoal
+      fullName: Assets.Scripts.GOAP.InvestigateNoiseGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/InvestigateNoiseGoal.cs
+      <Id>k__BackingField: InvestigateNoise-ce8984c9-1451-44bb-a15a-eb0c4dc9d8f7
     - <Name>k__BackingField: PatrolGoal
       fullName: Assets.Scripts.GOAP.Goals.PatrolGoal, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -31,6 +41,16 @@ MonoBehaviour:
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/RechargeGoal.cs
       <Id>k__BackingField: Recharge-b6a22d6b-bcb7-43b9-8de2-24d37fb909f8
     actions:
+    - <Name>k__BackingField: CatchAction
+      fullName: Assets.Scripts.GOAP.Actions.CatchAction, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/CatchAction.cs
+      <Id>k__BackingField: Catch-5fe8c2cb-3a74-49ca-a008-19cf7bdba069
+    - <Name>k__BackingField: InvestigateNoiseAction
+      fullName: Assets.Scripts.GOAP.Actions.InvestigateNoiseAction, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/InvestigateNoiseAction.cs
+      <Id>k__BackingField: InvestigateNoise-73e3c275-b47d-48a5-bcdf-9e503738a046
     - <Name>k__BackingField: PatrolAction
       fullName: Assets.Scripts.GOAP.Actions.PatrolAction, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -62,7 +82,22 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/EnergySensor.cs
       <Id>k__BackingField: EnergySensor-a4da1183-e27a-4159-83bd-fb49f2ea3f2a
+    - <Name>k__BackingField: HeardNoiseSensor
+      fullName: Assets.Scripts.GOAP.Sensors.HeardNoiseSensor, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/HeardNoiseSensor.cs
+      <Id>k__BackingField: HeardNoiseSensor-40920bcf-96e7-4bab-b863-1d2b153581a4
+    - <Name>k__BackingField: PlayerCaughtSensor
+      fullName: Assets.Scripts.GOAP.Sensors.PlayerCaughtSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/PlayerCaughtSensor.cs
+      <Id>k__BackingField: PlayerCaughtSensor-83f83d17-c674-43cb-87ea-70ac8807c4be
     worldKeys:
+    - <Name>k__BackingField: AtNoiseSource
+      fullName: Assets.Scripts.GOAP.AtNoiseSource, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtNoiseSource.cs
+      <Id>k__BackingField: AtNoiseSource-9744e2af-f251-4510-acd1-c8606e059010
     - <Name>k__BackingField: AtPatrolTarget
       fullName: Assets.Scripts.GOAP.WorldKeys.AtPatrolTarget, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -83,6 +118,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/Energy.cs
       <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
+    - <Name>k__BackingField: HeardNoise
+      fullName: Assets.Scripts.GOAP.HeardNoise, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/HeardNoise.cs
+      <Id>k__BackingField: HeardNoise-e69d5a68-2f67-4e40-85e9-688231b0ccbc
     - <Name>k__BackingField: IsAlert
       fullName: Assets.Scripts.GOAP.WorldKeys.IsAlert, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -93,7 +133,17 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/PatrolCount.cs
       <Id>k__BackingField: PatrolCount-e6877c4b-28f8-4a4c-b4f2-a327d841030d
+    - <Name>k__BackingField: PlayerCaught
+      fullName: Assets.Scripts.GOAP.WorldKeys.PlayerCaught, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/PlayerCaught.cs
+      <Id>k__BackingField: PlayerCaught-e606251c-5f2b-4614-a064-2461b4080bc3
     targetSensors:
+    - <Name>k__BackingField: NoiseTargetSensor
+      fullName: Assets.Scripts.GOAP.Sensors.NoiseTargetSensor, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/NosieTargetSensor.cs
+      <Id>k__BackingField: NoiseTargetSensor-ebd8de9d-f878-45c1-add0-edef3a65bc21
     - <Name>k__BackingField: PatrolTargetSensor
       fullName: Assets.Scripts.GOAP.Sensors.PatrolTargetSensor, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -110,6 +160,11 @@ MonoBehaviour:
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/RechargeTargetSensor.cs
       <Id>k__BackingField: RechargeTargetSensor-d75bc583-1396-4c22-a928-5c77e9a1bdaa
     targetKeys:
+    - <Name>k__BackingField: NoiseTarget
+      fullName: Assets.Scripts.GOAP.NoiseTarget, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/TargetKeys/NoiseTarget.cs
+      <Id>k__BackingField: NoiseTarget-506aa48c-3c7e-4b47-8fbf-fb6cb7e4e5c4
     - <Name>k__BackingField: PatrolTarget
       fullName: Assets.Scripts.GOAP.TargetKeys.PatrolTarget, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null

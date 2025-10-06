@@ -1,65 +1,67 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.GOAP
+namespace Assets.Scripts.GOAP.Actions
 {
     [GoapId("Catch-5fe8c2cb-3a74-49ca-a008-19cf7bdba069")]
     public class CatchAction : GoapActionBase<CatchAction.Data>
     {
-        // This method is called when the action is created
-        // This method is optional and can be removed
+        private float catchAnimationTime = 0f;
+        private const float CATCH_ANIMATION_DURATION = 2.0f; // 2 second catch sequence
+
         public override void Created()
         {
         }
 
-        // This method is called every frame before the action is performed
-        // If this method returns false, the action will be stopped
-        // This method is optional and can be removed
-        public override bool IsValid(IActionReceiver agent, Data data)
-        {
-            return true;
-        }
-
-        // This method is called when the action is started
-        // This method is optional and can be removed
         public override void Start(IMonoAgent agent, Data data)
         {
+            catchAnimationTime = 0f;
+            
+            Debug.Log($"[CatchAction] Starting catch sequence!");
+            
+            // Stop the agent from moving
+            var navAgent = agent.Transform.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            if (navAgent != null)
+            {
+                navAgent.isStopped = true;
+            }
+            
+            // TODO: Play catch animation/sound effects here
+            // TODO: Disable player movement here
         }
 
-        // This method is called once before the action is performed
-        // This method is optional and can be removed
-        public override void BeforePerform(IMonoAgent agent, Data data)
-        {
-        }
-
-        // This method is called every frame while the action is running
-        // This method is required
         public override IActionRunState Perform(IMonoAgent agent, Data data, IActionContext context)
         {
-            return ActionRunState.Completed;
+            catchAnimationTime += Time.deltaTime;
+            
+            Debug.Log($"[CatchAction] Catch sequence progress: {catchAnimationTime:F1}s / {CATCH_ANIMATION_DURATION}s");
+            
+            // Wait for the catch animation/sequence to finish
+            if (catchAnimationTime >= CATCH_ANIMATION_DURATION)
+            {
+                Debug.Log("[CatchAction] Catch complete! Ending game...");
+                return ActionRunState.Completed;
+            }
+            
+            return ActionRunState.Continue;
         }
 
-        // This method is called when the action is completed
-        // This method is optional and can be removed
         public override void Complete(IMonoAgent agent, Data data)
         {
+            Debug.Log("[CatchAction] You have been caught! Game Over!");
+
+            
+            // TODO: Show Game Over UI here
+            // TODO: Add restart/quit buttons
         }
 
-        // This method is called when the action is stopped
-        // This method is optional and can be removed
-        public override void Stop(IMonoAgent agent, Data data)
-        {
-        }
-
-        // This method is called when the action is completed or stopped
-        // This method is optional and can be removed
         public override void End(IMonoAgent agent, Data data)
         {
+            catchAnimationTime = 0f;
         }
 
-        // The action class itself must be stateless!
-        // All data should be stored in the data class
         public class Data : IActionData
         {
             public ITarget Target { get; set; }

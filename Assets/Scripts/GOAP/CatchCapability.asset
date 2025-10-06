@@ -10,61 +10,52 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 875fbfa2d1734285b353878b31467c98, type: 3}
-  m_Name: PursuitCapability
+  m_Name: CatchCapability
   m_EditorClassIdentifier: 
   goals:
   - goal:
-      <Name>k__BackingField: PursuitGoal
-      <Id>k__BackingField: Pursuit-af07faca-6667-4b98-a05e-f325473a3447
+      <Name>k__BackingField: CatchGoal
+      <Id>k__BackingField: Catch-96a2599f-b52e-40f8-92ac-b13a4b6c03a2
     baseCost: 1
     conditions:
     - worldKey:
-        <Name>k__BackingField: AtPlayerTarget
-        <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+        <Name>k__BackingField: PlayerCaught
+        <Id>k__BackingField: PlayerCaught-e606251c-5f2b-4614-a064-2461b4080bc3
       comparison: 3
       amount: 1
   actions:
   - action:
-      <Name>k__BackingField: PursuitAction
-      <Id>k__BackingField: Pursuit-67f97c9c-9d66-42ce-853c-133448c53402
+      <Name>k__BackingField: CatchAction
+      <Id>k__BackingField: Catch-5fe8c2cb-3a74-49ca-a008-19cf7bdba069
     target:
       <Name>k__BackingField: PlayerTarget
       <Id>k__BackingField: PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4
     properties:
-      rid: 3255850240427688181
-    baseCost: 3
-    stoppingDistance: 1.5
+      rid: 3227784753871061059
+    baseCost: 5
+    stoppingDistance: 0
     validateTarget: 1
     requiresTarget: 1
     validateConditions: 1
     moveMode: 1
     conditions:
     - worldKey:
-        <Name>k__BackingField: IsAlert
-        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
-      comparison: 2
-      amount: 0
-    - worldKey:
-        <Name>k__BackingField: Energy
-        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
-      comparison: 2
-      amount: 0
-    effects:
-    - worldKey:
         <Name>k__BackingField: AtPlayerTarget
-        <Id>k__BackingField: 
-      effect: 1
+        <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+      comparison: 3
+      amount: 1
+    effects:
     - worldKey:
         <Name>k__BackingField: PlayerCaught
         <Id>k__BackingField: PlayerCaught-e606251c-5f2b-4614-a064-2461b4080bc3
       effect: 1
   worldSensors:
   - sensor:
-      <Name>k__BackingField: AlertSensor
-      <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
+      <Name>k__BackingField: PlayerCaughtSensor
+      <Id>k__BackingField: PlayerCaughtSensor-83f83d17-c674-43cb-87ea-70ac8807c4be
     worldKey:
-      <Name>k__BackingField: IsAlert
-      <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+      <Name>k__BackingField: PlayerCaught
+      <Id>k__BackingField: PlayerCaught-e606251c-5f2b-4614-a064-2461b4080bc3
   targetSensors:
   - sensor:
       <Name>k__BackingField: PlayerTargetSensor
@@ -77,6 +68,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 3255850240427688181
+    - rid: 3227784753871061059
       type: {class: EmptyActionProperties, ns: CrashKonijn.Agent.Runtime, asm: CrashKonijn.Agent.Runtime}
       data: 

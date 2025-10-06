@@ -55,6 +55,13 @@ namespace Assets.Scripts.GOAP.Actions
             if (dist <= catchDistance)
             {
                 Debug.Log($"[PursuitAction] {mono.Transform.name} Player caught! Distance: {dist:F2}, Catch Distance: {catchDistance:F2}");
+                // Set world state that player is caught
+                var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+                if (brain != null)
+                {
+                    brain.SetPlayerCaught(true);
+                }
+                
                 return ActionRunState.Completed;
             }
             
@@ -68,6 +75,14 @@ namespace Assets.Scripts.GOAP.Actions
                 if (data.CloseRangeTimer >= CLOSE_RANGE_CATCH_TIME)
                 {
                     Debug.Log($"[PursuitAction] {mono.Transform.name} Player caught by close range timer!");
+                    
+                    // Set world state that player is caught
+                    var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+                    if (brain != null)
+                    {
+                        brain.SetPlayerCaught(true);
+                    }
+                    
                     return ActionRunState.Completed;
                 }
             }
