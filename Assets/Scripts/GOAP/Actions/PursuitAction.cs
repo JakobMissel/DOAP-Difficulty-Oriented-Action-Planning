@@ -16,9 +16,19 @@ namespace Assets.Scripts.GOAP.Actions
         private const float CLOSE_RANGE_CATCH_TIME = 5.0f;
         private const float TIMER_DECAY_SPEED = 1.0f;
         
-        // Time to wait before giving up when target is lost
-        private const float TARGET_LOSS_TIMEOUT = 2.0f;
+        // Search behavior constants
+        private const float SEARCH_RADIUS = 2.0f; // How close to last known position to trigger search
+        private const float LOOK_DURATION = 1.5f; // How long to look in each direction
+        private const float LOOK_ANGLE = 90f; // How far to turn when looking (90 = left/right)
 
+        // Search state enum
+        public enum SearchState
+        {
+            MovingToLastKnown,
+            LookingLeft,
+            LookingRight,
+            SearchComplete
+        }
         public override void Created()
         {
         }
@@ -37,9 +47,11 @@ namespace Assets.Scripts.GOAP.Actions
             agent.updateRotation = true;
             agent.updatePosition = true;
             
-            // Reset the close range and target loss timer when starting pursuit
+            // Reset timers and state
             data.CloseRangeTimer = 0f;
-            data.TargetLostTimer = 0f;
+            data.SearchState = SearchState.MovingToLastKnown;
+            data.SearchTimer = 0f;
+            data.InitialRotation = Quaternion.identity;
 
             Debug.Log($"[PursuitAction] {mono.Transform.name} chasing {data.Target?.Position}");
         }
@@ -48,32 +60,30 @@ namespace Assets.Scripts.GOAP.Actions
         // This method is required
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            if (agent == null || data.Target == null || !data.Target.IsValid() || !sight.CanSeePlayer())
+            if (agent == null)
                 return ActionRunState.Stop;
 
-            if (data.Target == null || !data.Target.IsValid() || !sight.CanSeePlayer())
+            // Check if we can see the player - if so, switch back to normal pursuit
+            if (data.Target != null && data.Target.IsValid() && sight.CanSeePlayer())
             {
-                // Start counting time without target
-                data.TargetLostTimer += Time.deltaTime;
-                
-                Debug.Log($"[PursuitAction] Target lost! Timer: {data.TargetLostTimer:F1}s/{TARGET_LOSS_TIMEOUT}s");
-                
-                // If we've lost the target for too long, give up
-                if (data.TargetLostTimer >= TARGET_LOSS_TIMEOUT)
-                {
-                    Debug.Log("[PursuitAction] Target lost for too long - stopping pursuit");
-                    return ActionRunState.Stop;
-                }
-                
-                // Continue moving toward last known position while we wait
-                return ActionRunState.Continue;
+                return PerformActivePursuit(mono, data);
             }
+            else
+            {
+                return PerformSearch(mono, data);
+            }
+        }
 
-            // We can see the target - reset lost timer
-            data.TargetLostTimer = 0f;
+        private IActionRunState PerformActivePursuit(IMonoAgent mono, Data data)
+        {
+            // Reset search state if we see the player again
+            data.SearchState = SearchState.MovingToLastKnown;
+            data.SearchTimer = 0f;
             
             // Latest position of the target
             agent.SetDestination(data.Target.Position);
+            agent.isStopped = false;
+            agent.updateRotation = true;
 
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
 
@@ -82,8 +92,7 @@ namespace Assets.Scripts.GOAP.Actions
     
             if (dist <= catchDistance)
             {
-                Debug.Log($"[PursuitAction] {mono.Transform.name} Player caught! Distance: {dist:F2}, Catch Distance: {catchDistance:F2}");
-                // Set world state that player is caught
+                Debug.Log($"[PursuitAction] {mono.Transform.name} Player caught! Distance: {dist:F2}");
                 var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                 if (brain != null)
                 {
@@ -96,7 +105,6 @@ namespace Assets.Scripts.GOAP.Actions
             // Close range timer logic
             if (dist <= CLOSE_RANGE_DISTANCE)
             {
-                // Player is within close range - increment timer
                 data.CloseRangeTimer += Time.deltaTime;
                 Debug.Log($"[PursuitAction] Player in close range ({dist:F1}m) - Timer: {data.CloseRangeTimer:F1}s/{CLOSE_RANGE_CATCH_TIME}s");
                 
@@ -104,7 +112,6 @@ namespace Assets.Scripts.GOAP.Actions
                 {
                     Debug.Log($"[PursuitAction] {mono.Transform.name} Player caught by close range timer!");
                     
-                    // Set world state that player is caught
                     var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                     if (brain != null)
                     {
@@ -116,16 +123,161 @@ namespace Assets.Scripts.GOAP.Actions
             }
             else
             {
-                // Player is now out of range - decrease timer in incremental steps
                 if (data.CloseRangeTimer > 0f)
                 {
                     data.CloseRangeTimer -= Time.deltaTime * TIMER_DECAY_SPEED;
-                    data.CloseRangeTimer = Mathf.Max(0f, data.CloseRangeTimer); // Don't go below 0
-                    Debug.Log($"[PursuitAction] Player out of close range ({dist:F1}m) - Timer decaying: {data.CloseRangeTimer:F1}s");
+                    data.CloseRangeTimer = Mathf.Max(0f, data.CloseRangeTimer);
                 }
             }
 
             return ActionRunState.Continue;
+        }
+
+        private IActionRunState PerformSearch(IMonoAgent mono, Data data)
+        {
+            if (data.Target == null || !data.Target.IsValid())
+            {
+                Debug.Log("[PursuitAction] No target to search - stopping");
+                
+                // Clear last known position
+                var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+                if (brain != null)
+                {
+                    brain.ClearLastKnownPlayerPosition();
+                }
+                
+                return ActionRunState.Stop;
+            }
+
+            switch (data.SearchState)
+            {
+                case SearchState.MovingToLastKnown:
+                    return HandleMovingToLastKnown(mono, data);
+                
+                case SearchState.LookingLeft:
+                    return HandleLookingLeft(mono, data);
+                
+                case SearchState.LookingRight:
+                    return HandleLookingRight(mono, data);
+                
+                case SearchState.SearchComplete:
+                    Debug.Log("[PursuitAction] Search complete - player not found");
+                    
+                    // Clear last known position
+                    var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+                    if (brain != null)
+                    {
+                        brain.ClearLastKnownPlayerPosition();
+                    }
+                    
+                    return ActionRunState.Stop;
+            }
+
+            return ActionRunState.Continue;
+        }
+
+        private IActionRunState HandleMovingToLastKnown(IMonoAgent mono, Data data)
+        {
+            agent.SetDestination(data.Target.Position);
+            agent.isStopped = false;
+            agent.updateRotation = true;
+
+            float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
+            Debug.Log($"[PursuitAction] Moving to last known position - Distance: {dist:F2}m");
+
+            // Check if we can see the player while moving
+            if (sight.CanSeePlayer())
+            {
+                Debug.Log("[PursuitAction] Found player while moving to last known position!");
+                return ActionRunState.Continue; // Will be handled by PerformActivePursuit next frame
+            }
+
+            // Have we reached the last known position?
+            if (dist <= SEARCH_RADIUS)
+            {
+                Debug.Log("[PursuitAction] Reached last known position - starting search");
+                agent.isStopped = true;
+                agent.updateRotation = false;
+                
+                // Store initial rotation for the search
+                data.InitialRotation = mono.Transform.rotation;
+                data.SearchState = SearchState.LookingLeft;
+                data.SearchTimer = 0f;
+            }
+
+            return ActionRunState.Continue;
+        }
+
+        private IActionRunState HandleLookingLeft(IMonoAgent mono, Data data)
+        {
+            data.SearchTimer += Time.deltaTime;
+
+            // Smoothly rotate left
+            Quaternion targetRotation = data.InitialRotation * Quaternion.Euler(0, -LOOK_ANGLE, 0);
+            mono.Transform.rotation = Quaternion.Slerp(mono.Transform.rotation, targetRotation, Time.deltaTime * 2f);
+
+            Debug.Log($"[PursuitAction] Looking left - Timer: {data.SearchTimer:F1}s/{LOOK_DURATION}s");
+
+            // Check if we can see the player
+            if (sight.CanSeePlayer())
+            {
+                Debug.Log("[PursuitAction] Found player while looking left!");
+                agent.isStopped = false;
+                agent.updateRotation = true;
+                data.SearchState = SearchState.MovingToLastKnown; // Reset to pursuit mode
+                return ActionRunState.Continue;
+            }
+
+            // Finished looking left?
+            if (data.SearchTimer >= LOOK_DURATION)
+            {
+                Debug.Log("[PursuitAction] Finished looking left - now looking right");
+                data.SearchState = SearchState.LookingRight;
+                data.SearchTimer = 0f;
+            }
+
+            return ActionRunState.Continue;
+        }
+
+        private IActionRunState HandleLookingRight(IMonoAgent mono, Data data)
+        {
+            data.SearchTimer += Time.deltaTime;
+
+            // Smoothly rotate right (from initial, not from left position)
+            Quaternion targetRotation = data.InitialRotation * Quaternion.Euler(0, LOOK_ANGLE, 0);
+            mono.Transform.rotation = Quaternion.Slerp(mono.Transform.rotation, targetRotation, Time.deltaTime * 2f);
+
+            Debug.Log($"[PursuitAction] Looking right - Timer: {data.SearchTimer:F1}s/{LOOK_DURATION}s");
+
+            // Check if we can see the player
+            if (sight.CanSeePlayer())
+            {
+                Debug.Log("[PursuitAction] Found player while looking right!");
+                agent.isStopped = false;
+                agent.updateRotation = true;
+                data.SearchState = SearchState.MovingToLastKnown; // Reset to pursuit mode
+                return ActionRunState.Continue;
+            }
+
+            // Finished looking right?
+            if (data.SearchTimer >= LOOK_DURATION)
+            {
+                Debug.Log("[PursuitAction] Finished looking right - player not found");
+                data.SearchState = SearchState.SearchComplete;
+            }
+
+            return ActionRunState.Continue;
+        }
+
+        public override void End(IMonoAgent mono, Data data)
+        {
+            if (agent != null)
+            {
+                agent.isStopped = false;
+                agent.updateRotation = true;
+            }
+            
+            Debug.Log("[PursuitAction] Ended");
         }
 
         // The action class itself must be stateless
@@ -134,7 +286,9 @@ namespace Assets.Scripts.GOAP.Actions
         {
             public ITarget Target { get; set; }
             public float CloseRangeTimer { get; set; } = 0f;
-            public float TargetLostTimer { get; set; } = 0f;
+            public SearchState SearchState { get; set; } = SearchState.MovingToLastKnown;
+            public float SearchTimer { get; set; } = 0f;
+            public Quaternion InitialRotation { get; set; }
         }
     }
 }

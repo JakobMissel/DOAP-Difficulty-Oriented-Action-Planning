@@ -20,6 +20,10 @@ namespace Assets.Scripts.GOAP.Behaviours
         public Vector3 LastNoisePosition { get; private set; }
         public float NoiseHearingRadius = 20f; // How far the agent can hear noises
         
+        // Track last known player position
+        public bool HasLastKnownPosition { get; private set; } = false;
+        public Vector3 LastKnownPlayerPosition { get; private set; }
+        
         [Header("NavMesh Settings")]
         [SerializeField] private float angularSpeed = 360f; // Default is 120, increase for faster turning
         [SerializeField] private float acceleration = 12f; // Default is 8, increase for faster acceleration
@@ -54,6 +58,21 @@ namespace Assets.Scripts.GOAP.Behaviours
             {
                 Debug.Log("[BrainBehaviour] Player has been caught!");
             }
+        }
+        
+        // Method to update last known player position
+        public void UpdateLastKnownPlayerPosition(Vector3 position)
+        {
+            HasLastKnownPosition = true;
+            LastKnownPlayerPosition = position;
+            Debug.Log($"[BrainBehaviour] Updated last known player position: {position}");
+        }
+        
+        // Method to clear last known position
+        public void ClearLastKnownPlayerPosition()
+        {
+            HasLastKnownPosition = false;
+            Debug.Log("[BrainBehaviour] Cleared last known player position");
         }
         
         // Method called when a noise is heard (called from NoiseArea or thrown object)
