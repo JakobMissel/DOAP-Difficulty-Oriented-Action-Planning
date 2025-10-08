@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SimpleGuardSightNiko : MonoBehaviour
@@ -15,18 +14,13 @@ public class SimpleGuardSightNiko : MonoBehaviour
     bool playerHit;
 
     [Header("Gizmo")]
-    [SerializeField] [Range(3,50)] int rayCount;
+    [SerializeField] [Range(0,50)] int rayCount;
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void Update()
-    {
-        LookForPlayer();
-    }
-
-    void LookForPlayer()
+    public bool CanSeePlayer()
     {
         exclamationMark.SetActive(playerHit);
         Quaternion sightRotation = Quaternion.Euler(sightRotationOffset);
@@ -55,16 +49,23 @@ public class SimpleGuardSightNiko : MonoBehaviour
                 if (Physics.Raycast(eyes.position, direction, distance, obstacleLayer))
                 {
                     playerHit = false;
-                    return;
+                    return false;
                 }
                 playerHit = true;
                 PlayerSpotted();
+                return true;
             }
             else
+            {
                 playerHit = false;
+                return false;
+            }
         }
         else
+        {
             playerHit = false;
+            return false;
+        }
     }
 
     void PlayerSpotted()

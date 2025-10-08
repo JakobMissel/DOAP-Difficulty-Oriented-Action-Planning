@@ -9,7 +9,8 @@ namespace Assets.Scripts.GOAP.Actions
     public class PursuitAction : GoapActionBase<PursuitAction.Data>
     {
         private NavMeshAgent agent;
-        
+        private SimpleGuardSightNiko sight;
+
         // Timer constants
         private const float CLOSE_RANGE_DISTANCE = 5.0f;
         private const float CLOSE_RANGE_CATCH_TIME = 5.0f;
@@ -26,7 +27,9 @@ namespace Assets.Scripts.GOAP.Actions
         {
             if (agent == null)
                 agent = mono.Transform.GetComponent<NavMeshAgent>();
-            
+            if (sight == null)
+                sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
@@ -41,7 +44,7 @@ namespace Assets.Scripts.GOAP.Actions
         // This method is required
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            if (agent == null || data.Target == null || !data.Target.IsValid())
+            if (agent == null || data.Target == null || !data.Target.IsValid() || !sight.CanSeePlayer())
                 return ActionRunState.Stop;
 
             // Latest position of the target

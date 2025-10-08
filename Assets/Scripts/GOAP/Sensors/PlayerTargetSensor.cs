@@ -10,11 +10,17 @@ namespace Assets.Scripts.GOAP.Sensors
     {
         [SerializeField] private float detectionRange = 10f;
         private Transform player;
+        private SimpleGuardSightNiko sight;
 
         public override void Created()
         {
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
             Debug.Log($"[PlayerTargetSensor-1] Player={player} sensed");
+        }
+
+        void GetSight(IActionReceiver agent)
+        {
+            sight = agent.Transform.GetComponent<SimpleGuardSightNiko>();
         }
 
         public override void Update() { }
@@ -26,7 +32,11 @@ namespace Assets.Scripts.GOAP.Sensors
                 Debug.Log("[PlayerTargetSensor-2] No player transform found!");
                 return null;
             }
-
+            if (agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var s))
+            {
+                if(s.CanSeePlayer() == false)
+                    return null;
+            }
             float dist = Vector3.Distance(agent.Transform.position, player.position);
             bool inRange = dist <= detectionRange;
 
