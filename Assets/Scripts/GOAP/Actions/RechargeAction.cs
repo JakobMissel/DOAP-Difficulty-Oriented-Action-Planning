@@ -68,11 +68,13 @@ namespace Assets.Scripts.GOAP.Actions
             if (energy != null)
             {
                 float currentEnergy = energy.CurrentEnergy;
+                float maxEnergy = energy.MaxEnergy;
                 Debug.Log($"[RechargeAction] Recharging... Energy: {currentEnergy:0.00}/{energy.MaxEnergy}");
                 
-                if (currentEnergy >= 100f)  // Complete at 100
+                // Only complete when at maximum capacity (with small tolerance for floating point)
+                if (currentEnergy >= maxEnergy - 0.1f)
                 {
-                    Debug.Log("[RechargeAction] Recharged enough! Completing action.");
+                    Debug.Log("[RechargeAction] Fully recharged! Completing action.");
                     return ActionRunState.Completed;
                 }
             }

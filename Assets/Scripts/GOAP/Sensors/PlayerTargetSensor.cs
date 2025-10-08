@@ -8,19 +8,12 @@ namespace Assets.Scripts.GOAP.Sensors
     [GoapId("PlayerTarget-2264f0c6-cd4e-43a3-844a-d8e505c7c1c4")]
     public class PlayerTargetSensor : LocalTargetSensorBase
     {
-        [SerializeField] private float detectionRange = 10f;
         private Transform player;
-        private SimpleGuardSightNiko sight;
 
         public override void Created()
         {
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
             Debug.Log($"[PlayerTargetSensor-1] Player={player} sensed");
-        }
-
-        void GetSight(IActionReceiver agent)
-        {
-            sight = agent.Transform.GetComponent<SimpleGuardSightNiko>();
         }
 
         public override void Update() { }
@@ -29,23 +22,30 @@ namespace Assets.Scripts.GOAP.Sensors
         {
             if (player == null)
             {
-                Debug.Log("[PlayerTargetSensor-2] No player transform found!");
+                Debug.Log("[PlayerTargetSensor] No player transform found!");
                 return null;
             }
-            if (agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var s))
+            
+            // Check if the agent can see the player using SimpleGuardSightNiko
+            if (!agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var sight))
             {
-                if(s.CanSeePlayer() == false)
-                    return null;
+                Debug.LogWarning("[PlayerTargetSensor] No SimpleGuardSightNiko component found!");
+                return null;
             }
-            float dist = Vector3.Distance(agent.Transform.position, player.position);
-            bool inRange = dist <= detectionRange;
 
-            Debug.Log($"[PlayerTargetSensor-3] In range={inRange}, Dist={dist}, Player={player}");
+            if (!sight.CanSeePlayer())
+            {
+                Debug.Log("[PlayerTargetSensor] Player not in sight - returning null");
+                return null;
+            }
+
+            // Player is visible - return target
+            float dist = Vector3.Distance(agent.Transform.position, player.position);
+            Debug.Log($"[PlayerTargetSensor] Player VISIBLE - Distance: {dist:F2}");
 
             if (existingTarget is TransformTarget t)
                 return t.SetTransform(player);
             
-            Debug.Log($"[PlayerTargetSensor-4] Returning TransformTarget for {player}, dist={dist}");
             return new TransformTarget(player);
         }
     }

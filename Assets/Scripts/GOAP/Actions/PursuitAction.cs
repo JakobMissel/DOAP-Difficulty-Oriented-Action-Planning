@@ -15,6 +15,9 @@ namespace Assets.Scripts.GOAP.Actions
         private const float CLOSE_RANGE_DISTANCE = 5.0f;
         private const float CLOSE_RANGE_CATCH_TIME = 5.0f;
         private const float TIMER_DECAY_SPEED = 1.0f;
+        
+        // Time to wait before giving up when target is lost
+        private const float TARGET_LOSS_TIMEOUT = 2.0f;
 
         public override void Created()
         {
@@ -34,8 +37,9 @@ namespace Assets.Scripts.GOAP.Actions
             agent.updateRotation = true;
             agent.updatePosition = true;
             
-            // Reset the close range timer when starting pursuit
+            // Reset the close range and target loss timer when starting pursuit
             data.CloseRangeTimer = 0f;
+            data.TargetLostTimer = 0f;
 
             Debug.Log($"[PursuitAction] {mono.Transform.name} chasing {data.Target?.Position}");
         }
@@ -47,6 +51,27 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || data.Target == null || !data.Target.IsValid() || !sight.CanSeePlayer())
                 return ActionRunState.Stop;
 
+            if (data.Target == null || !data.Target.IsValid() || !sight.CanSeePlayer())
+            {
+                // Start counting time without target
+                data.TargetLostTimer += Time.deltaTime;
+                
+                Debug.Log($"[PursuitAction] Target lost! Timer: {data.TargetLostTimer:F1}s/{TARGET_LOSS_TIMEOUT}s");
+                
+                // If we've lost the target for too long, give up
+                if (data.TargetLostTimer >= TARGET_LOSS_TIMEOUT)
+                {
+                    Debug.Log("[PursuitAction] Target lost for too long - stopping pursuit");
+                    return ActionRunState.Stop;
+                }
+                
+                // Continue moving toward last known position while we wait
+                return ActionRunState.Continue;
+            }
+
+            // We can see the target - reset lost timer
+            data.TargetLostTimer = 0f;
+            
             // Latest position of the target
             agent.SetDestination(data.Target.Position);
 
@@ -109,6 +134,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             public ITarget Target { get; set; }
             public float CloseRangeTimer { get; set; } = 0f;
+            public float TargetLostTimer { get; set; } = 0f;
         }
     }
 }

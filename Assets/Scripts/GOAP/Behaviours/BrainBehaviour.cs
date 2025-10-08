@@ -2,6 +2,7 @@ using Assets.Scripts.GOAP.Goals;
 using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
@@ -19,14 +20,28 @@ namespace Assets.Scripts.GOAP.Behaviours
         public Vector3 LastNoisePosition { get; private set; }
         public float NoiseHearingRadius = 20f; // How far the agent can hear noises
         
+        [Header("NavMesh Settings")]
+        [SerializeField] private float angularSpeed = 360f; // Default is 120, increase for faster turning
+        [SerializeField] private float acceleration = 12f; // Default is 8, increase for faster acceleration
+        
         private void Awake()
         {
             this.goap = FindAnyObjectByType<GoapBehaviour>();
             this.agent = this.GetComponent<AgentBehaviour>();
             this.provider = this.GetComponent<GoapActionProvider>();
+            
+            // Configure NavMeshAgent turning speed
+            var navAgent = GetComponent<NavMeshAgent>();
+            if (navAgent != null)
+            {
+                navAgent.angularSpeed = angularSpeed;
+                navAgent.acceleration = acceleration;
+                Debug.Log($"[BrainBehaviour] Set angular speed to {angularSpeed} degrees/sec");
+            }
         }
         private void Start()
         {
+            // Add all goals to the provider
             this.provider.RequestGoal<PatrolGoal, PursuitGoal, RechargeGoal, CatchGoal, InvestigateNoiseGoal>();
         }
         

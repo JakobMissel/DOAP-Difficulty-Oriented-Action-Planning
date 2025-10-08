@@ -21,7 +21,8 @@ namespace Assets.Scripts.GOAP.Sensors
                 return new SenseValue(0);
             }
 
-            return new SenseValue((int)energyBehaviour.CurrentEnergy);
+            // Return the exact energy value (rounded to nearest int for world state)
+            return new SenseValue(Mathf.RoundToInt(energyBehaviour.CurrentEnergy));
         }
     }
 }
