@@ -60,7 +60,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         public void OnNoiseHeard(Vector3 noisePosition)
         {
             float distance = Vector3.Distance(transform.position, noisePosition);
-            
+            Debug.Log($"[BrainBehaviour] Noise made at {noisePosition}, distance: {distance:F1}m");
             if (distance <= NoiseHearingRadius)
             {
                 HasHeardNoise = true;

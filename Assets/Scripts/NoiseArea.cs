@@ -21,25 +21,34 @@ public class NoiseArea : MonoBehaviour
         newScale.Set(scale, scale, scale);
         noiseArea.localScale = newScale;
     }
-    
+
     // Call this method to trigger the noise and notify agents
-    public void TriggerNoise()
+    void TriggerNoise()
     {
         if (hasTriggered)
             return;
 
         hasTriggered = true;
+    }
 
+    void SendNoise(Collider other)
+    {
         Vector3 noisePosition = noiseCenter != null ? noiseCenter.position : transform.position;
-        
+
         Debug.Log($"[NoiseArea] Noise triggered at {noisePosition}");
 
-        // Find all agents with BrainBehaviour and notify them
-        var agents = FindObjectsOfType<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
-        
-        foreach (var agent in agents)
+        // Find all agents in NoiseArea, with BrainBehaviour, and notify them
+        var agent = other.gameObject?.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+
+        agent.OnNoiseHeard(noisePosition);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Agent"))
         {
-            agent.OnNoiseHeard(noisePosition);
+            SendNoise(other);
         }
     }
 }
+
