@@ -1966,12 +1966,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1c32a8ed136cb84a9f281befaeceab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  differenceThreshold: 0.25
   leftArmConstraints: {fileID: 2843656329883555099}
   leftTarget: {fileID: 7775773077219946126}
   leftShoulder: {fileID: 7640873226072930588}
+  leftDistanceToShoulder: 0.5
   rightArmConstraints: {fileID: 2026946481053155567}
   rightTarget: {fileID: 1888316953157660477}
   rightShoulder: {fileID: 6912063490215821735}
+  rightDistanceToShoulder: 0.5
 --- !u!65 &3990556596890192251
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1991,7 +1994,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.7}
+  m_Size: {x: 1.7, y: 1, z: 0.7}
   m_Center: {x: 0, y: 1.08, z: 0.42}
 --- !u!4 &8602535812733848770 stripped
 Transform:
