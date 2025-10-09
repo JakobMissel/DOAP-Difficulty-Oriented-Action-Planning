@@ -24,6 +24,9 @@ namespace Assets.Scripts.GOAP.Behaviours
         public bool HasLastKnownPosition { get; private set; } = false;
         public Vector3 LastKnownPlayerPosition { get; private set; }
         
+        // Track if we were seeing the player in the previous frame
+        private bool wasSeenLastFrame = false;
+        
         [Header("NavMesh Settings")]
         [SerializeField] private float angularSpeed = 360f; // Default is 120, increase for faster turning
         [SerializeField] private float acceleration = 12f; // Default is 8, increase for faster acceleration
@@ -60,18 +63,34 @@ namespace Assets.Scripts.GOAP.Behaviours
             }
         }
         
-        // Method to update last known player position
-        public void UpdateLastKnownPlayerPosition(Vector3 position)
+        // Method to update player visibility state - called every frame from sensor
+        public void UpdatePlayerVisibility(bool canSee, Vector3 currentPlayerPosition)
         {
-            HasLastKnownPosition = true;
-            LastKnownPlayerPosition = position;
-            Debug.Log($"[BrainBehaviour] Updated last known player position: {position}");
+            // If we could see the player last frame but can't now, capture the last known position
+            if (wasSeenLastFrame && !canSee)
+            {
+                HasLastKnownPosition = true;
+                LastKnownPlayerPosition = currentPlayerPosition;
+                Debug.Log($"[BrainBehaviour] Player just left sight! Captured last known position: {LastKnownPlayerPosition}");
+            }
+            
+            // If we can see the player now, clear the "investigated" flag so we can capture again later
+            if (canSee)
+            {
+                // Don't clear HasLastKnownPosition here - it will be cleared after investigation
+                wasSeenLastFrame = true;
+            }
+            else
+            {
+                wasSeenLastFrame = false;
+            }
         }
         
-        // Method to clear last known position
+        // Method to clear last known position (called after investigation is complete)
         public void ClearLastKnownPlayerPosition()
         {
             HasLastKnownPosition = false;
+            wasSeenLastFrame = false;
             Debug.Log("[BrainBehaviour] Cleared last known player position");
         }
         

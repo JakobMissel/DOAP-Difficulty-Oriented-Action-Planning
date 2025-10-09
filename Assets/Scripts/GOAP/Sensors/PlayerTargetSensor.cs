@@ -14,7 +14,7 @@ namespace Assets.Scripts.GOAP.Sensors
         public override void Created()
         {
             player = GameObject.FindGameObjectWithTag("Player")?.transform;
-            Debug.Log($"[PlayerTargetSensor-1] Player={player} sensed");
+            Debug.Log($"[PlayerTargetSensor] Player found: {player != null}");
         }
 
         public override void Update() { }
@@ -36,17 +36,20 @@ namespace Assets.Scripts.GOAP.Sensors
                 return null;
             }
 
-            if (sight.CanSeePlayer())
+            bool canSee = sight.CanSeePlayer();
+            
+            // Update the brain with current visibility state
+            // This will capture last known position when player leaves sight
+            if (brain != null)
             {
-                // Player is visible - update last known position and return current target
+                brain.UpdatePlayerVisibility(canSee, player.position);
+            }
+
+            if (canSee)
+            {
+                // Player is visible - return live tracking target
                 float dist = Vector3.Distance(agent.Transform.position, player.position);
                 Debug.Log($"[PlayerTargetSensor] Player VISIBLE - Distance: {dist:F2}");
-                
-                // Update last known position in brain
-                if (brain != null)
-                {
-                    brain.UpdateLastKnownPlayerPosition(player.position);
-                }
 
                 if (existingTarget is TransformTarget t)
                     return t.SetTransform(player);
@@ -55,10 +58,10 @@ namespace Assets.Scripts.GOAP.Sensors
             }
             else
             {
-                // Player not visible - check if we have a last known position
+                // Player not visible - check if we have a last known position to investigate
                 if (brain != null && brain.HasLastKnownPosition)
                 {
-                    Debug.Log($"[PlayerTargetSensor] Player not visible - using last known position: {brain.LastKnownPlayerPosition}");
+                    Debug.Log($"[PlayerTargetSensor] Player not visible - using FROZEN last known position: {brain.LastKnownPlayerPosition}");
                     
                     if (existingTarget is PositionTarget pt)
                         return pt.SetPosition(brain.LastKnownPlayerPosition);

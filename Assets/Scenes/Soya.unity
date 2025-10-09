@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 170448629}
   - component: {fileID: 170448628}
   - component: {fileID: 170448627}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outer_E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -742,7 +742,7 @@ GameObject:
   - component: {fileID: 192681155}
   - component: {fileID: 192681154}
   - component: {fileID: 192681153}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Entrance (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1150,7 +1150,7 @@ GameObject:
   - component: {fileID: 282686875}
   - component: {fileID: 282686874}
   - component: {fileID: 282686873}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Study_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1258,7 +1258,7 @@ GameObject:
   - component: {fileID: 334493502}
   - component: {fileID: 334493501}
   - component: {fileID: 334493500}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1903,7 +1903,7 @@ GameObject:
   - component: {fileID: 528567237}
   - component: {fileID: 528567236}
   - component: {fileID: 528567235}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2303,7 +2303,7 @@ GameObject:
   - component: {fileID: 658995839}
   - component: {fileID: 658995838}
   - component: {fileID: 658995837}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner2 (1)_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2411,7 +2411,7 @@ GameObject:
   - component: {fileID: 712035868}
   - component: {fileID: 712035867}
   - component: {fileID: 712035866}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Entrance (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2579,7 +2579,7 @@ GameObject:
   - component: {fileID: 851776993}
   - component: {fileID: 851776992}
   - component: {fileID: 851776991}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner2 (1)_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3014,7 +3014,7 @@ GameObject:
   - component: {fileID: 943722072}
   - component: {fileID: 943722071}
   - component: {fileID: 943722070}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Study
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3650,7 +3650,7 @@ GameObject:
   - component: {fileID: 1069032984}
   - component: {fileID: 1069032983}
   - component: {fileID: 1069032982}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3758,7 +3758,7 @@ GameObject:
   - component: {fileID: 1069808469}
   - component: {fileID: 1069808468}
   - component: {fileID: 1069808467}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Dining2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3866,7 +3866,7 @@ GameObject:
   - component: {fileID: 1087854998}
   - component: {fileID: 1087854997}
   - component: {fileID: 1087854996}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Entrance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4114,7 +4114,7 @@ GameObject:
   - component: {fileID: 1168256758}
   - component: {fileID: 1168256757}
   - component: {fileID: 1168256756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Dining1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4359,7 +4359,7 @@ GameObject:
   - component: {fileID: 1230712358}
   - component: {fileID: 1230712357}
   - component: {fileID: 1230712356}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Study (2)_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4467,7 +4467,7 @@ GameObject:
   - component: {fileID: 1258300289}
   - component: {fileID: 1258300288}
   - component: {fileID: 1258300287}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outer_W
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4835,7 +4835,7 @@ GameObject:
   - component: {fileID: 1401052541}
   - component: {fileID: 1401052540}
   - component: {fileID: 1401052539}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Dining1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5814,7 +5814,7 @@ GameObject:
   - component: {fileID: 1637112627}
   - component: {fileID: 1637112626}
   - component: {fileID: 1637112625}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outer_N
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5922,7 +5922,7 @@ GameObject:
   - component: {fileID: 1651578767}
   - component: {fileID: 1651578766}
   - component: {fileID: 1651578765}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Study (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6030,7 +6030,7 @@ GameObject:
   - component: {fileID: 1700371217}
   - component: {fileID: 1700371216}
   - component: {fileID: 1700371215}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6138,7 +6138,7 @@ GameObject:
   - component: {fileID: 1704494786}
   - component: {fileID: 1704494785}
   - component: {fileID: 1704494784}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Study (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6296,6 +6296,151 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1277657391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1748534157
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.7090745
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000019073486
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6.5645595
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180950564769169283, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1890421074633751972, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_Name
+      value: PlayerGroup + Cameras
+      objectReference: {fileID: 0}
+    - target: {fileID: 1890421074633751972, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046527116031148795, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046527116031148795, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard&Mouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535205840818440892, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5535205840818440892, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582726492726603851, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.6703284
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582726492726603851, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.8432944
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582726492726603851, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.4729612
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582726492726603851, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7801116
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582726492726603851, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2806589
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582726492726603851, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5261427
+      objectReference: {fileID: 0}
+    - target: {fileID: 8582726492726603851, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.1892891
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857538476683617884, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.6703284
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857538476683617884, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.8432944
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857538476683617884, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.4729612
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857538476683617884, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7801116
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857538476683617884, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.28065887
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857538476683617884, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5261427
+      objectReference: {fileID: 0}
+    - target: {fileID: 8857538476683617884, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.18928911
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
 --- !u!1 &1762595729
 GameObject:
   m_ObjectHideFlags: 0
@@ -6417,7 +6562,7 @@ GameObject:
   - component: {fileID: 1768664035}
   - component: {fileID: 1768664034}
   - component: {fileID: 1768664033}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner2 (1)_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7264,7 +7409,7 @@ GameObject:
   - component: {fileID: 1952373034}
   - component: {fileID: 1952373033}
   - component: {fileID: 1952373032}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Outer_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7372,7 +7517,7 @@ GameObject:
   - component: {fileID: 2010684149}
   - component: {fileID: 2010684148}
   - component: {fileID: 2010684147}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Study
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7480,7 +7625,7 @@ GameObject:
   - component: {fileID: 2027806070}
   - component: {fileID: 2027806069}
   - component: {fileID: 2027806068}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Entrance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7588,7 +7733,7 @@ GameObject:
   - component: {fileID: 2043781874}
   - component: {fileID: 2043781873}
   - component: {fileID: 2043781872}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner2 (1)_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7801,7 +7946,7 @@ GameObject:
   - component: {fileID: 2140570800}
   - component: {fileID: 2140570799}
   - component: {fileID: 2140570798}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Wall_Inner2 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7909,3 +8054,4 @@ SceneRoots:
   - {fileID: 359398809}
   - {fileID: 1277657391}
   - {fileID: 987958168}
+  - {fileID: 1748534157}
