@@ -66,22 +66,23 @@ namespace Assets.Scripts.GOAP.Behaviours
         // Method to update player visibility state - called every frame from sensor
         public void UpdatePlayerVisibility(bool canSee, Vector3 currentPlayerPosition)
         {
-            // If we could see the player last frame but can't now, capture the last known position
-            if (wasSeenLastFrame && !canSee)
-            {
-                HasLastKnownPosition = true;
-                LastKnownPlayerPosition = currentPlayerPosition;
-                Debug.Log($"[BrainBehaviour] Player just left sight! Captured last known position: {LastKnownPlayerPosition}");
-            }
-            
-            // If we can see the player now, clear the "investigated" flag so we can capture again later
             if (canSee)
             {
-                // Don't clear HasLastKnownPosition here - it will be cleared after investigation
+                // Keep updating while visible so we have the freshest position
+                LastKnownPlayerPosition = currentPlayerPosition;
                 wasSeenLastFrame = true;
+        
+                // Don't clear HasLastKnownPosition - that gets cleared after investigation
             }
             else
             {
+                // If we JUST lost sight this frame, mark that we have a last known position
+                if (wasSeenLastFrame && !HasLastKnownPosition)
+                {
+                    HasLastKnownPosition = true;
+                    Debug.Log($"[BrainBehaviour] Player just left sight! Last known position frozen at: {LastKnownPlayerPosition}");
+                }
+        
                 wasSeenLastFrame = false;
             }
         }
