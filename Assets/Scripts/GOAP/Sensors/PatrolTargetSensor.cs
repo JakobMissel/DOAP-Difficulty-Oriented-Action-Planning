@@ -5,25 +5,34 @@ using CrashKonijn.Goap.Runtime;
 
 namespace Assets.Scripts.GOAP.Sensors
 {
-    // Defining a GoapId is required for ScriptableObject configuration
     [GoapId("PatrolTargetSensor-19d1c6d2-77c7-4e3f-b8cf-123456789abc")]
     public class PatrolTargetSensor : LocalTargetSensorBase
     {
-        public override void Created() { } // Is called when this script is initialzed
+        public override void Created() { }
         public override void Update() { }
 
         public override ITarget Sense(IActionReceiver agent, IComponentReference references, ITarget existingTarget)
         {
             var route = references.GetCachedComponent<Assets.Scripts.GOAP.Behaviours.PatrolRouteBehaviour>();
-            if (route == null) return null;
+            if (route == null) 
+            {
+                Debug.LogWarning("[PatrolTargetSensor] No PatrolRouteBehaviour found!");
+                return null;
+            }
 
             var wp = route.GetCurrent();
-            if (wp == null) return null;
+            if (wp == null) 
+            {
+                Debug.LogWarning("[PatrolTargetSensor] No current waypoint!");
+                return null;
+            }
 
-            if (existingTarget is TransformTarget t)
-                return t.SetTransform(wp);
+            Debug.Log($"[PatrolTargetSensor] Target waypoint: {wp.name} at {wp.position}");
 
-            return new TransformTarget(wp);
+            if (existingTarget is PositionTarget pt)
+                return pt.SetPosition(wp.position);
+
+            return new PositionTarget(wp.position);
         }
     }
 }

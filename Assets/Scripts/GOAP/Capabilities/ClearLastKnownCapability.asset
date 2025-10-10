@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875fbfa2d1734285b353878b31467c98, type: 3}
+  m_Name: ClearLastKnownCapability
+  m_EditorClassIdentifier: 
+  goals:
+  - goal:
+      <Name>k__BackingField: ClearLastKnownGoal
+      <Id>k__BackingField: ClearLastKnown-85419734-05f9-4234-9ba3-fdd34120ceb4
+    baseCost: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: IsAlert
+        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+      comparison: 1
+      amount: 0
+  actions:
+  - action:
+      <Name>k__BackingField: ClearLastKnownAction
+      <Id>k__BackingField: ClearLastKnown-11630d95-435f-4d5b-8ad2-dcf0edec684f
+    target:
+      <Name>k__BackingField: LastKnownPlayerTarget
+      <Id>k__BackingField: LastKnownPlayerTarget-d59ae2b4-282e-455c-9c2f-fd6cd4648f92
+    properties:
+      rid: 9021967032628543553
+    baseCost: 2
+    stoppingDistance: 1.5
+    validateTarget: 1
+    requiresTarget: 1
+    validateConditions: 1
+    moveMode: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: HasLastKnownPosition
+        <Id>k__BackingField: 
+      comparison: 3
+      amount: 1
+    - worldKey:
+        <Name>k__BackingField: Energy
+        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
+      comparison: 2
+      amount: 0
+    effects:
+    - worldKey:
+        <Name>k__BackingField: HasLastKnownPosition
+        <Id>k__BackingField: 
+      effect: 0
+    - worldKey:
+        <Name>k__BackingField: IsAlert
+        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+      effect: 0
+  worldSensors:
+  - sensor:
+      <Name>k__BackingField: HasLastKnownPositionSensor
+      <Id>k__BackingField: 
+    worldKey:
+      <Name>k__BackingField: HasLastKnownPosition
+      <Id>k__BackingField: 
+  - sensor:
+      <Name>k__BackingField: AlertSensor
+      <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
+    worldKey:
+      <Name>k__BackingField: IsAlert
+      <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+  targetSensors:
+  - sensor:
+      <Name>k__BackingField: LastKnownPlayerTargetSensor
+      <Id>k__BackingField: LastKnownPlayerTargetSensor-ca4d172e-345b-4a5d-905b-fb7f2a44c144
+    targetKey:
+      <Name>k__BackingField: LastKnownPlayerTarget
+      <Id>k__BackingField: LastKnownPlayerTarget-d59ae2b4-282e-455c-9c2f-fd6cd4648f92
+  multiSensors: []
+  generatorScriptable: {fileID: 11400000, guid: 0422e7a0a8d2c3a43bf617285bc969b5, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 9021967032628543553
+      type: {class: EmptyActionProperties, ns: CrashKonijn.Agent.Runtime, asm: CrashKonijn.Agent.Runtime}
+      data: 

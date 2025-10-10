@@ -10,8 +10,6 @@ namespace Assets.Scripts.GOAP.Sensors
     public class AlertSensor : LocalWorldSensorBase
     {
         private Transform player;
-        private float alertCooldownTimer = 0f;
-        private const float ALERT_COOLDOWN_DURATION = 1f; // Stay alert for `n` seconds after losing sight
 
         public override void Created()
         {
@@ -20,11 +18,6 @@ namespace Assets.Scripts.GOAP.Sensors
 
         public override void Update()
         {
-            // Decay the cooldown timer
-            if (alertCooldownTimer > 0f)
-            {
-                alertCooldownTimer -= Time.deltaTime;
-            }
         }
 
         public override SenseValue Sense(IActionReceiver agent, IComponentReference refs)
@@ -42,22 +35,14 @@ namespace Assets.Scripts.GOAP.Sensors
             {
                 bool canSee = sight.CanSeePlayer();
                 
-                if (canSee)
-                {
-                    // Player is visible - reset the cooldown timer and set alert
-                    alertCooldownTimer = ALERT_COOLDOWN_DURATION;
-                    Debug.Log($"[AlertSensor] {agent.Transform.name} can see player - IsAlert: true");
-                    return new SenseValue(true);
-                }
-                else
-                {
-                    // Player not visible - check cooldown timer OR last known position
-                    bool hasLastKnown = brain != null && brain.HasLastKnownPosition;
-                    bool isAlert = alertCooldownTimer > 0f || hasLastKnown;
-                    
-                    Debug.Log($"[AlertSensor] {agent.Transform.name} - CanSee: false, Cooldown: {alertCooldownTimer:F1}s, HasLastKnown: {hasLastKnown}, IsAlert: {isAlert}");
-                    return new SenseValue(isAlert);
-                }
+                // Alert is TRUE if:
+                // 1. We can see the player, OR
+                // 2. We have a last known position to investigate
+                bool hasLastKnown = brain != null && brain.HasLastKnownPosition;
+                bool isAlert = canSee || hasLastKnown;
+                
+                Debug.Log($"[AlertSensor] {agent.Transform.name} - CanSee: {canSee}, HasLastKnown: {hasLastKnown}, IsAlert: {isAlert}");
+                return new SenseValue(isAlert ? 1 : 0);
             }
 
             Debug.LogWarning($"[AlertSensor] {agent.Transform.name} has no SimpleGuardSightNiko component!");

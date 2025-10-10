@@ -26,10 +26,7 @@ namespace Assets.Scripts.GOAP.Sensors
                 Debug.Log("[PlayerTargetSensor] No player transform found!");
                 return null;
             }
-            
-            var brain = refs.GetCachedComponent<BrainBehaviour>();
-            
-            // Check if the agent can see the player using SimpleGuardSightNiko
+
             if (!agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var sight))
             {
                 Debug.LogWarning("[PlayerTargetSensor] No SimpleGuardSightNiko component found!");
@@ -38,48 +35,18 @@ namespace Assets.Scripts.GOAP.Sensors
 
             bool canSee = sight.CanSeePlayer();
             
-            // Update the brain with current visibility state
-            // This will capture last known position when player leaves sight
             if (canSee)
             {
-                // Update the brain with current visibility state
-                // This will capture last known position when player leaves sight
-                if (brain != null)
-                {
-                    brain.UpdatePlayerVisibility(true, player.position);
-                }
-
-                // Player is visible - return live tracking target
-                float dist = Vector3.Distance(agent.Transform.position, player.position);
-                Debug.Log($"[PlayerTargetSensor] Player VISIBLE - Distance: {dist:F2}");
-
+                Debug.Log($"[PlayerTargetSensor] Can see player at {player.position}");
+                
                 if (existingTarget is TransformTarget t)
                     return t.SetTransform(player);
-        
+
                 return new TransformTarget(player);
             }
-            else
-            {
-                // FIXED: Tell brain we can't see player anymore (without passing position)
-                if (brain != null)
-                {
-                    brain.UpdatePlayerVisibility(false, Vector3.zero);
-                }
 
-                // Player not visible - check if we have a last known position to investigate
-                if (brain != null && brain.HasLastKnownPosition)
-                {
-                    Debug.Log($"[PlayerTargetSensor] Player not visible - using FROZEN last known position: {brain.LastKnownPlayerPosition}");
-            
-                    if (existingTarget is PositionTarget pt)
-                        return pt.SetPosition(brain.LastKnownPlayerPosition);
-            
-                    return new PositionTarget(brain.LastKnownPlayerPosition);
-                }
-                
-                Debug.Log("[PlayerTargetSensor] Player not in sight and no last known position - returning null");
-                return null;
-            }
+            Debug.Log("[PlayerTargetSensor] Cannot see player");
+            return null;
         }
     }
 }

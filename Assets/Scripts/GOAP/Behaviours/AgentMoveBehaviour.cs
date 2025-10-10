@@ -58,13 +58,13 @@ namespace CrashKonijn.Docs.GettingStarted.Behaviours
           if (this.agent.IsPaused)
                 return;
 
-            if (!this.shouldMove)
+          if (!this.shouldMove)
                 return;
             
-            if (this.currentTarget == null)
+          if (this.currentTarget == null)
                 return;
             
-            this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.currentTarget.Position.x, this.transform.position.y, this.currentTarget.Position.z), Time.deltaTime);
+          this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.currentTarget.Position.x, this.transform.position.y, this.currentTarget.Position.z), Time.deltaTime);
         }
 
         private void OnDrawGizmos()
