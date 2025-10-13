@@ -3,7 +3,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] [Tooltip("Text that is displayed when close enough to interact with pickup.")] [Multiline] string displayName;
+    [SerializeField] [Tooltip("Text that is displayed when close enough to interact with pickup.")] [TextArea] string displayName;
     public string DisplayName => displayName;
 
     [Header("\"Animation\"")]

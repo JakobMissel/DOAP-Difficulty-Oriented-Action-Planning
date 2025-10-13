@@ -1,0 +1,60 @@
+using System;
+using UnityEngine;
+
+public class ObjectivesManager : MonoBehaviour
+{
+    [SerializeField] Objective[] objectives;
+    int currentObjectiveIndex = 0;
+    Objective currentObjective;
+    public Objective CurrentObjective => currentObjective;
+    public static ObjectivesManager Instance;
+
+    public static Action<Objective> onSetNewObjective;
+    public static void OnSetNewObjective(Objective newObjective) => onSetNewObjective?.Invoke(newObjective);
+
+
+    public static Action<Objective> onDisplayObjective;
+    public static void OnDisplayObjective(Objective objective) => onDisplayObjective?.Invoke(objective);
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void OnEnable()
+    {
+        ObjectivesManager.onSetNewObjective += SetNewObjective;
+    }
+
+    void OnDisable()
+    {
+        ObjectivesManager.onSetNewObjective -= SetNewObjective;
+    }
+
+    void Start()
+    {
+        if (objectives.Length > 0)
+        {
+            currentObjective = objectives[0];
+            onSetNewObjective?.Invoke(currentObjective);
+        }
+        else
+        {
+            Debug.LogWarning("No objectives set in ObjectivesManager.");
+        }
+    }
+
+    void SetNewObjective(Objective newObjective)
+    {
+        currentObjective = newObjective;
+        OnDisplayObjective(currentObjective);
+    }
+}
