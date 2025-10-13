@@ -11,9 +11,9 @@ namespace Assets.Scripts.GOAP.Actions
         private NavMeshAgent agent;
         private SimpleGuardSightNiko sight;
 
-        private const float SEARCH_RADIUS = 2.0f;
+        private const float SEARCH_RADIUS = 1.5f;
         private const float LOOK_DURATION = 1.5f;
-        private const float LOOK_ANGLE = 90f;
+        private const float LOOK_ANGLE = 75f;
 
         public enum SearchState
         {
@@ -32,6 +32,9 @@ namespace Assets.Scripts.GOAP.Actions
             if (sight == null)
                 sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
 
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+                return;
+
             agent.isStopped = false;
             agent.updateRotation = true;
             
@@ -44,7 +47,7 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            if (agent == null || data.Target == null || !data.Target.IsValid())
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
             // If we spot the player during investigation, stop and let PursuitGoal take over
@@ -84,6 +87,8 @@ namespace Assets.Scripts.GOAP.Actions
 
         private IActionRunState HandleMovingToLocation(IMonoAgent mono, Data data)
         {
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+                return ActionRunState.Stop;
             agent.SetDestination(data.Target.Position);
             agent.isStopped = false;
             agent.updateRotation = true;
@@ -158,7 +163,7 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
-            if (agent != null)
+            if (agent != null && agent.enabled && agent.isOnNavMesh)
             {
                 agent.isStopped = false;
                 agent.updateRotation = true;

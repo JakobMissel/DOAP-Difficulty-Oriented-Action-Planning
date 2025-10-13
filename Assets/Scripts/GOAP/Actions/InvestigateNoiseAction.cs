@@ -22,6 +22,9 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null)
                 agent = mono.Transform.GetComponent<NavMeshAgent>();
 
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+                return;
+
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
@@ -33,7 +36,7 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            if (agent == null || data.Target == null || !data.Target.IsValid())
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
             {
                 Debug.LogWarning("[InvestigateNoiseAction] No valid target or agent!");
                 return ActionRunState.Stop;
@@ -78,7 +81,7 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
-            if (agent != null)
+            if (agent != null && agent.enabled && agent.isOnNavMesh)
             {
                 agent.isStopped = false;
             }

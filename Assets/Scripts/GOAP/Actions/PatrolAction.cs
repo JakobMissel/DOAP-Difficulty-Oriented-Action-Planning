@@ -20,6 +20,9 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null)
                 agent = mono.Transform.GetComponent<NavMeshAgent>();
 
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+                return;
+
             if (TryGetValidTargetPosition(data, out var pos))
             {
                 agent.SetDestination(pos);
@@ -33,6 +36,8 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+                return ActionRunState.Stop;
             // Debug.Log($"[PatrolAction] {mono.Transform.name} Perform tick. RemDist={agent.remainingDistance}, StopDist={agent.stoppingDistance}, PathPending={agent.pathPending}");
 
 

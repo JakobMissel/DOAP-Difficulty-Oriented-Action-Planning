@@ -82,6 +82,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AlertSensor.cs
       <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
+    - <Name>k__BackingField: AtPlayerTargetSensor
+      fullName: Assets.Scripts.GOAP.Sensors.AtPlayerTargetSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AtPlayerTargetSensor.cs
+      <Id>k__BackingField: AtPlayerTargetSensor-5f28b6b3-6c7c-4c51-9d86-3a12a6fd2f2c
     - <Name>k__BackingField: AtRechargeStationSensor
       fullName: Assets.Scripts.GOAP.Sensors.AtRechargeStationSensor, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

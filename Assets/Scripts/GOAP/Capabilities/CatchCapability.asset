@@ -52,10 +52,16 @@ MonoBehaviour:
   worldSensors:
   - sensor:
       <Name>k__BackingField: PlayerCaughtSensor
-      <Id>k__BackingField: PlayerCaughtSensor-83f83d17-c674-43cb-87ea-70ac8807c4be
+      <Id>k__BackingField: 
     worldKey:
       <Name>k__BackingField: PlayerCaught
-      <Id>k__BackingField: PlayerCaught-e606251c-5f2b-4614-a064-2461b4080bc3
+      <Id>k__BackingField: 
+  - sensor:
+      <Name>k__BackingField: AtPlayerTargetSensor
+      <Id>k__BackingField: AtPlayerTargetSensor-5f28b6b3-6c7c-4c51-9d86-3a12a6fd2f2c
+    worldKey:
+      <Name>k__BackingField: AtPlayerTarget
+      <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
   targetSensors:
   - sensor:
       <Name>k__BackingField: PlayerTargetSensor

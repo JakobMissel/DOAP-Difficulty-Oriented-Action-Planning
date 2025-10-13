@@ -32,7 +32,7 @@ namespace Assets.Scripts.GOAP.Actions
 
             hasReachedStation = false;
 
-            if (navAgent != null && data.Target != null && data.Target.IsValid())
+            if (navAgent != null && navAgent.enabled && navAgent.isOnNavMesh && data.Target != null && data.Target.IsValid())
             {
                 navAgent.isStopped = false;
                 navAgent.SetDestination(data.Target.Position);
@@ -42,7 +42,7 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            if (navAgent == null || data.Target == null || !data.Target.IsValid())
+            if (navAgent == null || !navAgent.enabled || !navAgent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
             // First check if we've reached the station
@@ -87,7 +87,7 @@ namespace Assets.Scripts.GOAP.Actions
             if (energy != null)
                 energy.SetRecharging(false);
 
-            if (navAgent != null)
+            if (navAgent != null && navAgent.enabled && navAgent.isOnNavMesh)
                 navAgent.isStopped = false;
 
             hasReachedStation = false;

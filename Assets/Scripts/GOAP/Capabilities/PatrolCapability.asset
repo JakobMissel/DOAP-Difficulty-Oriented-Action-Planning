@@ -41,31 +41,20 @@ MonoBehaviour:
     conditions:
     - worldKey:
         <Name>k__BackingField: IsAlert
-        <Id>k__BackingField: 
+        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
       comparison: 1
       amount: 0
     - worldKey:
         <Name>k__BackingField: Energy
-        <Id>k__BackingField: 
+        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
       comparison: 2
-      amount: 0
-    - worldKey:
-        <Name>k__BackingField: HasLastKnownPosition
-        <Id>k__BackingField: HasLastKnownPosition-4692534f-5c5a-4fbf-a7be-808009796dad
-      comparison: 1
       amount: 0
     effects:
     - worldKey:
         <Name>k__BackingField: PatrolCount
         <Id>k__BackingField: PatrolCount-e6877c4b-28f8-4a4c-b4f2-a327d841030d
       effect: 1
-  worldSensors:
-  - sensor:
-      <Name>k__BackingField: AlertSensor
-      <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
-    worldKey:
-      <Name>k__BackingField: IsAlert
-      <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+  worldSensors: []
   targetSensors:
   - sensor:
       <Name>k__BackingField: PatrolTargetSensor

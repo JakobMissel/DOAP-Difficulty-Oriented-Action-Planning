@@ -21,8 +21,8 @@ MonoBehaviour:
     - worldKey:
         <Name>k__BackingField: Energy
         <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
-      comparison: 1
-      amount: 0
+      comparison: 3
+      amount: 99
   actions:
   - action:
       <Name>k__BackingField: RechargeAction

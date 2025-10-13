@@ -25,6 +25,9 @@ namespace Assets.Scripts.GOAP.Actions
             if (sight == null)
                 sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
 
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+                return;
+
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
@@ -36,7 +39,7 @@ namespace Assets.Scripts.GOAP.Actions
         
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            if (agent == null || data.Target == null || !data.Target.IsValid())
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
             // If we can't see the player anymore, stop (InvestigateLastKnownGoal will take over)
@@ -100,7 +103,7 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
-            if (agent != null)
+            if (agent != null && agent.enabled && agent.isOnNavMesh)
             {
                 agent.isStopped = false;
                 agent.updateRotation = true;

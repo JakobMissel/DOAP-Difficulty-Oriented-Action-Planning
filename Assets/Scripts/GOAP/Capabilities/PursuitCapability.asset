@@ -52,7 +52,7 @@ MonoBehaviour:
     effects:
     - worldKey:
         <Name>k__BackingField: AtPlayerTarget
-        <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+        <Id>k__BackingField: 
       effect: 1
     - worldKey:
         <Name>k__BackingField: PlayerCaught
@@ -61,22 +61,10 @@ MonoBehaviour:
   worldSensors:
   - sensor:
       <Name>k__BackingField: AlertSensor
-      <Id>k__BackingField: 
+      <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
     worldKey:
       <Name>k__BackingField: IsAlert
-      <Id>k__BackingField: 
-  - sensor:
-      <Name>k__BackingField: CanSeePlayerSensor
-      <Id>k__BackingField: CanSeePlayerSensor-859b0f9f-9d6a-41ba-adf2-a7a7526be1e9
-    worldKey:
-      <Name>k__BackingField: CanSeePlayer
-      <Id>k__BackingField: CanSeePlayer-534eee6c-e6ea-4abb-844c-8da27953d2f8
-  - sensor:
-      <Name>k__BackingField: HasLastKnownPositionSensor
-      <Id>k__BackingField: HasLastKnownPositionSensor-cd897159-34ae-441e-904c-3fca6a73e074
-    worldKey:
-      <Name>k__BackingField: HasLastKnownPosition
-      <Id>k__BackingField: HasLastKnownPosition-4692534f-5c5a-4fbf-a7be-808009796dad
+      <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
   targetSensors:
   - sensor:
       <Name>k__BackingField: PlayerTargetSensor

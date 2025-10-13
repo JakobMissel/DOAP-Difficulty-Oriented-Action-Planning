@@ -3,6 +3,7 @@ using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
+using Assets.Scripts.GOAP;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
@@ -62,8 +63,16 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         private void Start()
         {
-            // Add all goals to a provider
-            this.provider.RequestGoal<PatrolGoal, PursuitGoal, CatchGoal, ClearLastKnownGoal, RechargeGoal>();
+            // Add all goals to a provider (now includes InvestigateNoiseGoal)
+            this.provider.RequestGoal(new[]
+            {
+                typeof(PatrolGoal),
+                typeof(PursuitGoal),
+                typeof(CatchGoal),
+                typeof(ClearLastKnownGoal),
+                typeof(RechargeGoal),
+                typeof(InvestigateNoiseGoal)
+            });
         }
 
         // NEW: Track player velocity every frame
