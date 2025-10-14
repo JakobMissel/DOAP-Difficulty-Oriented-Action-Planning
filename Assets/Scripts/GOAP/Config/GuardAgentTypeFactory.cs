@@ -26,6 +26,18 @@ namespace Assets.Scripts.GOAP.Config
         [Tooltip("Multiply the cost of PursuitAction to make it more/less attractive.")]
         [SerializeField] private float pursuitCostMultiplier = 1f;
 
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            // If this factory lives on the same GameObject as a GoapActionProvider, the Graph Viewer will show a static config graph
+            // (gray nodes) instead of live data. Move this component to the GameObject that has GoapBehaviour.
+            if (GetComponent<GoapActionProvider>() != null)
+            {
+                Debug.LogWarning("[GuardAgentTypeFactory] Detected on same GameObject as GoapActionProvider. Move this component to the GameObject with GoapBehaviour and add it to 'Agent Type Config Factories' for live Graph Viewer highlighting.", this);
+            }
+        }
+#endif
+
         public override IAgentTypeConfig Create()
         {
             // Build capability configs from SOs
