@@ -15,9 +15,18 @@ namespace Assets.Scripts.GOAP.Config
         {
             provider = GetComponent<GoapActionProvider>();
             goap = FindAnyObjectByType<GoapBehaviour>();
+
+            // Link as early as possible so editor tools (Graph Viewer) can read live state immediately.
+            LinkIfPossible();
         }
 
         private void Start()
+        {
+            // Fallback in case GoapBehaviour was not yet available in Awake
+            LinkIfPossible();
+        }
+
+        private void LinkIfPossible()
         {
             if (provider == null || goap == null)
                 return;
@@ -29,9 +38,12 @@ namespace Assets.Scripts.GOAP.Config
                 return;
             }
 
+            // If already linked to the same AgentType instance or matching id, skip
+            if (provider.AgentType == agentType || (provider.AgentType != null && provider.AgentType.Id == agentTypeName))
+                return;
+
             provider.AgentType = agentType;
             Debug.Log($"[AgentTypeLinker] Linked provider to AgentType '{agentTypeName}'.");
         }
     }
 }
-
