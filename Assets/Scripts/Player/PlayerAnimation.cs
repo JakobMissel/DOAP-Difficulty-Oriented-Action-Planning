@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
@@ -16,14 +15,14 @@ public class PlayerAnimation : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerSneak.sneakStatus += SneakAnimation;
-        PlayerClimb.climbStatus += ClimbAnimation;
+        PlayerActions.sneakStatus += SneakAnimation;
+        PlayerActions.climbStatus += ClimbAnimation;
     }
 
     void OnDisable()
     {
-        PlayerSneak.sneakStatus -= SneakAnimation;
-        PlayerClimb.climbStatus -= ClimbAnimation;
+        PlayerActions.sneakStatus -= SneakAnimation;
+        PlayerActions.climbStatus -= ClimbAnimation;
     }
 
     void Update()

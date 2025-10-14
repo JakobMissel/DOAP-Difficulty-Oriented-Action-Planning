@@ -48,16 +48,16 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput.actions["Move"].performed += OnMove;
         playerInput.actions["Move"].canceled += OnMove;
-        PlayerThrow.aimStatus += OnAimStatus;
-        PlayerSneak.sneakStatus += OnSneakStatus;
+        PlayerActions.aimStatus += OnAimStatus;
+        PlayerActions.sneakStatus += OnSneakStatus;
     }
 
     void OnDisable()
     {
         playerInput.actions["Move"].performed -= OnMove;
         playerInput.actions["Move"].canceled -= OnMove;
-        PlayerThrow.aimStatus -= OnAimStatus;
-        PlayerSneak.sneakStatus -= OnSneakStatus;
+        PlayerActions.aimStatus -= OnAimStatus;
+        PlayerActions.sneakStatus -= OnSneakStatus;
     }
 
     void LateUpdate()

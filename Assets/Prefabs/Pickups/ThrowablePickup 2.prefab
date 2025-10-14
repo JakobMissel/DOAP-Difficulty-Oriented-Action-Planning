@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4257286297235915161}
   m_Layer: 0
   m_Name: ThrowablePickup 2
-  m_TagString: Untagged
+  m_TagString: POI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fab6747c6e8624cb5a941455f4a114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: 
+  displayName: 'Throwable 2
+
+'
   verticalAnimation: 1
   verticalSpeed: 0.5
   verticalHeight: 0.5

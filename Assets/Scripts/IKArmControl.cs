@@ -46,12 +46,12 @@ public class IKArmControl : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerThrow.aimStatus += AimStatus;
+        PlayerActions.aimStatus += AimStatus;
     }
 
     void OnDisable()
     {
-        PlayerThrow.aimStatus -= AimStatus;
+        PlayerActions.aimStatus -= AimStatus;
     }
 
     void AimStatus(bool aimStatus)

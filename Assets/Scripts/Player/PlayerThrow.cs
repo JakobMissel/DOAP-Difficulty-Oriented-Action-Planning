@@ -2,9 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections.Generic;
-using System;
-using UnityEngine.UI;
-
 
 public class PlayerThrow : MonoBehaviour
 {
@@ -39,24 +36,6 @@ public class PlayerThrow : MonoBehaviour
     RaycastHit currentHit;
 
     [HideInInspector] public bool isAiming = false;
-
-
-    public static Action<bool> aimStatus;
-    public static void OnAimStatus(bool isAiming) => aimStatus?.Invoke(isAiming);
-
-    public static Action<CinemachineCamera> changedCamera;
-    public static void OnChangedCamera(CinemachineCamera newCamera) => changedCamera?.Invoke(newCamera);
-
-    public static Action<GameObject> sethitArea;
-    public static void OnSetHitArea(GameObject hitArea) => sethitArea?.Invoke(hitArea);
-
-    public static Action<int> ammoUpdate;
-    public static void OnAmmoUpdate(int ammo) => ammoUpdate?.Invoke(ammo);
-
-    public static Action<Sprite> spriteUpdate;
-    public static void OnSpriteUpdate(Sprite sprite) => spriteUpdate?.Invoke(sprite);
-
-
 
     void Awake()
     {
@@ -98,8 +77,8 @@ public class PlayerThrow : MonoBehaviour
     void OnAim(InputAction.CallbackContext ctx)
     {
         isAiming = ctx.ReadValueAsButton();
-        OnAimStatus(isAiming);
-        OnSetHitArea(hitArea);
+        PlayerActions.OnAimStatus(isAiming);
+        PlayerActions.OnSetHitArea(hitArea);
     }
 
     void ThrowCooldown()
@@ -129,7 +108,7 @@ public class PlayerThrow : MonoBehaviour
             resetCamera = false;
             aimCamera.Priority = 1;
             freeLookCamera.Priority = 0;
-            OnChangedCamera(aimCamera);
+            PlayerActions.OnChangedCamera(aimCamera);
 
             // Show the throw line
             throwLineRenderer.enabled = true;
@@ -178,7 +157,7 @@ public class PlayerThrow : MonoBehaviour
                 resetCamera = true;
                 aimCamera.Priority = 0;
                 freeLookCamera.Priority = 1;
-                OnChangedCamera(freeLookCamera);
+                PlayerActions.OnChangedCamera(freeLookCamera);
                 freeLookCamera.GetComponent<CinemachineOrbitalFollow>().VerticalAxis.Value = 27;
             }
             if(!isAiming)
@@ -252,9 +231,9 @@ public class PlayerThrow : MonoBehaviour
     void UpdateUICall()
     {
         if (throwablePrefabsList.Count > 0)
-            OnSpriteUpdate(throwablePrefabsList[0].GetComponent<ThrownObject>().thrownObjectImage);
+            PlayerActions.OnSpriteUpdate(throwablePrefabsList[0].GetComponent<ThrownObject>().thrownObjectImage);
         else
-            OnSpriteUpdate(null); 
-        OnAmmoUpdate(ammoCount);
+            PlayerActions.OnSpriteUpdate(null); 
+        PlayerActions.OnAmmoUpdate(ammoCount);
     }
 }

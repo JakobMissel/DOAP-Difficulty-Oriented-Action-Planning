@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -13,9 +12,6 @@ public class PlayerSneak : MonoBehaviour
     float time;
     Color startColor;
     Color transparentColor;
-
-    public static Action<bool> sneakStatus;
-    public static void OnSneakStatus(bool isSneaking) => sneakStatus?.Invoke(isSneaking);
 
     void Awake()
     {
@@ -40,7 +36,7 @@ public class PlayerSneak : MonoBehaviour
     void OnSneak(InputAction.CallbackContext context)
     {
         isSneaking = context.ReadValueAsButton();
-        OnSneakStatus(isSneaking);
+        PlayerActions.OnSneakStatus(isSneaking);
     }
 
     void Update()

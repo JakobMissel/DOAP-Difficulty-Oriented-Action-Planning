@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -19,15 +17,6 @@ public class PlayerInteract : MonoBehaviour
     
     List<Pickup> pickups = new();
 
-    public static Action<InputAction.CallbackContext> playerInteract;
-    public static void OnPlayerInteract(InputAction.CallbackContext cxt) => playerInteract?.Invoke(cxt);
-
-    public static Action<Pickup> addPickup;
-    public static void OnAddPickup(Pickup pickup) => addPickup?.Invoke(pickup);
-
-    public static Action<Pickup> removePickup;
-    public static void OnRemovePickup(Pickup pickup) => removePickup?.Invoke(pickup);
-
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -37,16 +26,16 @@ public class PlayerInteract : MonoBehaviour
     {
         playerInput.actions["Interact"].performed += Interact;
         playerInput.actions["Interact"].canceled += Interact;
-        PlayerInteract.addPickup += AddPickup;
-        PlayerInteract.removePickup += RemovePickup;
+        PlayerActions.addPickup += AddPickup;
+        PlayerActions.removePickup += RemovePickup;
     }
 
     void OnDisable()
     {
         playerInput.actions["Interact"].performed -= Interact;
         playerInput.actions["Interact"].canceled -= Interact;
-        PlayerInteract.addPickup -= AddPickup;
-        PlayerInteract.removePickup -= RemovePickup;
+        PlayerActions.addPickup -= AddPickup;
+        PlayerActions.removePickup -= RemovePickup;
     }
 
     void Update()
@@ -61,8 +50,8 @@ public class PlayerInteract : MonoBehaviour
 
         if (!ClosestPickup() || !pickups.Contains(ClosestPickup())) return;
         Pickup pickup = ClosestPickup().GetComponent<Pickup>();
-        
-        OnPlayerInteract(ctx);
+
+        PlayerActions.OnPlayerInteract(ctx);
 
         // Send button status to closest pickup
         if (pickup.HoldRequired)

@@ -19,14 +19,14 @@ public class LookAtPOI : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerThrow.aimStatus += AimStatus;
-        PlayerThrow.sethitArea += SetHitArea;
+        PlayerActions.aimStatus += AimStatus;
+        PlayerActions.sethitArea += SetHitArea;
     }
 
     void OnDisable()
     {
-        PlayerThrow.aimStatus -= AimStatus;
-        PlayerThrow.sethitArea -= SetHitArea;
+        PlayerActions.aimStatus -= AimStatus;
+        PlayerActions.sethitArea -= SetHitArea;
     }
 
 

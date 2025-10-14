@@ -44,7 +44,7 @@ public class Pickup : MonoBehaviour
         {
             if (buttonRequired)
             {
-                PlayerInteract.OnAddPickup(this);
+                PlayerActions.OnAddPickupToInteractableList(this);
             }
             else
                 ActivatePickup(other);
@@ -69,7 +69,7 @@ public class Pickup : MonoBehaviour
         if (!canBepickedUp) return;
         if (other.CompareTag("Player") && buttonRequired)
         {
-            PlayerInteract.OnRemovePickup(this);
+            PlayerActions.OnRemovePickupFromInteractableList(this);
             buttonHeld = false;
             holdTime = 0;
         }
@@ -85,7 +85,8 @@ public class Pickup : MonoBehaviour
             audioGameObject.GetComponent<AudioSource>().clip = audioClip;
             newAudioGameObject = Instantiate(audioGameObject, transform.position, Quaternion.identity);
         }
-        PlayerInteract.OnRemovePickup(this);
+        PlayerActions.OnRemovePickupFromInteractableList(this);
+        PlayerActions.OnPickedUpItem(this);
         Destroy(gameObject);
     }
 

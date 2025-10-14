@@ -16,14 +16,14 @@ public class ThrowUI : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerThrow.ammoUpdate += UpdateAmmo;
-        PlayerThrow.spriteUpdate += UpdateSprite;
+        PlayerActions.ammoUpdate += UpdateAmmo;
+        PlayerActions.spriteUpdate += UpdateSprite;
     }
 
     void OnDisable()
     {
-        PlayerThrow.ammoUpdate -= UpdateAmmo;
-        PlayerThrow.spriteUpdate -= UpdateSprite;
+        PlayerActions.ammoUpdate -= UpdateAmmo;
+        PlayerActions.spriteUpdate -= UpdateSprite;
     }
 
     void UpdateAmmo(int ammo)

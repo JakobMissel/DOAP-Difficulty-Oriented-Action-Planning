@@ -4,7 +4,7 @@ using UnityEngine;
 public class ObjectivesManager : MonoBehaviour
 {
     [SerializeField] Objective[] objectives;
-    int currentObjectiveIndex = 0;
+    //int currentObjectiveIndex = 0;
     Objective currentObjective;
     public Objective CurrentObjective => currentObjective;
     public static ObjectivesManager Instance;
@@ -31,12 +31,12 @@ public class ObjectivesManager : MonoBehaviour
 
     void OnEnable()
     {
-        ObjectivesManager.onSetNewObjective += SetNewObjective;
+        onSetNewObjective += SetNewObjective;
     }
 
     void OnDisable()
     {
-        ObjectivesManager.onSetNewObjective -= SetNewObjective;
+        onSetNewObjective -= SetNewObjective;
     }
 
     void Start()

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,9 +34,6 @@ public class PlayerClimb : MonoBehaviour
     [SerializeField] bool climbButtonHeld;
     [SerializeField] public bool onWall;
     [SerializeField] bool isClimbing;
-
-    public static Action<bool> climbStatus;
-    public static void OnClimbStatus(bool isClimbing) => climbStatus?.Invoke(isClimbing);
 
     void Awake()
     {
@@ -78,7 +74,7 @@ public class PlayerClimb : MonoBehaviour
         }
         DepleteStamina();
         RegenerateStamina();
-        OnClimbStatus(isClimbing);
+        PlayerActions.OnClimbStatus(isClimbing);
     }
 
     void FixedUpdate()

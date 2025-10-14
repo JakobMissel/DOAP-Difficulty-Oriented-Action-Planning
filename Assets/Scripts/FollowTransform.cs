@@ -15,13 +15,13 @@ public class FollowTransform : MonoBehaviour
     void OnEnable()
     {
         if(subscribeToCameraChange)
-            PlayerThrow.changedCamera += SetNewCamera;
+            PlayerActions.changedCamera += SetNewCamera;
     }
 
     void OnDisable()
     {
         if(subscribeToCameraChange)
-            PlayerThrow.changedCamera -= SetNewCamera;        
+            PlayerActions.changedCamera -= SetNewCamera;        
     }
 
     void Update()
