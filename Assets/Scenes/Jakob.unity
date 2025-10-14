@@ -6267,6 +6267,7 @@ GameObject:
   - component: {fileID: 1045943903}
   - component: {fileID: 1045943901}
   - component: {fileID: 1045943902}
+  - component: {fileID: 1045943904}
   m_Layer: 0
   m_Name: GOAP
   m_TagString: Untagged
@@ -6288,7 +6289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   configInitializer: {fileID: 0}
   agentTypeConfigFactories:
-  - {fileID: 1726766952}
+  - {fileID: 1045943904}
 --- !u!114 &1045943902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6316,6 +6317,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1726766943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1045943904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045943900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba76f83282945c7ab3e12cd479a9808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capabilities:
+  - {fileID: 11400000, guid: 391c4632b24e8b646b108d40186e1a40, type: 2}
+  - {fileID: 11400000, guid: 425f931d1f43b254d91d36084c23635c, type: 2}
+  - {fileID: 11400000, guid: 0dbcea87da793b948af4b48085b74de0, type: 2}
+  - {fileID: 11400000, guid: 2538429734c099f4cbdcba9db5f6eee6, type: 2}
+  - {fileID: 11400000, guid: 93618e8c30780c44f9865e9f7c76aa7f, type: 2}
+  - {fileID: 11400000, guid: 6ba2c034ca0e72c4390cf03d09996533, type: 2}
+  agentTypeName: Guard
+  investigateNoiseCostMultiplier: 1
+  pursuitCostMultiplier: 1
 --- !u!4 &1058817293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4398957818134730461, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
@@ -9633,7 +9656,6 @@ GameObject:
   - component: {fileID: 1726766947}
   - component: {fileID: 1726766946}
   - component: {fileID: 1726766945}
-  - component: {fileID: 1726766952}
   - component: {fileID: 1726766951}
   m_Layer: 0
   m_Name: SimpleGuard
@@ -9873,28 +9895,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentTypeName: Guard
---- !u!114 &1726766952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1726766939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ba76f83282945c7ab3e12cd479a9808, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  capabilities:
-  - {fileID: 11400000, guid: 391c4632b24e8b646b108d40186e1a40, type: 2}
-  - {fileID: 11400000, guid: 425f931d1f43b254d91d36084c23635c, type: 2}
-  - {fileID: 11400000, guid: 0dbcea87da793b948af4b48085b74de0, type: 2}
-  - {fileID: 11400000, guid: 2538429734c099f4cbdcba9db5f6eee6, type: 2}
-  - {fileID: 11400000, guid: 93618e8c30780c44f9865e9f7c76aa7f, type: 2}
-  - {fileID: 11400000, guid: 6ba2c034ca0e72c4390cf03d09996533, type: 2}
-  agentTypeName: Guard
-  investigateNoiseCostMultiplier: 1
-  pursuitCostMultiplier: 1
 --- !u!1 &1729533625 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7917349904687423284, guid: 4f4fa069dc5b86a41a45892e3656b370, type: 3}
