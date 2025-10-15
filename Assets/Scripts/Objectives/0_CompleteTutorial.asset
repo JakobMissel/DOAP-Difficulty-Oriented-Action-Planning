@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 0_CompleteTutorial
   m_EditorClassIdentifier: 
   name: Tutorial
-  description: Complete the tutorial.
+  goals:
+  - {fileID: 11400000, guid: 3c7102bc615110b4fbce60f5f2db8c86, type: 2}
+  - {fileID: 11400000, guid: da73cfac90cca0948ae860cacdb23da6, type: 2}
+  - {fileID: 11400000, guid: 4a1eccb26a1cc5343925c9b206e29ac1, type: 2}
+  - {fileID: 11400000, guid: a0655a3bb47eea24698f80f703e587d6, type: 2}
+  - {fileID: 11400000, guid: 8bde445ee90f5014790f31c6b724bcb6, type: 2}
+  - {fileID: 11400000, guid: 27fbdfb7bde009f4ca668931a75429bb, type: 2}
+  completions: []

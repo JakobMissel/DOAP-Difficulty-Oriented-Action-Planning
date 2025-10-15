@@ -5091,6 +5091,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1066562530044901153, guid: a4405e2e1da980e40a54b76949a91189, type: 3}
   m_PrefabInstance: {fileID: 725272734}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &734961699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 734961700}
+  - component: {fileID: 734961702}
+  - component: {fileID: 734961701}
+  m_Layer: 5
+  m_Name: TimerImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &734961700
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734961699}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2057260225}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 75}
+  m_SizeDelta: {x: 200, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &734961701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734961699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 3b66d3323fad5b041bb75753b4da7bc3, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &734961702
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734961699}
+  m_CullTransparentMesh: 1
 --- !u!1 &744157098
 GameObject:
   m_ObjectHideFlags: 0
@@ -6115,6 +6190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 865471765}
+  - component: {fileID: 865471766}
   - component: {fileID: 865471764}
   m_Layer: 0
   m_Name: ObjectivesManager
@@ -6155,6 +6231,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &865471766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865471763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5734fa08ab68445a37adcd67c67897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objective: {fileID: 11400000, guid: 2da7a914a78e19a46a477bfa63bcc5a1, type: 2}
+  timerImage: {fileID: 734961701}
+  moveTime: 4
+  sneakTime: 4
+  climbTime: 4
+  aimTime: 4
 --- !u!4 &872490607 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1066562530044901153, guid: cc0cd3d923952684ab192836a3f36a2f, type: 3}
@@ -9666,8 +9760,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -137.5}
-  m_SizeDelta: {x: 350, y: 275}
+  m_AnchoredPosition: {x: 0, y: -278.6}
+  m_SizeDelta: {x: 350, y: 557.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1425998540
 MonoBehaviour:
@@ -13695,6 +13789,7 @@ RectTransform:
   - {fileID: 205349705}
   - {fileID: 2139342281}
   - {fileID: 1425998539}
+  - {fileID: 734961700}
   m_Father: {fileID: 815550380}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -14675,6 +14770,10 @@ PrefabInstance:
       propertyPath: interactButton
       value: 
       objectReference: {fileID: 1327319008}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: maxMoveSpeed.x
+      value: 3.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

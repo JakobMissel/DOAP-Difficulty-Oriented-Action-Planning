@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerActions : MonoBehaviour
 {
+    // Movement actions
+    public static Action<bool> moveStatus;
+    public static void OnMoveStatus(bool isMoving) => moveStatus?.Invoke(isMoving);
+
     // Climb actions
     public static Action<bool> climbStatus;
     public static void OnClimbStatus(bool isClimbing) => climbStatus?.Invoke(isClimbing);
@@ -12,6 +16,9 @@ public class PlayerActions : MonoBehaviour
     // Sneak actions
     public static Action<bool> sneakStatus;
     public static void OnSneakStatus(bool isSneaking) => sneakStatus?.Invoke(isSneaking);
+
+    public static Action<bool> isSneaking;
+    public static void OnIsSneaking(bool sneak) => isSneaking?.Invoke(sneak);
 
     // Interaction actions
     public static Action<InputAction.CallbackContext> playerInteract;
@@ -31,6 +38,9 @@ public class PlayerActions : MonoBehaviour
     public static Action<bool> aimStatus;
     public static void OnAimStatus(bool isAiming) => aimStatus?.Invoke(isAiming);
 
+    public static Action<bool> isAiming;
+    public static void OnIsAiming(bool aim) => isAiming?.Invoke(aim);
+
     public static Action<CinemachineCamera> changedCamera;
     public static void OnChangedCamera(CinemachineCamera newCamera) => changedCamera?.Invoke(newCamera);
 
@@ -46,6 +56,7 @@ public class PlayerActions : MonoBehaviour
     //========================================================================//
 
     [SerializeField] bool debugEvents;
+    bool previousMoveStatus;
     bool previousClimbStatus;
     bool previousSneakStatus;
 
@@ -53,6 +64,7 @@ public class PlayerActions : MonoBehaviour
     {
         if (debugEvents)
         {
+            moveStatus += DebugMove;
             climbStatus += DebugClimb;
             sneakStatus += DebugSneak;
             pickedUpItem += DebugPickup;
@@ -65,11 +77,21 @@ public class PlayerActions : MonoBehaviour
     {
         if (debugEvents)
         {
+            moveStatus -= DebugMove;
             climbStatus -= DebugClimb;
             sneakStatus -= DebugSneak;
             pickedUpItem -= DebugPickup;
             aimStatus -= DebugAim;
             ammoUpdate -= DebugAmmoUpdate;
+        }
+    }
+
+    void DebugMove(bool obj)
+    {
+        if(obj != previousMoveStatus)
+        {
+            print($"[{Time.time}] Moving: {obj}");
+            previousMoveStatus = obj;
         }
     }
 

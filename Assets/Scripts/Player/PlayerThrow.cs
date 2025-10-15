@@ -102,6 +102,7 @@ public class PlayerThrow : MonoBehaviour
 
     void VisualizeThrowLine()
     {
+        PlayerActions.OnIsAiming(isAiming);
         if (isAiming)
         {
             // Set the camera to aim
