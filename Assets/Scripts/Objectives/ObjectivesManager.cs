@@ -14,7 +14,7 @@ public class ObjectivesManager : MonoBehaviour
 
 
     public static Action<Objective> onDisplayObjective;
-    public static void OnDisplayObjective(Objective objective) => onDisplayObjective?.Invoke(objective);
+    public static void OnUpdateObjective(Objective objective) => onDisplayObjective?.Invoke(objective);
 
     void Awake()
     {
@@ -55,6 +55,6 @@ public class ObjectivesManager : MonoBehaviour
     void SetNewObjective(Objective newObjective)
     {
         currentObjective = newObjective;
-        OnDisplayObjective(currentObjective);
+        OnUpdateObjective(currentObjective);
     }
 }

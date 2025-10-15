@@ -18,6 +18,10 @@ public class ObjectiveUI : MonoBehaviour
     void UpdateObjectiveUI(Objective objective)
     {
         nameText.text = objective.name;
-        descriptionText.text = objective.description;
+        descriptionText.text = "";
+        for (int i = 0; i < objective.goals.Count; i++)
+        {
+            descriptionText.text += objective.goals[i].description;
+        }
     }
 }

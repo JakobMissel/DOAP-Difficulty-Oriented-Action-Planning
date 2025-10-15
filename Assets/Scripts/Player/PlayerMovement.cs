@@ -80,7 +80,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(Vector3 maxSpeed, Vector3 acceleration, Vector3 deceleration)
     {
-        if(!canMove) return;
+        if (!canMove) return;
+
+        // Send move action (for tutorial)
+        PlayerActions.OnMoveStatus(moveInput != Vector2.zero);
 
         // Convert velocity to local space
         velocity = transform.InverseTransformDirection(rb.linearVelocity);
@@ -90,6 +93,9 @@ public class PlayerMovement : MonoBehaviour
         // Move when there is input
         if (moveInput != Vector2.zero)
         {
+            // Send sneaking action when moving (for tutorial)
+            PlayerActions.OnIsSneaking(isSneaking);
+            
             // Convert moveInput to world space direction
             var forceZ = orientation.forward * moveInput.y * currentZSpeed;
             var forceX = orientation.right * moveInput.x * currentXSpeed;
@@ -100,10 +106,10 @@ public class PlayerMovement : MonoBehaviour
 
             // Clamp velocity (adjust for diagonal movement)
             if(moveInput.x == 0)
-                velocity.z = Mathf.Clamp(velocity.z, -maxSpeed.z, maxSpeed.z);
+                velocity.z = Mathf.Clamp(velocity.z, -currentZSpeed, currentZSpeed);
             else
-                velocity.z = Mathf.Clamp(velocity.z, -maxSpeed.z * diagonalDampener, maxSpeed.z * diagonalDampener);
-            velocity.x = Mathf.Clamp(velocity.x, -maxSpeed.x, maxSpeed.x);
+                velocity.z = Mathf.Clamp(velocity.z, -currentZSpeed * diagonalDampener, currentZSpeed * diagonalDampener);
+            velocity.x = Mathf.Clamp(velocity.x, -currentXSpeed, currentXSpeed);
 
         }
 
@@ -126,10 +132,10 @@ public class PlayerMovement : MonoBehaviour
     void GetCurrentSpeed(Vector3 maxSpeed)
     {
         // Forward/backward movement
-        if (moveInput.y < 0)
-            currentZSpeed = maxSpeed.z / 2;
-        else if (moveInput.y > 0)
+        if (moveInput.y > 0)
             currentZSpeed = maxSpeed.z;
+        else if (moveInput.y < 0)
+            currentZSpeed = maxSpeed.z * 0.7f;
         else
             currentZSpeed = 0;
 
@@ -156,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-        if(!lockCursor && Cursor.lockState != CursorLockMode.None)
+        if (!lockCursor && Cursor.lockState != CursorLockMode.None)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
