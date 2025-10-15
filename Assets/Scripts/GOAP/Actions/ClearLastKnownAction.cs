@@ -15,14 +15,11 @@ namespace Assets.Scripts.GOAP.Actions
         private BrainBehaviour brain;
 
         // How long to "check" the last known position once arrived
-        private const float ClearDuration = 2.5f;
-        // Safety timeout to avoid getting stuck
-        private const float MaxActionTime = 20f;
-        private const float ScanAngle = 85f;
-        private const float ScanSweepTime = 2.5f;
-        
-        // Distance tolerance to consider arrived if NavMeshAgent.stoppingDistance isn't used
-        private const float FallbackArriveDistance = 1.6f;
+        // Defaults; will be overridden by BrainBehaviour values if present
+        private float ClearDuration = 1.5f;
+        private float ScanAngle = 75f;
+        private float ScanSweepTime = 1.5f;
+        private float FallbackArriveDistance = 1.6f;
 
         public override void Created() { }
 
@@ -34,6 +31,15 @@ namespace Assets.Scripts.GOAP.Actions
                 sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
             if (brain == null)
                 brain = mono.Transform.GetComponent<BrainBehaviour>();
+
+            // Read per-agent scan settings if available
+            if (brain != null)
+            {
+                if (brain.scanDuration > 0f) ClearDuration = brain.scanDuration;
+                if (brain.scanAngle > 0f) ScanAngle = brain.scanAngle;
+                if (brain.scanSweepTime > 0f) ScanSweepTime = brain.scanSweepTime;
+                if (brain.arriveDistance > 0f) FallbackArriveDistance = brain.arriveDistance;
+            }
 
             data.Timer = 0f;
             data.ArrivalTimer = 0f;
@@ -91,23 +97,45 @@ namespace Assets.Scripts.GOAP.Actions
                 return ActionRunState.Stop;
             }
 
-            // Compute arrival using direct distance to be robust across NavMeshAgent settings
+            // Compute arrival using XZ distance and NavMeshAgent remainingDistance
             float arriveDist = Mathf.Max(agent.stoppingDistance, FallbackArriveDistance);
-            float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
-            bool arrivedByNavmesh = !agent.pathPending && agent.hasPath && agent.remainingDistance <= arriveDist;
+            // Always use brain's current/frozen last-known for movement to ensure we follow updates reliably
+            Vector3 currentTargetPos = (brain != null && brain.HasLastKnownPosition) ? brain.LastKnownPlayerPosition : data.Target.Position;
+
+            // Update GOAP target object too, so Graph Viewer and other systems reflect the latest position
+            if (data.Target is PositionTarget posT)
+                posT.SetPosition(currentTargetPos);
+
+            Vector3 a = mono.Transform.position; a.y = 0f;
+            Vector3 b = currentTargetPos; b.y = 0f;
+            float dist = Vector3.Distance(a, b);
+            bool arrivedByNavmesh = !agent.pathPending && agent.remainingDistance <= arriveDist;
             bool arrivedByDistance = dist <= arriveDist;
             bool arrived = arrivedByNavmesh || arrivedByDistance;
 
-            if (!arrived)
+            // If the follow window is still active, keep updating destination and NEVER start scanning yet
+            if (brain != null && brain.IsLastKnownFollowActive)
             {
-                // Navigate towards target while allowing NavMesh to control facing
                 agent.updateRotation = true;
                 agent.isStopped = false;
-                agent.SetDestination(data.Target.Position);
+                agent.SetDestination(currentTargetPos);
+
+                // Ensure we don't accidentally carry over scan state
+                data.ScanningInitialized = false;
+                data.ArrivalTimer = 0f;
                 return ActionRunState.Continue;
             }
 
-            // Arrived: stop and run scan pattern
+            if (!arrived)
+            {
+                // Follow window ended, but we haven't reached the frozen spot yet — keep moving
+                agent.updateRotation = true;
+                agent.isStopped = false;
+                agent.SetDestination(currentTargetPos);
+                return ActionRunState.Continue;
+            }
+
+            // Arrived AND follow window ended: stop and run scan pattern
             agent.isStopped = true;
 
             if (!data.ScanningInitialized)
@@ -115,8 +143,8 @@ namespace Assets.Scripts.GOAP.Actions
                 data.BaseYaw = (data.LookTransform != null ? data.LookTransform.eulerAngles.y : mono.Transform.eulerAngles.y);
                 data.ScanningInitialized = true;
                 agent.updateRotation = false; // manual rotation while scanning
-                data.Timer = 0f; // reset overall timer so long approaches don’t immediately timeout
-                Debug.Log("[ClearLastKnownAction] Arrived. Starting scan.");
+                data.Timer = 0f; // reset since we just started scanning
+                Debug.Log("[ClearLastKnownAction] Arrived at frozen last-known. Starting scan.");
             }
 
             // Oscillate yaw around base yaw
@@ -148,16 +176,7 @@ namespace Assets.Scripts.GOAP.Actions
                 return ActionRunState.Completed;
             }
 
-            // Safety: if we take too long overall, force clear to keep planner progressing
-            if (data.Timer >= MaxActionTime)
-            {
-                if (brain != null && brain.HasLastKnownPosition)
-                    brain.ClearLastKnownPlayerPosition();
-                Debug.LogWarning("[ClearLastKnownAction] Timed out while clearing. Forcing completion.");
-                return ActionRunState.Completed;
-            }
-
-            // Continue scanning until duration met
+            // Continue scanning until duration met (no global timeout to allow long walks)
             return ActionRunState.Continue;
         }
 

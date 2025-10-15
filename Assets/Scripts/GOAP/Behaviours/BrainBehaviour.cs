@@ -24,34 +24,37 @@ namespace Assets.Scripts.GOAP.Behaviours
         public bool HasLastKnownPosition { get; private set; } = false;
         public Vector3 LastKnownPlayerPosition { get; private set; }
 
-        // NEW: Track player velocity for prediction
+        // References
         private Transform playerTransform;
         private SimpleGuardSightNiko sight;
-        private Vector3 lastTrackedPlayerPosition = Vector3.zero;
-        private Vector3 playerVelocity = Vector3.zero;
         private bool wasSeenLastFrame = false;
-        private bool hasTrackedPosition = false;
-        private bool hasInvestigated = false; // NEW: Prevent re-capturing after investigation
+        private bool hasInvestigated = false; // Prevent re-capturing after investigation
 
         [Header("NavMesh Settings")]
         [SerializeField] private float angularSpeed = 360f;
         [SerializeField] private float acceleration = 12f;
         
-        [Header("Prediction Settings")]
-        [SerializeField] private float predictionTime = 1.5f;
-        [SerializeField] private bool usePrediction = true;
-        [SerializeField] private float minVelocityThreshold = 0.5f;
-
         [Header("Last-known Follow Settings")] 
         [Tooltip("How long after losing sight we keep updating the last-known position")] 
-        [SerializeField] private float lastKnownChaseDuration = 5.0f; 
+        [SerializeField] private float lastKnownChaseDuration = 4.0f; 
         [Tooltip("How often we refresh the last-known position during the follow window")] 
         [SerializeField] private float lastKnownUpdateInterval = 0.1f;
 
-        // NEW: simple follow-window state (replaces velocity-based prediction)
+        [Header("ClearLastKnown Scan Settings")]
+        [Tooltip("Seconds to scan left/right at the last-known position")] 
+        public float scanDuration = 1.5f;
+        [Tooltip("Degrees to either side during scan")] 
+        public float scanAngle = 75f;
+        [Tooltip("Seconds per full left-right-left oscillation")] 
+        public float scanSweepTime = 1.5f;
+        [Tooltip("Fallback distance considered 'arrived' if NavMeshAgent remainingDistance is unreliable")] 
+        public float arriveDistance = 1.5f;
+
+        // Follow-window state
         private bool isLastKnownFollowActive; 
         private float lastKnownFollowTimer; 
         private float lastKnownUpdateAccumulator;
+        public bool IsLastKnownFollowActive => isLastKnownFollowActive;
 
         private void Awake()
         {
@@ -85,7 +88,6 @@ namespace Assets.Scripts.GOAP.Behaviours
             });
         }
 
-        // NEW: Track player velocity every frame
         private void Update()
         {
             if (playerTransform == null || sight == null)
@@ -95,18 +97,6 @@ namespace Assets.Scripts.GOAP.Behaviours
 
             if (canSeePlayer)
             {
-                Vector3 currentPlayerPos = playerTransform.position;
-
-                // Track last seen to support seamless hand-off
-                if (hasTrackedPosition)
-                {
-                    Vector3 positionDelta = currentPlayerPos - lastTrackedPlayerPosition;
-                    Vector3 instantVelocity = positionDelta / Time.deltaTime;
-                    playerVelocity = Vector3.Lerp(playerVelocity, instantVelocity, 0.3f);
-                }
-
-                lastTrackedPlayerPosition = currentPlayerPos;
-                hasTrackedPosition = true;
                 wasSeenLastFrame = true;
                 hasInvestigated = false;
 
@@ -157,7 +147,6 @@ namespace Assets.Scripts.GOAP.Behaviours
             }
         }
         
-        // Method to set player caught state (called from PursuitAction or other sources)
         public void SetPlayerCaught(bool caught)
         {
             IsPlayerCaught = caught;
@@ -168,14 +157,7 @@ namespace Assets.Scripts.GOAP.Behaviours
             }
         }
         
-        // SIMPLIFIED: Sensor just checks if we can see, doesn't calculate velocity
-        public void UpdatePlayerVisibility(bool canSee, Vector3 currentPlayerPosition)
-        {
-            // This method is now mostly unused since we track in Update()
-            // But we keep it for compatibility with the sensor
-        }
-        
-        // NEW: Clamp position to NavMesh (used in prediction and follow)
+        // NEW: Clamp position to NavMesh (used in follow)
         private Vector3 ClampToNavMesh(Vector3 pos)
         {
             NavMeshHit hit;
@@ -183,24 +165,7 @@ namespace Assets.Scripts.GOAP.Behaviours
                 return hit.position;
             return pos;
         }
-
-        // Calculate predicted position based on player velocity
-        private Vector3 CalculatePredictedPosition()
-        {
-            // Kept for reference, but no longer used by the follow-window approach.
-            if (!usePrediction || !hasTrackedPosition)
-                return lastTrackedPlayerPosition;
-            float speed = playerVelocity.magnitude;
-            if (speed < minVelocityThreshold)
-                return lastTrackedPlayerPosition;
-            Vector3 predictedPosition = lastTrackedPlayerPosition + (playerVelocity * predictionTime);
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(predictedPosition, out hit, 5.0f, NavMesh.AllAreas))
-                return hit.position;
-            return lastTrackedPlayerPosition;
-        }
         
-        // Method to clear last known position (called after investigation is complete)
         public void ClearLastKnownPlayerPosition()
         {
             HasLastKnownPosition = false;
@@ -211,7 +176,6 @@ namespace Assets.Scripts.GOAP.Behaviours
             Debug.Log("[BrainBehaviour] Cleared last known player position - marked as investigated");
         }
         
-        // Method called when a noise is heard (called from NoiseArea or thrown object)
         public void OnNoiseHeard(Vector3 noisePosition)
         {
             float distance = Vector3.Distance(transform.position, noisePosition);
@@ -224,7 +188,6 @@ namespace Assets.Scripts.GOAP.Behaviours
             }
         }
 
-        // Method to clear noise after investigation
         public void ClearNoise()
         {
             HasHeardNoise = false;
@@ -232,4 +195,3 @@ namespace Assets.Scripts.GOAP.Behaviours
         }
     }
 }
-

@@ -6592,9 +6592,12 @@ MonoBehaviour:
   NoiseHearingRadius: 20
   angularSpeed: 360
   acceleration: 12
-  predictionTime: 1.5
-  usePrediction: 1
-  minVelocityThreshold: 0.5
+  lastKnownChaseDuration: 0.85
+  lastKnownUpdateInterval: 0.05
+  scanDuration: 1.5
+  scanAngle: 75
+  scanSweepTime: 1.5
+  arriveDistance: 1.6
 --- !u!114 &1829937741
 MonoBehaviour:
   m_ObjectHideFlags: 0
