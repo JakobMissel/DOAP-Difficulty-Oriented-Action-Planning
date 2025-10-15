@@ -41,7 +41,7 @@ MonoBehaviour:
     conditions:
     - worldKey:
         <Name>k__BackingField: HasLastKnownPosition
-        <Id>k__BackingField: 
+        <Id>k__BackingField: HasLastKnownPosition-4692534f-5c5a-4fbf-a7be-808009796dad
       comparison: 3
       amount: 1
     - worldKey:
@@ -52,7 +52,7 @@ MonoBehaviour:
     effects:
     - worldKey:
         <Name>k__BackingField: HasLastKnownPosition
-        <Id>k__BackingField: 
+        <Id>k__BackingField: HasLastKnownPosition-4692534f-5c5a-4fbf-a7be-808009796dad
       effect: 0
     - worldKey:
         <Name>k__BackingField: IsAlert
@@ -61,10 +61,10 @@ MonoBehaviour:
   worldSensors:
   - sensor:
       <Name>k__BackingField: HasLastKnownPositionSensor
-      <Id>k__BackingField: 
+      <Id>k__BackingField: HasLastKnownPositionSensor-cd897159-34ae-441e-904c-3fca6a73e074
     worldKey:
       <Name>k__BackingField: HasLastKnownPosition
-      <Id>k__BackingField: 
+      <Id>k__BackingField: HasLastKnownPosition-4692534f-5c5a-4fbf-a7be-808009796dad
   - sensor:
       <Name>k__BackingField: AlertSensor
       <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15

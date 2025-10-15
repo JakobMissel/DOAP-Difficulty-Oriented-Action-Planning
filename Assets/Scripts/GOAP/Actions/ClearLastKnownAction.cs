@@ -1,7 +1,9 @@
+// csharp
 using UnityEngine;
 using UnityEngine.AI;
 using CrashKonijn.Goap.Runtime;
 using CrashKonijn.Agent.Core;
+using Assets.Scripts.GOAP.Behaviours;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -10,18 +12,17 @@ namespace Assets.Scripts.GOAP.Actions
     {
         private NavMeshAgent agent;
         private SimpleGuardSightNiko sight;
+        private BrainBehaviour brain;
 
-        private const float SEARCH_RADIUS = 1.5f;
-        private const float LOOK_DURATION = 1.5f;
-        private const float LOOK_ANGLE = 75f;
-
-        public enum SearchState
-        {
-            MovingToLocation,
-            LookingLeft,
-            LookingRight,
-            SearchComplete
-        }
+        // How long to "check" the last known position once arrived
+        private const float ClearDuration = 2.5f;
+        // Safety timeout to avoid getting stuck
+        private const float MaxActionTime = 20f;
+        private const float ScanAngle = 85f;
+        private const float ScanSweepTime = 2.5f;
+        
+        // Distance tolerance to consider arrived if NavMeshAgent.stoppingDistance isn't used
+        private const float FallbackArriveDistance = 1.6f;
 
         public override void Created() { }
 
@@ -31,133 +32,132 @@ namespace Assets.Scripts.GOAP.Actions
                 agent = mono.Transform.GetComponent<NavMeshAgent>();
             if (sight == null)
                 sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            if (brain == null)
+                brain = mono.Transform.GetComponent<BrainBehaviour>();
+
+            data.Timer = 0f;
+            data.ArrivalTimer = 0f;
+            data.ScanningInitialized = false;
+            data.BaseYaw = 0f;
+            data.LookTransform = null;
+            data.BaseLocalEuler = Vector3.zero;
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
             agent.isStopped = false;
             agent.updateRotation = true;
-            
-            data.SearchState = SearchState.MovingToLocation;
-            data.SearchTimer = 0f;
-            data.InitialRotation = Quaternion.identity;
+            agent.updatePosition = true;
 
-            Debug.Log($"[InvestigateLastKnownAction] {mono.Transform.name} investigating {data.Target?.Position}");
+            if (data.Target != null && data.Target.IsValid())
+            {
+                agent.SetDestination(data.Target.Position);
+                
+                // Prefer rotating the eyes during scan; fallback to the root transform
+                var eyes = (sight != null) ? sight.Eyes : null;
+                data.LookTransform = eyes != null ? eyes : mono.Transform;
+                data.BaseLocalEuler = data.LookTransform.localEulerAngles;
+                
+                Debug.Log($"[ClearLastKnownAction] Heading to last known position {data.Target.Position}");
+            }
+            else
+            {
+                Debug.LogWarning("[ClearLastKnownAction] No valid last-known target provided.");
+            }
         }
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
+            if (sight != null && sight.CanSeePlayer())
+            {
+                Debug.Log("[ClearLastKnownAction] Player seen again, aborting clear.");
                 return ActionRunState.Stop;
-
-            // If we spot the player during investigation, stop and let PursuitGoal take over
-            if (sight.CanSeePlayer())
-            {
-                Debug.Log("[ClearLastKnownAction] Spotted player during investigation!");
-                return ActionRunState.Stop; // Will switch to PursuitGoal
             }
 
-            switch (data.SearchState)
-            {
-                case SearchState.MovingToLocation:
-                    return HandleMovingToLocation(mono, data);
-        
-                case SearchState.LookingLeft:
-                    return HandleLookingLeft(mono, data);
-        
-                case SearchState.LookingRight:
-                    return HandleLookingRight(mono, data);
-        
-                case SearchState.SearchComplete:
-                    Debug.Log("[ClearLastKnownAction] Search complete - clearing last known position");
-            
-                    var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
-                    if (brain != null)
-                    {
-                        brain.ClearLastKnownPlayerPosition();
-                    }
-            
-                    // The effects (IsAlert-- and HasLastKnownPosition--) will be applied by GOAP
-                    // This makes IsAlert = 0, which satisfies ClearLastKnownGoal
-                    return ActionRunState.Completed;
-            }
+            data.Timer += Time.deltaTime;
 
-            return ActionRunState.Continue;
-        }
-
-        private IActionRunState HandleMovingToLocation(IMonoAgent mono, Data data)
-        {
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return ActionRunState.Stop;
-            agent.SetDestination(data.Target.Position);
-            agent.isStopped = false;
-            agent.updateRotation = true;
 
+            if (data.Target == null || !data.Target.IsValid())
+            {
+                if (brain != null && brain.HasLastKnownPosition)
+                {
+                    Debug.Log("[ClearLastKnownAction] Target invalid, clearing last-known state anyway.");
+                    brain.ClearLastKnownPlayerPosition();
+                    return ActionRunState.Completed;
+                }
+
+                return ActionRunState.Stop;
+            }
+
+            // Compute arrival using direct distance to be robust across NavMeshAgent settings
+            float arriveDist = Mathf.Max(agent.stoppingDistance, FallbackArriveDistance);
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
-            Debug.Log($"[InvestigateLastKnownAction] Moving to location - Distance: {dist:F2}m");
+            bool arrivedByNavmesh = !agent.pathPending && agent.hasPath && agent.remainingDistance <= arriveDist;
+            bool arrivedByDistance = dist <= arriveDist;
+            bool arrived = arrivedByNavmesh || arrivedByDistance;
 
-            if (dist <= SEARCH_RADIUS)
+            if (!arrived)
             {
-                Debug.Log("[InvestigateLastKnownAction] Reached location - starting search");
-                agent.isStopped = true;
-                agent.updateRotation = false;
-                
-                data.InitialRotation = mono.Transform.rotation;
-                data.SearchState = SearchState.LookingLeft;
-                data.SearchTimer = 0f;
-            }
-
-            return ActionRunState.Continue;
-        }
-
-        private IActionRunState HandleLookingLeft(IMonoAgent mono, Data data)
-        {
-            data.SearchTimer += Time.deltaTime;
-
-            Quaternion targetRotation = data.InitialRotation * Quaternion.Euler(0, -LOOK_ANGLE, 0);
-            mono.Transform.rotation = Quaternion.Slerp(mono.Transform.rotation, targetRotation, Time.deltaTime * 2f);
-
-            Debug.Log($"[InvestigateLastKnownAction] Looking left - {data.SearchTimer:F1}s/{LOOK_DURATION}s");
-
-            if (sight.CanSeePlayer())
-            {
-                Debug.Log("[InvestigateLastKnownAction] Found player while looking left!");
-                agent.isStopped = false;
+                // Navigate towards target while allowing NavMesh to control facing
                 agent.updateRotation = true;
-                return ActionRunState.Stop; // Switch to PursuitGoal
-            }
-
-            if (data.SearchTimer >= LOOK_DURATION)
-            {
-                data.SearchState = SearchState.LookingRight;
-                data.SearchTimer = 0f;
-            }
-
-            return ActionRunState.Continue;
-        }
-
-        private IActionRunState HandleLookingRight(IMonoAgent mono, Data data)
-        {
-            data.SearchTimer += Time.deltaTime;
-
-            Quaternion targetRotation = data.InitialRotation * Quaternion.Euler(0, LOOK_ANGLE, 0);
-            mono.Transform.rotation = Quaternion.Slerp(mono.Transform.rotation, targetRotation, Time.deltaTime * 2f);
-
-            Debug.Log($"[InvestigateLastKnownAction] Looking right - {data.SearchTimer:F1}s/{LOOK_DURATION}s");
-
-            if (sight.CanSeePlayer())
-            {
-                Debug.Log("[InvestigateLastKnownAction] Found player while looking right!");
                 agent.isStopped = false;
-                agent.updateRotation = true;
-                return ActionRunState.Stop; // Switch to PursuitGoal
+                agent.SetDestination(data.Target.Position);
+                return ActionRunState.Continue;
             }
 
-            if (data.SearchTimer >= LOOK_DURATION)
+            // Arrived: stop and run scan pattern
+            agent.isStopped = true;
+
+            if (!data.ScanningInitialized)
             {
-                data.SearchState = SearchState.SearchComplete;
+                data.BaseYaw = (data.LookTransform != null ? data.LookTransform.eulerAngles.y : mono.Transform.eulerAngles.y);
+                data.ScanningInitialized = true;
+                agent.updateRotation = false; // manual rotation while scanning
+                data.Timer = 0f; // reset overall timer so long approaches don’t immediately timeout
+                Debug.Log("[ClearLastKnownAction] Arrived. Starting scan.");
             }
 
+            // Oscillate yaw around base yaw
+            float t = data.ArrivalTimer;
+            float omega = Mathf.PI * 2f / Mathf.Max(0.01f, ScanSweepTime);
+            float yawOffset = Mathf.Sin(t * omega) * ScanAngle;
+
+            if (data.LookTransform != null)
+            {
+                var euler = data.BaseLocalEuler;
+                euler.y = euler.y + yawOffset;
+                data.LookTransform.localEulerAngles = euler;
+            }
+            else
+            {
+                var euler = mono.Transform.eulerAngles;
+                euler.y = data.BaseYaw + yawOffset;
+                mono.Transform.eulerAngles = euler;
+            }
+
+            data.ArrivalTimer += Time.deltaTime;
+
+            if (data.ArrivalTimer >= ClearDuration)
+            {
+                if (brain != null)
+                    brain.ClearLastKnownPlayerPosition();
+
+                Debug.Log("[ClearLastKnownAction] Area cleared after scan. Resuming normal duties.");
+                return ActionRunState.Completed;
+            }
+
+            // Safety: if we take too long overall, force clear to keep planner progressing
+            if (data.Timer >= MaxActionTime)
+            {
+                if (brain != null && brain.HasLastKnownPosition)
+                    brain.ClearLastKnownPlayerPosition();
+                Debug.LogWarning("[ClearLastKnownAction] Timed out while clearing. Forcing completion.");
+                return ActionRunState.Completed;
+            }
+
+            // Continue scanning until duration met
             return ActionRunState.Continue;
         }
 
@@ -168,16 +168,30 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.isStopped = false;
                 agent.updateRotation = true;
             }
+
+            // Restore look transform rotation if we modified it
+            if (data.LookTransform != null)
+            {
+                data.LookTransform.localEulerAngles = data.BaseLocalEuler;
+            }
+
+            data.Timer = 0f;
+            data.ArrivalTimer = 0f;
+            data.ScanningInitialized = false;
+            data.LookTransform = null;
             
-            Debug.Log("[InvestigateLastKnownAction] Ended");
+            Debug.Log("[ClearLastKnownAction] Ended");
         }
 
         public class Data : IActionData
         {
             public ITarget Target { get; set; }
-            public SearchState SearchState { get; set; } = SearchState.MovingToLocation;
-            public float SearchTimer { get; set; } = 0f;
-            public Quaternion InitialRotation { get; set; }
+            public float Timer { get; set; }
+            public float ArrivalTimer { get; set; }
+            public bool ScanningInitialized { get; set; }
+            public float BaseYaw { get; set; }
+            public Transform LookTransform { get; set; }
+            public Vector3 BaseLocalEuler { get; set; }
         }
     }
 }

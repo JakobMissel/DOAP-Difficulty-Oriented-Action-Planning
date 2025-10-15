@@ -13,6 +13,9 @@ public class SimpleGuardSightNiko : MonoBehaviour
     GameObject player;
     bool playerHit;
 
+    // Allow other systems to read/rotate the eyes explicitly
+    public Transform Eyes => eyes;
+
     [Header("Gizmo")]
     [SerializeField] [Range(0,50)] int rayCount;
     void Awake()

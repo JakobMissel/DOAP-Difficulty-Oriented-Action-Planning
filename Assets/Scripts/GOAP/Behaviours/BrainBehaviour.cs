@@ -3,7 +3,6 @@ using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
-using Assets.Scripts.GOAP;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
@@ -42,7 +41,18 @@ namespace Assets.Scripts.GOAP.Behaviours
         [SerializeField] private float predictionTime = 1.5f;
         [SerializeField] private bool usePrediction = true;
         [SerializeField] private float minVelocityThreshold = 0.5f;
-        
+
+        [Header("Last-known Follow Settings")] 
+        [Tooltip("How long after losing sight we keep updating the last-known position")] 
+        [SerializeField] private float lastKnownChaseDuration = 5.0f; 
+        [Tooltip("How often we refresh the last-known position during the follow window")] 
+        [SerializeField] private float lastKnownUpdateInterval = 0.1f;
+
+        // NEW: simple follow-window state (replaces velocity-based prediction)
+        private bool isLastKnownFollowActive; 
+        private float lastKnownFollowTimer; 
+        private float lastKnownUpdateAccumulator;
+
         private void Awake()
         {
             this.goap = FindAnyObjectByType<GoapBehaviour>();
@@ -63,7 +73,7 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         private void Start()
         {
-            // Add all goals to a provider (now includes InvestigateNoiseGoal)
+            // Add all goals to the provider
             this.provider.RequestGoal(new[]
             {
                 typeof(PatrolGoal),
@@ -87,40 +97,62 @@ namespace Assets.Scripts.GOAP.Behaviours
             {
                 Vector3 currentPlayerPos = playerTransform.position;
 
-                // Calculate velocity
+                // Track last seen to support seamless hand-off
                 if (hasTrackedPosition)
                 {
                     Vector3 positionDelta = currentPlayerPos - lastTrackedPlayerPosition;
                     Vector3 instantVelocity = positionDelta / Time.deltaTime;
-                    
-                    // Smooth velocity to avoid jitter
                     playerVelocity = Vector3.Lerp(playerVelocity, instantVelocity, 0.3f);
-                    
-                    // Only log occasionally to avoid spam
-                    if (Time.frameCount % 30 == 0)
-                    {
-                        Debug.Log($"[BrainBehaviour] Tracking velocity: {playerVelocity.magnitude:F2} m/s, Direction: {playerVelocity.normalized}");
-                    }
                 }
-                
+
                 lastTrackedPlayerPosition = currentPlayerPos;
                 hasTrackedPosition = true;
                 wasSeenLastFrame = true;
-                hasInvestigated = false; // Reset investigation flag when we see the player again
+                hasInvestigated = false;
+
+                // If we see the player, we don't need last-known state
+                if (HasLastKnownPosition)
+                    HasLastKnownPosition = false;
+
+                // Cancel any follow window
+                isLastKnownFollowActive = false;
+                lastKnownFollowTimer = 0f;
+                lastKnownUpdateAccumulator = 0f;
             }
             else
             {
-                // Player left sight this frame - ONLY capture position on the transition frame AND if not already investigated
-                if (wasSeenLastFrame && !HasLastKnownPosition && !hasInvestigated)
+                // Just lost sight this frame
+                if (wasSeenLastFrame && !hasInvestigated)
                 {
-                    Vector3 predictedPosition = CalculatePredictedPosition();
-                    LastKnownPlayerPosition = predictedPosition;
+                    // Start follow window: keep updating last-known to player's transform for a short time
+                    LastKnownPlayerPosition = ClampToNavMesh(playerTransform.position);
                     HasLastKnownPosition = true;
-                    
-                    Debug.Log($"[BrainBehaviour] ★ Player left sight! Last: {lastTrackedPlayerPosition}, Velocity: {playerVelocity} ({playerVelocity.magnitude:F2} m/s), Predicted: {predictedPosition}");
+
+                    isLastKnownFollowActive = true;
+                    lastKnownFollowTimer = 0f;
+                    lastKnownUpdateAccumulator = 0f;
+
+                    Debug.Log($"[BrainBehaviour] Lost sight. Starting last-known follow for {lastKnownChaseDuration:F1}s. Initial: {LastKnownPlayerPosition}");
                 }
-                
-                // IMPORTANT: Only set wasSeenLastFrame to false AFTER the check above
+                // Continue follow updates while window is active
+                else if (isLastKnownFollowActive)
+                {
+                    lastKnownFollowTimer += Time.deltaTime;
+                    lastKnownUpdateAccumulator += Time.deltaTime;
+
+                    if (lastKnownUpdateAccumulator >= Mathf.Max(0.01f, lastKnownUpdateInterval))
+                    {
+                        lastKnownUpdateAccumulator = 0f;
+                        LastKnownPlayerPosition = ClampToNavMesh(playerTransform.position);
+                    }
+
+                    if (lastKnownFollowTimer >= lastKnownChaseDuration)
+                    {
+                        isLastKnownFollowActive = false; // Freeze last-known here
+                        Debug.Log($"[BrainBehaviour] Last-known follow window ended. Frozen at: {LastKnownPlayerPosition}");
+                    }
+                }
+
                 wasSeenLastFrame = false;
             }
         }
@@ -143,38 +175,28 @@ namespace Assets.Scripts.GOAP.Behaviours
             // But we keep it for compatibility with the sensor
         }
         
+        // NEW: Clamp position to NavMesh (used in prediction and follow)
+        private Vector3 ClampToNavMesh(Vector3 pos)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(pos, out hit, 5.0f, NavMesh.AllAreas))
+                return hit.position;
+            return pos;
+        }
+
         // Calculate predicted position based on player velocity
         private Vector3 CalculatePredictedPosition()
         {
+            // Kept for reference, but no longer used by the follow-window approach.
             if (!usePrediction || !hasTrackedPosition)
-            {
-                Debug.Log("[BrainBehaviour] Using actual last seen position (no prediction)");
                 return lastTrackedPlayerPosition;
-            }
-            
-            // Check if player was moving fast enough to predict
             float speed = playerVelocity.magnitude;
             if (speed < minVelocityThreshold)
-            {
-                Debug.Log($"[BrainBehaviour] Player moving too slowly ({speed:F2} m/s) - using actual position");
                 return lastTrackedPlayerPosition;
-            }
-            
-            // Predict where the player might be based on their velocity
             Vector3 predictedPosition = lastTrackedPlayerPosition + (playerVelocity * predictionTime);
-            
-            Debug.Log($"[BrainBehaviour] Calculation - LastPos: {lastTrackedPlayerPosition}, Velocity: {playerVelocity}, Result: {predictedPosition}");
-            
-            // Clamp to NavMesh to ensure it's a valid position
-            UnityEngine.AI.NavMeshHit hit;
-            if (UnityEngine.AI.NavMesh.SamplePosition(predictedPosition, out hit, 5.0f, UnityEngine.AI.NavMesh.AllAreas))
-            {
-                Debug.Log($"[BrainBehaviour] ✓ Predicted position on NavMesh: {hit.position} (speed: {speed:F2} m/s, {predictionTime}s ahead)");
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(predictedPosition, out hit, 5.0f, NavMesh.AllAreas))
                 return hit.position;
-            }
-            
-            // If predicted position is off NavMesh, use last known position
-            Debug.Log($"[BrainBehaviour] ✗ Predicted position OFF NavMesh - using actual: {lastTrackedPlayerPosition}");
             return lastTrackedPlayerPosition;
         }
         
@@ -182,7 +204,10 @@ namespace Assets.Scripts.GOAP.Behaviours
         public void ClearLastKnownPlayerPosition()
         {
             HasLastKnownPosition = false;
-            hasInvestigated = true; // Mark that we've investigated - don't re-capture until we see player again
+            hasInvestigated = true;
+            isLastKnownFollowActive = false;
+            lastKnownFollowTimer = 0f;
+            lastKnownUpdateAccumulator = 0f;
             Debug.Log("[BrainBehaviour] Cleared last known player position - marked as investigated");
         }
         
@@ -207,3 +232,4 @@ namespace Assets.Scripts.GOAP.Behaviours
         }
     }
 }
+
