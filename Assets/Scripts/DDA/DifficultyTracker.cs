@@ -11,28 +11,6 @@ using Assets.Scripts.DDA;
 
 namespace Assets.Scripts.DDA
 {
-    public enum DifficultyAdjustingActions
-    {
-        TimesCaptured,
-        TimeBetweenPaintings,
-        SuccesfulItemUsage,
-
-    }
-
-    public enum EnemyActions
-    {
-        StandGuard,
-        Patrol,
-        InspectArea,
-        BatterypowerUsage,
-        ContactBackup,
-        ChasePlayer,
-        EnergyUsage,
-        ActivateLasers,
-        ActivateCameras,
-
-    }
-
     /// <summary>
     /// Singleton to keep track of what difficulty the game is at
     /// </summary>
@@ -40,11 +18,9 @@ namespace Assets.Scripts.DDA
     {
         public static DifficultyTracker Instance { get; private set; }
 
-        [SerializeField, Tooltip("How a player action affects difficulty. 0 as value means no effect, 1 means max difficulty. Time to be based on player action.")] private DaaDictionary playerDifficultyEffect;
-        [SerializeField, Tooltip("How much an enemy action will cost based on difficulty. Value 0 means no cost, 5 means 5 times the cost. Time to be between 0 and 1.")] private EaDictionary enemyDifficultyEffect;
+        [SerializeField, Tooltip("How a player action affects difficulty.")] private List<DifficultyAdjustingAction> playerDifficultyEffect;
+        [SerializeField, Tooltip("How much an enemy action will cost based on difficulty.")] private List<EnemyAction> enemyDifficultyEffect;
         
-        [SerializeField, Tooltip("Effective difficulties of the differens difficultyAdjustingActions")] private Dictionary<DifficultyAdjustingActions, float> effectiveDifficulties = new Dictionary<DifficultyAdjustingActions, float>();
-
         private void Awake()
         {
             if (Instance != null)
@@ -54,13 +30,6 @@ namespace Assets.Scripts.DDA
             }
 
             Instance = this;
-
-            // If not all difficultyAdjustingActions have a base effective difficulty, create one at the medium difficulty
-            foreach (DifficultyAdjustingActions difficultyAction in playerDifficultyEffect.Keys)
-            {
-                if (effectiveDifficulties.ContainsKey(difficultyAction)) continue;
-                effectiveDifficulties.Add(difficultyAction, 0.5f);
-            }
         }
 
         /// <summary>
@@ -70,7 +39,15 @@ namespace Assets.Scripts.DDA
         /// <returns>A number to be summed with the other DifficultyTranslationPlayer actions</returns>
         public float DifficultyTranslationPlayer(DifficultyAdjustingActions actionToTranslate)
         {
-            float difficultyTranslation = playerDifficultyEffect[actionToTranslate].Evaluate(GetDifficultyF());
+            float difficultyTranslation = 0f;
+            foreach (DifficultyAdjustingAction action in playerDifficultyEffect)
+            {
+                if (action.action != actionToTranslate) continue;
+
+                difficultyTranslation = action.curve.Evaluate(GetDifficultyF());
+
+                break;
+            }
             return difficultyTranslation;
         }
 
@@ -81,7 +58,15 @@ namespace Assets.Scripts.DDA
         /// <returns>A number to be multiplied by the WorldKey of that enemy action</returns>
         public float DifficultyTranslationEnemy(EnemyActions actionToTranslate)
         {
-            float difficultyTranslation = enemyDifficultyEffect[actionToTranslate].Evaluate(GetDifficultyF());
+            float difficultyTranslation = 0f;
+            foreach (EnemyAction action in enemyDifficultyEffect)
+            {
+                if (action.action != actionToTranslate) continue;
+
+                difficultyTranslation = action.curve.Evaluate(GetDifficultyF());
+
+                break;
+            }
             return difficultyTranslation;
         }
 
@@ -92,7 +77,17 @@ namespace Assets.Scripts.DDA
         /// <param name="actionInputValue">Eg average seconds since last painting was picked up</param>
         public void AlterDifficulty(DifficultyAdjustingActions actionToAdjust, float actionInputValue)
         {
-            effectiveDifficulties[actionToAdjust] = playerDifficultyEffect[actionToAdjust].Evaluate(actionInputValue);
+            // Goes through all playerDAAs
+            for (int i = 0; i < playerDifficultyEffect.Count; i++)
+            {
+                // Skips non-selected ones
+                if (playerDifficultyEffect[i].action != actionToAdjust) continue;
+
+                // Evaluates the effective difficulty based on the updates info about the player action
+                playerDifficultyEffect[i].effectiveDifficulty = playerDifficultyEffect[i].curve.Evaluate(actionInputValue);
+
+                break;
+            }
         }
 
         /// <summary>
@@ -103,9 +98,10 @@ namespace Assets.Scripts.DDA
         {
             float effectiveDifficulty = 0f;
             
-            foreach (float difficulty in effectiveDifficulties.Values)
+            // Sum and clamp01 all effective difficulties
+            foreach (DifficultyAdjustingAction difficultyAction in playerDifficultyEffect)
             {
-                effectiveDifficulty += difficulty;
+                effectiveDifficulty += difficultyAction.effectiveDifficulty;
             }
 
             effectiveDifficulty = Mathf.Clamp01(effectiveDifficulty);
