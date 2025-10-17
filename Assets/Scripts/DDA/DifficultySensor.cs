@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.DDA
 {
-    // Assign mig en sej GoapId
+    // TODO: Få en sej GoapId
     // [GoapId("DifficultySensor-21c25467-410e-4d08-a28e-8df3f7202e15")]
     public class DifficultySensor : LocalWorldSensorBase
     {
-        [SerializeField] private DifficultyTracker difficultyTracker;
+        private DifficultyTracker difficultyTracker;
 
         public override void Created()
         {
@@ -23,7 +23,7 @@ namespace Assets.Scripts.DDA
 
         public override SenseValue Sense(IActionReceiver agent, IComponentReference refs)
         {
-            return new SenseValue(100);
+            return new SenseValue(difficultyTracker.GetDifficultyI());
         }
     }
 }

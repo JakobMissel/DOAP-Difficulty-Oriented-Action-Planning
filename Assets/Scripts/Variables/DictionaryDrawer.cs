@@ -184,4 +184,7 @@ namespace Assets.Scripts.Variables
 
     [CustomPropertyDrawer(typeof(DaaDictionary))]
     public class DaaDictionaryDrawer : DictionaryDrawer<DifficultyAdjustingActions, AnimationCurve> { }
+
+    [CustomPropertyDrawer(typeof(EaDictionary))]
+    public class EaDictionaryDrawer : DictionaryDrawer<EnemyActions, AnimationCurve> { }
 }
