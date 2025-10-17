@@ -71,6 +71,13 @@ namespace Assets.Scripts.GOAP.Behaviours
         [Tooltip("Fallback distance considered 'arrived' if NavMeshAgent remainingDistance is unreliable")] 
         public float arriveDistance = 1.5f;
 
+        [Header("Hearing Settings")]
+        [Tooltip("If true, player noise can be heard through walls. If false, a line-of-sight check is used and walls block player noise.")]
+        public bool hearPlayerThroughWalls = true;
+        [Tooltip("Layers that block hearing when 'hearPlayerThroughWalls' is false. Set this to the same layers as your sight obstacle mask.")]
+        public LayerMask hearingObstructionMask;
+        [Tooltip("Ray height offset (meters) used when checking hearing occlusion")] public float hearingRayHeight = 1.5f;
+
         // Follow-window state
         private bool isLastKnownFollowActive; 
         private float lastKnownFollowTimer; 
@@ -233,6 +240,18 @@ namespace Assets.Scripts.GOAP.Behaviours
         // Explicit API for player-generated noise
         public void OnPlayerNoiseHeard(Vector3 noisePosition, float radius)
         {
+            // If hearing through walls is disabled, check for occlusion
+            if (!hearPlayerThroughWalls)
+            {
+                var from = transform.position + Vector3.up * Mathf.Max(0f, hearingRayHeight);
+                var to = noisePosition + Vector3.up * Mathf.Max(0f, hearingRayHeight);
+                if (IsHearingOccluded(from, to))
+                {
+                    // Ignore occluded player noise
+                    return;
+                }
+            }
+
             HasHeardPlayerNoise = true;
             LastPlayerNoisePosition = noisePosition;
             LastHeardNoiseRadius = radius;
@@ -262,6 +281,19 @@ namespace Assets.Scripts.GOAP.Behaviours
 
             float dist = Vector3.Distance(transform.position, player.position);
             return dist <= Mathf.Max(0f, LastHeardNoiseRadius);
+        }
+
+        private bool IsHearingOccluded(Vector3 origin, Vector3 target)
+        {
+            Vector3 dir = target - origin;
+            float dist = dir.magnitude;
+            if (dist <= 0.01f)
+                return false;
+            dir /= dist;
+
+            int mask = hearingObstructionMask.value == 0 ? Physics.DefaultRaycastLayers : hearingObstructionMask.value;
+            // If a collider is hit in the obstruction mask, hearing is considered blocked
+            return Physics.Raycast(origin, dir, dist, mask);
         }
     }
 }

@@ -4386,9 +4386,6 @@ MonoBehaviour:
   sneakNoiseRadius: 3
   idleNoiseRadius: 0
   pulseInterval: 0.2
-  scanLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
   drawGizmos: 1
   gizmoFade: 0.3
 --- !u!1 &1162953933
@@ -6851,7 +6848,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b807ff6078f43c08a483d63dd5fe02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NoiseHearingRadius: 20
+  lookAtPlayerNoiseDuration: 1
+  lookTurnSpeed: 540
   audiblePursuitMemory: 0.75
   angularSpeed: 360
   acceleration: 12
@@ -6861,6 +6859,11 @@ MonoBehaviour:
   scanAngle: 75
   scanSweepTime: 1.5
   arriveDistance: 1.6
+  hearPlayerThroughWalls: 0
+  hearingObstructionMask:
+    serializedVersion: 2
+    m_Bits: 192
+  hearingRayHeight: 1.5
 --- !u!114 &1829937741
 MonoBehaviour:
   m_ObjectHideFlags: 0
