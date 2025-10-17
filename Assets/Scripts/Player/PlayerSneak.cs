@@ -15,22 +15,61 @@ public class PlayerSneak : MonoBehaviour
 
     void Awake()
     {
+        // Try to find PlayerInput on this or parent object
         playerInput = GetComponent<PlayerInput>();
-        startColor = vignette.color;
-        transparentColor = new Color(startColor.r, startColor.g, startColor.b, 0);
-        vignette.color = transparentColor;
+        if (playerInput == null)
+            playerInput = GetComponentInParent<PlayerInput>();
+
+        if (vignette != null)
+        {
+            startColor = vignette.color;
+            transparentColor = new Color(startColor.r, startColor.g, startColor.b, 0);
+            vignette.color = transparentColor;
+            if (vignette.gameObject.activeSelf)
+                vignette.gameObject.SetActive(false); // ensure hidden at start
+        }
+        else
+        {
+            Debug.LogWarning("[PlayerSneak] Vignette Image is not assigned. Sneak UI feedback will be disabled.", this);
+        }
     }
 
     void OnEnable()
     {
-        playerInput.actions["Sneak"].performed += OnSneak;
-        playerInput.actions["Sneak"].canceled += OnSneak;
+        if (playerInput == null)
+        {
+            Debug.LogWarning("[PlayerSneak] No PlayerInput found. Sneak input will not be handled.", this);
+            return;
+        }
+
+        if (playerInput.actions == null)
+        {
+            Debug.LogWarning("[PlayerSneak] PlayerInput has no actions asset assigned.", this);
+            return;
+        }
+
+        var sneakAction = playerInput.actions["Sneak"];
+        if (sneakAction == null)
+        {
+            Debug.LogWarning("[PlayerSneak] No 'Sneak' action found in the actions asset.", this);
+            return;
+        }
+
+        sneakAction.performed += OnSneak;
+        sneakAction.canceled += OnSneak;
     }
 
     void OnDisable()
     {
-        playerInput.actions["Sneak"].performed -= OnSneak;
-        playerInput.actions["Sneak"].canceled -= OnSneak;
+        if (playerInput?.actions == null)
+            return;
+
+        var sneakAction = playerInput.actions["Sneak"];
+        if (sneakAction == null)
+            return;
+
+        sneakAction.performed -= OnSneak;
+        sneakAction.canceled -= OnSneak;
     }
 
     void OnSneak(InputAction.CallbackContext context)
@@ -46,15 +85,25 @@ public class PlayerSneak : MonoBehaviour
 
     void Sneak()
     {
+        if (vignette == null)
+            return;
+
         if (isSneaking)
         {
+            // Enable on first frame of sneak and start fading in
+            if (!vignette.gameObject.activeSelf)
+                vignette.gameObject.SetActive(true);
+
             time += Time.deltaTime / fateDuration;
             vignette.color = Color.Lerp(vignette.color, startColor, time);
         }
         else
         {
+            // Fade out instantly and hide to avoid always-on visuals
             time = 0;
             vignette.color = transparentColor;
+            if (vignette.gameObject.activeSelf)
+                vignette.gameObject.SetActive(false);
         }
     }
 }

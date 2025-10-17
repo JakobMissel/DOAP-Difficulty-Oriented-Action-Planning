@@ -10,6 +10,7 @@ namespace Assets.Scripts.GOAP.Actions
     {
         private NavMeshAgent agent;
         private SimpleGuardSightNiko sight;
+        private Transform player;
 
         // Timer constants
         private const float CLOSE_RANGE_DISTANCE = 5.0f;
@@ -24,6 +25,8 @@ namespace Assets.Scripts.GOAP.Actions
                 agent = mono.Transform.GetComponent<NavMeshAgent>();
             if (sight == null)
                 sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            if (player == null)
+                player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -33,8 +36,6 @@ namespace Assets.Scripts.GOAP.Actions
             agent.updatePosition = true;
             
             data.CloseRangeTimer = 0f;
-
-            Debug.Log($"[PursuitAction] {mono.Transform.name} chasing player");
         }
         
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
@@ -42,12 +43,10 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
-            // If we can't see the player anymore, stop (InvestigateLastKnownGoal will take over)
-            if (!sight.CanSeePlayer())
-            {
-                Debug.Log("[PursuitAction] Lost sight of player - stopping pursuit");
+            // Stop if we no longer have visual contact
+            bool hasVisual = sight != null && sight.CanSeePlayer();
+            if (!hasVisual)
                 return ActionRunState.Stop;
-            }
 
             // Chase the player
             agent.SetDestination(data.Target.Position);
@@ -61,7 +60,6 @@ namespace Assets.Scripts.GOAP.Actions
     
             if (dist <= catchDistance)
             {
-                Debug.Log($"[PursuitAction] Player caught! Distance: {dist:F2}");
                 var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                 if (brain != null)
                 {
@@ -78,8 +76,6 @@ namespace Assets.Scripts.GOAP.Actions
                 
                 if (data.CloseRangeTimer >= CLOSE_RANGE_CATCH_TIME)
                 {
-                    Debug.Log($"[PursuitAction] Player caught by close range timer!");
-                    
                     var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                     if (brain != null)
                     {
@@ -108,8 +104,6 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.isStopped = false;
                 agent.updateRotation = true;
             }
-            
-            Debug.Log("[PursuitAction] Ended");
         }
 
         public class Data : IActionData

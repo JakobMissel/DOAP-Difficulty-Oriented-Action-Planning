@@ -61,11 +61,11 @@ namespace Assets.Scripts.GOAP.Actions
                 {
                     Debug.Log("[InvestigateNoiseAction] Investigation complete!");
                     
-                    // Clear the noise from the behaviour
+                    // Clear the distraction noise from the behaviour
                     var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                     if (brain != null)
                     {
-                        brain.ClearNoise();
+                        brain.ClearDistractionNoise();
                     }
                     
                     return ActionRunState.Completed;

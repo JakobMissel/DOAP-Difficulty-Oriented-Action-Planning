@@ -3,6 +3,7 @@ using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
@@ -12,13 +13,33 @@ namespace Assets.Scripts.GOAP.Behaviours
         private GoapActionProvider provider;
         private GoapBehaviour goap;
         
+        // Global registry for efficient broadcasts (e.g., player noise)
+        private static readonly HashSet<BrainBehaviour> ActiveBrains = new HashSet<BrainBehaviour>();
+        public static IEnumerable<BrainBehaviour> GetActiveBrains() => ActiveBrains;
+        private void OnEnable() => ActiveBrains.Add(this);
+        private void OnDisable() => ActiveBrains.Remove(this);
+        
         // Track if player has been caught
         public bool IsPlayerCaught { get; private set; } = false;
 
-        // Track noise/distraction
-        public bool HasHeardNoise { get; private set; } = false;
-        public Vector3 LastNoisePosition { get; private set; }
-        public float NoiseHearingRadius = 20f; // How far the agent can hear noises
+        // Track distraction noise (e.g., thrown objects)
+        public bool HasHeardDistractionNoise { get; private set; } = false;
+        public Vector3 LastDistractionNoisePosition { get; private set; }
+        private float lastDistractionNoiseTime = -999f;
+
+        // Track player noise (distinct from distraction)
+        public bool HasHeardPlayerNoise { get; private set; } = false;
+        public Vector3 LastPlayerNoisePosition { get; private set; }
+        public float LastHeardNoiseRadius { get; private set; } = 0f; // player noise radius for proximity logic
+        private float lastPlayerNoiseTime = -999f;
+
+        [Tooltip("Seconds after a player noise during which the agent will turn to look toward it")] 
+        public float lookAtPlayerNoiseDuration = 1.0f;
+        [Tooltip("Degrees/second when turning to face player noise")]
+        public float lookTurnSpeed = 540f;
+
+        [Tooltip("Seconds after a noise pulse during which audio can trigger proximity logic (if used)")] 
+        public float audiblePursuitMemory = 0.75f;
         
         // Track last known player position
         public bool HasLastKnownPosition { get; private set; } = false;
@@ -145,6 +166,18 @@ namespace Assets.Scripts.GOAP.Behaviours
 
                 wasSeenLastFrame = false;
             }
+
+            // Head-turn toward recent player noise if not seeing the player
+            if (!canSeePlayer && Time.time - lastPlayerNoiseTime <= lookAtPlayerNoiseDuration)
+            {
+                Vector3 dir = LastPlayerNoisePosition - transform.position;
+                dir.y = 0f;
+                if (dir.sqrMagnitude > 0.0001f)
+                {
+                    Quaternion targetRot = Quaternion.LookRotation(dir.normalized, Vector3.up);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, lookTurnSpeed * Time.deltaTime);
+                }
+            }
         }
         
         public void SetPlayerCaught(bool caught)
@@ -157,7 +190,7 @@ namespace Assets.Scripts.GOAP.Behaviours
             }
         }
         
-        // NEW: Clamp position to NavMesh (used in follow)
+        // Clamp position to NavMesh (used in follow)
         private Vector3 ClampToNavMesh(Vector3 pos)
         {
             NavMeshHit hit;
@@ -176,22 +209,59 @@ namespace Assets.Scripts.GOAP.Behaviours
             Debug.Log("[BrainBehaviour] Cleared last known player position - marked as investigated");
         }
         
+        // Backwards-compat: interpret as distraction noise
         public void OnNoiseHeard(Vector3 noisePosition)
         {
-            float distance = Vector3.Distance(transform.position, noisePosition);
-            Debug.Log($"[BrainBehaviour] Noise made at {noisePosition}, distance: {distance:F1}m");
-            if (distance <= NoiseHearingRadius)
-            {
-                HasHeardNoise = true;
-                LastNoisePosition = noisePosition;
-                Debug.Log($"[BrainBehaviour] Heard noise at {noisePosition}, distance: {distance:F1}m");
-            }
+            OnDistractionNoiseHeard(noisePosition, 0f);
         }
 
-        public void ClearNoise()
+        // Backwards-compat: interpret as distraction noise
+        public void OnNoiseHeard(Vector3 noisePosition, float radius)
         {
-            HasHeardNoise = false;
-            Debug.Log("[BrainBehaviour] Noise cleared");
+            OnDistractionNoiseHeard(noisePosition, radius);
+        }
+
+        // Explicit API for thrown/distraction noise
+        public void OnDistractionNoiseHeard(Vector3 noisePosition, float radius)
+        {
+            HasHeardDistractionNoise = true;
+            LastDistractionNoisePosition = noisePosition;
+            lastDistractionNoiseTime = Time.time;
+            Debug.Log($"[BrainBehaviour] Distraction noise at {noisePosition} (r={radius:F1})");
+        }
+
+        // Explicit API for player-generated noise
+        public void OnPlayerNoiseHeard(Vector3 noisePosition, float radius)
+        {
+            HasHeardPlayerNoise = true;
+            LastPlayerNoisePosition = noisePosition;
+            LastHeardNoiseRadius = radius;
+            lastPlayerNoiseTime = Time.time;
+            Debug.Log($"[BrainBehaviour] Player noise at {noisePosition} (r={radius:F1})");
+        }
+
+        public void ClearDistractionNoise()
+        {
+            HasHeardDistractionNoise = false;
+            Debug.Log("[BrainBehaviour] Distraction noise cleared");
+        }
+
+        public void ClearPlayerNoise()
+        {
+            HasHeardPlayerNoise = false;
+            Debug.Log("[BrainBehaviour] Player noise cleared");
+        }
+
+        // Helper for sensors (if you ever want to use audio proximity again)
+        public bool IsWithinAudiblePursuitWindow(Transform player)
+        {
+            if (player == null)
+                return false;
+            if (Time.time - lastPlayerNoiseTime > audiblePursuitMemory)
+                return false;
+
+            float dist = Vector3.Distance(transform.position, player.position);
+            return dist <= Mathf.Max(0f, LastHeardNoiseRadius);
         }
     }
 }

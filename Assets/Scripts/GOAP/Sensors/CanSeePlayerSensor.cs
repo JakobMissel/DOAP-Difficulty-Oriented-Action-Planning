@@ -16,7 +16,6 @@ namespace Assets.Scripts.GOAP.Sensors
             if (agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var sight))
             {
                 bool canSee = sight.CanSeePlayer();
-                Debug.Log($"[CanSeePlayerSensor] {agent.Transform.name} - CanSee: {canSee}");
                 return new SenseValue(canSee ? 1 : 0);
             }
 

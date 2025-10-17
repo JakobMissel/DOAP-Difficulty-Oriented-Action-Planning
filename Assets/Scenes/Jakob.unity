@@ -6320,6 +6320,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4398957818134730461, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
   m_PrefabInstance: {fileID: 369551750}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1028207599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 378007007463572359, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+  m_PrefabInstance: {fileID: 7980162816909603947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1028207612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028207599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5794cf6b7ec9456b919d2d096e2e008e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runNoiseRadius: 12
+  sneakNoiseRadius: 4
+  idleNoiseRadius: 0
+  pulseInterval: 0.2
+  scanLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  drawGizmos: 1
+  gizmoFade: 0.3
 --- !u!1 &1045943900
 GameObject:
   m_ObjectHideFlags: 0
@@ -9885,11 +9911,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NoiseHearingRadius: 20
+  audiblePursuitMemory: 0.75
   angularSpeed: 360
   acceleration: 12
-  predictionTime: 1.5
-  usePrediction: 1
-  minVelocityThreshold: 0.5
+  lastKnownChaseDuration: 4
+  lastKnownUpdateInterval: 0.1
+  scanDuration: 1.5
+  scanAngle: 75
+  scanSweepTime: 1.5
+  arriveDistance: 1.5
 --- !u!114 &1726766948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12650,10 +12680,21 @@ PrefabInstance:
       propertyPath: interactButton
       value: 
       objectReference: {fileID: 1327319008}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: maxMoveSpeed.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8080000086657084796, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: maxMoveSpeed.z
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 378007007463572359, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1028207612}
   m_SourcePrefab: {fileID: 100100000, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
 --- !u!1001 &8775763064674653902
 PrefabInstance:

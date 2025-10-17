@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     float targetAngle;
     bool isAiming;
     bool isSneaking;
+    
 
     void Awake()
     {
