@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: Sneak Sub-Objective
   m_EditorClassIdentifier: 
-  description: You are now sneaking. Move around to avoid detection.
-  goal: Hold [CTRL] to Sneak.\n
-  completion: You are now sneaking. Move around to avoid detection.\n
+  isCompleted: 0
+  descriptionText: 
+  goalText: To sneak hold control, and move around.\n
+  completionText: So sneaky ;)\n

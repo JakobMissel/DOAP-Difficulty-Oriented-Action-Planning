@@ -4,13 +4,12 @@ using UnityEngine;
 public class SubObjective : ScriptableObject
 {
     public bool isCompleted;
-    public string description;
-    [TextArea] public string goal;
-    [TextArea] public string completion;
+    public string descriptionText;
+    [TextArea] public string goalText;
+    [TextArea] public string completionText;
 
     public void MarkAsCompleted()
     {
         isCompleted = true;
-        description = completion;
     }
 }

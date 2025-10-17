@@ -12,9 +12,11 @@ public class ObjectivesManager : MonoBehaviour
     public static Action<Objective> onSetNewObjective;
     public static void OnSetNewObjective(Objective newObjective) => onSetNewObjective?.Invoke(newObjective);
 
+    public static Action<Objective> onCompleteObjective;
+    public static void OnCompleteObjective(Objective completedObjective) => onCompleteObjective?.Invoke(completedObjective);
 
-    public static Action<Objective> onDisplayObjective;
-    public static void OnUpdateObjective(Objective objective) => onDisplayObjective?.Invoke(objective);
+    public static Action<Objective, int, float> onDisplayObjective;
+    public static void OnDisplayObjective(Objective objective, int subGoalIndex, float delay) => onDisplayObjective?.Invoke(objective, subGoalIndex, delay);
 
     void Awake()
     {
@@ -27,6 +29,18 @@ public class ObjectivesManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        for (int i = 0; i < objectives.Length; i++) 
+        {
+            objectives[i].isCompleted = false;
+            objectives[i].completions.Clear();
+
+            for (int j = 0; j < objectives[i].goals.Count; j++) 
+            {
+                objectives[i].goals[j].isCompleted = false;
+                objectives[i].goals[j].descriptionText = objectives[i].goals[j].goalText;
+            }
+        }
+
     }
 
     void OnEnable()
@@ -55,6 +69,6 @@ public class ObjectivesManager : MonoBehaviour
     void SetNewObjective(Objective newObjective)
     {
         currentObjective = newObjective;
-        OnUpdateObjective(currentObjective);
+        OnDisplayObjective(currentObjective, 0, 0);
     }
 }

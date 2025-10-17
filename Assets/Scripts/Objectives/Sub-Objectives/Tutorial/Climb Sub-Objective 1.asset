@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
-  m_Name: Aim Sub-Objective
+  m_Name: Climb Sub-Objective 1
   m_EditorClassIdentifier: 
-  description: Hold [Right Click] to Aim.\n
-  goal: Hold [Right Click] to Aim.\n
-  completion: Aim to hit areas with accuracy.\n
+  isCompleted: 0
+  descriptionText: 
+  goalText: Hold [SPACE] to climb and use [W][A][S][D] to move.\n
+  completionText: Spider-man, Spider-man, breaking laws and other stuff.\n

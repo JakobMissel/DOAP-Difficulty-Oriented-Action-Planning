@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9bc55e65edca44fa3e8fc3c1f3b951, type: 3}
   m_Name: 1_StealPainting
   m_EditorClassIdentifier: 
+  isCompleted: 0
   name: Steal "Woman Cooling down"
-  description: "The Painting \"Woman Cooling down\" by Ermandog Modig is valued approximately
-    \u20AC10,000,000.\nBlah blah blah."
+  goals: []
+  completions: []
+  nextObjective: {fileID: 11400000, guid: 3d61011a09d1e474cade6c8c6fafe6f7, type: 2}

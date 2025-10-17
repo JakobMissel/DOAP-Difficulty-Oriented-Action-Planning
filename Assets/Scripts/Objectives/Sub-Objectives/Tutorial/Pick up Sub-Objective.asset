@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
-  m_Name: Throw Sub-Objective
+  m_Name: Pick up Sub-Objective
   m_EditorClassIdentifier: 
-  description: Press [Left Click] to Throw while Aiming.
-  goal: Press [Left Click] to Throw while Aiming.\n
-  completion: The thrown item will distract nearby guards if they hear it.\n
+  isCompleted: 0
+  descriptionText: 
+  goalText: Pick stuff up with [E].\n
+  completionText: Nice finger coordination.\n

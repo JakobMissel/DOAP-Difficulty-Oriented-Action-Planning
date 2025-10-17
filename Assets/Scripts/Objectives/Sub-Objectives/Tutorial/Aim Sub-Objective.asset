@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
-  m_Name: Climb Sub-Objective 1
+  m_Name: Aim Sub-Objective
   m_EditorClassIdentifier: 
-  description: You are now climbing. Reach higher places and avoid detection.\n
-  goal: Hold [SPACE] and use [W][A][S][D] to Climb.\n
-  completion: Reach higher places and avoid detection.\n
+  isCompleted: 0
+  descriptionText: 
+  goalText: Hold [RIGHT CLICK] to aim.\n
+  completionText: Good boi.\n

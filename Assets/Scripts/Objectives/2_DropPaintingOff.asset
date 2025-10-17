@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9bc55e65edca44fa3e8fc3c1f3b951, type: 3}
   m_Name: 2_DropPaintingOff
   m_EditorClassIdentifier: 
+  isCompleted: 0
   name: Drop Off The Painting
-  description: Drop off the collected painting back at where you came from.
+  goals: []
+  completions: []
+  nextObjective: {fileID: 11400000, guid: 195151351b65c61489f2ba1d7538d64f, type: 2}
