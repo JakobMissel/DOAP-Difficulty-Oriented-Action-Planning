@@ -30,6 +30,7 @@ namespace Assets.Scripts.DDA
             }
 
             Instance = this;
+            DontDestroyOnLoad(this);
         }
 
         /// <summary>
