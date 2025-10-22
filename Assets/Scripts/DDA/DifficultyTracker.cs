@@ -2,12 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using Assets.Scripts.Variables;
-using Assets.Scripts.DDA;
-
-
-[Serializable] public class DaaDictionary : SerializableDictionary<DifficultyAdjustingActions, AnimationCurve> { }
-[Serializable] public class EaDictionary : SerializableDictionary<EnemyActions, AnimationCurve> { }
 
 namespace Assets.Scripts.DDA
 {
