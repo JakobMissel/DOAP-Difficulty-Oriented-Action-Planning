@@ -158,70 +158,86 @@ Each action exposes a Data class implementing **IActionData** that carries its *
 
 
 ### `Actions/PursuitAction.cs`
-- Target: from PlayerTargetSensor (TransformTarget when the player is visible).
-- Requires sight: if SimpleGuardSightNiko.CanSeePlayer() is false, the action stops (planning will swap to ClearLastKnownGoal).
-- Movement: sets destination to the player target.
-- Catch logic:
+- **Target**: from PlayerTargetSensor (TransformTarget when the player is visible).
+- **Requires sight**: if SimpleGuardSightNiko.CanSeePlayer() is false, the action stops (planning will swap to ClearLastKnownGoal).
+- **Movement**: sets destination to the player target.
+
+
+- **Catch logic:**
   - If distance <= catchDistance (stoppingDistance + margin, min 1.5m), immediately “catches” by setting BrainBehaviour.IsPlayerCaught = true and completes.
   - Otherwise, if within CLOSE_RANGE_DISTANCE (5m) for CLOSE_RANGE_CATCH_TIME (5s), also catches via timer accumulation with decay when far.
 
-Effect in graph: Drives the agent while the player is in sight; produces PlayerCaught state when catch conditions are met (read by PlayerCaughtSensor/goal graph).
+**Effect in graph:** Drives the agent while the player is in sight; produces PlayerCaught state when catch conditions are met (read by PlayerCaughtSensor/goal graph).
 
 
 ### `Actions/CatchAction.cs`
-- A short catch sequence with a 2s timer. Stops the NavMeshAgent, logs progress, and completes when done. Stub for playing animation/SFX/UI.
+- A short catch sequence with a 2s timer. \
+Stops the NavMeshAgent, logs progress, and completes when done. \
+Stub for playing animation/SFX/UI.
 
-Effect in graph: Can be used to model a “catch” step after pursuit if your graph includes it.
+**Effect in graph:** Can be used to model a “catch” step after pursuit if your graph includes it.
 
 
 ### `Actions/ClearLastKnownAction.cs`
-Purpose: Go to the last-known player position (frozen after the follow window) and scan the area before clearing.
+Go to the last-known player position (frozen after the follow window) and scan the area before satisfying goal.
 
-- Dependencies: NavMeshAgent, SimpleGuardSightNiko (for eyes transform), BrainBehaviour.
+- **Dependencies**: NavMeshAgent, SimpleGuardSightNiko (for eyes transform), BrainBehaviour.
 - Reads scan tunables from BrainBehaviour if present: scanDuration, scanAngle, scanSweepTime, arriveDistance.
-- Start(): sets destination to the last-known position (data.Target), stores a LookTransform (eyes if available) and base local Euler angles.
-- Perform():
+- **Start()**: sets destination to the last-known position (data.Target), stores a LookTransform (eyes if available) and base local Euler angles.
+
+
+- **Perform()**:
   - If the player becomes visible again, returns Stop (planner will reselect pursuit).
   - During BrainBehaviour’s follow window (still updating last-known), it keeps following the moving last-known position and never scans yet.
   - After the follow window ends and the agent arrives at the frozen position, it stops and runs an oscillating yaw scan using a sine wave around BaseYaw or LookTransform.localEulerAngles.y for ClearDuration.
   - On completion, calls brain.ClearLastKnownPlayerPosition() and returns Completed.
-- End(): Restores agent rotation updates and the LookTransform’s localEulerAngles to their base, resets timers.
 
-Effect in graph: Satisfies “HasLastKnownPosition” resolution by clearing it after scanning, returning the guard to normal duties.
+
+- **End():** Restores agent rotation updates and the LookTransform’s localEulerAngles to their base, resets timers.
+
+**Effect in graph:** Satisfies “HasLastKnownPosition” resolution by clearing it after scanning, returning the guard to normal duties.
 
 
 ### `Actions/InvestigateNoiseAction.cs`
-Purpose: Investigate distraction noises (e.g., thrown objects).
+Investigate distraction noises (e.g., thrown objects).
 
-- Target: from NoiseTargetSensor (PositionTarget at BrainBehaviour.LastDistractionNoisePosition).
-- Start(): sets NavMesh destination; resets timer.
-- Perform():
+- **Target**: from NoiseTargetSensor (PositionTarget at BrainBehaviour.LastDistractionNoisePosition).
+- **Start()**: sets NavMesh destination; resets timer.
+
+
+- **Perform()**:
   - Moves to target; when arrived, stops and waits/investigates for INVESTIGATION_DURATION (3s).
   - On completion, calls brain.ClearDistractionNoise() to reset noise state.
 
-Effect in graph: Addresses world key HeardNoise; returns the agent to patrol when done.
+**Effect in graph:** Addresses world key HeardNoise; returns the agent to patrol when done.
 
 
-### `Actions/InvestigatePlayerNoiseAction.cs`
-- Scaffold/no-op action that immediately completes. Present for future use (explicit “player noise” vs. “distraction noise”).
+### `Actions/InvestigatePlayerNoiseAction.cs` 
+- Currently does nothing.
+- Created for possible future use instead of BrainBeheviour hearing (explicit “player noise” vs. “distraction noise”).
 
 
 ### `Actions/RechargeAction.cs`
-Purpose: Move to the recharge station and refill energy to maximum.
+Move to the recharge station and refill energy to maximum.
 
-- Target: from RechargeTargetSensor (PositionTarget at a GameObject tagged "Breakpoint"; snapped to NavMesh).
-- Start(): sets destination and begins moving.
-- Perform():
+- **Target**: from RechargeTargetSensor (PositionTarget at a GameObject tagged "Breakpoint"; snapped to NavMesh).
+- **Start()**: sets destination and begins moving.
+
+
+- **Perform()**:
   - First reach the station and stop; then set EnergyBehaviour.SetRecharging(true).
   - Continue until CurrentEnergy >= MaxEnergy - tiny tolerance, then completes.
-- End(): clears recharging state and resumes movement.
 
-Effect in graph: Satisfies low-energy conditions and keeps Energy world state high.
+
+- **End()**: clears recharging state and resumes movement.
+
+**Effect in graph:** Satisfies low-energy conditions and keeps Energy world state high.
 
 
 ## Sensors (produce world/target keys for planning)
 
-World sensors set/measure values for WorldKeys; target sensors produce ITarget values for TargetKeys. All sensors derive from LocalWorldSensorBase or LocalTargetSensorBase and run per-agent.
+World sensors set/measure values for WorldKeys; target sensors produce ITarget values for TargetKeys. \
+All sensors derive from LocalWorldSensorBase or LocalTargetSensorBase and run per-agent.
 
 ### World sensors
 
@@ -303,14 +319,14 @@ Goals are simple markers (derive from GoalBase) and are made available by BrainB
 - `Goals/ClearLastKnownGoal`
 - `Goals/RechargeGoal`
 - `Goals/InvestigateNoiseGoal`
-- `Goals/InvestigatePlayerNoiseGoal` (scaffold)
+- `Goals/InvestigatePlayerNoiseGoal` (does nothing yet)
 
-The actual conditions/desires (e.g., “Energy low”, “HeardNoise == true”, “HasLastKnownPosition == true”, etc.) are configured in your capability assets that feed into GuardAgentTypeFactory. Those assets live under Assets/Scripts/GOAP/Capabilities (ScriptableObjects not detailed here).
+The actual conditions/desires (e.g., “Energy low”, “HeardNoise == true”, “HasLastKnownPosition == true”, etc.) are configured in the capability assets that feed into GuardAgentTypeFactory. Those assets live under Assets/Scripts/GOAP/Capabilities (ScriptableObjects not detailed here).
 
 
-## How pieces work together
+## How the pieces work together
 
-1) Vision/pursuit pipeline
+**1) Vision/pursuit pipeline**
 - SimpleGuardSightNiko determines visibility.
 - CanSeePlayerSensor sets CanSeePlayer.
 - PlayerTargetSensor provides PlayerTarget when visible.
@@ -320,19 +336,19 @@ The actual conditions/desires (e.g., “Energy low”, “HeardNoise == true”,
 - LastKnownPlayerTargetSensor provides that frozen target; ClearLastKnownGoal plans into ClearLastKnownAction.
 - ClearLastKnownAction moves to the frozen point, scans, then brain.ClearLastKnownPlayerPosition() to reset state.
 
-2) Hearing/noise pipeline
+**2) Hearing/noise pipeline**
 - Some external gameplay event calls BrainBehaviour.OnDistractionNoiseHeard or OnPlayerNoiseHeard (you can broadcast to BrainBehaviour.GetActiveBrains()).
 - HeardNoiseSensor returns true; NoiseTargetSensor returns a PositionTarget.
 - InvestigateNoiseGoal selects InvestigateNoiseAction, which moves, waits a few seconds, and calls brain.ClearDistractionNoise().
 - BrainBehaviour also briefly turns the head toward recent player noise to sell awareness.
 
-3) Energy/recharge pipeline
+**3) Energy/recharge pipeline**
 - EnergyBehaviour drains over time.
 - EnergySensor returns a numerical Energy world state.
 - When below your capability-graph threshold, RechargeGoal is selected; RechargeTargetSensor returns the station target (tag "Breakpoint").
 - RechargeAction moves, enables recharging, waits until full, then ends.
 
-4) Configuration wiring
+**4) Configuration wiring**
 - GuardAgentTypeFactory aggregates capabilities into a single AgentType named “Guard”.
 - AgentTypeLinker on each guard binds its GoapActionProvider to that AgentType by name.
 - BrainBehaviour requests the goals so the planner can consider them.
@@ -340,59 +356,63 @@ The actual conditions/desires (e.g., “Energy low”, “HeardNoise == true”,
 
 ## Setup checklist (per scene)
 
-- Global GOAP host:
+- **Global GOAP host:**
   - Add a GameObject with GoapBehaviour.
   - Add GuardAgentTypeFactory to the same object and add it to GoapBehaviour’s “Agent Type Config Factories”.
   - Ensure its agentTypeName matches the guard AgentTypeLinker (default "Guard").
   - Add your capability ScriptableObjects to the factory.
 
-- Guard prefab / agent:
+- **Guard prefab / agent:**
   - Components: NavMeshAgent, AgentBehaviour, GoapActionProvider, BrainBehaviour, EnergyBehaviour, SimpleGuardSightNiko.
   - Add AgentTypeLinker (agentTypeName = "Guard").
   - Optional: AgentMoveBehaviour (if not using NavMesh-driven actions).
   - Ensure the object is on an area baked by NavMesh.
 
-- Scene objects:
+- **Scene objects:**
   - Player tagged "Player".
   - Waypoints tagged "Waypoint" for patrol.
-  - Recharge station object tagged "Breakpoint" (the code will snap to NavMesh for precise targeting).
-
-- Optional: Broadcasting noises
-  - From gameplay events (e.g., when the player makes sound), call:
-    - For distraction: foreach (var b in BrainBehaviour.GetActiveBrains()) b.OnDistractionNoiseHeard(position, radius);
-    - For player noise: foreach (var b in BrainBehaviour.GetActiveBrains()) b.OnPlayerNoiseHeard(position, radius);
-  - Or directly reference the specific BrainBehaviour on a guard.
+  - Recharge station object tagged "Breakpoint" (_the code will snap to NavMesh for precise targeting_).
 
 
 ## Edge cases and safeguards
 
-- NavMesh availability: Most actions check navAgent != null, enabled, and isOnNavMesh. Without NavMesh, they Stop to avoid errors.
-- Missing components: Sensors and actions log warnings and degrade gracefully if dependencies are missing (e.g., SimpleGuardSightNiko, EnergyBehaviour, PatrolRouteBehaviour).
-- Sensor duplicates: GuardAgentTypeFactory DeduplicateSensors() prevents multiple sensors writing the same key.
-- Last-known follow window: ClearLastKnownAction defers scanning until the follow window ends and keeps updating both the NavMesh destination and the GOAP PositionTarget.
-- Hearing occlusion: BrainBehaviour can require unobstructed line-of-sound unless hearPlayerThroughWalls = true; uses hearingObstructionMask and a ray at hearingRayHeight.
+- **NavMesh availability:** Most actions check navAgent != null, enabled, and isOnNavMesh. Without NavMesh, they Stop to avoid errors.
+
+
+- **Missing components:** Sensors and actions log warnings and degrade gracefully if dependencies are missing (e.g., SimpleGuardSightNiko, EnergyBehaviour, PatrolRouteBehaviour).
+
+
+- **Sensor duplicates:** GuardAgentTypeFactory DeduplicateSensors() prevents multiple sensors writing the same key.
+
+
+- **Last-known follow window:** ClearLastKnownAction defers scanning until the follow window ends and keeps updating both the NavMesh destination and the GOAP PositionTarget.
+
+
+- **Hearing occlusion:** BrainBehaviour can require unobstructed line-of-sound unless hearPlayerThroughWalls = true; uses hearingObstructionMask and a ray at hearingRayHeight.
 
 
 ## Extending the system
 
-- New goal or action: Create a GoalBase and GoapActionBase<T> pair, add sensors/keys as needed, then include them in a capability ScriptableObject wired into GuardAgentTypeFactory.
-- Additional sensors: Create LocalWorldSensorBase or LocalTargetSensorBase, return SenseValue/ITarget, and register in your capability.
-- Tuning difficulty:
+- **New goal or action**: Create a GoalBase and GoapActionBase<T> pair with the Generator, add sensors/keys as needed, then include them in a capability ScriptableObject wired into GuardAgentTypeFactory.
+
+
+- **Additional sensors:** Create LocalWorldSensorBase or LocalTargetSensorBase, return SenseValue/ITarget, and register in your capability.
+
+
+- **Tuning difficulty:**
   - Use GuardAgentTypeFactory’s multipliers to bias InvestigateNoiseAction or PursuitAction cost without changing assets.
   - Adjust BrainBehaviour scan/follow/hearing parameters per agent instance.
-- Patrol improvements: Replace PatrolRouteBehaviour with an ordered path or NavMesh path network for deterministic patrol routes.
+
+
+- **Patrol improvements**: Replace PatrolRouteBehaviour with an ordered path or NavMesh path network for deterministic patrol routes.
 
 
 ## Quick reference index
 
-- Behaviours: BrainBehaviour, EnergyBehaviour, PatrolRouteBehaviour, AgentMoveBehaviour
-- Actions: PatrolAction, PursuitAction, CatchAction, ClearLastKnownAction, InvestigateNoiseAction, InvestigatePlayerNoiseAction, RechargeAction
-- Sensors (World): CanSeePlayerSensor, AlertSensor, HasLastKnownPositionSensor, AtRechargeStationSensor, EnergySensor, HeardNoiseSensor, PlayerCaughtSensor, AtPlayerTargetSensor
-- Sensors (Target): PlayerTargetSensor, PatrolTargetSensor, RechargeTargetSensor, NoiseTargetSensor, LastKnownPlayerTargetSensor
-- World keys: CanSeePlayer, IsAlert, HasLastKnownPosition, HeardNoise, AtRechargeStation, AtPlayerTarget, AtPatrolTarget, AtNoiseSource, Energy, PatrolCount, PlayerCaught
-- Target keys: PlayerTarget, PatrolTarget, RechargeTarget, NoiseTarget, LastKnownPlayerTarget
-- Config: GuardAgentTypeFactory, AgentTypeLinker
-
-
-If you need a visual graph, open the GOAP Graph Viewer in the editor; ensure AgentTypeLinker has linked the agent providers to the same AgentType the GoapBehaviour reports.
-
+- **Behaviours**: BrainBehaviour, EnergyBehaviour, PatrolRouteBehaviour, AgentMoveBehaviour
+- **Actions**: PatrolAction, PursuitAction, CatchAction, ClearLastKnownAction, InvestigateNoiseAction, InvestigatePlayerNoiseAction, RechargeAction
+- **Sensors** (World): AlertSensor, HasLastKnownPositionSensor, AtRechargeStationSensor, EnergySensor, HeardNoiseSensor, PlayerCaughtSensor, AtPlayerTargetSensor
+- **Sensors** (Target): PlayerTargetSensor, PatrolTargetSensor, RechargeTargetSensor, NoiseTargetSensor, LastKnownPlayerTargetSensor
+- **World keys:** IsAlert, HasLastKnownPosition, HeardNoise, AtRechargeStation, AtPlayerTarget, AtPatrolTarget, AtNoiseSource, Energy, PatrolCount, PlayerCaught
+- **Target keys**: PlayerTarget, PatrolTarget, RechargeTarget, NoiseTarget, LastKnownPlayerTarget
+- **Config**: GuardAgentTypeFactory, AgentTypeLinker
