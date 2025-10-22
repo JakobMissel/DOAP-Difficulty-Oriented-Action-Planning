@@ -30,6 +30,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/InvestigateNoiseGoal.cs
       <Id>k__BackingField: InvestigateNoise-ce8984c9-1451-44bb-a15a-eb0c4dc9d8f7
+    - <Name>k__BackingField: InvestigatePlayerNoiseGoal
+      fullName: Assets.Scripts.GOAP.InvestigatePlayerNoiseGoal, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/InvestigatePlayerNoiseGoal.cs
+      <Id>k__BackingField: InvestigatePlayerNoise-7b6245d4-dac0-40df-bcf5-f30cc6ed9297
     - <Name>k__BackingField: PatrolGoal
       fullName: Assets.Scripts.GOAP.Goals.PatrolGoal, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -61,6 +66,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Actions/InvestigateNoiseAction.cs
       <Id>k__BackingField: InvestigateNoise-73e3c275-b47d-48a5-bcdf-9e503738a046
+    - <Name>k__BackingField: InvestigatePlayerNoiseAction
+      fullName: Assets.Scripts.GOAP.InvestigatePlayerNoiseAction, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/InvestigatePlayerNoiseAction.cs
+      <Id>k__BackingField: InvestigatePlayerNoise-a20df32e-1993-4188-856a-4fd9f4b4cfa3
     - <Name>k__BackingField: PatrolAction
       fullName: Assets.Scripts.GOAP.Actions.PatrolAction, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
