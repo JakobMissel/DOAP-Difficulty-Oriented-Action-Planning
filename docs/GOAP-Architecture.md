@@ -8,18 +8,18 @@ The system is built on [CrashKonijn GOAP (v3)]
 package and ties into Unity’s NavMesh.
 
 The museum guards are the GOAP agents that plan between the different goals:
-* Patrolling the museum
-* Investigating noises
-* Pursuing the player
-* Catching the player
-* Clearing the players last-known position
-* Recharging the flashlight when low on energy.
+* **PatrolGoal**: Patrolling the museum
+* **InvestigateNoiseGoal**: Investigating noises
+* **PursuitGoal**: Pursuing the player
+* **CatchGoal**: Catching the player
+* **ClearLastKnownGoal**: Clearing the players last-known position
+* **RechargeGoal**: Recharging the flashlight when energy reaches 0
 
 
 ## GOAP Runtime Flow
 
-- One *Empty Game Object* in the scene has **GoapBehaviour** (the global GOAP host). \
-It holds the GOAP Behaviour and the agent type factory with all the capability configurations. \
+- **GoapBehaviour** is located on an EmptyGameObject (the global GOAP host). \
+This Game object holds the GOAP Behaviour and the agent type factory with all the capability configurations. \
 ![img_2.png](img_2.png) 
 
   
@@ -35,7 +35,8 @@ It holds the GOAP Behaviour and the agent type factory with all the capability c
 ![img.png](img.png)
 
 
-- **BrainBehaviour** *and other behaviour scripts* (on each guard) owns state like whether the player was seen/caught, last-known player position, heard noises, and exposes helper APIs. 
+- **BrainBehaviour** *and other behaviour scripts* (on each guard) owns state like whether the player was seen/caught, last-known player position, heard noises, and exposes helper APIs. \
+Some of these settings can be changed directly in the inspector. \
 It also registers the agent’s goals on Start(). \
 ![img_4.png](img_4.png)
 
@@ -49,22 +50,26 @@ It also registers the agent’s goals on Start(). \
 ## Configuration scripts
 
 ### `Config/GuardAgentTypeFactory.cs`
-Builds a complete AgentType (actions, goals, sensors) for guards from a list of capability ScriptableObjects; performs deduplication and optional cost tweaks.
+Builds a complete **AgentType** (actions, goals, sensors) for guards from a list of capability ScriptableObjects; performs deduplication and optional cost tweaks.
 
 **Highlights**:
-- Serialized fields:
+- **Serialized fields:**
   - capabilities: list of CapabilityConfigScriptable assets. Each provides portions of the GOAP graph (goals/actions/sensors). The factory merges them.
   - agentTypeName: defaults to "Guard". The AgentType is registered under this name.
   - investigateNoiseCostMultiplier, pursuitCostMultiplier: simple cost multipliers applied programmatically by matching action class names.
-- Create():
+
+
+- **Create():**
   - Builds ICapabilityConfig for each capability.
   - Merges Goals, Actions, WorldSensors, TargetSensors, MultiSensors into an AgentTypeConfig.
   - DeduplicateSensors(): groups by key name for world and target sensors and keeps the first instance.
   - Ensures there’s always an AtPlayerTarget world sensor (used by pursuit/catch flows).
   - ApplyDifficultyTweaks(): multiplies ActionConfig.BaseCost for InvestigateNoiseAction and PursuitAction if present.
-- OnValidate(): warns if the factory is on the same GameObject as GoapActionProvider; it should live on the GoapBehaviour object and be added to “Agent Type Config Factories”.
 
-How it fits:
+
+- **OnValidate():** warns if the factory is on the same GameObject as GoapActionProvider; it should live on the GoapBehaviour object and be added to “Agent Type Config Factories”.
+
+**How it fits:**
 - GoapBehaviour queries this factory to get the AgentType. AgentTypeLinker will then bind each guard’s provider to that AgentType by name.
 
 
@@ -76,7 +81,7 @@ Highlights:
 - Calls goap.GetAgentType(agentTypeName) and assigns provider.AgentType.
 - Logs helpful errors if the AgentType isn’t found (e.g., factory not set up or name mismatch).
 
-How it fits:
+**How it fits:**
 - Without this, planners/graph viewers won’t know which graph the agent uses; actions/goals won’t be active.
 
 
@@ -110,7 +115,7 @@ Guard "brain"—holds runtime state for sight and hearing, last-known player pos
 - IsWithinAudiblePursuitWindow(Transform)
 - Static ActiveBrains set: GetActiveBrains() for broadcasting events like noises to all guards.
 
-Also: On Start(), it registers the core goals via provider.RequestGoal(): PatrolGoal, PursuitGoal, CatchGoal, ClearLastKnownGoal, RechargeGoal, InvestigateNoiseGoal.
+**Also**: On Start(), it registers the core goals via provider.RequestGoal(): PatrolGoal, PursuitGoal, CatchGoal, ClearLastKnownGoal, RechargeGoal, InvestigateNoiseGoal.
 
 
 ### `Behaviours/EnergyBehaviour.cs`
@@ -118,7 +123,7 @@ Simple energy model for guards.
 
 - **currentEnergy** drains by **drainRate** over time, or recharges by **rechargeRate** when **isRecharging** is true.
 - **SetRecharging**(bool) flips the state (used by **RechargeAction**).
-- Sensors read **CurrentEnergy** to drive the **RechargeGoal**.
+- **Sensors** read **CurrentEnergy** to drive the **RechargeGoal**.
 
 
 ### `Behaviours/PatrolRouteBehaviour.cs`
@@ -128,7 +133,7 @@ Minimal waypoint provider for patrolling.
 - **GetCurrent()**: returns the current waypoint transform.
 - **Advance()**: cycles to the next waypoint (wrap-around).
 
-Notes:
+**Notes:**
 - This uses scene-wide **FindGameObjectsWithTag**, so ordering depends on scene ordering. \
 _If we need deterministic routes, consider a parent object holding ordered children_.
 
