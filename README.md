@@ -28,3 +28,8 @@ Unsplash - Free to use under the Unsplash License
 - https://unsplash.com/photos/a-painting-of-a-hat-and-other-items-on-a-table-GyPNjmq5mdA
 - https://unsplash.com/photos/blue-white-and-black-abstract-painting-uG6R6Hl-L74
 - https://unsplash.com/photos/black-and-white-bird-painting-eMw-fVXNpME
+- https://unsplash.com/photos/jl4maZl7d6I
+- https://unsplash.com/photos/gCazvo5BQtg
+- https://unsplash.com/photos/XWr8xsCDAWs
+- https://unsplash.com/photos/149d9GAl7ww
+- https://unsplash.com/photos/SLTRRzBPzKE
