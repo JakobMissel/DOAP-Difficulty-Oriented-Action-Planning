@@ -40,7 +40,7 @@ namespace Assets.Scripts.DDA
         /// </summary>
         /// <param name="actionToTranslate"></param>
         /// <returns>A number to be summed with the other DifficultyTranslationPlayer actions</returns>
-        public static float DifficultyTranslationPlayer(PlayerDAAs actionToTranslate)
+        public static float DifficultyTranslation(PlayerDAAs actionToTranslate)
         {
             CalledNow();
 
@@ -61,7 +61,7 @@ namespace Assets.Scripts.DDA
         /// </summary>
         /// <param name="actionToTranslate">Which enemy action do you want to evaluate</param>
         /// <returns>A number to be multiplied with the relevant enemy action</returns>
-        public static float DifficultyTranslationEnemy(EnemyActions actionToTranslate)
+        public static float DifficultyTranslation(EnemyActions actionToTranslate)
         {
             CalledNow();
 

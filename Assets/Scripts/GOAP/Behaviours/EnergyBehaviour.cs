@@ -12,7 +12,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         [SerializeField] private float drainRate = 2f;
         [SerializeField] private float rechargeRate = 8f;
 
-        [SerializeField] private float currentEnergy;
+        private float currentEnergy;
         private bool isRecharging;
 
         public float CurrentEnergy => currentEnergy;
@@ -39,7 +39,7 @@ namespace Assets.Scripts.GOAP.Behaviours
             else
             {
                 // Multiplies the drainrate by the Difficulty Translation of it (full energy usage at difficulty 0, no energy usage at difficulty 1)
-                currentEnergy -= DifficultyTracker.DifficultyTranslationEnemy(EnemyActions.EnergyUsage) * drainRate * dt;
+                currentEnergy -= DifficultyTracker.DifficultyTranslation(EnemyActions.EnergyUsage) * drainRate * dt;
                 if (currentEnergy < 0f)
                     currentEnergy = 0f;
             }
