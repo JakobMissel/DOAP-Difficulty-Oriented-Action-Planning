@@ -20,7 +20,6 @@ public class Tutorial : MonoBehaviour
     void Awake()
     {
         timerImage.fillAmount = 0;
-        
         moveT = moveTime;
         sneakT = sneakTime;
         climbT = climbTime;
@@ -48,7 +47,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerMoved(bool isMoving)
     {
-        if(isMoving && IsPreviousGoalCompleted(0))
+        if(isMoving && IsPreviousGoalCompleted(0) && IsGoalActive(0))
         {
             moveT -= Time.deltaTime;
             print(moveT);
@@ -64,7 +63,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerSneaked(bool isSneaking)
     {
-        if (isSneaking && IsPreviousGoalCompleted(1))
+        if (isSneaking && IsPreviousGoalCompleted(1) && IsGoalActive(1))
         {
             sneakT -= Time.deltaTime;
             print(sneakT);
@@ -79,7 +78,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerClimbed(bool isClimbing)
     {
-        if (isClimbing && IsPreviousGoalCompleted(2))
+        if (isClimbing && IsPreviousGoalCompleted(2) && IsGoalActive(2))
         {
             climbT -= Time.deltaTime;
             print(climbT);
@@ -94,7 +93,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerPickedUpItem(Pickup item)
     {
-        if (IsPreviousGoalCompleted(3))
+        if (IsPreviousGoalCompleted(3) && IsGoalActive(3))
         {
             // Unsubscribe after completing the goal
             PlayerActions.pickedUpItem -= PlayerPickedUpItem;
@@ -105,7 +104,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerAimed(bool isAiming)
     {
-        if (isAiming && IsPreviousGoalCompleted(4))
+        if (isAiming && IsPreviousGoalCompleted(4) && IsGoalActive(4))
         {
             aimT -= Time.deltaTime;
             print(aimT);
@@ -120,7 +119,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerAmmoUpdated(int ammo)
     {
-        if (ammo < 1 && IsPreviousGoalCompleted(5))
+        if (ammo < 1 && IsPreviousGoalCompleted(5) && IsGoalActive(5))
         {
             // Unsubscribe after completing the goal
             PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
@@ -144,6 +143,11 @@ public class Tutorial : MonoBehaviour
         }
         Debug.LogWarning("Complete previous goals first!");
         return false;
+    }
+
+    bool IsGoalActive(int goalIndex)
+    {
+        return objective.goals[goalIndex].isActive;
     }
 
     void CompleteGoal(int goalIndex, float delay)

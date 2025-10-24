@@ -4,6 +4,7 @@ using UnityEngine;
 public class SubObjective : ScriptableObject
 {
     public bool isCompleted;
+    public bool isActive;
     public string descriptionText;
     [TextArea] public string goalText;
     [TextArea] public string completionText;

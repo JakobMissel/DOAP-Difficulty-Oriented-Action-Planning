@@ -1,5 +1,6 @@
 using System;
 using Unity.Cinemachine;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +34,9 @@ public class PlayerActions : MonoBehaviour
     // Pickup actions
     public static Action<Pickup> pickedUpItem;
     public static void OnPickedUpItem(Pickup item) => pickedUpItem?.Invoke(item);
+
+    public static Action<Pickup> stealItem;
+    public static void OnStealItem(Pickup item) => stealItem?.Invoke(item);
 
     // Aim & Throw actions
     public static Action<bool> aimStatus;
@@ -68,6 +72,7 @@ public class PlayerActions : MonoBehaviour
             climbStatus += DebugClimb;
             sneakStatus += DebugSneak;
             pickedUpItem += DebugPickup;
+            stealItem += DebugStole;
             aimStatus += DebugAim;
             ammoUpdate += DebugAmmoUpdate;
         }
@@ -81,6 +86,7 @@ public class PlayerActions : MonoBehaviour
             climbStatus -= DebugClimb;
             sneakStatus -= DebugSneak;
             pickedUpItem -= DebugPickup;
+            stealItem -= DebugStole;
             aimStatus -= DebugAim;
             ammoUpdate -= DebugAmmoUpdate;
         }
@@ -113,9 +119,14 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    private void DebugPickup(Pickup pickup)
+    void DebugPickup(Pickup pickup)
     {
         print($"[{Time.time}] Picked up item: {pickup.name}");
+    }
+
+    void DebugStole(Pickup pickup)
+    {
+        print($"[{Time.time}] Stole item: {pickup.name}");
     }
 
     void DebugAim(bool status)

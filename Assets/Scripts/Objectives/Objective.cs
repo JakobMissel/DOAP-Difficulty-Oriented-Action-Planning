@@ -10,6 +10,11 @@ public class Objective : ScriptableObject
     public List<SubObjective> completions;
     public Objective nextObjective;
 
+    public void BeginObjective()
+    {
+        goals[0].isActive = true;
+    }
+
     public void CompleteGoal(int goalIndex)
     {
         goals[goalIndex].MarkAsCompleted();

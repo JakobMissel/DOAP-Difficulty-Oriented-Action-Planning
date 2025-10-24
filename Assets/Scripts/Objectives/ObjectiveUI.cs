@@ -30,7 +30,7 @@ public class ObjectiveUI : MonoBehaviour
         completionText.text = "";
         if (currentObjective.completions.Count > 0)
         {
-            // Show completion text for the last completed sub-goal
+            // Show completion text for the most recent completed sub-goal
             completionText.text = currentObjective?.completions[currentSubGoalIndex - 1].completionText;
         }
 
@@ -42,13 +42,20 @@ public class ObjectiveUI : MonoBehaviour
     {
         if (currentObjective.isCompleted)
         {
-            ObjectivesManager.OnSetNewObjective(currentObjective.nextObjective);
+            descriptionText.text = $"{currentObjective} has been completed!";
             return;
         }
-
+        
+        // Update UI texts
         nameText.text = currentObjective.name;
         descriptionText.text = "";
         completionText.text = "";
-        descriptionText.text = currentObjective?.goals[currentSubGoalIndex].descriptionText;
+
+        // Activate the current sub-objective
+        if(currentObjective && currentObjective.goals.Count > currentSubGoalIndex)
+        {
+            ObjectivesManager.OnActivateSubObjective(currentObjective?.goals[currentSubGoalIndex]);
+            descriptionText.text = currentObjective?.goals[currentSubGoalIndex].descriptionText;
+        }
     }
 }
