@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Assets.Scripts.DDA
 {
-    [RequireComponent(typeof(DifficultyTracker))]
     public class DdaPlayerActions : MonoBehaviour
     {
         // Paintings
@@ -56,7 +55,7 @@ namespace Assets.Scripts.DDA
             }
 
             // Tell the average painting stealing time to the difficulty tracker
-            DifficultyTracker.Instance.AlterDifficulty(DifficultyAdjustingActions.TimeBetweenPaintings, totalStealingTime / paintingStealingLength.Count);
+            DifficultyTracker.AlterDifficulty(PlayerDAAs.TimeBetweenPaintings, totalStealingTime / paintingStealingLength.Count);
         }
 
         private void UsedItem(int newAmmo)
@@ -67,7 +66,7 @@ namespace Assets.Scripts.DDA
                 // Count up the total items used
                 totalItemsUsed++;
                 // Tell the DifficultyTracker the current percentage of succesful item usages
-                DifficultyTracker.Instance.AlterDifficulty(DifficultyAdjustingActions.SuccesfulItemUsage, (float)itemSuccesses/(float)totalItemsUsed);
+                DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)itemSuccesses/(float)totalItemsUsed);
             }
 
             // Update the tracked ammo

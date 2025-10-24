@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Assets.Scripts.DDA
@@ -8,23 +7,32 @@ namespace Assets.Scripts.DDA
     /// <summary>
     /// Singleton to keep track of what difficulty the game is at
     /// </summary>
-    public class DifficultyTracker : MonoBehaviour
+    public static class DifficultyTracker
     {
-        public static DifficultyTracker Instance { get; private set; }
+        private static PlayerDifficultyEffects pde;
+        private static EnemyDifficultyEffects ede;
 
-        [SerializeField, Tooltip("How a player action affects difficulty.")] private List<DifficultyAdjustingAction> playerDifficultyEffect;
-        [SerializeField, Tooltip("How much an enemy action will cost based on difficulty.")] private List<EnemyAction> enemyDifficultyEffect;
-        
-        private void Awake()
+        private static bool hasBeenCalled = false;
+
+        private static List<float> effectiveDifficulties = new List<float>();
+
+        /// <summary>
+        /// If this is the first time this is called, get the Player and Enemy Difficulty Effects
+        /// </summary>
+        private static void CalledNow()
         {
-            if (Instance != null)
-            {
-                Destroy(this);
-                return;
-            }
+            if (hasBeenCalled) return;
 
-            Instance = this;
-            DontDestroyOnLoad(this);
+            hasBeenCalled = true;
+
+            pde = Resources.Load<PlayerDifficultyEffects>("DDA/PlayerDifficultyEffects");
+            ede = Resources.Load<EnemyDifficultyEffects>("DDA/EnemyDifficultyEffects");
+
+            // Assign pde to base values
+            for (int i = 0; i < pde.playerActions.Count; i++)
+            {
+                effectiveDifficulties.Add(pde.playerActions[i].startDifficulty);
+            }
         }
 
         /// <summary>
@@ -32,10 +40,12 @@ namespace Assets.Scripts.DDA
         /// </summary>
         /// <param name="actionToTranslate"></param>
         /// <returns>A number to be summed with the other DifficultyTranslationPlayer actions</returns>
-        public float DifficultyTranslationPlayer(DifficultyAdjustingActions actionToTranslate)
+        public static float DifficultyTranslationPlayer(PlayerDAAs actionToTranslate)
         {
+            CalledNow();
+
             float difficultyTranslation = 0f;
-            foreach (DifficultyAdjustingAction action in playerDifficultyEffect)
+            foreach (DifficultyAdjustingAction action in pde.playerActions)
             {
                 if (action.action != actionToTranslate) continue;
 
@@ -50,11 +60,13 @@ namespace Assets.Scripts.DDA
         /// Gets the difficulty translation of an enemy action
         /// </summary>
         /// <param name="actionToTranslate">Which enemy action do you want to evaluate</param>
-        /// <returns>A number to be multiplied by the WorldKey of that enemy action</returns>
-        public float DifficultyTranslationEnemy(EnemyActions actionToTranslate)
+        /// <returns>A number to be multiplied with the relevant enemy action</returns>
+        public static float DifficultyTranslationEnemy(EnemyActions actionToTranslate)
         {
+            CalledNow();
+
             float difficultyTranslation = 0f;
-            foreach (EnemyAction action in enemyDifficultyEffect)
+            foreach (EnemyAction action in ede.enemyActions)
             {
                 if (action.action != actionToTranslate) continue;
 
@@ -70,16 +82,18 @@ namespace Assets.Scripts.DDA
         /// </summary>
         /// <param name="actionToAdjust"></param>
         /// <param name="actionInputValue">Eg average seconds since last painting was picked up</param>
-        public void AlterDifficulty(DifficultyAdjustingActions actionToAdjust, float actionInputValue)
+        public static void AlterDifficulty(PlayerDAAs actionToAdjust, float actionInputValue)
         {
+            CalledNow();
+
             // Goes through all playerDAAs
-            for (int i = 0; i < playerDifficultyEffect.Count; i++)
+            for (int i = 0; i < pde.playerActions.Count; i++)
             {
                 // Skips non-selected ones
-                if (playerDifficultyEffect[i].action != actionToAdjust) continue;
+                if (pde.playerActions[i].action != actionToAdjust) continue;
 
                 // Evaluates the effective difficulty based on the updates info about the player action
-                playerDifficultyEffect[i].effectiveDifficulty = playerDifficultyEffect[i].curve.Evaluate(actionInputValue);
+                effectiveDifficulties[i] = pde.playerActions[i].curve.Evaluate(actionInputValue);
 
                 break;
             }
@@ -89,27 +103,31 @@ namespace Assets.Scripts.DDA
         /// Gets the current difficulty as a float between 0 and 1
         /// </summary>
         /// <returns></returns>
-        public float GetDifficultyF()
+        public static float GetDifficultyF()
         {
-            float effectiveDifficulty = 0f;
+            CalledNow();
+
+            float summedEffectiveDifficulty = 0f;
             
             // Sum and clamp01 all effective difficulties
-            foreach (DifficultyAdjustingAction difficultyAction in playerDifficultyEffect)
+            foreach (float effectiveDifficulty in effectiveDifficulties)
             {
-                effectiveDifficulty += difficultyAction.effectiveDifficulty;
+                summedEffectiveDifficulty += effectiveDifficulty;
             }
 
-            effectiveDifficulty = Mathf.Clamp01(effectiveDifficulty);
+            summedEffectiveDifficulty = Mathf.Clamp01(summedEffectiveDifficulty);
 
-            return effectiveDifficulty;
+            return summedEffectiveDifficulty;
         }
 
         /// <summary>
         /// Gets the current difficulty as an int between 0 and 100
         /// </summary>
         /// <returns></returns>
-        public int GetDifficultyI()
+        public static int GetDifficultyI()
         {
+            CalledNow();
+
             int difficulty = Mathf.RoundToInt(GetDifficultyF() * 100);
             return difficulty;
         }

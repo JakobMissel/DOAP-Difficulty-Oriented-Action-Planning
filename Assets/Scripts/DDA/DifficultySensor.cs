@@ -9,11 +9,9 @@ namespace Assets.Scripts.DDA
     // [GoapId("DifficultySensor-21c25467-410e-4d08-a28e-8df3f7202e15")]
     public class DifficultySensor : LocalWorldSensorBase
     {
-        private DifficultyTracker difficultyTracker;
-
         public override void Created()
         {
-            difficultyTracker = DifficultyTracker.Instance;
+            
         }
 
         public override void Update()
@@ -23,7 +21,7 @@ namespace Assets.Scripts.DDA
 
         public override SenseValue Sense(IActionReceiver agent, IComponentReference refs)
         {
-            return new SenseValue(difficultyTracker.GetDifficultyI());
+            return new SenseValue(DifficultyTracker.GetDifficultyI());
         }
     }
 }

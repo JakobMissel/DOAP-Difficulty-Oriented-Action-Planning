@@ -2,6 +2,7 @@ using Assets.Scripts.GOAP.Goals;
 using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
+using Assets.Scripts.DDA;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
@@ -11,7 +12,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         [SerializeField] private float drainRate = 2f;
         [SerializeField] private float rechargeRate = 8f;
 
-        private float currentEnergy;
+        [SerializeField] private float currentEnergy;
         private bool isRecharging;
 
         public float CurrentEnergy => currentEnergy;
@@ -37,7 +38,8 @@ namespace Assets.Scripts.GOAP.Behaviours
             }
             else
             {
-                currentEnergy -= drainRate * dt;
+                // Multiplies the drainrate by the Difficulty Translation of it (full energy usage at difficulty 0, no energy usage at difficulty 1)
+                currentEnergy -= DifficultyTracker.DifficultyTranslationEnemy(EnemyActions.EnergyUsage) * drainRate * dt;
                 if (currentEnergy < 0f)
                     currentEnergy = 0f;
             }
