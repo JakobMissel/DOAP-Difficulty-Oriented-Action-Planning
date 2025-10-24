@@ -7,6 +7,9 @@ Freestylized - Royalty Free License: Free to use for all Commercial and Non-Comm
 - https://freestylized.com/material/wood_planks_09/
 - https://freestylized.com/material/wood_planks_02/
 
+3D Textures - Free PBR textures and Stylized textures with Color, Normal, Displacement, Occlusion and Roughness Maps.
+- https://3dtextures.me/2021/08/12/wood-floor-011/
+
 Unsplash - Free to use under the Unsplash License
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-zZPeoLxLRyM
 - https://unsplash.com/photos/orange-white-and-teal-abstract-painting-1_WMZARl81c
