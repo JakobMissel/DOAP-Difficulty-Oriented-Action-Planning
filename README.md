@@ -11,7 +11,6 @@ Unsplash - Free to use under the Unsplash License
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-zZPeoLxLRyM
 - https://unsplash.com/photos/orange-white-and-teal-abstract-painting-1_WMZARl81c
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-4kHLQBBM6p4
-- https://unsplash.com/photos/an-abstract-painting-of-multicolored-lines-on-a-black-background-aKWIRLXuTZA
 - https://unsplash.com/photos/F8x3DJmh-Hg
 - https://unsplash.com/photos/blue-and-red-abstract-painting-RKRnPx9e4jQ
 - https://unsplash.com/photos/a-painting-of-a-man-holding-a-book-0f1vVflVO1M
