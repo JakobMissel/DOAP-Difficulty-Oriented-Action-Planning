@@ -1,23 +1,16 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Core;
 using CrashKonijn.Goap.Runtime;
-using UnityEngine;
+using Assets.Scripts.DDA;
 
-namespace Assets.Scripts.DDA
+namespace Assets.Scripts.GOAP.Sensors.DDA
 {
-    // TODO: Få en sej GoapId
-    // [GoapId("DifficultySensor-21c25467-410e-4d08-a28e-8df3f7202e15")]
+    [GoapId("DifficultySensor-260fd14a-d8e1-49eb-93c7-4281156582c2")]
     public class DifficultySensor : LocalWorldSensorBase
     {
-        public override void Created()
-        {
-            
-        }
+        public override void Created() { }
 
-        public override void Update()
-        {
-
-        }
+        public override void Update() { }
 
         public override SenseValue Sense(IActionReceiver agent, IComponentReference refs)
         {

@@ -102,11 +102,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AtRechargeStationSensor.cs
       <Id>k__BackingField: AtRechargeStationSensor-bc4891f5-9f4c-433e-8a18-995894a9a9d7
-    - <Name>k__BackingField: CanSeePlayerSensor
-      fullName: Assets.Scripts.GOAP.Sensors.CanSeePlayerSensor, Assembly-CSharp,
+    - <Name>k__BackingField: DifficultySensor
+      fullName: Assets.Scripts.GOAP.Sensors.DDA.DifficultySensor, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/CanSeePlayerSensor.cs
-      <Id>k__BackingField: CanSeePlayerSensor-859b0f9f-9d6a-41ba-adf2-a7a7526be1e9
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/DDA/DifficultySensor.cs
+      <Id>k__BackingField: DifficultySensor-260fd14a-d8e1-49eb-93c7-4281156582c2
     - <Name>k__BackingField: EnergySensor
       fullName: Assets.Scripts.GOAP.Sensors.EnergySensor, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -148,11 +148,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/AtRechargeStation.cs
       <Id>k__BackingField: AtRechargeStation-40a2850d-48e2-4996-8a89-86fa022f2f72
-    - <Name>k__BackingField: CanSeePlayer
-      fullName: Assets.Scripts.GOAP.WorldKeys.CanSeePlayer, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/CanSeePlayer.cs
-      <Id>k__BackingField: CanSeePlayer-534eee6c-e6ea-4abb-844c-8da27953d2f8
+    - <Name>k__BackingField: DifficultyWK
+      fullName: Assets.Scripts.GOAP.WorldKeys.DDA.DifficultyWK, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/DDA/DifficultyWK.cs
+      <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
     - <Name>k__BackingField: Energy
       fullName: Assets.Scripts.GOAP.WorldKeys.Energy, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -192,7 +192,7 @@ MonoBehaviour:
     - <Name>k__BackingField: NoiseTargetSensor
       fullName: Assets.Scripts.GOAP.Sensors.NoiseTargetSensor, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/NosieTargetSensor.cs
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/NoiseTargetSensor.cs
       <Id>k__BackingField: NoiseTargetSensor-ebd8de9d-f878-45c1-add0-edef3a65bc21
     - <Name>k__BackingField: PatrolTargetSensor
       fullName: Assets.Scripts.GOAP.Sensors.PatrolTargetSensor, Assembly-CSharp,
