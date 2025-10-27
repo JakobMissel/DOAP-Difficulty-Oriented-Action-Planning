@@ -3,8 +3,7 @@
 This document explains how the project’s GOAP (Goal-Oriented Action Planning) layer is structured, what each script does, and how they interact at runtime. 
 It serves as a reference for understanding, extending, or modifying the AI behaviour system.
 
-The system is built on [CrashKonijn GOAP (v3)]
-(https://github.com/crashkonijn/GOAP) 
+The system is built on [CrashKonijn GOAP (v3)](https://github.com/crashkonijn/GOAP) 
 package and ties into Unity’s NavMesh.
 
 The museum guards are the GOAP agents that plan between the different goals:
