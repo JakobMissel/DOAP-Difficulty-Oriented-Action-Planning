@@ -1,5 +1,7 @@
+using CrashKonijn.Goap.Runtime;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.DDA
@@ -14,6 +16,7 @@ namespace Assets.Scripts.DDA
 
         private static bool hasBeenCalled = false;
 
+        private static List<float> actualDifficulties = new List<float>();
         private static List<float> effectiveDifficulties = new List<float>();
 
         /// <summary>
@@ -31,8 +34,11 @@ namespace Assets.Scripts.DDA
             // Assign pde to base values
             for (int i = 0; i < pde.playerActions.Count; i++)
             {
-                effectiveDifficulties.Add(pde.playerActions[i].startDifficulty);
+                actualDifficulties.Add(pde.playerActions[i].startDifficulty);
             }
+
+            // Effective difficulties should be equal to the starting difficulties
+            PutDifficultyIntoEffect();
         }
 
         /// <summary>
@@ -45,11 +51,11 @@ namespace Assets.Scripts.DDA
             CalledNow();
 
             float difficultyTranslation = 0f;
-            foreach (DifficultyAdjustingAction action in pde.playerActions)
+            for (int i = 0; i < pde.playerActions.Count; i++)
             {
-                if (action.action != actionToTranslate) continue;
+                if (pde.playerActions[i].action != actionToTranslate) continue;
 
-                difficultyTranslation = action.curve.Evaluate(GetDifficultyF());
+                difficultyTranslation = pde.playerActions[i].curve.Evaluate(GetDifficultyF());
 
                 break;
             }
@@ -66,11 +72,11 @@ namespace Assets.Scripts.DDA
             CalledNow();
 
             float difficultyTranslation = 0f;
-            foreach (EnemyAction action in ede.enemyActions)
+            for (int i = 0; i < ede.enemyActions.Count; i++)
             {
-                if (action.action != actionToTranslate) continue;
+                if (ede.enemyActions[i].action != actionToTranslate) continue;
 
-                difficultyTranslation = action.curve.Evaluate(GetDifficultyF());
+                difficultyTranslation = ede.enemyActions[i].curve.Evaluate(GetDifficultyF());
 
                 break;
             }
@@ -93,10 +99,13 @@ namespace Assets.Scripts.DDA
                 if (pde.playerActions[i].action != actionToAdjust) continue;
 
                 // Evaluates the effective difficulty based on the updates info about the player action
-                effectiveDifficulties[i] = pde.playerActions[i].curve.Evaluate(actionInputValue);
+                actualDifficulties[i] = pde.playerActions[i].curve.Evaluate(actionInputValue);
 
                 break;
             }
+
+            // Put the new difficulties into effect
+            PutDifficultyIntoEffect();
         }
 
         /// <summary>
@@ -110,9 +119,9 @@ namespace Assets.Scripts.DDA
             float summedEffectiveDifficulty = 0f;
             
             // Sum and clamp01 all effective difficulties
-            foreach (float effectiveDifficulty in effectiveDifficulties)
+            for (int i = 0; i < effectiveDifficulties.Count; i++)
             {
-                summedEffectiveDifficulty += effectiveDifficulty;
+                summedEffectiveDifficulty += effectiveDifficulties[i];
             }
 
             summedEffectiveDifficulty = Mathf.Clamp01(summedEffectiveDifficulty);
@@ -130,6 +139,24 @@ namespace Assets.Scripts.DDA
 
             int difficulty = Mathf.RoundToInt(GetDifficultyF() * 100);
             return difficulty;
+        }
+
+        /// <summary>
+        /// Put the current difficulty into effect
+        /// </summary>
+        public static void PutDifficultyIntoEffect()
+        {
+            // Update effective difficulties to match the actual difficulties
+            effectiveDifficulties = new List<float>(actualDifficulties);
+
+            // Make costs of GOAP actions reflect the difficulties
+            for (int i = 0; i < ede.enemyActions.Count; i++)
+            {
+                if (ede.enemyActions[i].capability == null)
+                    continue;
+                Debug.Log($"Applying cost change of {ede.enemyActions[i].action}, on capability {ede.enemyActions[i].capability}.\nThe cost is being set to {DifficultyTranslation(ede.enemyActions[i].action)}, given the difficulty {GetDifficultyF()}");
+                ede.enemyActions[i].capability.actions[0].baseCost = DifficultyTranslation(ede.enemyActions[i].action);
+            }
         }
     }
 }

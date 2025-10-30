@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d6076189f0d8b4db4bfdb28c3d74f2, type: 3}
   m_Name: EnemyDifficultyEffects
   m_EditorClassIdentifier: 
+  developerNote: 'How difficulty affects enemy actions.
+
+    The element the curve
+    affects may differ from action to action.
+
+    For some it affects cost, others
+    it affects runtime variables such as battery drain speed.'
   enemyActions:
   - action: 0
     curve:
@@ -38,6 +45,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
   - action: 1
     curve:
       serializedVersion: 2
@@ -63,6 +72,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
   - action: 2
     curve:
       serializedVersion: 2
@@ -88,6 +99,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
   - action: 3
     curve:
       serializedVersion: 2
@@ -113,6 +126,9 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: How quickly battery power drains depending on the difficulty.
+      1 is at the base rate, 0 is that it does not drain at all
   - action: 4
     curve:
       serializedVersion: 2
@@ -138,6 +154,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
   - action: 5
     curve:
       serializedVersion: 2
@@ -163,6 +181,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
   - action: 6
     curve:
       serializedVersion: 2
@@ -188,6 +208,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
   - action: 7
     curve:
       serializedVersion: 2
@@ -222,6 +244,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
   - action: 8
     curve:
       serializedVersion: 2
@@ -256,3 +280,72 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
+  - action: 8
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.25
+        value: 2
+        inSlope: -12.051967
+        outSlope: -12.051967
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08249986
+      - serializedVersion: 3
+        time: 0.5
+        value: 1
+        inSlope: -0.00000067636506
+        outSlope: -0.00000067636506
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.58749974
+      - serializedVersion: 3
+        time: 0.8
+        value: 0.2
+        inSlope: -5.4025774
+        outSlope: -5.4025774
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.091666974
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: 
+  - action: 9
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 4
+        inSlope: -1.5
+        outSlope: -1.5
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 2.5
+        inSlope: -1.5
+        outSlope: -1.5
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    capability: {fileID: 11400000, guid: 6ba2c034ca0e72c4390cf03d09996533, type: 2}
+    developerNote: 'The curve value directly assigns the cost of taking a recharge
+      action.
+
+      Chasing the player has a cost of 3. So when this costs more
+      than 3, it is more important than casing the player.'

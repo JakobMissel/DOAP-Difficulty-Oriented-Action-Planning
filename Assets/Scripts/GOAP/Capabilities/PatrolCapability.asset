@@ -49,23 +49,12 @@ MonoBehaviour:
         <Id>k__BackingField: 
       comparison: 2
       amount: 0
-    - worldKey:
-        <Name>k__BackingField: DifficultyWK
-        <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
-      comparison: 3
-      amount: 25
     effects:
     - worldKey:
         <Name>k__BackingField: PatrolCount
         <Id>k__BackingField: PatrolCount-e6877c4b-28f8-4a4c-b4f2-a327d841030d
       effect: 1
-  worldSensors:
-  - sensor:
-      <Name>k__BackingField: DifficultySensor
-      <Id>k__BackingField: DifficultySensor-260fd14a-d8e1-49eb-93c7-4281156582c2
-    worldKey:
-      <Name>k__BackingField: DifficultyWK
-      <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
+  worldSensors: []
   targetSensors:
   - sensor:
       <Name>k__BackingField: PatrolTargetSensor
