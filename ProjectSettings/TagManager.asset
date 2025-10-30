@@ -11,6 +11,7 @@ TagManager:
   - Breakpoint
   - Agent
   - Laser
+  - PlayerPaintingPosition
   layers:
   - Default
   - TransparentFX

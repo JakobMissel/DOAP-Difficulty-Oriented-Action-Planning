@@ -3,13 +3,22 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] Animator animator;
+
+    [Header("Climbing")]
+    [SerializeField] GameObject playerHips;
+    [SerializeField] Vector3 hipsRotationOffset;
+
     PlayerMovement playerMovement;
+    PlayerClimb playerClimb;
     int moveLayer;
     int sneakLayer;
     int climbLayer;
+    bool onWall;
+
     void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        playerClimb = GetComponent<PlayerClimb>();
         GetAnimationLayers();
     }
 
@@ -27,7 +36,10 @@ public class PlayerAnimation : MonoBehaviour
 
     void Update()
     {
-        MoveAnimation();
+        if(!playerClimb.onWall) 
+            MoveAnimation();
+        else
+            ClimbAnimation();
     }
 
     void MoveAnimation()
@@ -47,8 +59,26 @@ public class PlayerAnimation : MonoBehaviour
 
     void ClimbAnimation(bool status)
     {
-        animator?.SetLayerWeight(moveLayer, status ? 0 : 1);
-        animator?.SetLayerWeight(climbLayer, status ? 1 : 0);
+        animator?.SetLayerWeight(moveLayer, playerClimb.onWall ? 0 : 1);
+        animator?.SetLayerWeight(climbLayer, playerClimb.onWall ? 1 : 0);
+    }
+
+    void ClimbAnimation()
+    {
+        animator?.SetFloat("VelocityZ", playerClimb.velocity.y);
+        if (playerMovement.moveInput.y == 0)
+            animator?.SetFloat("VelocityX", playerClimb.velocity.x);
+        else
+            animator?.SetFloat("VelocityX", playerClimb.velocity.x / 2);
+
+        //if (onWall)
+        //{
+        //    playerHips.transform.localEulerAngles += hipsRotationOffset;
+        //}
+        //else
+        //{
+        //    playerHips.transform.localEulerAngles = Vector3.zero;
+        //}
     }
 
     void GetAnimationLayers()

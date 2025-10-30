@@ -12,20 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9bc55e65edca44fa3e8fc3c1f3b951, type: 3}
   m_Name: 0_CompleteTutorial
   m_EditorClassIdentifier: 
-  isCompleted: 1
+  isCompleted: 0
+  isActive: 0
   name: Tutorial
-  goals:
+  completionDelay: 7
+  subObjectives:
   - {fileID: 11400000, guid: 3c7102bc615110b4fbce60f5f2db8c86, type: 2}
   - {fileID: 11400000, guid: da73cfac90cca0948ae860cacdb23da6, type: 2}
   - {fileID: 11400000, guid: 4a1eccb26a1cc5343925c9b206e29ac1, type: 2}
   - {fileID: 11400000, guid: a0655a3bb47eea24698f80f703e587d6, type: 2}
   - {fileID: 11400000, guid: 8bde445ee90f5014790f31c6b724bcb6, type: 2}
   - {fileID: 11400000, guid: 27fbdfb7bde009f4ca668931a75429bb, type: 2}
-  completions:
-  - {fileID: 11400000, guid: 3c7102bc615110b4fbce60f5f2db8c86, type: 2}
-  - {fileID: 11400000, guid: da73cfac90cca0948ae860cacdb23da6, type: 2}
-  - {fileID: 11400000, guid: 4a1eccb26a1cc5343925c9b206e29ac1, type: 2}
-  - {fileID: 11400000, guid: a0655a3bb47eea24698f80f703e587d6, type: 2}
-  - {fileID: 11400000, guid: 8bde445ee90f5014790f31c6b724bcb6, type: 2}
-  - {fileID: 11400000, guid: 27fbdfb7bde009f4ca668931a75429bb, type: 2}
+  completions: []
   nextObjective: {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}

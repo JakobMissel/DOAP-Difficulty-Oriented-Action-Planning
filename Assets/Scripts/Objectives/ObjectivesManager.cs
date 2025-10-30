@@ -1,25 +1,30 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ObjectivesManager : MonoBehaviour
 {
-    [SerializeField] Objective[] objectives;
-    //int currentObjectiveIndex = 0;
-    Objective currentObjective;
+    [SerializeField] Objective currentObjective;
     public Objective CurrentObjective => currentObjective;
+
+    [SerializeField] bool startFromFirstObjective = true;
+    [SerializeField] public bool completedTutorial;
+
+    [SerializeField] Objective[] objectives;
     public static ObjectivesManager Instance;
 
-    public static Action<Objective> onSetNewObjective;
-    public static void OnSetNewObjective(Objective newObjective) => onSetNewObjective?.Invoke(newObjective);
+    public static Action<Objective, int, float, float> setNewObjective;
+    public static void OnSetNewObjective(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay) => setNewObjective?.Invoke(newObjective, subObjectiveIndex, delay, enumeratorDelay);
 
-    public static Action<SubObjective> onActivateSubObjective;
-    public static void OnActivateSubObjective(SubObjective subObjective) => onActivateSubObjective?.Invoke(subObjective);
+    public static Action<SubObjective> activateSubObjective;
+    public static void OnActivateSubObjective(SubObjective subObjective) => activateSubObjective?.Invoke(subObjective);
 
-    public static Action<Objective> onCompleteObjective;
-    public static void OnCompleteObjective(Objective completedObjective) => onCompleteObjective?.Invoke(completedObjective);
+    public static Action<Objective> completeObjective;
+    public static void OnCompleteObjective(Objective completedObjective) => completeObjective?.Invoke(completedObjective);
 
-    public static Action<Objective, int, float> onDisplayObjective;
-    public static void OnDisplayObjective(Objective objective, int subGoalIndex, float delay) => onDisplayObjective?.Invoke(objective, subGoalIndex, delay);
+    public static Action<Objective, int, float> displayObjective;
+    public static void OnDisplayObjective(Objective objective, int subGoalIndex, float delay) => displayObjective?.Invoke(objective, subGoalIndex, delay);
+
 
     void Awake()
     {
@@ -34,36 +39,52 @@ public class ObjectivesManager : MonoBehaviour
         }
         for (int i = 0; i < objectives.Length; i++) 
         {
+            if(objectives[i] == null)
+            {
+                Debug.LogWarning($"Objective at index {i} is null in ObjectivesManager.");
+                continue;
+            }
             objectives[i].isCompleted = false;
+            objectives[i].isActive = false;
             objectives[i].completions.Clear();
 
-            for (int j = 0; j < objectives[i].goals.Count; j++) 
+            for (int j = 0; j < objectives[i].subObjectives.Count; j++) 
             {
-                objectives[i].goals[j].isCompleted = false;
-                objectives[i].goals[j].isActive = false;
-                objectives[i].goals[j].descriptionText = objectives[i].goals[j].goalText;
+                if(objectives[i].subObjectives[j] == null)
+                {
+                    Debug.LogWarning($"SubObjective at index {j} in Objective {objectives[i].name} is null in ObjectivesManager.");
+                    continue;
+                }
+                objectives[i].subObjectives[j].isCompleted = false;
+                objectives[i].subObjectives[j].isActive = false;
+                objectives[i].subObjectives[j].descriptionText = objectives[i].subObjectives[j].goalText;
             }
         }
+        completedTutorial = false;
     }
 
     void OnEnable()
     {
-        onSetNewObjective += SetNewObjective;
-        onActivateSubObjective += ActivateSubObjective;
+        setNewObjective += SetNewObjective;
+        activateSubObjective += ActivateSubObjective;
+        completeObjective += FlagCompletedObjective;
     }
 
     void OnDisable()
     {
-        onSetNewObjective -= SetNewObjective;
-        onActivateSubObjective -= ActivateSubObjective;
+        setNewObjective -= SetNewObjective;
+        activateSubObjective -= ActivateSubObjective;
+        completeObjective -= FlagCompletedObjective;
     }
 
     void Start()
     {
         if (objectives.Length > 0)
         {
-            currentObjective = objectives[0];
-            onSetNewObjective?.Invoke(currentObjective);
+            if (startFromFirstObjective)
+                currentObjective = objectives[0];
+            if(currentObjective != null)
+                setNewObjective?.Invoke(currentObjective, 0, 0, 0);
         }
         else
         {
@@ -71,14 +92,35 @@ public class ObjectivesManager : MonoBehaviour
         }
     }
 
-    void SetNewObjective(Objective newObjective)
+    void SetNewObjective(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay)
     {
         currentObjective = newObjective;
-        OnDisplayObjective(currentObjective, 0, 0);
+        currentObjective.isActive = false;
+        StartCoroutine(SetNewObjectiveEnumerator(newObjective, subObjectiveIndex, delay, enumeratorDelay));
+    }
+
+    IEnumerator SetNewObjectiveEnumerator(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay)
+    {
+        yield return new WaitForSeconds(enumeratorDelay);
+        currentObjective = newObjective;
+        currentObjective.BeginObjective();
+        OnDisplayObjective(currentObjective, subObjectiveIndex, delay);
+        if (currentObjective == objectives[objectives.Length - 1])
+        {
+            PlayerActions.Instance.canEscape = true;
+        }
     }
 
     void ActivateSubObjective(SubObjective subObjective)
     {
         subObjective.isActive = true;
+    }
+
+    void FlagCompletedObjective(Objective objective)
+    {
+        // If there is a next objective, set it and show after 2 seconds
+        if(objective.nextObjective != null)
+            StartCoroutine(SetNewObjectiveEnumerator(objective.nextObjective, 0, 0, objective.completionDelay));
+
     }
 }

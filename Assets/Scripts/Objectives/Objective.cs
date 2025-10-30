@@ -5,35 +5,45 @@ using System.Collections.Generic;
 public class Objective : ScriptableObject
 {
     public bool isCompleted;
+    public bool isActive;
     public new string name;
-    public List<SubObjective> goals;
+    public float completionDelay;
+    public List<SubObjective> subObjectives;
     public List<SubObjective> completions;
+    public int currentSubObjectiveIndex;
     public Objective nextObjective;
 
     public void BeginObjective()
     {
-        goals[0].isActive = true;
-    }
-
-    public void CompleteGoal(int goalIndex)
-    {
-        goals[goalIndex].MarkAsCompleted();
-        completions.Add(goals[goalIndex]);
-    }
-
-    public void DisplayNextGoal(float delay)
-    {
-        for (int i = 0; i < goals.Count; i++)
+        isActive = true;
+        if(subObjectives.Count > 0)
         {
-            if (!goals[i].isCompleted)
+            subObjectives[0].isActive = true;
+            currentSubObjectiveIndex = 0;
+        }
+    }
+
+    public void CompleteSubObjective(int subObjectiveIndex)
+    {
+        subObjectives[subObjectiveIndex].MarkAsCompleted();
+        completions.Add(subObjectives[subObjectiveIndex]);
+    }
+
+    public void DisplayNextSubObjective(float delay)
+    {
+        for (int i = 0; i < subObjectives.Count; i++)
+        {
+            if (!subObjectives[i].isCompleted)
             {
+                currentSubObjectiveIndex = i;
                 ObjectivesManager.OnDisplayObjective(this, i, delay);
                 break;
             }
 
-            if(i == goals.Count - 1)
+            if(i == subObjectives.Count - 1)
             {
                 isCompleted = true;
+                currentSubObjectiveIndex = i;
                 ObjectivesManager.OnDisplayObjective(this, i, delay);
                 ObjectivesManager.OnCompleteObjective(this);
                 break;

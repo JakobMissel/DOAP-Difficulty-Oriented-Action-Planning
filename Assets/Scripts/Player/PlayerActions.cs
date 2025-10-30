@@ -1,6 +1,5 @@
 using System;
 using Unity.Cinemachine;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,8 +34,11 @@ public class PlayerActions : MonoBehaviour
     public static Action<Pickup> pickedUpItem;
     public static void OnPickedUpItem(Pickup item) => pickedUpItem?.Invoke(item);
 
-    public static Action<Pickup> stealItem;
-    public static void OnStealItem(Pickup item) => stealItem?.Invoke(item);
+    public static Action<StealablePickup> stealItem;
+    public static void OnStealItem(StealablePickup item) => stealItem?.Invoke(item);
+
+    public static Action paintingDelivered;
+    public static void OnPaintingDelivered() => paintingDelivered?.Invoke();
 
     // Aim & Throw actions
     public static Action<bool> aimStatus;
@@ -59,12 +61,31 @@ public class PlayerActions : MonoBehaviour
 
     //========================================================================//
 
+    public static PlayerActions Instance;
     [SerializeField] bool debugEvents;
     bool previousMoveStatus;
     bool previousClimbStatus;
     bool previousSneakStatus;
+    public bool carriesPainting;
+    public bool canEscape;
 
-    void OnEnable()
+
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        canEscape = false;
+        carriesPainting = false;
+    }
+
+void OnEnable()
     {
         if (debugEvents)
         {
@@ -73,6 +94,7 @@ public class PlayerActions : MonoBehaviour
             sneakStatus += DebugSneak;
             pickedUpItem += DebugPickup;
             stealItem += DebugStole;
+            paintingDelivered += DebugPaintingDelivered;
             aimStatus += DebugAim;
             ammoUpdate += DebugAmmoUpdate;
         }
@@ -87,6 +109,7 @@ public class PlayerActions : MonoBehaviour
             sneakStatus -= DebugSneak;
             pickedUpItem -= DebugPickup;
             stealItem -= DebugStole;
+            paintingDelivered -= DebugPaintingDelivered;
             aimStatus -= DebugAim;
             ammoUpdate -= DebugAmmoUpdate;
         }
@@ -127,6 +150,11 @@ public class PlayerActions : MonoBehaviour
     void DebugStole(Pickup pickup)
     {
         print($"[{Time.time}] Stole item: {pickup.name}");
+    }
+
+    void DebugPaintingDelivered()
+    {
+        print($"[{Time.time}] Stolen item delivered"); // might want a pickup reference here too
     }
 
     void DebugAim(bool status)

@@ -21,13 +21,14 @@ public class PlayerClimb : MonoBehaviour
     [SerializeField] Vector2 climbDeceleration = new(15, 15);
     [Header("Stamina")]
     [SerializeField] public float maxStamina = 5f;
+    [SerializeField] float staminaRechargeRate = 3f;
     [SerializeField] float staminaDrainRate = 1f;
     public float currentStamina;
     [Header("Rotation")]
     [SerializeField] float rotationSmoothTime = 0.1f;
-    
+
     RaycastHit climbableHit;
-    Vector3 velocity;
+    public Vector3 velocity;
     float rotationSmoothAngle;
 
     [Header("Debugging")]
@@ -73,7 +74,7 @@ public class PlayerClimb : MonoBehaviour
             onWall = false;
         }
         DepleteStamina();
-        RegenerateStamina();
+        RechargeStamina();
         PlayerActions.OnClimbStatus(isClimbing);
     }
 
@@ -154,10 +155,10 @@ public class PlayerClimb : MonoBehaviour
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
     }
 
-    void RegenerateStamina()
+    void RechargeStamina()
     {
         if (onWall || !playerMovement.IsGrounded()) return;
-        currentStamina += (staminaDrainRate * 1.2f) * Time.deltaTime;
+        currentStamina += staminaRechargeRate * Time.deltaTime;
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
     }
 
