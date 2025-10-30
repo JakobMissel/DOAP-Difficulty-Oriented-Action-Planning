@@ -9,6 +9,7 @@ Freestylized - Royalty Free License: Free to use for all Commercial and Non-Comm
 
 3D Textures - Free PBR textures and Stylized textures with Color, Normal, Displacement, Occlusion and Roughness Maps.
 - https://www.poliigon.com/texture/square-terracotta-matte-tile-texture-beige/5377
+- https://www.poliigon.com/texture/gold-paint-metal-texture/7253
 
 Unsplash - Free to use under the Unsplash License
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-zZPeoLxLRyM
