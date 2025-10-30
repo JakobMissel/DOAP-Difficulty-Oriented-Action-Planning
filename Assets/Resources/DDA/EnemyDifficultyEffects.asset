@@ -347,5 +347,8 @@ MonoBehaviour:
     developerNote: 'The curve value directly assigns the cost of taking a recharge
       action.
 
-      Chasing the player has a cost of 3. So when this costs more
-      than 3, it is more important than casing the player.'
+      The Base Cost of this was 4.
+
+      Chasing the player has a
+      cost of 3. So when this costs more than 3, it is more important than casing
+      the player.'
