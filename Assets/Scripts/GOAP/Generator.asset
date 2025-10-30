@@ -15,6 +15,11 @@ MonoBehaviour:
   nameSpace: Assets.Scripts.GOAP
   scripts:
     goals:
+    - <Name>k__BackingField: BreakGoal
+      fullName: Assets.Scripts.GOAP.BreakGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/BreakGoal.cs
+      <Id>k__BackingField: Break-3fbb6fe8-6a30-42bb-a731-3d1003d9a4b5
     - <Name>k__BackingField: CatchGoal
       fullName: Assets.Scripts.GOAP.Goals.CatchGoal, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -25,6 +30,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/ClearLastKnownGoal.cs
       <Id>k__BackingField: ClearLastKnown-85419734-05f9-4234-9ba3-fdd34120ceb4
+    - <Name>k__BackingField: ConctactBackupGoal
+      fullName: Assets.Scripts.GOAP.ConctactBackupGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/ConctactBackupGoal.cs
+      <Id>k__BackingField: ConctactBackup-6385187a-cc24-470a-94a5-2b1527bccda5
     - <Name>k__BackingField: InvestigateNoiseGoal
       fullName: Assets.Scripts.GOAP.InvestigateNoiseGoal, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -51,6 +61,11 @@ MonoBehaviour:
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/RechargeGoal.cs
       <Id>k__BackingField: Recharge-b6a22d6b-bcb7-43b9-8de2-24d37fb909f8
     actions:
+    - <Name>k__BackingField: BreakAction
+      fullName: Assets.Scripts.GOAP.BreakAction, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/BreakAction.cs
+      <Id>k__BackingField: Break-f39d68ed-d6b8-4b86-b32b-6eebb6ea748e
     - <Name>k__BackingField: CatchAction
       fullName: Assets.Scripts.GOAP.Actions.CatchAction, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -61,6 +76,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Actions/ClearLastKnownAction.cs
       <Id>k__BackingField: ClearLastKnown-11630d95-435f-4d5b-8ad2-dcf0edec684f
+    - <Name>k__BackingField: ConctactBackupAction
+      fullName: Assets.Scripts.GOAP.ConctactBackupAction, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/ConctactBackupAction.cs
+      <Id>k__BackingField: ConctactBackup-c56b48c2-f65a-480e-ac16-feba162620c9
     - <Name>k__BackingField: InvestigateNoiseAction
       fullName: Assets.Scripts.GOAP.Actions.InvestigateNoiseAction, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
