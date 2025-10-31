@@ -35,6 +35,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/ConctactBackupGoal.cs
       <Id>k__BackingField: ConctactBackup-6385187a-cc24-470a-94a5-2b1527bccda5
+    - <Name>k__BackingField: GoToLaserGoal
+      fullName: Assets.Scripts.GOAP.GoToLaserGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/GoToLaserGoal.cs
+      <Id>k__BackingField: GoToLaser-67f81d7e-b950-41bd-9371-198355d72756
     - <Name>k__BackingField: InvestigateNoiseGoal
       fullName: Assets.Scripts.GOAP.InvestigateNoiseGoal, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -96,6 +101,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Actions/ConctactBackupAction.cs
       <Id>k__BackingField: ConctactBackup-c56b48c2-f65a-480e-ac16-feba162620c9
+    - <Name>k__BackingField: GoToLaserAction
+      fullName: Assets.Scripts.GOAP.GoToLaserAction, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/GoToLaserAction.cs
+      <Id>k__BackingField: GoToLaser-a8fbbe83-4db9-486c-89f5-ad58636d61bb
     - <Name>k__BackingField: InvestigateNoiseAction
       fullName: Assets.Scripts.GOAP.Actions.InvestigateNoiseAction, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

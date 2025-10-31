@@ -16,6 +16,9 @@ namespace Assets.Scripts.GOAP.Behaviours
         [Tooltip("Radius used when broadcasting a noise alert to guards when the beam is triggered.")]
         public float alertRadius = 10f;
 
+        [Tooltip("If enabled, keep LaserTriggered at 1 as long as the beam is active; it resets to 0 only when the player leaves the beam. If disabled, the Alert action will clear it immediately.")]
+        [SerializeField] private bool holdUntilExit = true;
+
         private int pendingTriggers = 0;
 
         public bool IsLaserEnabled => beam != null && beam.IsEnabled;
@@ -36,7 +39,9 @@ namespace Assets.Scripts.GOAP.Behaviours
             {
                 beam.onActivated ??= new UnityEngine.Events.UnityEvent();
                 beam.onActivated.AddListener(OnBeamActivated);
-                // We could also listen to onDeactivated if you want to react
+                // Ensure we clear the trigger when the player leaves the beam (last collider exits)
+                beam.onDeactivated ??= new UnityEngine.Events.UnityEvent();
+                beam.onDeactivated.AddListener(OnBeamDeactivated);
             }
         }
 
@@ -57,18 +62,32 @@ namespace Assets.Scripts.GOAP.Behaviours
         private void OnDestroy()
         {
             if (beam != null)
+            {
                 beam.onActivated.RemoveListener(OnBeamActivated);
+                beam.onDeactivated.RemoveListener(OnBeamDeactivated);
+            }
         }
 
         private void OnBeamActivated()
         {
-            pendingTriggers = Mathf.Clamp(pendingTriggers + 1, 0, 999);
+            // Latch as triggered while the beam is active
+            pendingTriggers = 1;
+        }
+
+        private void OnBeamDeactivated()
+        {
+            // Clear when the laser deactivates (player left or beam turned off)
+            pendingTriggers = 0;
         }
 
         public void ConsumeOneTrigger()
         {
-            pendingTriggers = Mathf.Max(0, pendingTriggers - 1);
+            // If configured to hold until exit and the beam is currently active, keep it latched
+            if (holdUntilExit && beam != null && beam.IsEnabled)
+                return;
+
+            // Otherwise clear the pending trigger after processing an alert
+            pendingTriggers = 0;
         }
     }
 }
-
