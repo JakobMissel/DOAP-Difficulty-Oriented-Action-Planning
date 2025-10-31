@@ -40,6 +40,11 @@ MonoBehaviour:
     moveMode: 0
     conditions:
     - worldKey:
+        <Name>k__BackingField: LaserOn
+        <Id>k__BackingField: 
+      comparison: 3
+      amount: 1
+    - worldKey:
         <Name>k__BackingField: LaserTriggered
         <Id>k__BackingField: LaserTriggered-6cc9f0dd-04ea-4ad3-8a1a-75b4d9c91f3b
       comparison: 3

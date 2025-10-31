@@ -16,6 +16,11 @@ namespace Assets.Scripts.DDA
         private static List<float> actualDifficulties = new List<float>();
         private static List<float> effectiveDifficulties = new List<float>();
 
+        // Testing-mode override
+        private static bool testingMode = false;
+        private static float testingDifficulty01 = 0f; // 0..1
+        private static readonly int[] testingSteps = new[] { 0, 25, 50, 75, 100 };
+
         /// <summary>
         /// If this is the first time this is called, get the Player and Enemy Difficulty Effects
         /// </summary>
@@ -113,6 +118,10 @@ namespace Assets.Scripts.DDA
         {
             CalledNow();
 
+            // In testing mode, return the override directly
+            if (testingMode)
+                return Mathf.Clamp01(testingDifficulty01);
+
             float summedEffectiveDifficulty = 0f;
             
             // Sum and clamp01 all effective difficulties
@@ -143,6 +152,26 @@ namespace Assets.Scripts.DDA
         /// </summary>
         public static void PutDifficultyIntoEffect()
         {
+            // If testing mode is active, just log and update costs using the override via DifficultyTranslation
+            if (testingMode)
+            {
+#if UNITY_EDITOR
+                Debug.Log($"[DDA] Testing mode difficulty set to {Mathf.RoundToInt(testingDifficulty01 * 100)}% (override)");
+#endif
+                // Apply costs against the testing value
+                for (int i = 0; i < ede.enemyActions.Count; i++)
+                {
+                    if (ede.enemyActions[i].capability == null)
+                        continue;
+                    Debug.Log($"Applying cost change of {ede.enemyActions[i].action}, on capability {ede.enemyActions[i].capability}.\nThe cost is being set to {DifficultyTranslation(ede.enemyActions[i].action)}, given the difficulty {GetDifficultyF()}");
+                    ede.enemyActions[i].capability.actions[0].baseCost = DifficultyTranslation(ede.enemyActions[i].action);
+                }
+#if UNITY_EDITOR
+                Debug.Log($"Difficulty set to {GetDifficultyF().ToString("n2")}");
+#endif
+                return;
+            }
+
             // Update effective difficulties to match the actual difficulties
             effectiveDifficulties = new List<float>(actualDifficulties);
 
@@ -157,6 +186,54 @@ namespace Assets.Scripts.DDA
 #if UNITY_EDITOR
             Debug.Log($"Difficulty set to {GetDifficultyF().ToString("n2")}");
 #endif
+        }
+
+        // --- Testing mode---
+        public static void EnableTestingMode(bool enabled)
+        {
+            CalledNow();
+            testingMode = enabled;
+            // Re-apply costs using current difficulty source
+            PutDifficultyIntoEffect();
+        }
+
+        public static bool IsTestingMode() => testingMode;
+
+        public static void SetTestingDifficulty01(float value01)
+        {
+            CalledNow();
+            testingMode = true;
+            testingDifficulty01 = Mathf.Clamp01(value01);
+            PutDifficultyIntoEffect();
+        }
+
+        public static void SetTestingDifficultyPercent(int percent)
+        {
+            SetTestingDifficulty01(Mathf.Clamp01(percent / 100f));
+        }
+
+        public static int StepTestingDifficulty(int direction)
+        {
+            CalledNow();
+            testingMode = true;
+
+            int currentPercent = Mathf.RoundToInt(GetDifficultyF() * 100f);
+            int closestIdx = 0;
+            int best = int.MaxValue;
+            for (int i = 0; i < testingSteps.Length; i++)
+            {
+                int d = Mathf.Abs(testingSteps[i] - currentPercent);
+                if (d < best)
+                {
+                    best = d;
+                    closestIdx = i;
+                }
+            }
+
+            int newIdx = Mathf.Clamp(closestIdx + (direction >= 0 ? 1 : -1), 0, testingSteps.Length - 1);
+            int newPercent = testingSteps[newIdx];
+            SetTestingDifficultyPercent(newPercent);
+            return newPercent;
         }
     }
 }
