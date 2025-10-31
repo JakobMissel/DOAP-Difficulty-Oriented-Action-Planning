@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,54 +13,78 @@ public class LaserBeam : MonoBehaviour
 
     [Header("Beam Visual")]
     [Min(0.001f)] public float thickness = 0.05f;
-    public Color color = Color.red;
+    public Color inactiveColor = Color.red;
+    public Color activeColor = Color.white; // shown while player stands in the beam
 
-    [Header("Alert")]
+    [Header("Detection")]
     public string triggerTag = "Player";
-    public bool autoReset = true;
-    [Tooltip("Seconds until the laser will detect again after being triggered.")]
-    public float resetTime = 3f;
-    public AudioClip alertClip;
-    public bool playSound = true;
+
+    [Header("Audio (optional)")]
+    public AudioClip activateClip;   // one-shot on enter
+    public AudioClip loopClip;       // loops while active
+    public AudioClip deactivateClip; // one-shot on exit
+    public bool playAudio = true;
 
     [Header("Events")]
-    public UnityEvent onTriggered;
+    public UnityEvent onActivated;              // fired once when first valid collider enters
+    public UnityEvent<float> onActiveTick;      // fired every frame while active (passes active duration seconds)
+    public UnityEvent onDeactivated;            // fired once when last valid collider exits
+
+    [Header("State")]
+    [Tooltip("If true, the laser line + trigger collider are enabled on start.")]
+    public bool startEnabled = false;
 
     // internals
     private LineRenderer lr;
     private BoxCollider boxCol;
-    private bool triggered = false;
     private AudioSource audioSource;
     private Material runtimeMat;
+
+    private readonly HashSet<Collider> _inside = new HashSet<Collider>();
+    private bool _active = false;
+    private float _activeSince = 0f;
+    private bool _isEnabled = false;
+
+    public bool IsEnabled => _isEnabled;
 
     void Awake()
     {
         EnsureComponents();
-        SetupAudio();
-        UpdateBeam(); // do an initial build
-    }
-
-    void Reset()
-    {
-        EnsureComponents();
+        UpdateBeam();
+        SetBeamColor(inactiveColor);
     }
 
     void OnEnable()
     {
-        // keep things in sync in edit mode too
+        EnsureComponents();
         UpdateBeam();
+        if (Application.isPlaying) SetBeamColor(_active ? activeColor : inactiveColor);
+        // Apply starting enabled state
+        if (Application.isPlaying)
+            SetEnabled(startEnabled);
+        else
+            EditorApplyEnabled(startEnabled);
     }
 
     void Update()
     {
-        // Update every frame so moving endpoints keep the beam/collider aligned
         UpdateBeam();
+
+        if (Application.isPlaying && _active)
+        {
+            float activeFor = Time.time - _activeSince;
+            onActiveTick?.Invoke(activeFor);
+        }
     }
 
     void OnValidate()
     {
         EnsureComponents();
         UpdateBeam();
+        if (!Application.isPlaying) SetBeamColor(_active ? activeColor : inactiveColor);
+        // Keep editor visuals in sync
+        if (!Application.isPlaying)
+            EditorApplyEnabled(startEnabled);
     }
 
     void EnsureComponents()
@@ -68,35 +92,27 @@ public class LaserBeam : MonoBehaviour
         if (!lr) lr = GetComponent<LineRenderer>();
         if (!boxCol) boxCol = GetComponent<BoxCollider>();
 
-        // LineRenderer baseline settings
         lr.positionCount = 2;
-        lr.useWorldSpace = false; // we'll move/rotate the Laser object instead
+        lr.useWorldSpace = false;
         lr.startWidth = thickness;
         lr.endWidth = thickness;
 
-        // Make sure we have a material that we can tint safely
-        if (lr.material == null || (Application.isPlaying && runtimeMat == null))
+        if (lr.sharedMaterial == null || (Application.isPlaying && runtimeMat == null))
         {
             var shader = Shader.Find("Unlit/Color");
-            if (shader == null) shader = Shader.Find("Sprites/Default"); // fallback
+            if (shader == null) shader = Shader.Find("Sprites/Default");
             runtimeMat = new Material(shader);
-            lr.material = runtimeMat;
+            lr.sharedMaterial = runtimeMat;
         }
 
-        // In edit mode, tint the assigned material directly; at runtime, tint our runtimeMat
-        lr.material.color = color;
-
         boxCol.isTrigger = true;
-    }
 
-    void SetupAudio()
-    {
-        if (playSound)
+        if (playAudio)
         {
-            audioSource = GetComponent<AudioSource>();
+            if (!audioSource) audioSource = GetComponent<AudioSource>();
             if (!audioSource) audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
-            audioSource.clip = alertClip;
+            audioSource.loop = false;
         }
     }
 
@@ -109,10 +125,8 @@ public class LaserBeam : MonoBehaviour
         Vector3 dir = b - a;
         float length = dir.magnitude;
 
-        // Avoid zero-length issues
         if (length < 0.0001f)
         {
-            // Collapse beam & collider
             transform.SetPositionAndRotation(a, Quaternion.identity);
             lr.SetPosition(0, Vector3.zero);
             lr.SetPosition(1, Vector3.zero);
@@ -122,60 +136,125 @@ public class LaserBeam : MonoBehaviour
 
         Vector3 mid = (a + b) * 0.5f;
         Quaternion rot = Quaternion.LookRotation(dir.normalized, Vector3.up);
-
-        // Place this Laser object at the midpoint, facing along +Z toward EndPoint
         transform.SetPositionAndRotation(mid, rot);
 
-        // Draw the line in local space from -Z/2 to +Z/2
         float half = length * 0.5f;
         lr.startWidth = thickness;
         lr.endWidth = thickness;
         lr.SetPosition(0, Vector3.back * half);
         lr.SetPosition(1, Vector3.forward * half);
 
-        // Size the trigger collider to cover the beam
-        // Axis-aligned to this object's local frame (so it matches the line).
         boxCol.center = Vector3.zero;
         boxCol.size = new Vector3(thickness * 2f, thickness * 2f, length);
     }
 
-    private void OnTriggerEnter(Collider other)
+    void SetBeamColor(Color c)
     {
-        if (triggered) return;
-        if (!string.IsNullOrEmpty(triggerTag) && !other.CompareTag(triggerTag)) return;
-
-        TriggeredBy(other.gameObject);
+        if (lr && lr.sharedMaterial) lr.sharedMaterial.color = c;
     }
 
-    void TriggeredBy(GameObject who)
+    // Public API to enable/disable the laser visuals + trigger
+    public void SetEnabled(bool enabled)
     {
-        triggered = true;
-        onTriggered?.Invoke();
-        Debug.Log($"Laser triggered by {who.name}");
+        _isEnabled = enabled;
+        if (lr) lr.enabled = enabled;
+        if (boxCol) boxCol.enabled = enabled;
 
-        if (playSound && audioSource && alertClip)
-            audioSource.PlayOneShot(alertClip);
-
-        // quick flash feedback
-        StartCoroutine(FlashBeamRoutine());
-
-        if (autoReset)
-            StartCoroutine(ResetRoutine());
+        // If disabling while active, clean up state
+        if (!enabled)
+        {
+            if (_active)
+                Deactivate();
+        }
     }
 
-    IEnumerator FlashBeamRoutine()
+    // Editor-only helper to avoid playing audio when toggling in editor
+    private void EditorApplyEnabled(bool enabled)
     {
-        var mat = lr.material;
-        var orig = mat.color;
-        mat.color = Color.white;
-        yield return new WaitForSeconds(0.12f);
-        mat.color = color;
+        _isEnabled = enabled;
+        if (lr) lr.enabled = enabled;
+        if (boxCol) boxCol.enabled = enabled;
     }
 
-    IEnumerator ResetRoutine()
+    // --- Trigger logic: activate on first enter, stay active while any valid collider remains, deactivate on last exit ---
+
+    void OnTriggerEnter(Collider other)
     {
-        yield return new WaitForSeconds(resetTime);
-        triggered = false;
+        if (!IsValid(other)) return;
+
+        if (_inside.Add(other))
+        {
+            if (!_active)
+                Activate();
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (!IsValid(other)) return;
+
+        if (_inside.Remove(other))
+        {
+            if (_active && _inside.Count == 0)
+                Deactivate();
+        }
+    }
+
+    bool IsValid(Collider other)
+    {
+        if (!other) return false;
+        if (!string.IsNullOrEmpty(triggerTag) && !other.CompareTag(triggerTag)) return false;
+        return true;
+    }
+
+    void Activate()
+    {
+        _active = true;
+        _activeSince = Time.time;
+        SetBeamColor(activeColor);
+        onActivated?.Invoke();
+
+        if (playAudio && audioSource)
+        {
+            // one-shot start
+            if (activateClip) audioSource.PlayOneShot(activateClip);
+
+            // start looping alarm
+            if (loopClip)
+            {
+                audioSource.clip = loopClip;
+                audioSource.loop = true;
+                // if a one-shot just played, layering is fine; otherwise start loop immediately
+                audioSource.Play();
+            }
+        }
+    }
+
+    void Deactivate()
+    {
+        _active = false;
+        SetBeamColor(inactiveColor);
+        onDeactivated?.Invoke();
+
+        if (playAudio && audioSource)
+        {
+            // stop loop if any
+            if (audioSource.loop)
+            {
+                audioSource.loop = false;
+                audioSource.Stop();
+                audioSource.clip = null;
+            }
+            // play end blip
+            if (deactivateClip) audioSource.PlayOneShot(deactivateClip);
+        }
+    }
+
+    void OnDisable()
+    {
+        // clean state to avoid stuck audio in editor
+        _inside.Clear();
+        if (_active) Deactivate();
     }
 
     void OnDrawGizmosSelected()
@@ -185,10 +264,8 @@ public class LaserBeam : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(startPoint.position, endPoint.position);
 
-        // draw collider box outline (approx)
         Gizmos.matrix = transform.localToWorldMatrix;
-        Gizmos.color = new Color(1, 0, 0, 0.7f);
-        Vector3 size = new Vector3(thickness * 2f, thickness * 2f, Vector3.Distance(startPoint.position, endPoint.position));
-        Gizmos.DrawWireCube(Vector3.zero, size);
+        Gizmos.color = new Color(1, 0, 0, 0.6f);
+        if (boxCol != null) Gizmos.DrawWireCube(boxCol.center, boxCol.size);
     }
 }

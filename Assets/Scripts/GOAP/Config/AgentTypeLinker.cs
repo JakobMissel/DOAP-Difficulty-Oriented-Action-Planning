@@ -34,7 +34,7 @@ namespace Assets.Scripts.GOAP.Config
             var agentType = goap.GetAgentType(agentTypeName);
             if (agentType == null)
             {
-                Debug.LogError($"[AgentTypeLinker] AgentType '{agentTypeName}' not found. Ensure GuardAgentTypeFactory is added to GoapBehaviour > Agent Type Config Factories and uses the same name.");
+                Debug.LogError($"[AgentTypeLinker] AgentType '{agentTypeName}' not found. Ensure a matching AgentTypeFactory (e.g., GuardAgentTypeFactory, LaserAgentTypeFactory) is added to GoapBehaviour > Agent Type Config Factories and uses the same Agent Type Name.");
                 return;
             }
 

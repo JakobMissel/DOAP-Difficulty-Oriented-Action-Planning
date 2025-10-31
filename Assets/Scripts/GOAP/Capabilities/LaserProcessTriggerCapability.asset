@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875fbfa2d1734285b353878b31467c98, type: 3}
+  m_Name: LaserProcessTriggerCapability
+  m_EditorClassIdentifier: 
+  goals:
+  - goal:
+      <Name>k__BackingField: LaserProcessTriggerGoal
+      <Id>k__BackingField: LaserProcessTriggerGoal-75f1a628-86b2-4a77-ae1d-bb8d7faacc7a
+    baseCost: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: LaserTriggered
+        <Id>k__BackingField: LaserTriggered-6cc9f0dd-04ea-4ad3-8a1a-75b4d9c91f3b
+      comparison: 1
+      amount: 0
+  actions:
+  - action:
+      <Name>k__BackingField: AlertGuardsAction
+      <Id>k__BackingField: AlertGuardsAction-8c6e2f63-9e52-4d1e-898e-1a27a08b2f4d
+    target:
+      <Name>k__BackingField: SelfTarget
+      <Id>k__BackingField: SelfTarget-f912d3e9-4d2b-4f47-8a27-8d1b7b61cf80
+    properties:
+      rid: 9021967506735104068
+    baseCost: 1
+    stoppingDistance: 0
+    validateTarget: 0
+    requiresTarget: 0
+    validateConditions: 1
+    moveMode: 0
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: LaserTriggered
+        <Id>k__BackingField: LaserTriggered-6cc9f0dd-04ea-4ad3-8a1a-75b4d9c91f3b
+      comparison: 3
+      amount: 1
+    effects:
+    - worldKey:
+        <Name>k__BackingField: LaserTriggered
+        <Id>k__BackingField: LaserTriggered-6cc9f0dd-04ea-4ad3-8a1a-75b4d9c91f3b
+      effect: 0
+  worldSensors:
+  - sensor:
+      <Name>k__BackingField: LaserTriggeredSensor
+      <Id>k__BackingField: LaserTriggeredSensor-0c0db3e3-3415-4e86-8a83-10c2f9b22fd1
+    worldKey:
+      <Name>k__BackingField: LaserTriggered
+      <Id>k__BackingField: LaserTriggered-6cc9f0dd-04ea-4ad3-8a1a-75b4d9c91f3b
+  targetSensors:
+  - sensor:
+      <Name>k__BackingField: SelfTargetSensor
+      <Id>k__BackingField: SelfTargetSensor-8c8b1f7d-ea75-4c89-87d5-5c7c2c8d64c9
+    targetKey:
+      <Name>k__BackingField: SelfTarget
+      <Id>k__BackingField: SelfTarget-f912d3e9-4d2b-4f47-8a27-8d1b7b61cf80
+  multiSensors: []
+  generatorScriptable: {fileID: 11400000, guid: 0422e7a0a8d2c3a43bf617285bc969b5, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 9021967506735104068
+      type: {class: EmptyActionProperties, ns: CrashKonijn.Agent.Runtime, asm: CrashKonijn.Agent.Runtime}
+      data: 

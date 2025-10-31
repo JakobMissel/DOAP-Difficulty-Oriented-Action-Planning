@@ -45,6 +45,21 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/InvestigatePlayerNoiseGoal.cs
       <Id>k__BackingField: InvestigatePlayerNoise-7b6245d4-dac0-40df-bcf5-f30cc6ed9297
+    - <Name>k__BackingField: LaserMaintainOffGoal
+      fullName: Assets.Scripts.GOAP.Goals.LaserMaintainOffGoal, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/LaserMaintainOffGoal.cs
+      <Id>k__BackingField: LaserMaintainOffGoal-9e2c73a6-8b61-4d48-bf7f-6d034e3b8e9a
+    - <Name>k__BackingField: LaserMaintainOnGoal
+      fullName: Assets.Scripts.GOAP.Goals.LaserMaintainOnGoal, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/LaserMaintainOnGoal.cs
+      <Id>k__BackingField: LaserMaintainOnGoal-3ac5adf7-0d7f-4f60-8d2b-0f7f3d6381ba
+    - <Name>k__BackingField: LaserProcessTriggerGoal
+      fullName: Assets.Scripts.GOAP.Goals.LaserProcessTriggerGoal, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/LaserProcessTriggerGoal.cs
+      <Id>k__BackingField: LaserProcessTriggerGoal-75f1a628-86b2-4a77-ae1d-bb8d7faacc7a
     - <Name>k__BackingField: PatrolGoal
       fullName: Assets.Scripts.GOAP.Goals.PatrolGoal, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -91,6 +106,21 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Actions/InvestigatePlayerNoiseAction.cs
       <Id>k__BackingField: InvestigatePlayerNoise-a20df32e-1993-4188-856a-4fd9f4b4cfa3
+    - <Name>k__BackingField: AlertGuardsAction
+      fullName: Assets.Scripts.GOAP.Actions.Laser.AlertGuardsAction, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/Laser/AlertGuardsAction.cs
+      <Id>k__BackingField: AlertGuardsAction-8c6e2f63-9e52-4d1e-898e-1a27a08b2f4d
+    - <Name>k__BackingField: DisableLaserAction
+      fullName: Assets.Scripts.GOAP.Actions.Laser.DisableLaserAction, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/Laser/DisableLaserAction.cs
+      <Id>k__BackingField: DisableLaserAction-5a17cfd1-34b6-4c5d-b7f3-8c43a9a7c0ce
+    - <Name>k__BackingField: EnableLaserAction
+      fullName: Assets.Scripts.GOAP.Actions.Laser.EnableLaserAction, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/Laser/EnableLaserAction.cs
+      <Id>k__BackingField: EnableLaserAction-a29a1d9e-02f8-4cb8-b32b-3ad58a8a701d
     - <Name>k__BackingField: PatrolAction
       fullName: Assets.Scripts.GOAP.Actions.PatrolAction, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -142,6 +172,16 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/HeardNoiseSensor.cs
       <Id>k__BackingField: HeardNoiseSensor-40920bcf-96e7-4bab-b863-1d2b153581a4
+    - <Name>k__BackingField: LaserEnabledSensor
+      fullName: Assets.Scripts.GOAP.Sensors.Laser.LaserEnabledSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/Laser/LaserEnabledSensor.cs
+      <Id>k__BackingField: LaserEnabledSensor-0adf54c7-6a47-4f6d-9d7e-8e0a1f1f2f31
+    - <Name>k__BackingField: LaserTriggeredSensor
+      fullName: Assets.Scripts.GOAP.Sensors.Laser.LaserTriggeredSensor, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/Laser/LaserTriggeredSensor.cs
+      <Id>k__BackingField: LaserTriggeredSensor-0c0db3e3-3415-4e86-8a83-10c2f9b22fd1
     - <Name>k__BackingField: PlayerCaughtSensor
       fullName: Assets.Scripts.GOAP.Sensors.PlayerCaughtSensor, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -193,6 +233,16 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/IsAlert.cs
       <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+    - <Name>k__BackingField: LaserOn
+      fullName: Assets.Scripts.GOAP.WorldKeys.Laser.LaserOn, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/Laser/LaserOn.cs
+      <Id>k__BackingField: LaserOn-6a2f1c1d-1fe4-4a3a-9d6c-1b0bace87c72
+    - <Name>k__BackingField: LaserTriggered
+      fullName: Assets.Scripts.GOAP.WorldKeys.Laser.LaserTriggered, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/Laser/LaserTriggered.cs
+      <Id>k__BackingField: LaserTriggered-6cc9f0dd-04ea-4ad3-8a1a-75b4d9c91f3b
     - <Name>k__BackingField: PatrolCount
       fullName: Assets.Scripts.GOAP.WorldKeys.PatrolCount, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -229,6 +279,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/RechargeTargetSensor.cs
       <Id>k__BackingField: RechargeTargetSensor-d75bc583-1396-4c22-a928-5c77e9a1bdaa
+    - <Name>k__BackingField: SelfTargetSensor
+      fullName: Assets.Scripts.GOAP.Sensors.SelfTargetSensor, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/SelfTargetSensor.cs
+      <Id>k__BackingField: SelfTargetSensor-8c8b1f7d-ea75-4c89-87d5-5c7c2c8d64c9
     targetKeys:
     - <Name>k__BackingField: LastKnownPlayerTarget
       fullName: Assets.Scripts.GOAP.LastKnownPlayerTarget, Assembly-CSharp, Version=0.0.0.0,
@@ -255,4 +310,9 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/TargetKeys/RechargeTarget.cs
       <Id>k__BackingField: RechargeTarget-7696443c-a02f-4c6f-b405-29f3256c68ff
+    - <Name>k__BackingField: SelfTarget
+      fullName: Assets.Scripts.GOAP.TargetKeys.SelfTarget, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/TargetKeys/SelfTarget.cs
+      <Id>k__BackingField: SelfTarget-f912d3e9-4d2b-4f47-8a27-8d1b7b61cf80
     multiSensors: []
