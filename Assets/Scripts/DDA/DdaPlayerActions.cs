@@ -1,5 +1,5 @@
-using Assets.Scripts.DDA;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.DDA
@@ -8,6 +8,7 @@ namespace Assets.Scripts.DDA
     {
         // Paintings
         private Dictionary<string, float> paintingStealingLength = new Dictionary<string, float>();
+        private List<float> paintingStealingLengths = new List<float>();
         private float startMoment = 0f;
 
         // Item usage / Throwables
@@ -30,45 +31,43 @@ namespace Assets.Scripts.DDA
 
         private void OnEnable()
         {
-            PlayerActions.addPickup += PaintingPickedUp;
+            PlayerActions.stealItem += (pickup) => PaintingPickedUp();
+            PlayerActions.paintingDelivered += PaintingStolen;
             PlayerActions.ammoUpdate += UsedItem;
         }
 
         private void OnDisable()
         {
-            PlayerActions.addPickup -= PaintingPickedUp;
+            PlayerActions.stealItem -= (pickup) => PaintingPickedUp();
+            PlayerActions.paintingDelivered -= PaintingStolen;
             PlayerActions.ammoUpdate -= UsedItem;
         }
 
-        private void PaintingPickedUp(Pickup pickup)
+        /// <summary>
+        /// To be called whenever the player picks up a painting
+        /// </summary>
+        private void PaintingPickedUp()
         {
-            // TEMP If this is the first painting stolen, assume that this is the end of the tutorial and start tracking time
-            if (paintingStealingLength.Count == 0)
-            {
-                startMoment = Time.time;
-            }
-
-            // If this is a painting that was already picked up, don't do anything
-            if (paintingStealingLength.ContainsKey(pickup.name))
-            {
-                return;
-            }
-
-            // Remember the painting and pickup-time
-            paintingStealingLength.Add(pickup.name, Time.time - startMoment);
+            // Remember the time it took to find this painting (In case we want only the last X paintings to affect difficulty)
+            paintingStealingLengths.Add(Time.time - startMoment);
 
             // Remember this time so that next painting stealing length can be the length of time it between this one and that one
             startMoment = Time.time;
 
-            float totalStealingTime = 0f;
+            // Get the average stealing time (sum of stealing times / amount of paintings stolen)
+            float averageStealingTime = paintingStealingLengths.Sum() / paintingStealingLengths.Count;
 
-            foreach (float stealingMoment in paintingStealingLength.Values)
-            {
-                totalStealingTime += stealingMoment;
-            }
+            // Tell the difficulty tracker the average time it takes to steal a painting
+            DifficultyTracker.AlterDifficulty(PlayerDAAs.TimeBetweenPaintings, averageStealingTime);
+        }
 
-            // Tell the average painting stealing time to the difficulty tracker
-            DifficultyTracker.AlterDifficulty(PlayerDAAs.TimeBetweenPaintings, totalStealingTime / paintingStealingLength.Count);
+        /// <summary>
+        /// To be called whenever a painting has been delivered
+        /// </summary>
+        private void PaintingStolen()
+        {
+            // Note the time as to keep track of the average painting stealing time
+            startMoment = Time.time;
         }
 
         /// <summary>

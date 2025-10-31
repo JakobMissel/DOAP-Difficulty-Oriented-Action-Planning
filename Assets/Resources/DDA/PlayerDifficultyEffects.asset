@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 15342096eb394394aa8c3a6f00a8814f, type: 3}
   m_Name: PlayerDifficultyEffects
-  m_EditorClassIdentifier: Assembly-CSharp:Assets.Scripts.DDA:PlayerDifficultyEffects
+  m_EditorClassIdentifier: 
+  developerNote: How an action affects difficulty. Values are the difficulty, summed
+    then clamped between 0 and 1.
   playerActions:
   - action: 0
     curve:
@@ -20,60 +22,69 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0
         value: 0.25
-        inSlope: 0
+        inSlope: -0.025
         outSlope: -0.025
-        tangentMode: 69
+        tangentMode: 65
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 10
         value: 0
         inSlope: -0.025
-        outSlope: Infinity
-        tangentMode: 101
+        outSlope: -0.0375
+        tangentMode: 5
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 15
-        value: -0.2
-        inSlope: -0.04
-        outSlope: -0.04
-        tangentMode: 34
+        value: -0.25
+        inSlope: Infinity
+        outSlope: -0.05
+        tangentMode: 7
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
     _startDifficulty: 0.25
+    developerNote: 'At no captures the game should be at the top easy difficulty;
+      0.25
+
+      At 10 captures, no difficulty is added from captures.
+
+      At
+      15 captures, make the game 0.2 easier'
   - action: 1
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 20
-        value: 0.5
-        inSlope: -0.005
-        outSlope: -0.005
-        tangentMode: 34
+        value: 1
+        inSlope: -0.040567953
+        outSlope: -0.040567953
+        tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0.14166665
       - serializedVersion: 3
-        time: 120
+        time: 60
         value: 0
-        inSlope: -0.005
-        outSlope: -0.005
-        tangentMode: 34
+        inSlope: -0.008789723
+        outSlope: -0.008789723
+        tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0.2125
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
     _startDifficulty: 0
+    developerNote: At 20 seconds per painting, add 1 to the difficulty, then add
+      less to the dfficulty up to 60 seconds per painting, which adds nothing
   - action: 2
     curve:
       serializedVersion: 2
@@ -81,12 +92,12 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0.2
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: 1.0180622
+        outSlope: 1.0180622
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.26923078
       - serializedVersion: 3
         time: 0.85
         value: 0.5
@@ -95,17 +106,24 @@ MonoBehaviour:
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.60714275
+        outWeight: 0.49999982
       - serializedVersion: 3
         time: 1.2
         value: 1
-        inSlope: 4.1123433
-        outSlope: 4.1123433
+        inSlope: 3.6015363
+        outSlope: 3.6015363
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.08885179
+        inWeight: 0.2142855
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
     _startDifficulty: 0
+    developerNote: 'At 20% or less correct usage, don''t add anything to the difficulty
+
+      At
+      85% correct usage, add 0.5 to the difficulty
+
+      at 120% usage, add 1 to
+      difficulty'

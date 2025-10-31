@@ -1,7 +1,4 @@
-using CrashKonijn.Goap.Runtime;
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.DDA
@@ -11,8 +8,8 @@ namespace Assets.Scripts.DDA
     /// </summary>
     public static class DifficultyTracker
     {
-        private static PlayerDifficultyEffects pde;
-        private static EnemyDifficultyEffects ede;
+        [Tooltip("PlayerDifficultyEffects")] private static PlayerDifficultyEffects pde;
+        [Tooltip("EnemyDifficultyEffects")]  private static EnemyDifficultyEffects ede;
 
         private static bool hasBeenCalled = false;
 
@@ -31,7 +28,7 @@ namespace Assets.Scripts.DDA
             pde = Resources.Load<PlayerDifficultyEffects>("DDA/PlayerDifficultyEffects");
             ede = Resources.Load<EnemyDifficultyEffects>("DDA/EnemyDifficultyEffects");
 
-            // Assign pde to base values
+            // Assign pde values to base values
             for (int i = 0; i < pde.playerActions.Count; i++)
             {
                 actualDifficulties.Add(pde.playerActions[i].startDifficulty);
@@ -157,6 +154,9 @@ namespace Assets.Scripts.DDA
                 Debug.Log($"Applying cost change of {ede.enemyActions[i].action}, on capability {ede.enemyActions[i].capability}.\nThe cost is being set to {DifficultyTranslation(ede.enemyActions[i].action)}, given the difficulty {GetDifficultyF()}");
                 ede.enemyActions[i].capability.actions[0].baseCost = DifficultyTranslation(ede.enemyActions[i].action);
             }
+#if UNITY_EDITOR
+            Debug.Log($"Difficulty set to {GetDifficultyF().ToString("n2")}");
+#endif
         }
     }
 }
