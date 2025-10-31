@@ -4,6 +4,7 @@ using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using Assets.Scripts.DDA;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
@@ -231,6 +232,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         // Explicit API for thrown/distraction noise
         public void OnDistractionNoiseHeard(Vector3 noisePosition, float radius)
         {
+            DdaPlayerActions.Instance.SuccesfulItemUsage();
             HasHeardDistractionNoise = true;
             LastDistractionNoisePosition = noisePosition;
             lastDistractionNoiseTime = Time.time;

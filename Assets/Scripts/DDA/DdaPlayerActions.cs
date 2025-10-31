@@ -12,8 +12,21 @@ namespace Assets.Scripts.DDA
 
         // Item usage / Throwables
         private int currentAmmo = 0;
-        [HideInInspector, Tooltip("To be updated whenever an enemy gets distracted by a used item")] public int itemSuccesses = 0;
+        private int itemSuccesses = 0;
         private int totalItemsUsed = 0;
+
+        public static DdaPlayerActions Instance;
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                Destroy(this);
+                return;
+            }
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
 
         private void OnEnable()
         {
@@ -56,6 +69,16 @@ namespace Assets.Scripts.DDA
 
             // Tell the average painting stealing time to the difficulty tracker
             DifficultyTracker.AlterDifficulty(PlayerDAAs.TimeBetweenPaintings, totalStealingTime / paintingStealingLength.Count);
+        }
+
+        /// <summary>
+        /// To be called whenever an enemy gets succesfully distracted by an item
+        /// </summary>
+        public void SuccesfulItemUsage()
+        {
+            itemSuccesses++;
+            // Tell the DifficultyTracker the current percentage of succesful item usages
+            DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)itemSuccesses / (float)totalItemsUsed);
         }
 
         private void UsedItem(int newAmmo)
