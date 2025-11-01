@@ -43,9 +43,7 @@ public class StealPainting : MonoBehaviour
 
     void CheckActive(Objective objective, int arg2, float arg3)
     {
-        print("check1 " + objective);
         if (objective != this.objective) return;
-        print("check2 " + objective);
         UpdatePaintingNames();
     }
 
@@ -90,7 +88,6 @@ public class StealPainting : MonoBehaviour
         {
             if (paintings[i].paintingName == name)
             {
-                print("help");
                 currentPainting = paintings[i];
                 GameObject painting = Instantiate(currentPainting.gameObject);
                 OnSendPaintingPrefab(painting);

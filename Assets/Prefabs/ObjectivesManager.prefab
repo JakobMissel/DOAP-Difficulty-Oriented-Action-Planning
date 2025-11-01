@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2225959533642535551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1937655057234403953}
+  - component: {fileID: 1799843238429081897}
+  - component: {fileID: 2912193341384634044}
+  - component: {fileID: 6111951887104273761}
+  m_Layer: 0
+  m_Name: ObjectivesManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1937655057234403953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225959533642535551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.177439, y: 2.2952394, z: 2.3197615}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1799843238429081897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225959533642535551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5734fa08ab68445a37adcd67c67897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objective: {fileID: 11400000, guid: 2da7a914a78e19a46a477bfa63bcc5a1, type: 2}
+  timerImage: {fileID: 0}
+  delayBetweenGoals: 4
+  moveTime: 4
+  sneakTime: 4
+  climbTime: 4
+  aimTime: 4
+--- !u!114 &2912193341384634044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225959533642535551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 109234ce5bbdb8545bed2f86043f6ef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPaintingPosition: {fileID: 0}
+  paintingPositionOffset: {x: 0, y: 0, z: 0}
+  paintingRotationOffset: {x: 90, y: 0, z: 90}
+  objective: {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}
+  currentPaintingName: 
+  paintings:
+  - {fileID: 4279844000067428162, guid: 1421fad43eb61fe429ee3e8c0ad32b0d, type: 3}
+  - {fileID: 6438433605640342852, guid: 2405d8cb5a1b3a24e8681965cb1ea928, type: 3}
+  - {fileID: 5944078329822002359, guid: 146520557eaa78945afd3f3f0679615f, type: 3}
+  - {fileID: 5624694344710439689, guid: 65c6a24bb0591d64c878672040999d96, type: 3}
+  - {fileID: 1231924821368651526, guid: d6ddb6a94c45f484584bf9c236e241be, type: 3}
+  stolenPaintings: []
+--- !u!114 &6111951887104273761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225959533642535551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71236277ced119f498ec06d1b6c8aed5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentObjective: {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}
+  startFromFirstObjective: 1
+  completedTutorial: 0
+  objectives:
+  - {fileID: 11400000, guid: 2da7a914a78e19a46a477bfa63bcc5a1, type: 2}
+  - {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}
+  - {fileID: 11400000, guid: 195151351b65c61489f2ba1d7538d64f, type: 2}

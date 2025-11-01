@@ -103,7 +103,6 @@ public class ObjectivesManager : MonoBehaviour
         currentObjective = newObjective;
 
         // Tutorial completed flag
-        print("Current Objective: " + currentObjective.name);
         if (objectives[1] == currentObjective)
         {
             completedTutorial = true;
