@@ -1,12 +1,15 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
+using UnityEngine.AI;
 
-namespace Assets.Scripts.GOAP
+namespace Assets.Scripts.GOAP.Actions
 {
     [GoapId("GoToLaser-a8fbbe83-4db9-486c-89f5-ad58636d61bb")]
     public class GoToLaserAction : GoapActionBase<GoToLaserAction.Data>
     {
+        private NavMeshAgent agent;
+
         // This method is called when the action is created
         // This method is optional and can be removed
         public override void Created()
@@ -23,8 +26,26 @@ namespace Assets.Scripts.GOAP
 
         // This method is called when the action is started
         // This method is optional and can be removed
-        public override void Start(IMonoAgent agent, Data data)
+        public override void Start(IMonoAgent mono, Data data)
         {
+            if (agent == null)
+                agent = mono.Transform.GetComponent<NavMeshAgent>();
+
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+                return;
+
+            agent.isStopped = false;
+            agent.updateRotation = true;
+            agent.updatePosition = true;
+
+            // Snapshot which laser raised the alert when this action starts
+            data.AnchorSnapshot = Assets.Scripts.GOAP.Systems.LaserAlertSystem.Anchor;
+
+            // Optional immediate set; Perform keeps updating until arrival
+            if (data.Target != null && data.Target.IsValid())
+            {
+                agent.SetDestination(data.Target.Position);
+            }
         }
 
         // This method is called once before the action is performed
@@ -35,15 +56,33 @@ namespace Assets.Scripts.GOAP
 
         // This method is called every frame while the action is running
         // This method is required
-        public override IActionRunState Perform(IMonoAgent agent, Data data, IActionContext context)
+        public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
-            return ActionRunState.Completed;
+            if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
+                return ActionRunState.Stop;
+
+            // Continuously head to the target position
+            agent.SetDestination(data.Target.Position);
+
+            // Arrive when close enough
+            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.5f)
+            {
+                agent.isStopped = true;
+
+                // Arrival reached; do not auto-clear the global alert here.
+                // Alert will clear when the laser deactivates (via LaserAlertSystem.OnLaserDeactivated()).
+                return ActionRunState.Completed;
+            }
+
+            return ActionRunState.Continue;
         }
 
         // This method is called when the action is completed
         // This method is optional and can be removed
-        public override void Complete(IMonoAgent agent, Data data)
+        public override void Complete(IMonoAgent mono, Data data)
         {
+            // Try to clear the world key if no newer alert replaced this one
+            Assets.Scripts.GOAP.Systems.LaserAlertSystem.TryClearWorldKeyForAnchor(data.AnchorSnapshot);
         }
 
         // This method is called when the action is stopped
@@ -54,8 +93,12 @@ namespace Assets.Scripts.GOAP
 
         // This method is called when the action is completed or stopped
         // This method is optional and can be removed
-        public override void End(IMonoAgent agent, Data data)
+        public override void End(IMonoAgent mono, Data data)
         {
+            if (agent != null && agent.enabled && agent.isOnNavMesh)
+            {
+                agent.isStopped = false;
+            }
         }
 
         // The action class itself must be stateless!
@@ -63,6 +106,7 @@ namespace Assets.Scripts.GOAP
         public class Data : IActionData
         {
             public ITarget Target { get; set; }
+            public Transform AnchorSnapshot { get; set; }
         }
     }
 }

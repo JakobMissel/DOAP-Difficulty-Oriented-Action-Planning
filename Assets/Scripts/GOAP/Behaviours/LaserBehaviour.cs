@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using CrashKonijn.Agent.Runtime;
 using CrashKonijn.Goap.Runtime;
+using Assets.Scripts.GOAP.Systems;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
@@ -72,12 +73,21 @@ namespace Assets.Scripts.GOAP.Behaviours
         {
             // Latch as triggered while the beam is active
             pendingTriggers = 1;
+
+            // Immediately raise a global alert anchored to this beam so guards react without delay
+            if (beam != null)
+            {
+                Assets.Scripts.GOAP.Systems.LaserAlertSystem.RaiseAlert(beam.transform);
+                Debug.Log($"Laser beam activated at {beam.transform.position}");
+            }
         }
 
         private void OnBeamDeactivated()
         {
             // Clear when the laser deactivates (player left or beam turned off)
             pendingTriggers = 0;
+            // Schedule global alert clearance after hold period
+            LaserAlertSystem.OnLaserDeactivated();
         }
 
         public void ConsumeOneTrigger()

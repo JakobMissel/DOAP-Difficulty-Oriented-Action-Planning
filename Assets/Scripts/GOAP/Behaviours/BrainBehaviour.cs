@@ -113,7 +113,8 @@ namespace Assets.Scripts.GOAP.Behaviours
                 typeof(CatchGoal),
                 typeof(ClearLastKnownGoal),
                 typeof(RechargeGoal),
-                typeof(InvestigateNoiseGoal)
+                typeof(InvestigateNoiseGoal),
+                typeof(Assets.Scripts.GOAP.GoToLaserGoal)
             });
         }
 

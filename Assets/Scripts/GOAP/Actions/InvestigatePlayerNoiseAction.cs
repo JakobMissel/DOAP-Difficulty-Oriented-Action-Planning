@@ -2,7 +2,7 @@ using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 
-namespace Assets.Scripts.GOAP
+namespace Assets.Scripts.GOAP.Actions
 {
     [GoapId("InvestigatePlayerNoise-a20df32e-1993-4188-856a-4fd9f4b4cfa3")]
     public class InvestigatePlayerNoiseAction : GoapActionBase<InvestigatePlayerNoiseAction.Data>

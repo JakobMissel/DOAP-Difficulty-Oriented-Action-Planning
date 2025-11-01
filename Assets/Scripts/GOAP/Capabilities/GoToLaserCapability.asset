@@ -17,26 +17,57 @@ MonoBehaviour:
       <Name>k__BackingField: GoToLaserGoal
       <Id>k__BackingField: GoToLaser-67f81d7e-b950-41bd-9371-198355d72756
     baseCost: 1
-    conditions: []
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: LaserAlert
+        <Id>k__BackingField: 
+      comparison: 1
+      amount: 0
+    - worldKey:
+        <Name>k__BackingField: DifficultyWK
+        <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
+      comparison: 3
+      amount: 75
   actions:
   - action:
       <Name>k__BackingField: GoToLaserAction
       <Id>k__BackingField: GoToLaser-a8fbbe83-4db9-486c-89f5-ad58636d61bb
     target:
-      <Name>k__BackingField: 
-      <Id>k__BackingField: 
+      <Name>k__BackingField: LaserAlertTarget
+      <Id>k__BackingField: LaserAlertTarget-65f3b8de-3e3a-4e9e-8f4f-18dc3cb7a0f2
     properties:
       rid: 9021967506735104069
-    baseCost: 1
+    baseCost: 2.8
     stoppingDistance: 0.1
     validateTarget: 1
     requiresTarget: 1
     validateConditions: 1
-    moveMode: 0
-    conditions: []
-    effects: []
-  worldSensors: []
-  targetSensors: []
+    moveMode: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: LaserAlert
+        <Id>k__BackingField: LaserAlert-0cf9f5d8-83b8-4bd4-9f38-37c4d7fe7d8c
+      comparison: 3
+      amount: 1
+    effects:
+    - worldKey:
+        <Name>k__BackingField: LaserAlert
+        <Id>k__BackingField: LaserAlert-0cf9f5d8-83b8-4bd4-9f38-37c4d7fe7d8c
+      effect: 0
+  worldSensors:
+  - sensor:
+      <Name>k__BackingField: LaserAlertWorldSensor
+      <Id>k__BackingField: LaserAlertWorldSensor-1c9e351b-7b8d-4d5c-8b3b-8b3e51c6fd10
+    worldKey:
+      <Name>k__BackingField: LaserAlert
+      <Id>k__BackingField: LaserAlert-0cf9f5d8-83b8-4bd4-9f38-37c4d7fe7d8c
+  targetSensors:
+  - sensor:
+      <Name>k__BackingField: LaserAlertTargetSensor
+      <Id>k__BackingField: LaserAlertTargetSensor-76a9bf6a-5d9d-4a1f-8c3e-6df9c1b4f0f1
+    targetKey:
+      <Name>k__BackingField: LaserAlertTarget
+      <Id>k__BackingField: LaserAlertTarget-65f3b8de-3e3a-4e9e-8f4f-18dc3cb7a0f2
   multiSensors: []
   generatorScriptable: {fileID: 11400000, guid: 0422e7a0a8d2c3a43bf617285bc969b5, type: 2}
   references:

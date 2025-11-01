@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using CrashKonijn.Goap.Runtime;
 using CrashKonijn.Agent.Core;
+using Assets.Scripts.GOAP.Systems;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -23,6 +24,10 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
+            // If a laser alert is active, abort starting patrol and let the planner switch immediately
+            if (LaserAlertSystem.WorldKeyActive)
+                return;
+
             if (TryGetValidTargetPosition(data, out var pos))
             {
                 agent.SetDestination(pos);
@@ -36,6 +41,10 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
+            // Immediately interrupt patrol when a laser alert is active so we can replan to GoToLaser
+            if (LaserAlertSystem.WorldKeyActive)
+                return ActionRunState.Stop;
+
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return ActionRunState.Stop;
             // Debug.Log($"[PatrolAction] {mono.Transform.name} Perform tick. RemDist={agent.remainingDistance}, StopDist={agent.stoppingDistance}, PathPending={agent.pathPending}");

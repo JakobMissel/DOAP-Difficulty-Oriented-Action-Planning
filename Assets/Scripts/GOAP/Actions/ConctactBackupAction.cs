@@ -2,7 +2,7 @@ using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 
-namespace Assets.Scripts.GOAP
+namespace Assets.Scripts.GOAP.Actions
 {
     [GoapId("ConctactBackup-c56b48c2-f65a-480e-ac16-feba162620c9")]
     public class ConctactBackupAction : GoapActionBase<ConctactBackupAction.Data>

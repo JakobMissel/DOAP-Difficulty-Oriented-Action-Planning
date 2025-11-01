@@ -2,6 +2,7 @@ using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 using Assets.Scripts.GOAP.Behaviours;
+using Assets.Scripts.GOAP.Systems;
 
 namespace Assets.Scripts.GOAP.Actions.Laser
 {
@@ -16,16 +17,11 @@ namespace Assets.Scripts.GOAP.Actions.Laser
                 return;
 
             var pos = beam.transform.position;
-            float radius = Mathf.Max(0f, laser.alertRadius);
 
-            foreach (var brain in BrainBehaviour.GetActiveBrains())
-            {
-                if (brain == null) continue;
-                // Use distraction noise so HeardNoiseSensor triggers InvestigateNoise behaviour
-                brain.OnDistractionNoiseHeard(pos, radius);
-            }
+            // Raise a global alert so all guards will plan to go to this position
+            LaserAlertSystem.RaiseAlert(beam.transform);
 
-            // consume one pending trigger so the sensor count goes down
+            // Consume one pending trigger so the laser process goal can re-satisfy
             laser.ConsumeOneTrigger();
         }
 
