@@ -34,8 +34,6 @@ namespace Assets.Scripts.GOAP.Sensors
             float dist = Vector3.Distance(agent.Transform.position, stationNavmeshPos);
             bool atStation = dist <= threshold;
             
-            Debug.Log($"[AtRechargeStationSensor] Agent {agent.Transform.name} distance: {dist:0.00}, threshold: {threshold}, result: {(atStation ? 1 : 0)}");
-            
             return new SenseValue(atStation ? 1 : 0);
         }
     }

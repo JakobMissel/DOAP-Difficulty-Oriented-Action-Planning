@@ -17,7 +17,7 @@ namespace Assets.Scripts.GOAP.Sensors
             var energyBehaviour = refs.GetCachedComponent<EnergyBehaviour>();
             if (energyBehaviour == null)
             {
-                Debug.LogWarning("[EnergySensor] EnergyBehaviour not found on agent!");
+                // Removed per-frame warning
                 return new SenseValue(0);
             }
 

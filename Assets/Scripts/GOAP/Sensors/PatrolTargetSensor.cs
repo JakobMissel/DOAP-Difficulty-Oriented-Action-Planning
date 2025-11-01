@@ -16,18 +16,15 @@ namespace Assets.Scripts.GOAP.Sensors
             var route = references.GetCachedComponent<Assets.Scripts.GOAP.Behaviours.PatrolRouteBehaviour>();
             if (route == null) 
             {
-                Debug.LogWarning("[PatrolTargetSensor] No PatrolRouteBehaviour found!");
                 return null;
             }
 
             var wp = route.GetCurrent();
             if (wp == null) 
             {
-                Debug.LogWarning("[PatrolTargetSensor] No current waypoint!");
                 return null;
             }
 
-            Debug.Log($"[PatrolTargetSensor] Target waypoint: {wp.name} at {wp.position}");
 
             if (existingTarget is PositionTarget pt)
                 return pt.SetPosition(wp.position);

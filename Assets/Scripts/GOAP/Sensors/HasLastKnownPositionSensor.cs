@@ -17,7 +17,6 @@ namespace Assets.Scripts.GOAP.Sensors
             var brain = refs.GetCachedComponent<BrainBehaviour>();
             bool hasLastKnown = brain != null && brain.HasLastKnownPosition;
             
-            Debug.Log($"[HasLastKnownPositionSensor] {agent.Transform.name} - HasLastKnown: {hasLastKnown}");
             return new SenseValue(hasLastKnown);
         }
     }

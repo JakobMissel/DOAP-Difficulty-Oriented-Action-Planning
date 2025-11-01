@@ -79,6 +79,12 @@ namespace Assets.Scripts.GOAP.Systems
             return true;
         }
 
+        // Clear only the world key (keeps anchor/position intact)
+        public static void ClearWorldKey()
+        {
+            WorldKeyActive = false;
+        }
+
         /// <summary>Return the best current alert position (anchor if set, otherwise stored Position).</summary>
         public static Vector3 GetCurrentPosition()
         {

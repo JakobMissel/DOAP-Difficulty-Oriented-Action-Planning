@@ -52,7 +52,7 @@ namespace Assets.Scripts.GOAP.Actions
 
             if (!TryGetValidTargetPosition(data, out var pos))
             {
-                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} performing but no valid target.");
+                // Removed per-frame warning
                 return ActionRunState.Stop;
             }
 
@@ -76,7 +76,8 @@ namespace Assets.Scripts.GOAP.Actions
             }
             else
             {
-                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no PatrolRouteBehaviour!");
+                // Reduced warning noise
+                // Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no PatrolRouteBehaviour!");
             }
         }
 

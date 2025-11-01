@@ -18,15 +18,12 @@ namespace Assets.Scripts.GOAP.Sensors
             
             if (brain != null && brain.HasLastKnownPosition)
             {
-                Debug.Log($"[LastKnownPlayerTargetSensor] Returning last known position: {brain.LastKnownPlayerPosition}");
-                
                 if (existingTarget is PositionTarget pt)
                     return pt.SetPosition(brain.LastKnownPlayerPosition);
                 
                 return new PositionTarget(brain.LastKnownPlayerPosition);
             }
             
-            Debug.Log("[LastKnownPlayerTargetSensor] No last known position available");
             return null;
         }
     }

@@ -2,6 +2,7 @@ using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
+using Assets.Scripts.GOAP.Systems;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -9,6 +10,7 @@ namespace Assets.Scripts.GOAP.Actions
     public class GoToLaserAction : GoapActionBase<GoToLaserAction.Data>
     {
         private NavMeshAgent agent;
+        private SimpleGuardSightNiko sight;
 
         // This method is called when the action is created
         // This method is optional and can be removed
@@ -30,9 +32,18 @@ namespace Assets.Scripts.GOAP.Actions
         {
             if (agent == null)
                 agent = mono.Transform.GetComponent<NavMeshAgent>();
+            if (sight == null)
+                sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
+
+            // If we already see the player, abort and clear the alert so pursuit can take over immediately
+            if (sight != null && sight.CanSeePlayer())
+            {
+                LaserAlertSystem.ClearWorldKey();
+                return;
+            }
 
             agent.isStopped = false;
             agent.updateRotation = true;
@@ -58,6 +69,13 @@ namespace Assets.Scripts.GOAP.Actions
         // This method is required
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
+            // Abort instantly if we can see the player; clear alert so pursuit wins
+            if (sight != null && sight.CanSeePlayer())
+            {
+                LaserAlertSystem.ClearWorldKey();
+                return ActionRunState.Stop;
+            }
+
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 

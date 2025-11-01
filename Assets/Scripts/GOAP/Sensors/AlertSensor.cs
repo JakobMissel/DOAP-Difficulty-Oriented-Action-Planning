@@ -24,7 +24,6 @@ namespace Assets.Scripts.GOAP.Sensors
         {
             if (player == null)
             {
-                Debug.Log("[AlertSensor] No player found");
                 return new SenseValue(false);
             }
 
@@ -34,18 +33,12 @@ namespace Assets.Scripts.GOAP.Sensors
             if (agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var sight))
             {
                 bool canSee = sight.CanSeePlayer();
-                
-                // Alert is TRUE if:
-                // 1. We can see the player, OR
-                // 2. We have a last known position to investigate
                 bool hasLastKnown = brain != null && brain.HasLastKnownPosition;
                 bool isAlert = canSee || hasLastKnown;
                 
-                Debug.Log($"[AlertSensor] {agent.Transform.name} - CanSee: {canSee}, HasLastKnown: {hasLastKnown}, IsAlert: {isAlert}");
                 return new SenseValue(isAlert ? 1 : 0);
             }
 
-            Debug.LogWarning($"[AlertSensor] {agent.Transform.name} has no SimpleGuardSightNiko component!");
             return new SenseValue(false);
         }
     }
