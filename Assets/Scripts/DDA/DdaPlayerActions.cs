@@ -69,6 +69,7 @@ namespace Assets.Scripts.DDA
         {
             PlayerActions.stealItem += (pickup) => PaintingPickedUp();
             PlayerActions.paintingDelivered += PaintingDelivered;
+            PlayerActions.tutorialCompletion += PaintingDelivered;
             PlayerActions.ammoUpdate += UsedItem;
         }
 
@@ -76,6 +77,7 @@ namespace Assets.Scripts.DDA
         {
             PlayerActions.stealItem -= (pickup) => PaintingPickedUp();
             PlayerActions.paintingDelivered -= PaintingDelivered;
+            PlayerActions.tutorialCompletion -= PaintingDelivered;
             PlayerActions.ammoUpdate -= UsedItem;
         }
 
