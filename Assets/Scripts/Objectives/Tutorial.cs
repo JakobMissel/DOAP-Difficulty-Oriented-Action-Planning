@@ -137,7 +137,7 @@ public class Tutorial : MonoBehaviour
         {
             return true;
         }
-        if (objective.goals[goalIndex - 1].isCompleted)
+        if (objective.subObjectives[goalIndex - 1].isCompleted)
         {
             return true;
         }
@@ -147,13 +147,13 @@ public class Tutorial : MonoBehaviour
 
     bool IsGoalActive(int goalIndex)
     {
-        return objective.goals[goalIndex].isActive;
+        return objective.subObjectives[goalIndex].isActive;
     }
 
-    void CompleteGoal(int goalIndex, float delay)
+    void CompleteGoal(int subObjectiveIndex, float delay)
     {
         timerImage.fillAmount = 0;
-        objective.CompleteGoal(goalIndex);
-        objective.DisplayNextGoal(delay);
+        objective.CompleteSubObjective(subObjectiveIndex);
+        objective.DisplayNextSubObjective(delay);
     }
 }

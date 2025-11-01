@@ -7,8 +7,12 @@ Freestylized - Royalty Free License: Free to use for all Commercial and Non-Comm
 - https://freestylized.com/material/wood_planks_09/
 - https://freestylized.com/material/wood_planks_02/
 
-3D Textures - Free PBR textures and Stylized textures with Color, Normal, Displacement, Occlusion and Roughness Maps.
+Poliigon assets are royalty-free.
 - https://www.poliigon.com/texture/square-terracotta-matte-tile-texture-beige/5377
+- https://www.poliigon.com/texture/gold-paint-metal-texture/7253
+
+3D Textures - Free PBR textures and Stylized textures with Color, Normal, Displacement, Occlusion and Roughness Maps.
+- https://3dtextures.me/2019/12/26/glass-blocks-001/
 
 Unsplash - Free to use under the Unsplash License
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-zZPeoLxLRyM

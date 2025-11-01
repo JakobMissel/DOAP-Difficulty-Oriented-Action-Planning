@@ -7,6 +7,11 @@ TagManager:
   - OffCamera
   - POI
   - Climbable
+  - Waypoint
+  - Breakpoint
+  - Agent
+  - Laser
+  - PlayerPaintingPosition
   layers:
   - Default
   - TransparentFX
@@ -17,7 +22,7 @@ TagManager:
   - Ground
   - Wall
   - Player
-  - 
+  - Laser
   - 
   - 
   - 

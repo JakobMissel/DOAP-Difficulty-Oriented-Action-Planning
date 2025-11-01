@@ -3,7 +3,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] [Tooltip("Text that is displayed when close enough to interact with pickup.")] [TextArea] string displayName;
+    [SerializeField] [Tooltip("Text that is displayed when close enough to interact with pickup.")] [TextArea] protected string displayName;
     public string DisplayName => displayName;
 
     [Header("\"Animation\"")]
@@ -18,7 +18,8 @@ public class Pickup : MonoBehaviour
     [SerializeField] AudioClip audioClip;
     GameObject newAudioGameObject;
     [Header("Interactable")]
-    [SerializeField] bool canBepickedUp = true;
+    [SerializeField] protected bool destroyOnPickup = true;
+    [SerializeField] protected bool canBepickedUp = true;
     [SerializeField] bool buttonRequired;
     [SerializeField] bool holdRequired;
     [SerializeField] float holdDuration;
@@ -32,12 +33,12 @@ public class Pickup : MonoBehaviour
 
 
 
-    void Awake()
+    protected virtual void Awake()
     {
         initialY = transform.position.y;
     }
 
-    void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (!canBepickedUp) return;
         if (other.CompareTag("Player"))
@@ -51,7 +52,7 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && buttonRequired)
         {
@@ -64,7 +65,7 @@ public class Pickup : MonoBehaviour
         }
     }
 
-    void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (!canBepickedUp) return;
         if (other.CompareTag("Player") && buttonRequired)
@@ -87,7 +88,8 @@ public class Pickup : MonoBehaviour
         }
         PlayerActions.OnRemovePickupFromInteractableList(this);
         PlayerActions.OnPickedUpItem(this);
-        Destroy(gameObject);
+        if (destroyOnPickup)
+            Destroy(gameObject);
     }
 
     void Update()
@@ -131,8 +133,11 @@ public class Pickup : MonoBehaviour
             holdTime += Time.deltaTime;
             if (holdTime >= holdDuration)
             {
+                holdTime = 0;
+                buttonHeld = false;
+                canBepickedUp = false;
                 ActivatePickup(other);
-                canBepickedUp = false;   
+
             }
         }
         else

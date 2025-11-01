@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875fbfa2d1734285b353878b31467c98, type: 3}
+  m_Name: LaserOffCapability
+  m_EditorClassIdentifier: 
+  goals:
+  - goal:
+      <Name>k__BackingField: LaserMaintainOffGoal
+      <Id>k__BackingField: LaserMaintainOffGoal-9e2c73a6-8b61-4d48-bf7f-6d034e3b8e9a
+    baseCost: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: DifficultyWK
+        <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
+      comparison: 0
+      amount: 75
+    - worldKey:
+        <Name>k__BackingField: LaserOn
+        <Id>k__BackingField: LaserOn-6a2f1c1d-1fe4-4a3a-9d6c-1b0bace87c72
+      comparison: 1
+      amount: 0
+  actions:
+  - action:
+      <Name>k__BackingField: DisableLaserAction
+      <Id>k__BackingField: DisableLaserAction-5a17cfd1-34b6-4c5d-b7f3-8c43a9a7c0ce
+    target:
+      <Name>k__BackingField: SelfTarget
+      <Id>k__BackingField: SelfTarget-f912d3e9-4d2b-4f47-8a27-8d1b7b61cf80
+    properties:
+      rid: 9021967506735104066
+    baseCost: 1
+    stoppingDistance: 0
+    validateTarget: 1
+    requiresTarget: 1
+    validateConditions: 1
+    moveMode: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: LaserOn
+        <Id>k__BackingField: 
+      comparison: 3
+      amount: 1
+    - worldKey:
+        <Name>k__BackingField: DifficultyWK
+        <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
+      comparison: 0
+      amount: 75
+    effects:
+    - worldKey:
+        <Name>k__BackingField: LaserOn
+        <Id>k__BackingField: LaserOn-6a2f1c1d-1fe4-4a3a-9d6c-1b0bace87c72
+      effect: 0
+  worldSensors:
+  - sensor:
+      <Name>k__BackingField: LaserEnabledSensor
+      <Id>k__BackingField: LaserEnabledSensor-0adf54c7-6a47-4f6d-9d7e-8e0a1f1f2f31
+    worldKey:
+      <Name>k__BackingField: LaserOn
+      <Id>k__BackingField: LaserOn-6a2f1c1d-1fe4-4a3a-9d6c-1b0bace87c72
+  - sensor:
+      <Name>k__BackingField: DifficultySensor
+      <Id>k__BackingField: DifficultySensor-260fd14a-d8e1-49eb-93c7-4281156582c2
+    worldKey:
+      <Name>k__BackingField: DifficultyWK
+      <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
+  targetSensors:
+  - sensor:
+      <Name>k__BackingField: SelfTargetSensor
+      <Id>k__BackingField: SelfTargetSensor-8c8b1f7d-ea75-4c89-87d5-5c7c2c8d64c9
+    targetKey:
+      <Name>k__BackingField: SelfTarget
+      <Id>k__BackingField: SelfTarget-f912d3e9-4d2b-4f47-8a27-8d1b7b61cf80
+  multiSensors: []
+  generatorScriptable: {fileID: 11400000, guid: 0422e7a0a8d2c3a43bf617285bc969b5, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 9021967506735104066
+      type: {class: EmptyActionProperties, ns: CrashKonijn.Agent.Runtime, asm: CrashKonijn.Agent.Runtime}
+      data: 

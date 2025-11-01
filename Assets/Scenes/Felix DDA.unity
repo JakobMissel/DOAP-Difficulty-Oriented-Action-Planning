@@ -6654,7 +6654,6 @@ MonoBehaviour:
   maxEnergy: 100
   drainRate: 2
   rechargeRate: 8
-  currentEnergy: 0
 --- !u!114 &1829937738
 MonoBehaviour:
   m_ObjectHideFlags: 0
