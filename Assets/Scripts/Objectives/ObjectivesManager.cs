@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class ObjectivesManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class ObjectivesManager : MonoBehaviour
     [SerializeField] bool startFromFirstObjective = true;
     [SerializeField] public bool completedTutorial;
 
-    [SerializeField] Objective[] objectives;
+    [SerializeField] public Objective[] objectives;
     public static ObjectivesManager Instance;
 
     public static Action<Objective, int, float, float> setNewObjective;
@@ -25,7 +26,9 @@ public class ObjectivesManager : MonoBehaviour
     public static Action<Objective, int, float> displayObjective;
     public static void OnDisplayObjective(Objective objective, int subGoalIndex, float delay) => displayObjective?.Invoke(objective, subGoalIndex, delay);
 
-
+    public static Action<string, string> trackPaintings;
+    public static void OnTrackPaintings(string paintingName, string objectiveName) => trackPaintings?.Invoke(paintingName, objectiveName);
+    
     void Awake()
     {
         if (Instance == null)
@@ -57,7 +60,7 @@ public class ObjectivesManager : MonoBehaviour
                 }
                 objectives[i].subObjectives[j].isCompleted = false;
                 objectives[i].subObjectives[j].isActive = false;
-                objectives[i].subObjectives[j].descriptionText = objectives[i].subObjectives[j].goalText;
+                objectives[i].subObjectives[j].descriptionText = "";
             }
         }
         completedTutorial = false;
@@ -94,15 +97,24 @@ public class ObjectivesManager : MonoBehaviour
 
     void SetNewObjective(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay)
     {
-        currentObjective = newObjective;
+        // Set current objective as inactive before switching
         currentObjective.isActive = false;
+
+        currentObjective = newObjective;
+
+        // Tutorial completed flag
+        print("Current Objective: " + currentObjective.name);
+        if (objectives[1] == currentObjective)
+        {
+            completedTutorial = true;
+            PlayerActions.OnTutorialCompletion();
+        }
         StartCoroutine(SetNewObjectiveEnumerator(newObjective, subObjectiveIndex, delay, enumeratorDelay));
     }
 
     IEnumerator SetNewObjectiveEnumerator(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay)
     {
         yield return new WaitForSeconds(enumeratorDelay);
-        currentObjective = newObjective;
         currentObjective.BeginObjective();
         OnDisplayObjective(currentObjective, subObjectiveIndex, delay);
         if (currentObjective == objectives[objectives.Length - 1])
@@ -118,9 +130,11 @@ public class ObjectivesManager : MonoBehaviour
 
     void FlagCompletedObjective(Objective objective)
     {
-        // If there is a next objective, set it and show after 2 seconds
+        // If there is a next objective, set it and show after X seconds
         if(objective.nextObjective != null)
-            StartCoroutine(SetNewObjectiveEnumerator(objective.nextObjective, 0, 0, objective.completionDelay));
+        {
+            OnSetNewObjective(objective.nextObjective, 0, 0, objective.completionDelay);
 
+        }
     }
 }

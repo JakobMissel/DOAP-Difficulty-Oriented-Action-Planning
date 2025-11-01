@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7275798469514331293}
   - component: {fileID: 5611962247772164593}
   - component: {fileID: 7901307877999311843}
-  - component: {fileID: 3569748017503323761}
   m_Layer: 0
   m_Name: Cube_1
   m_TagString: Untagged
@@ -87,27 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3569748017503323761
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3532944297391845093}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3989368852278959709
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,12 +95,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 164961894325572507}
-  - component: {fileID: 6335470574455905021}
-  - component: {fileID: 7027223619471371654}
-  - component: {fileID: 6660594409538270097}
+  - component: {fileID: 5944078329822002359}
+  - component: {fileID: 6425474956267056605}
   m_Layer: 0
   m_Name: Painting3
-  m_TagString: POI
+  m_TagString: CarriedPainting
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,7 +121,7 @@ Transform:
   - {fileID: 8699881132962987491}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6335470574455905021
+--- !u!114 &5944078329822002359
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,45 +133,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1d3de44f4d60647bbe0aaf0513dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: "Woman Cooling Down\n             by\nErmandog Modig"
+  displayName: 
   verticalAnimation: 0
-  verticalSpeed: 0
-  verticalHeight: 0
+  verticalSpeed: 2
+  verticalHeight: 0.5
   rotate: 0
-  rotationSpeed: 0
-  audioGameObject: {fileID: 2840963429894322711, guid: f33f6e2ec70e4c942b820c095de920ed, type: 3}
-  audioClip: {fileID: 8300000, guid: 48c1c4833b656964f8e650a4d2008e07, type: 3}
-  destroyOnPickup: 1
-  canBepickedUp: 1
-  buttonRequired: 1
-  holdRequired: 1
-  holdDuration: 4
+  rotationSpeed: 100
+  audioGameObject: {fileID: 0}
+  audioClip: {fileID: 0}
+  destroyOnPickup: 0
+  canBepickedUp: 0
+  buttonRequired: 0
+  holdRequired: 0
+  holdDuration: 0
   buttonPressed: 0
   buttonHeld: 0
   paintingName: "Jeg er h\xF8j"
   painterName: "S\xF8ren Pind"
---- !u!65 &7027223619471371654
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3989368852278959709}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.76, y: 2.9, z: 1.25}
-  m_Center: {x: 0.26, y: 0, z: 0}
---- !u!65 &6660594409538270097
+--- !u!65 &6425474956267056605
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,14 +163,14 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.06, y: 1.77, z: 1}
-  m_Center: {x: 0.03, y: 0, z: 0}
+  m_Size: {x: 0.05, y: 1.8, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5561939958945737545
 GameObject:
   m_ObjectHideFlags: 0

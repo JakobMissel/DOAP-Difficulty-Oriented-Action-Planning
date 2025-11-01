@@ -1,52 +1,72 @@
 using TMPro;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class ObjectiveUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI nameText;
-    //[SerializeField] TextMeshProUGUI descriptionText;
-    //[SerializeField] TextMeshProUGUI completionText;
-    [SerializeField] GameObject objectivesTextArea;
     [SerializeField] GameObject objectivesTextPrefab;
-    [SerializeField] List<GameObject> objectivesTexts;
+    [SerializeField] GameObject middlePanel;
+    [SerializeField] GameObject objectiveMiddlePanel;
+    [SerializeField] GameObject sidePanel;
+    [SerializeField] GameObject objectiveSidePanel;
 
     Objective currentObjective;
-    int currentSubGoalIndex = 0;
+    int currentSubObjectiveIndex = 0;
+
+    void Awake()
+    {
+        objectiveMiddlePanel.SetActive(false);
+        objectiveSidePanel.SetActive(false);
+    }
 
     void OnEnable()
     {
         ObjectivesManager.displayObjective += UpdateObjectiveUI;
+        ObjectivesManager.trackPaintings += TrackPaintings;
+        PlayerActions.stealItem += ActivateTextArea;
+        PlayerActions.paintingDelivered += DeactivateTextArea;
     }
+
 
     void OnDisable()
     {
         ObjectivesManager.displayObjective -= UpdateObjectiveUI;
+        ObjectivesManager.trackPaintings -= TrackPaintings;
+        PlayerActions.stealItem += ActivateTextArea;
     }
 
+    void ActivateTextArea(StealablePickup pickup)
+    {
+        //objectivesTextAreaMiddle.SetActive(true);
+    }
+    
+    void DeactivateTextArea()
+    {
+        objectiveMiddlePanel.SetActive(false);
+    }
+    
     void CreateObjectiveText(string text)
     {
-        GameObject newText = Instantiate(objectivesTextPrefab, objectivesTextArea.transform);
+        GameObject newText = Instantiate(objectivesTextPrefab, middlePanel.transform);
         newText.GetComponent<TextMeshProUGUI>().text = text;
-        objectivesTexts.Add(newText);
     }
 
-    void UpdateObjectiveUI(Objective objective, int subGoalIndex, float delay)
+    void UpdateObjectiveUI(Objective objective, int subObjectiveIndex, float delay)
     {
+        objectiveMiddlePanel.SetActive(true);
         // Update current objective and sub-goal index
         currentObjective = objective;
-        currentSubGoalIndex = subGoalIndex;
-        
+        currentSubObjectiveIndex = subObjectiveIndex;
         // Show completion text before next objective if applicable
         if (currentObjective.completions.Count > 0 && currentObjective.subObjectives.Count != currentObjective.completions.Count)
         {
-            // Show completion text for the most recent completed sub-goal
-            CreateObjectiveText(currentObjective.completions[currentSubGoalIndex - 1].completionText);
+            // Show completion text for the most recent completed sub-goal (most recent is the one before this, so - 1)
+            CreateObjectiveText(currentObjective.completions[currentSubObjectiveIndex - 1].completionText);
         }
         if (currentObjective.completions.Count > 0 && currentObjective.subObjectives.Count == currentObjective.completions.Count)
         {
-            // Show completion text for the last completed sub-goal
-            CreateObjectiveText(currentObjective.completions[currentSubGoalIndex].completionText);
+            // Show completion text for the last completed sub-goal (this time just look at current)
+            CreateObjectiveText(currentObjective.completions[currentSubObjectiveIndex].completionText);
         }
 
         // If the objective is already completed, do not update UI / clear texts
@@ -58,29 +78,44 @@ public class ObjectiveUI : MonoBehaviour
         // Show completion text
         if (currentObjective.isCompleted)
         {
-            ClearTextArea();
-            CreateObjectiveText($"{currentObjective} has been completed!");
+            ClearTextArea(middlePanel);
+            CreateObjectiveText($"{currentObjective.name} has been completed!");
             return;
         }
         
         // Update UI texts
         nameText.text = currentObjective.name;
-        ClearTextArea();
+        ClearTextArea(middlePanel);
+
+        if (ObjectivesManager.Instance.completedTutorial && currentSubObjectiveIndex == 0)
+        {
+            DeactivateTextArea();
+
+            return; 
+        }
 
         // Activate the current sub-objective
-        if(currentObjective && currentObjective.subObjectives.Count > currentSubGoalIndex)
+        if(currentObjective && currentObjective.subObjectives.Count > currentSubObjectiveIndex)
         {
-            ObjectivesManager.OnActivateSubObjective(currentObjective?.subObjectives[currentSubGoalIndex]);
-            CreateObjectiveText(currentObjective?.subObjectives[currentSubGoalIndex].descriptionText);
+            ObjectivesManager.OnActivateSubObjective(currentObjective?.subObjectives[currentSubObjectiveIndex]);
+            CreateObjectiveText(currentObjective?.subObjectives[currentSubObjectiveIndex].goalText);
         }
     }
 
-    void ClearTextArea()
+    void ClearTextArea(GameObject gameObject)
     {
-        objectivesTexts.Clear();
-        for (int i = 0; i < objectivesTextArea.transform.childCount; i++)
+        for (int i = 0; i < gameObject.transform.childCount; i++)
         {
-            Destroy(objectivesTextArea.transform.GetChild(i).gameObject);
+            Destroy(gameObject.transform.GetChild(i).gameObject);
         }
+    }
+
+    void TrackPaintings(string text, string objectiveName)
+    {
+        objectiveSidePanel.SetActive(true);
+        nameText.text = objectiveName;
+        ClearTextArea(sidePanel);
+        GameObject newText = Instantiate(objectivesTextPrefab, sidePanel.transform);
+        newText.GetComponent<TextMeshProUGUI>().text = text;
     }
 }

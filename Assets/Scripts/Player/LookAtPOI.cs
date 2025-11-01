@@ -43,6 +43,12 @@ public class LookAtPOI : MonoBehaviour
 
     void Update()
     {
+        // If carrying painting, do not look at POIs
+        if (PlayerActions.Instance.carriesPainting) 
+        {
+            headTracker.weight = 0;
+            return;
+        }
         LookAtTarget(ClosestPOI());
     }
 

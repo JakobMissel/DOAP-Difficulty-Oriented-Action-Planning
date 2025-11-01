@@ -9,6 +9,7 @@ public class IKArmControl : MonoBehaviour
     [SerializeField] GameObject leftArmConstraints;
     [SerializeField] GameObject leftTarget;
     [SerializeField] Transform leftShoulder;
+    [SerializeField] Transform leftCarryTarget;
     [SerializeField] float leftDistanceToShoulder = 0.5f;
     
     Vector3 leftTargetStartPosition;
@@ -20,6 +21,7 @@ public class IKArmControl : MonoBehaviour
     [SerializeField] GameObject rightArmConstraints;
     [SerializeField] GameObject rightTarget;
     [SerializeField] Transform rightShoulder;
+    [SerializeField] Transform rightCarryTarget;
     [SerializeField] float rightDistanceToShoulder = 0.5f;
     
     Vector3 rightTargetStartPosition;
@@ -27,20 +29,24 @@ public class IKArmControl : MonoBehaviour
     MultiRotationConstraint rightHandRotation;
     Vector3 rightClosestPoint;
 
+    bool atWall;
     bool isAiming;
 
     void Awake()
     {
         rig = GetComponent<Rig>();
         rig.weight = 1;
-
+        
         leftArmIK = leftArmConstraints.GetComponent<TwoBoneIKConstraint>();
         leftHandRotation = leftArmConstraints.GetComponent<MultiRotationConstraint>();
+        leftArmIK.weight = 0;
+        leftHandRotation.weight = 0;
+        leftTargetStartPosition = leftTarget.transform.position;
         
         rightArmIK = rightArmConstraints.GetComponent<TwoBoneIKConstraint>();
         rightHandRotation = rightArmConstraints.GetComponent<MultiRotationConstraint>();
-
-        leftTargetStartPosition = leftTarget.transform.position;
+        rightArmIK.weight = 0;
+        rightHandRotation.weight = 0;
         rightTargetStartPosition = rightTarget.transform.position;
     }
 
@@ -61,11 +67,6 @@ public class IKArmControl : MonoBehaviour
 
     void FixedUpdate() // To match with physics updates
     {
-        SetTargets();
-    }
-
-    void SetTargets()
-    {
         if (isAiming)
         {
             rig.weight = 0;
@@ -73,22 +74,22 @@ public class IKArmControl : MonoBehaviour
             rightTarget.transform.position = rightTargetStartPosition;
             return;
         }
+        if (PlayerActions.Instance.carriesPainting)
+        {
+            rig.weight = 1;
+            SetTargetsToPainting();
+            return;
+        }
+        if (atWall)
+        {
+            SetTargetsToWall();
+        }
+    }
 
+    void SetTargetsToWall()
+    {
         var leftDistance = Vector3.Distance(leftShoulder.position, leftClosestPoint);
         var rightDistance = Vector3.Distance(rightShoulder.position, rightClosestPoint);
-
-        //var leftWeight = Mathf.Clamp01(1 - (leftDistance / leftDistanceToShoulder));
-        //leftArmIK.weight = leftWeight;
-        //leftHandRotation.weight = leftWeight;
-        //leftTarget.transform.position = leftClosestPoint;
-
-        //var rightWeight = Mathf.Clamp01(1 - (rightDistance / rightDistanceToShoulder));
-        //rig.weight = rightWeight;
-        //rightArmIK.weight = rightWeight;
-        //rightHandRotation.weight = rightWeight;
-        //rightTarget.transform.position = rightClosestPoint;
-
-        //rig.weight = leftDistance > rightDistance ? leftWeight : rightWeight;
 
         if ((leftDistance < leftDistanceToShoulder) && leftDistance < rightDistance)
         {
@@ -132,29 +133,48 @@ public class IKArmControl : MonoBehaviour
         }
     }
 
+    void SetTargetsToPainting()
+    {
+        if (leftArmIK != null) 
+        {
+            leftArmIK.weight = 1;
+            leftHandRotation.weight = 1;
+            leftTarget.transform.position = leftCarryTarget.position;
+            leftTarget.transform.localRotation = Quaternion.Euler(new Vector3(0,100,0));
+        }
+        if (rightArmIK != null) 
+        {
+            rightArmIK.weight = 1;
+            rightHandRotation.weight = 1;
+            rightTarget.transform.position = rightCarryTarget.position;
+            rightTarget.transform.localRotation = Quaternion.Euler(new Vector3(0, -50, 0));
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Climbable"))
-        {
-            leftClosestPoint = other.ClosestPoint(leftShoulder.position);
-            rightClosestPoint = other.ClosestPoint(rightShoulder.position);
-        }
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Climbable"))
+        if (other.CompareTag("Climbable") && !PlayerActions.Instance.carriesPainting)
         {
+            atWall = true;
             leftClosestPoint = other.ClosestPoint(leftShoulder.position);
             rightClosestPoint = other.ClosestPoint(rightShoulder.position);
+        }
+        if (!other.CompareTag("Climbable") && !PlayerActions.Instance.carriesPainting)
+        {
+            atWall = false;
+            leftArmIK.weight = 0;
+            leftHandRotation.weight = 0;
+            rightArmIK.weight = 0;
+            rightHandRotation.weight = 0;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Climbable"))
-        {
-        }
     }
 
     void OnDrawGizmosSelected()

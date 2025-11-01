@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Painting3
   m_EditorClassIdentifier: 
   isCompleted: 0
-  isActive: 1
-  descriptionText: 'Steal a painting. '
-  goalText: '"Woman Cooling Down" by Ermandog Modig'
-  completionText: You stole {0}.
+  isActive: 0
+  descriptionText: 
+  goalText: "Woman Cooling Down\n<color=#8FCDA1>Hall\xF8j i skoven</color>\nJeg er
+    h\xF8j\nDiablo V\nEn lort\n"
+  completionText: "You have stolen the painting \"Jeg er h\xF8j\". Now place it outside."

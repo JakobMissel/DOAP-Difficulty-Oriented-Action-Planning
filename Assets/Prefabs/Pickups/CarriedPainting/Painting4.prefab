@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9028587882427815532}
-  - component: {fileID: 7291665102251818889}
-  - component: {fileID: 3664544713321924289}
-  - component: {fileID: 2404186275931417019}
+  - component: {fileID: 5624694344710439689}
+  - component: {fileID: -3872955249848588849}
   m_Layer: 0
   m_Name: Painting4
-  m_TagString: POI
+  m_TagString: CarriedPainting
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +35,7 @@ Transform:
   - {fileID: 6863070826986722706}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7291665102251818889
+--- !u!114 &5624694344710439689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,45 +47,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1d3de44f4d60647bbe0aaf0513dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: "Woman Cooling Down\n             by\nErmandog Modig"
+  displayName: 
   verticalAnimation: 0
-  verticalSpeed: 0
-  verticalHeight: 0
+  verticalSpeed: 2
+  verticalHeight: 0.5
   rotate: 0
-  rotationSpeed: 0
-  audioGameObject: {fileID: 2840963429894322711, guid: f33f6e2ec70e4c942b820c095de920ed, type: 3}
-  audioClip: {fileID: 8300000, guid: 48c1c4833b656964f8e650a4d2008e07, type: 3}
-  destroyOnPickup: 1
-  canBepickedUp: 1
-  buttonRequired: 1
-  holdRequired: 1
-  holdDuration: 4
+  rotationSpeed: 100
+  audioGameObject: {fileID: 0}
+  audioClip: {fileID: 0}
+  destroyOnPickup: 0
+  canBepickedUp: 0
+  buttonRequired: 0
+  holdRequired: 0
+  holdDuration: 0
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Diablo V
   painterName: Blizzard
---- !u!65 &3664544713321924289
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3676243823263848889}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.76, y: 2.9, z: 1.25}
-  m_Center: {x: 0.26, y: 0, z: 0}
---- !u!65 &2404186275931417019
+--- !u!65 &-3872955249848588849
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,14 +77,14 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.06, y: 1.77, z: 1}
-  m_Center: {x: 0.03, y: 0, z: 0}
+  m_Size: {x: 0.05, y: 1.8, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6018390315541983520
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +182,6 @@ GameObject:
   - component: {fileID: 5551301991504054420}
   - component: {fileID: 3212295032005921354}
   - component: {fileID: 8402792407002009859}
-  - component: {fileID: 1316205575216915623}
   m_Layer: 0
   m_Name: Cube_1
   m_TagString: Untagged
@@ -280,24 +257,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1316205575216915623
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8994678529690461666}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

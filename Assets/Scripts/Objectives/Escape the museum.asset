@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa9bc55e65edca44fa3e8fc3c1f3b951, type: 3}
-  m_Name: 2_EscapeMuseum
+  m_Name: Escape the museum
   m_EditorClassIdentifier: 
   isCompleted: 0
-  isActive: 1
-  name: Escape The Museum
-  completionDelay: 5
+  isActive: 0
+  name: Escape the museum
+  completionDelay: 0
   subObjectives: []
   completions: []
   currentSubObjectiveIndex: 0

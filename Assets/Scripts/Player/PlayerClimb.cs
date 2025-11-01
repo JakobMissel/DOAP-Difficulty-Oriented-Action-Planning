@@ -80,11 +80,20 @@ public class PlayerClimb : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Prevent climbing while carrying painting
+        if (PlayerActions.Instance.carriesPainting)
+        {
+            climbButtonHeld = false;
+            return; 
+        }
         Climb();
     }
 
     void OnClimb(InputAction.CallbackContext ctx)
     {
+        // Prevent climbing calls while carrying painting    
+        if (PlayerActions.Instance.carriesPainting) return; 
+        
         climbButtonHeld = ctx.ReadValueAsButton();
     }
 

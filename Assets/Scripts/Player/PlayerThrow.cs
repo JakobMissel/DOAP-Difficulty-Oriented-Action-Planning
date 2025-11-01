@@ -61,6 +61,15 @@ public class PlayerThrow : MonoBehaviour
 
     void Update()
     {
+        // Prevent aiming while carrying painting
+        if (PlayerActions.Instance.carriesPainting && isAiming)
+        {
+            isAiming = false;
+            PlayerActions.OnAimStatus(isAiming);
+            PlayerActions.OnSetHitArea(hitArea);
+            return;
+        }
+        if (PlayerActions.Instance.carriesPainting) return;
         VisualizeThrowLine();
         ThrowCooldown();
     }
@@ -76,6 +85,9 @@ public class PlayerThrow : MonoBehaviour
 
     void OnAim(InputAction.CallbackContext ctx)
     {
+        // Prevent aiming calls while carrying painting
+        if (PlayerActions.Instance.carriesPainting) return; 
+
         isAiming = ctx.ReadValueAsButton();
         PlayerActions.OnAimStatus(isAiming);
         PlayerActions.OnSetHitArea(hitArea);
@@ -103,7 +115,7 @@ public class PlayerThrow : MonoBehaviour
     void VisualizeThrowLine()
     {
         PlayerActions.OnIsAiming(isAiming);
-        if (isAiming)
+        if (isAiming && !PlayerActions.Instance.carriesPainting)
         {
             // Set the camera to aim
             resetCamera = false;
@@ -179,37 +191,37 @@ public class PlayerThrow : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(currentPosition + hitDistance * Vector3.down, hitRadius, Vector3.up, out hit, hitDistance, throwableLayer))
         {
-            print("Hit Up");
+            //print("Hit Up");
             currentHit = hit;
             return hit.point;
         }
         if (Physics.SphereCast(currentPosition + hitDistance * Vector3.up, hitRadius, Vector3.down, out hit, hitDistance, throwableLayer))
         {
-            print("Hit Down");
+            //print("Hit Down");
             currentHit = hit;
             return hit.point;
         }
         if (Physics.SphereCast(currentPosition + hitDistance * Vector3.right, hitRadius, Vector3.left, out hit, hitDistance, throwableLayer))
         {
-            print("Hit Left");
+            //print("Hit Left");
             currentHit = hit;
             return hit.point;
         }
         if (Physics.SphereCast(currentPosition + hitDistance * Vector3.left, hitRadius, Vector3.right, out hit, hitDistance, throwableLayer))
         {
-            print("Hit Right");
+            //print("Hit Right");
             currentHit = hit;
             return hit.point;
         }
         if (Physics.SphereCast(currentPosition + hitDistance * Vector3.back, hitRadius, Vector3.forward, out hit, hitDistance, throwableLayer))
         {
-            print("Hit Forward");
+            //print("Hit Forward");
             currentHit = hit;
             return hit.point;
         }
         if (Physics.SphereCast(currentPosition + hitDistance * Vector3.forward, hitRadius, Vector3.back, out hit, hitDistance, throwableLayer))
         {
-            print("Hit Back");
+            //print("Hit Back");
             currentHit = hit;
             return hit.point;
         }

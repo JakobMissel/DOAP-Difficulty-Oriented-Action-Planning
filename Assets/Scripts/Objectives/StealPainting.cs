@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StealPainting : MonoBehaviour
 {
-    GameObject playerPaintingPosition;
+    [SerializeField] GameObject playerPaintingPosition;
     [SerializeField] Vector3 paintingPositionOffset;
     [SerializeField] Vector3 paintingRotationOffset;
     [SerializeField] Objective objective;
@@ -12,13 +12,17 @@ public class StealPainting : MonoBehaviour
     [SerializeField] StealablePickup[] paintings;
     [SerializeField] List<StealablePickup> stolenPaintings;
 
+    StealablePickup currentPainting;
+
     public static Action<int, float> paintingStolen;
     public static void OnPaintingStolen(int subObjectiveIndex, float delay) => paintingStolen?.Invoke(subObjectiveIndex, delay);
+
+    public static Action<GameObject> sendPaintingPrefab;
+    public static void OnSendPaintingPrefab(GameObject painting) => sendPaintingPrefab?.Invoke(painting);
 
     void Awake()
     {
         playerPaintingPosition = GameObject.FindGameObjectWithTag("PlayerPaintingPosition");
-        UpdatePaintingNames();
     }
 
     void OnEnable()
@@ -26,6 +30,7 @@ public class StealPainting : MonoBehaviour
         PlayerActions.stealItem += ItemStolen;
         paintingStolen += PaintingStolen;
         PlayerActions.paintingDelivered += PaintingDelivered;
+        ObjectivesManager.displayObjective += CheckActive;
     }
 
     void OnDisable()
@@ -33,6 +38,15 @@ public class StealPainting : MonoBehaviour
         PlayerActions.stealItem -= ItemStolen;
         paintingStolen -= PaintingStolen;
         PlayerActions.paintingDelivered -= PaintingDelivered;
+        ObjectivesManager.displayObjective -= CheckActive;
+    }
+
+    void CheckActive(Objective objective, int arg2, float arg3)
+    {
+        print("check1 " + objective);
+        if (objective != this.objective) return;
+        print("check2 " + objective);
+        UpdatePaintingNames();
     }
 
     void ItemStolen(StealablePickup item)
@@ -45,9 +59,9 @@ public class StealPainting : MonoBehaviour
                 {
                     currentPaintingName = item.paintingName;
                     objective.subObjectives[i].completionText = $"You have stolen the painting \"{currentPaintingName}\". Now place it outside.";
-                    objective.subObjectives[i + 1].descriptionText = $"Place the painting \"{currentPaintingName}\" back at the entrance.";
+                    objective.subObjectives[i + 1].goalText = $"Place the painting \"{currentPaintingName}\" back at the entrance.";
                     objective.subObjectives[i + 1].completionText = $"\"{currentPaintingName}\" has been placed at the entrance.";
-                    OnPaintingStolen(objective.currentSubObjectiveIndex, 8);
+                    OnPaintingStolen(objective.currentSubObjectiveIndex, 0);
                     break;
                 }
             }
@@ -56,7 +70,6 @@ public class StealPainting : MonoBehaviour
 
     void PaintingStolen(int subObjectiveIndex, float delay)
     {
-        print("sub objective: " + subObjectiveIndex);
         AddPaintingToStolenList(currentPaintingName);
         objective.CompleteSubObjective(subObjectiveIndex);
         objective.DisplayNextSubObjective(delay);
@@ -64,10 +77,11 @@ public class StealPainting : MonoBehaviour
 
     void PaintingDelivered()
     {
-        UpdatePaintingNames();
-        print("sub objective: " + objective.currentSubObjectiveIndex);
+        // Add to "stolen list" and destroy the carried painting accounting for its siblings.
+        stolenPaintings.Add(currentPainting);
+        Destroy(playerPaintingPosition.transform.GetChild(2).gameObject);
         objective.CompleteSubObjective(objective.currentSubObjectiveIndex);
-        objective.DisplayNextSubObjective(5);
+        objective.DisplayNextSubObjective(0);
     }
 
     void AddPaintingToStolenList(string name)
@@ -76,8 +90,11 @@ public class StealPainting : MonoBehaviour
         {
             if (paintings[i].paintingName == name)
             {
-                stolenPaintings.Add(paintings[i]);
-                GameObject painting = Instantiate(paintings[i].gameObject, playerPaintingPosition.transform);
+                print("help");
+                currentPainting = paintings[i];
+                GameObject painting = Instantiate(currentPainting.gameObject);
+                OnSendPaintingPrefab(painting);
+                painting.transform.SetParent(playerPaintingPosition.transform);
                 painting.transform.localPosition = paintingPositionOffset;
                 painting.transform.localRotation = Quaternion.Euler(paintingRotationOffset);
                 break;
@@ -85,32 +102,30 @@ public class StealPainting : MonoBehaviour
         }
     }
 
+
     void UpdatePaintingNames()
     {
-        if(playerPaintingPosition.transform.childCount > 0)
-        {
-            Destroy(playerPaintingPosition.transform.GetChild(0).gameObject);
-        }
+        var paintingNames = "";
         foreach (var subObjective in objective.subObjectives)
         {
             if (subObjective.name.StartsWith("Painting"))
             {
-                subObjective.descriptionText = "";
-                print("Initializing painting sub objective: " + subObjective.name);
+                subObjective.goalText = "";
                 for (int i = 0; i < paintings.Length; i++)
                 {
                     if (stolenPaintings.Contains(paintings[i]))
                     {
-                        print("Painting stolen: " + paintings[i].paintingName);
-                        subObjective.descriptionText += $"<color=red>{paintings[i].paintingName}</color>\n";
+                        subObjective.goalText += $"<color=#8FCDA1>{paintings[i].paintingName}</color>\n"; // change color of stolen paintings
                         continue;
                     }
                     else
                     {
-                        subObjective.descriptionText += $"{paintings[i].paintingName}\n";
+                        subObjective.goalText += $"{paintings[i].paintingName}\n";
                     }
+                    paintingNames = subObjective.goalText;
                 }
             }
         }
+        ObjectivesManager.OnTrackPaintings(paintingNames, objective.name);
     }
 }

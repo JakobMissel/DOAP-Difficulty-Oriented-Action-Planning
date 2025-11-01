@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerActions : MonoBehaviour
 {
+    // Tutorial
+    public static Action tutorialCompletion;
+    public static void OnTutorialCompletion() => tutorialCompletion?.Invoke();
+
     // Movement actions
     public static Action<bool> moveStatus;
     public static void OnMoveStatus(bool isMoving) => moveStatus?.Invoke(isMoving);
@@ -89,6 +93,7 @@ void OnEnable()
     {
         if (debugEvents)
         {
+            tutorialCompletion += DebugTutorialCompleted;
             moveStatus += DebugMove;
             climbStatus += DebugClimb;
             sneakStatus += DebugSneak;
@@ -104,6 +109,7 @@ void OnEnable()
     {
         if (debugEvents)
         {
+            tutorialCompletion -= DebugTutorialCompleted;
             moveStatus -= DebugMove;
             climbStatus -= DebugClimb;
             sneakStatus -= DebugSneak;
@@ -113,6 +119,11 @@ void OnEnable()
             aimStatus -= DebugAim;
             ammoUpdate -= DebugAmmoUpdate;
         }
+    }
+
+    void DebugTutorialCompleted()
+    {
+        print($"[{Time.time}] Tutorial completed");
     }
 
     void DebugMove(bool obj)

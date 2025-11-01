@@ -6,6 +6,7 @@ public class StealablePickup : Pickup
     public string paintingName;
     public string painterName;
 
+
     protected override void Awake()
     {
         displayName = $"Steal \"{paintingName}\" \n by \n{painterName}";

@@ -16,6 +16,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] Image interactImage;
     
     List<Pickup> pickups = new();
+    bool isAiming = false;
 
     void Awake()
     {
@@ -50,6 +51,7 @@ public class PlayerInteract : MonoBehaviour
 
         PlayerActions.addPickup += AddPickup;
         PlayerActions.removePickup += RemovePickup;
+        PlayerActions.aimStatus += AimStatus;
     }
 
     void OnDisable()
@@ -65,30 +67,46 @@ public class PlayerInteract : MonoBehaviour
         
         PlayerActions.addPickup -= AddPickup;
         PlayerActions.removePickup -= RemovePickup;
+        PlayerActions.aimStatus -= AimStatus;
+    }
+
+    void AimStatus(bool aimStatus)
+    {
+        isAiming = aimStatus;
     }
 
     void Update()
     {
         var closest = ClosestPickup();
+        // Don't show interact UI while carrying painting
+        if (isAiming)
+        {
+            if(closest)
+                closest.buttonHeld = false;
+            FillInteractGraphic(null);
+            ShowInteractGraphic(null);
+            return;
+        }
         ShowInteractGraphic(closest);
         FillInteractGraphic(closest);
     }
 
     void Interact(InputAction.CallbackContext ctx)
     {
+        // Don't allow interaction while aiming or carrying painting
+        if (isAiming) return;
         ResetGraphics();
 
         var closest = ClosestPickup();
         if (!closest || !pickups.Contains(closest)) return;
-        Pickup pickup = closest.GetComponent<Pickup>();
 
         PlayerActions.OnPlayerInteract(ctx);
 
         // Send button status to closest pickup
-        if (pickup.HoldRequired)
-            pickup.buttonHeld = ctx.ReadValueAsButton();
+        if (closest.HoldRequired)
+            closest.buttonHeld = ctx.ReadValueAsButton();
         else
-            pickup.buttonPressed = ctx.ReadValueAsButton();
+            closest.buttonPressed = ctx.ReadValueAsButton();
     }
 
     Pickup ClosestPickup()
@@ -110,7 +128,6 @@ public class PlayerInteract : MonoBehaviour
         }
         return closestPickup;
     }
-
 
     void ShowInteractGraphic(Pickup pickup)
     {

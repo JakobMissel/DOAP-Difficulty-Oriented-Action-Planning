@@ -47,97 +47,97 @@ public class Tutorial : MonoBehaviour
 
     void PlayerMoved(bool isMoving)
     {
-        if(isMoving && IsPreviousGoalCompleted(0) && IsGoalActive(0))
+        if(isMoving && IsPreviousGoalCompleted(0) && IsSubObjectiveActive(0))
         {
             moveT -= Time.deltaTime;
-            print(moveT);
+            //print(moveT);
             timerImage.fillAmount = 1 - (moveT / moveTime);
             
             if (moveT > 0) return;
             // Unsubscribe after completing the goal
             PlayerActions.moveStatus -= PlayerMoved;
 
-            CompleteGoal(0, delayBetweenGoals);
+            CompleteSubObjective(0, delayBetweenGoals);
         }
     }
 
     void PlayerSneaked(bool isSneaking)
     {
-        if (isSneaking && IsPreviousGoalCompleted(1) && IsGoalActive(1))
+        if (isSneaking && IsPreviousGoalCompleted(1) && IsSubObjectiveActive(1))
         {
             sneakT -= Time.deltaTime;
-            print(sneakT);
+            //print(sneakT);
             timerImage.fillAmount = 1 - (sneakT / sneakTime);
             if (sneakT > 0) return;
             // Unsubscribe after completing the goal
             PlayerActions.isSneaking -= PlayerSneaked;
             
-            CompleteGoal(1, delayBetweenGoals);
+            CompleteSubObjective(1, delayBetweenGoals);
         }
     }
 
     void PlayerClimbed(bool isClimbing)
     {
-        if (isClimbing && IsPreviousGoalCompleted(2) && IsGoalActive(2))
+        if (isClimbing && IsPreviousGoalCompleted(2) && IsSubObjectiveActive(2))
         {
             climbT -= Time.deltaTime;
-            print(climbT);
+            //print(climbT);
             timerImage.fillAmount = 1 - (climbT / climbTime);
             if (climbT > 0) return;
             // Unsubscribe after completing the goal
             PlayerActions.climbStatus -= PlayerClimbed;
             
-            CompleteGoal(2, delayBetweenGoals);
+            CompleteSubObjective(2, delayBetweenGoals);
         }
     }
 
     void PlayerPickedUpItem(Pickup item)
     {
-        if (IsPreviousGoalCompleted(3) && IsGoalActive(3))
+        if (IsPreviousGoalCompleted(3) && IsSubObjectiveActive(3))
         {
             // Unsubscribe after completing the goal
             PlayerActions.pickedUpItem -= PlayerPickedUpItem;
             
-            CompleteGoal(3, delayBetweenGoals);
+            CompleteSubObjective(3, delayBetweenGoals);
         }
     }
 
     void PlayerAimed(bool isAiming)
     {
-        if (isAiming && IsPreviousGoalCompleted(4) && IsGoalActive(4))
+        if (isAiming && IsPreviousGoalCompleted(4) && IsSubObjectiveActive(4))
         {
             aimT -= Time.deltaTime;
-            print(aimT);
+            //print(aimT);
             timerImage.fillAmount = 1 - (aimT / aimTime);
             if (aimT > 0) return;
             // Unsubscribe after completing the goal
             PlayerActions.isAiming -= PlayerAimed;
             
-            CompleteGoal(4, delayBetweenGoals);
+            CompleteSubObjective(4, delayBetweenGoals);
         }
     }
 
     void PlayerAmmoUpdated(int ammo)
     {
-        if (ammo < 1 && IsPreviousGoalCompleted(5) && IsGoalActive(5))
+        if (ammo < 1 && IsPreviousGoalCompleted(5) && IsSubObjectiveActive(5))
         {
             // Unsubscribe after completing the goal
             PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
             
-            CompleteGoal(5, delayBetweenGoals);
+            CompleteSubObjective(5, delayBetweenGoals);
         }
     }
 
     /// <summary>
-    /// Is the previous goal completed? Relative to the current goal index.
+    /// Is the previous sub objective completed? Relative to the current sub objective (index).
     /// </summary>
-    bool IsPreviousGoalCompleted(int goalIndex)
+    bool IsPreviousGoalCompleted(int subObjectiveIndex)
     {
-        if (goalIndex == 0)
+        if (subObjectiveIndex == 0)
         {
             return true;
         }
-        if (objective.subObjectives[goalIndex - 1].isCompleted)
+        if (objective.subObjectives[subObjectiveIndex - 1].isCompleted)
         {
             return true;
         }
@@ -145,12 +145,12 @@ public class Tutorial : MonoBehaviour
         return false;
     }
 
-    bool IsGoalActive(int goalIndex)
+    bool IsSubObjectiveActive(int subObjectiveIndex)
     {
-        return objective.subObjectives[goalIndex].isActive;
+        return objective.subObjectives[subObjectiveIndex].isActive;
     }
 
-    void CompleteGoal(int subObjectiveIndex, float delay)
+    void CompleteSubObjective(int subObjectiveIndex, float delay)
     {
         timerImage.fillAmount = 0;
         objective.CompleteSubObjective(subObjectiveIndex);

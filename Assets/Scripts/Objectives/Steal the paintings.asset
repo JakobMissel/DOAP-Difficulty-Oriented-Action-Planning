@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa9bc55e65edca44fa3e8fc3c1f3b951, type: 3}
-  m_Name: 1_StealPainting
+  m_Name: Steal the paintings
   m_EditorClassIdentifier: 
   isCompleted: 0
   isActive: 1
-  name: Steal a painting
+  name: 'Steal the paintings:'
   completionDelay: 7
   subObjectives:
   - {fileID: 11400000, guid: 381f6e2c124dd99469a9cf253fc732e3, type: 2}
@@ -31,5 +31,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 381f6e2c124dd99469a9cf253fc732e3, type: 2}
   - {fileID: 11400000, guid: 25614842c3bab3c4dbfc58b764b13e92, type: 2}
   - {fileID: 11400000, guid: 90770d5027b9cf34caece6b4dbe07e1e, type: 2}
+  - {fileID: 11400000, guid: 7df0a9f3fe53dce4eb6fd3b2b2c885fe, type: 2}
   currentSubObjectiveIndex: 4
   nextObjective: {fileID: 11400000, guid: 195151351b65c61489f2ba1d7538d64f, type: 2}
