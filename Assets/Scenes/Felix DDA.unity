@@ -7529,51 +7529,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2043781870}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2128413159
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2128413161}
-  - component: {fileID: 2128413160}
-  m_Layer: 0
-  m_Name: Difficulty Tracking System
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2128413160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2128413159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3f3a221ec3d7e24bb18126cef479d10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemSuccesses: 0
---- !u!4 &2128413161
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2128413159}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.288, y: -6.235908, z: -2.4720821}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2140570796
 GameObject:
   m_ObjectHideFlags: 0
@@ -7682,6 +7637,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140570796}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &8994682619261881131
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 585616370249366940, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_Name
+      value: Difficulty Tracking System
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -19.288
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.235908
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.4720821
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 806023562566497589, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -7694,4 +7706,4 @@ SceneRoots:
   - {fileID: 1277657391}
   - {fileID: 987958168}
   - {fileID: 833687129}
-  - {fileID: 2128413161}
+  - {fileID: 8994682619261881131}
