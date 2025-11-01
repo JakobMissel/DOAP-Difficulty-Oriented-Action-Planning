@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6805938617046531353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425325663155565701}
+  - component: {fileID: 2947570443572948099}
+  - component: {fileID: 3042979143944750646}
+  - component: {fileID: 2572555349785727668}
+  - component: {fileID: 1292335085838311828}
+  m_Layer: 0
+  m_Name: GOAP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &425325663155565701
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805938617046531353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.720335, y: -35.790398, z: 2.2798033}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2947570443572948099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805938617046531353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19925b6b65787cf439172e5e095b51fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  configInitializer: {fileID: 0}
+  agentTypeConfigFactories:
+  - {fileID: 2572555349785727668}
+  - {fileID: 1292335085838311828}
+--- !u!114 &3042979143944750646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805938617046531353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed2f3e5164f4b4383d4f2ed55b4dd9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2572555349785727668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805938617046531353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba76f83282945c7ab3e12cd479a9808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capabilities:
+  - {fileID: 11400000, guid: 391c4632b24e8b646b108d40186e1a40, type: 2}
+  - {fileID: 11400000, guid: 425f931d1f43b254d91d36084c23635c, type: 2}
+  - {fileID: 11400000, guid: 0dbcea87da793b948af4b48085b74de0, type: 2}
+  - {fileID: 11400000, guid: 2538429734c099f4cbdcba9db5f6eee6, type: 2}
+  - {fileID: 11400000, guid: 93618e8c30780c44f9865e9f7c76aa7f, type: 2}
+  - {fileID: 11400000, guid: 6ba2c034ca0e72c4390cf03d09996533, type: 2}
+  - {fileID: 11400000, guid: 0550ad18662ba044dbf795d7976d6917, type: 2}
+  agentTypeName: Guard
+  investigateNoiseCostMultiplier: 1
+  pursuitCostMultiplier: 1
+--- !u!114 &1292335085838311828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805938617046531353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb167897ea043bb8ee3c9f1b78f4f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  capabilities:
+  - {fileID: 11400000, guid: e5f6718db4991d846aef798e4361ae00, type: 2}
+  - {fileID: 11400000, guid: 3570c8b62e70db14a91ef240c0552979, type: 2}
+  - {fileID: 11400000, guid: c13e26afb227ea046afd2fd41c733fb0, type: 2}
+  agentTypeName: Laser
+  difficultyThreshold: 60
