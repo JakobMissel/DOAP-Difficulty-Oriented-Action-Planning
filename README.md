@@ -14,6 +14,9 @@ Poliigon assets are royalty-free.
 3D Textures - Free PBR textures and Stylized textures with Color, Normal, Displacement, Occlusion and Roughness Maps.
 - https://3dtextures.me/2019/12/26/glass-blocks-001/
 
+Ambient CG - Free 3D Assets for Everyone and Everything.
+- https://ambientcg.com/view?id=Wallpaper001A
+
 Unsplash - Free to use under the Unsplash License
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-zZPeoLxLRyM
 - https://unsplash.com/photos/orange-white-and-teal-abstract-painting-1_WMZARl81c
