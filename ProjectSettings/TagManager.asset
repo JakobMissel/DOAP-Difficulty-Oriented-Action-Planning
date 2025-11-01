@@ -12,7 +12,6 @@ TagManager:
   - Agent
   - Laser
   - PlayerPaintingPosition
-  - LaserPosition
   layers:
   - Default
   - TransparentFX
