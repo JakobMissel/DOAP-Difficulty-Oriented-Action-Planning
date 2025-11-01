@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d6076189f0d8b4db4bfdb28c3d74f2, type: 3}
   m_Name: EnemyDifficultyEffects
   m_EditorClassIdentifier: 
-  developerNote: 'How difficulty affects enemy actions.
+  developerNote: 'How difficulty affects enemy actions. On the curve, difficulty
+    is the Time Component, and should be between 0 and 1.
 
     The element the curve
     affects may differ from action to action.
