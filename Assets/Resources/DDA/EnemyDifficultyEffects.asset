@@ -20,87 +20,6 @@ MonoBehaviour:
     For some it affects cost, others
     it affects runtime variables such as battery drain speed.'
   enemyActions:
-  - action: 0
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    capability: {fileID: 0}
-    developerNote: 
-  - action: 1
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    capability: {fileID: 0}
-    developerNote: 
-  - action: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    capability: {fileID: 0}
-    developerNote: 
   - action: 3
     curve:
       serializedVersion: 2
@@ -115,7 +34,7 @@ MonoBehaviour:
         inWeight: 0.33333334
         outWeight: 0.42499998
       - serializedVersion: 3
-        time: 0.75
+        time: 0.9
         value: 0
         inSlope: -4.0079036
         outSlope: -4.0079036
@@ -129,87 +48,40 @@ MonoBehaviour:
     capability: {fileID: 0}
     developerNote: How quickly battery power drains depending on the difficulty.
       1 is at the base rate, 0 is that it does not drain at all
-  - action: 4
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0.75
-        value: 1
-        inSlope: -10.753256
-        outSlope: -10.753256
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.045833293
-      - serializedVersion: 3
-        time: 0.95
-        value: 0.1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    capability: {fileID: 0}
-    developerNote: 
-  - action: 5
+  - action: 9
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        value: 4
+        inSlope: -1.5
+        outSlope: -1.5
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
-        outWeight: 0
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        value: 2.5
+        inSlope: -1.5
+        outSlope: -1.5
         tangentMode: 34
         weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    capability: {fileID: 0}
-    developerNote: 
-  - action: 6
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0.2
-        value: 1
-        inSlope: -0.6514631
-        outSlope: -0.6514631
-        tangentMode: 0
-        weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.42499998
-      - serializedVersion: 3
-        time: 0.75
-        value: 0
-        inSlope: -4.0079036
-        outSlope: -4.0079036
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.08749994
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-    capability: {fileID: 0}
-    developerNote: 
+    capability: {fileID: 11400000, guid: 6ba2c034ca0e72c4390cf03d09996533, type: 2}
+    developerNote: 'The curve value directly assigns the cost of taking a recharge
+      action.
+
+      The Base Cost of this was 4.
+
+      Chasing the player has a
+      cost of 3. So when this costs more than 3, it is more important than casing
+      the player.'
   - action: 7
     curve:
       serializedVersion: 2
@@ -245,97 +117,81 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
     capability: {fileID: 0}
-    developerNote: 
-  - action: 8
+    developerNote: Currently unused, lasers activate based on difficulty and not
+      based on a guard going over and activating them
+  - action: 6
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.25
-        value: 2
-        inSlope: -12.051967
-        outSlope: -12.051967
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.08249986
-      - serializedVersion: 3
-        time: 0.5
+        time: 0.2
         value: 1
-        inSlope: -0.00000067636506
-        outSlope: -0.00000067636506
+        inSlope: -0.6514631
+        outSlope: -0.6514631
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.58749974
+        outWeight: 0.42499998
       - serializedVersion: 3
-        time: 0.8
-        value: 0.2
-        inSlope: -5.4025774
-        outSlope: -5.4025774
+        time: 0.75
+        value: 0
+        inSlope: -4.0079036
+        outSlope: -4.0079036
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.091666974
+        inWeight: 0.08749994
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
     capability: {fileID: 0}
-    developerNote: 
-  - action: 8
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0.25
-        value: 2
-        inSlope: -12.051967
-        outSlope: -12.051967
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.08249986
-      - serializedVersion: 3
-        time: 0.5
-        value: 1
-        inSlope: -0.00000067636506
-        outSlope: -0.00000067636506
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.58749974
-      - serializedVersion: 3
-        time: 0.8
-        value: 0.2
-        inSlope: -5.4025774
-        outSlope: -5.4025774
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.091666974
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    capability: {fileID: 0}
-    developerNote: 
-  - action: 9
+    developerNote: Currently unused, there is no guard energy system (the thing titled
+      energy is flashlight battery/energy)
+  - action: 0
     curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 4
-        inSlope: -1.5
-        outSlope: -1.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: Currently unused, need an action and goal to fit this
+  - action: 1
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 3
+        inSlope: 0
+        outSlope: 0
         tangentMode: 34
         weightedMode: 0
         inWeight: 0
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 2.5
-        inSlope: -1.5
-        outSlope: -1.5
+        value: 3
+        inSlope: 0
+        outSlope: 0
         tangentMode: 34
         weightedMode: 0
         inWeight: 0.33333334
@@ -343,12 +199,122 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-    capability: {fileID: 11400000, guid: 6ba2c034ca0e72c4390cf03d09996533, type: 2}
-    developerNote: 'The curve value directly assigns the cost of taking a recharge
-      action.
-
-      The Base Cost of this was 4.
-
-      Chasing the player has a
-      cost of 3. So when this costs more than 3, it is more important than casing
-      the player.'
+    capability: {fileID: 0}
+    developerNote: Currently unused
+  - action: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: Currently unused
+  - action: 4
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.75
+        value: 1
+        inSlope: -10.753256
+        outSlope: -10.753256
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.045833293
+      - serializedVersion: 3
+        time: 0.95
+        value: 0.1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: Currently unused
+  - action: 5
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: Currently unused
+  - action: 8
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0.25
+        value: 2
+        inSlope: -12.051967
+        outSlope: -12.051967
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.08249986
+      - serializedVersion: 3
+        time: 0.5
+        value: 1
+        inSlope: -0.00000067636506
+        outSlope: -0.00000067636506
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.58749974
+      - serializedVersion: 3
+        time: 0.8
+        value: 0.2
+        inSlope: -5.4025774
+        outSlope: -5.4025774
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.091666974
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    capability: {fileID: 0}
+    developerNote: Currently unused
