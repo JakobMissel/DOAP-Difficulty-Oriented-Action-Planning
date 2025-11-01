@@ -8,6 +8,7 @@ namespace Assets.Scripts.DDA
     {
         // Paintings
         private List<float> paintingStealingLengths = new List<float>();
+        // TODO: Make startmonent be updated to whatever time the tutorial ended
         private float startMoment = 0f;
 
         // Item usage / Throwables
@@ -37,9 +38,9 @@ namespace Assets.Scripts.DDA
             DontDestroyOnLoad(this);
         }
 
+#if UNITY_EDITOR
         private void Start()
         {
-#if UNITY_EDITOR
             if (isTestingDdaPlayerActions)
             {
                 GameObject spawnedPrefab = Instantiate(uiVisualisationPrefab, transform);
@@ -61,25 +62,26 @@ namespace Assets.Scripts.DDA
                                                        "times captured",
                                                        timesCaptured.ToString());
             }
-#endif
         }
+#endif
 
         private void OnEnable()
         {
             PlayerActions.stealItem += (pickup) => PaintingPickedUp();
-            PlayerActions.paintingDelivered += PaintingStolen;
+            PlayerActions.paintingDelivered += PaintingDelivered;
             PlayerActions.ammoUpdate += UsedItem;
         }
 
         private void OnDisable()
         {
             PlayerActions.stealItem -= (pickup) => PaintingPickedUp();
-            PlayerActions.paintingDelivered -= PaintingStolen;
+            PlayerActions.paintingDelivered -= PaintingDelivered;
             PlayerActions.ammoUpdate -= UsedItem;
         }
 
         /// <summary>
-        /// To be called whenever the player picks up a painting
+        /// To be called whenever the player picks up a painting.
+        /// Calculates teh average time it takes to steal a painting and tells the Difficulty Tracker.
         /// </summary>
         private void PaintingPickedUp()
         {
@@ -106,16 +108,18 @@ namespace Assets.Scripts.DDA
         }
 
         /// <summary>
-        /// To be called whenever a painting has been delivered
+        /// To be called whenever a painting has been delivered.
+        /// Remembers what time the painting was delivered, to use for calculating the average painting stealing time.
         /// </summary>
-        private void PaintingStolen()
+        private void PaintingDelivered()
         {
             // Note the time as to keep track of the average painting stealing time
             startMoment = Time.time;
         }
 
         /// <summary>
-        /// To be called whenever an enemy gets succesfully distracted by an item
+        /// To be called whenever an enemy gets succesfully distracted by an item.
+        /// Calculates the succesful item usage ratio and tells the Difficulty Tracker.
         /// </summary>
         public void SuccesfulItemUsage()
         {
@@ -133,6 +137,11 @@ namespace Assets.Scripts.DDA
 #endif
         }
 
+        /// <summary>
+        /// To be called whenever an item is used.
+        /// Calculates the succesful item usage ratio and tells the Difficulty Tracker.
+        /// </summary>
+        /// <param name="newAmmo">The current amount of ammo the player has. Used to figure out whether an item was used or picked up</param>
         private void UsedItem(int newAmmo)
         {
             // If the new ammo amount is less than the old one, that means that an item was used
