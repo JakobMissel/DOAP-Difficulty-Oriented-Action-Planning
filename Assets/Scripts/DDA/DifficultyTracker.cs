@@ -135,6 +135,20 @@ namespace Assets.Scripts.DDA
             return summedEffectiveDifficulty;
         }
 
+#if UNITY_EDITOR
+        /// <summary>
+        /// Test function to help visualise how individual actions affect the overall difficulty
+        /// </summary>
+        /// <param name="playerDifficultyAction">An action to get the difficulty of</param>
+        /// <returns>The difficulty provided by the player action</returns>
+        public static float GetDifficultyF(PlayerDAAs playerDifficultyAction)
+        {
+            CalledNow();
+
+            return effectiveDifficulties[(int)playerDifficultyAction];
+        }
+#endif
+
         /// <summary>
         /// Gets the current difficulty as an int between 0 and 100
         /// </summary>
@@ -163,7 +177,9 @@ namespace Assets.Scripts.DDA
                 {
                     if (ede.enemyActions[i].capability == null)
                         continue;
+#if UNITY_EDITOR
                     Debug.Log($"Applying cost change of {ede.enemyActions[i].action}, on capability {ede.enemyActions[i].capability}.\nThe cost is being set to {DifficultyTranslation(ede.enemyActions[i].action)}, given the difficulty {GetDifficultyF()}");
+#endif
                     ede.enemyActions[i].capability.actions[0].baseCost = DifficultyTranslation(ede.enemyActions[i].action);
                 }
 #if UNITY_EDITOR
@@ -180,7 +196,9 @@ namespace Assets.Scripts.DDA
             {
                 if (ede.enemyActions[i].capability == null)
                     continue;
+#if UNITY_EDITOR
                 Debug.Log($"Applying cost change of {ede.enemyActions[i].action}, on capability {ede.enemyActions[i].capability}.\nThe cost is being set to {DifficultyTranslation(ede.enemyActions[i].action)}, given the difficulty {GetDifficultyF()}");
+#endif
                 ede.enemyActions[i].capability.actions[0].baseCost = DifficultyTranslation(ede.enemyActions[i].action);
             }
 #if UNITY_EDITOR

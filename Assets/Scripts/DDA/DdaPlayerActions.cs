@@ -7,7 +7,6 @@ namespace Assets.Scripts.DDA
     public class DdaPlayerActions : MonoBehaviour
     {
         // Paintings
-        private Dictionary<string, float> paintingStealingLength = new Dictionary<string, float>();
         private List<float> paintingStealingLengths = new List<float>();
         private float startMoment = 0f;
 
@@ -15,8 +14,17 @@ namespace Assets.Scripts.DDA
         private int currentAmmo = 0;
         private int itemSuccesses = 0;
         private int totalItemsUsed = 0;
+        private int timesCaptured = 0;
 
         public static DdaPlayerActions Instance;
+
+#if UNITY_EDITOR
+        [Header("Testing")]
+        [SerializeField] private bool isTestingDdaPlayerActions = false;
+        [SerializeField] private GameObject uiVisualisationPrefab;
+        [Tooltip("0 = Painting stealing time\n1 = Succesful item usage\n2 = Times captured")] private TMPro.TextMeshProUGUI[] testTextFields;
+        private string baseTestMessage = "{0} is at difficulty: <u><b>{1}</b></u>, with {2} at <u><b>{3}</b></u>";
+#endif
 
         private void Awake()
         {
@@ -27,6 +35,33 @@ namespace Assets.Scripts.DDA
             }
             Instance = this;
             DontDestroyOnLoad(this);
+        }
+
+        private void Start()
+        {
+#if UNITY_EDITOR
+            if (isTestingDdaPlayerActions)
+            {
+                GameObject spawnedPrefab = Instantiate(uiVisualisationPrefab, transform);
+                Debug.Log($"Spawned with {spawnedPrefab.transform.childCount} children\nThey have {spawnedPrefab.GetComponentsInChildren<TMPro.TextMeshProUGUI>().Length} TMProUGUI components");
+                testTextFields = spawnedPrefab.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+                testTextFields[0].text = string.Format(baseTestMessage,
+                                                       "Painting stealing time",
+                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
+                                                       "average stealing time",
+                                                       paintingStealingLengths.Count > 0 ? paintingStealingLengths.Average().ToString("N2") : "N/A");
+                testTextFields[1].text = string.Format(baseTestMessage,
+                                                       "Succesful item usage",
+                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
+                                                       "succesful item ratio",
+                                                       totalItemsUsed > 0 ? ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"): "0");
+                testTextFields[2].text = string.Format(baseTestMessage,
+                                                       "Captures",
+                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured).ToString("N2"),
+                                                       "times captured",
+                                                       timesCaptured.ToString());
+            }
+#endif
         }
 
         private void OnEnable()
@@ -55,10 +90,19 @@ namespace Assets.Scripts.DDA
             startMoment = Time.time;
 
             // Get the average stealing time (sum of stealing times / amount of paintings stolen)
-            float averageStealingTime = paintingStealingLengths.Sum() / paintingStealingLengths.Count;
+            float averageStealingTime = paintingStealingLengths.Average();
 
             // Tell the difficulty tracker the average time it takes to steal a painting
             DifficultyTracker.AlterDifficulty(PlayerDAAs.TimeBetweenPaintings, averageStealingTime);
+
+#if UNITY_EDITOR
+            // Update top difficulty text
+            testTextFields[0].text = string.Format(baseTestMessage,
+                                                   "Painting stealing time",
+                                                   DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
+                                                   "average stealing time",
+                                                   paintingStealingLengths.Average().ToString("N2"));
+#endif
         }
 
         /// <summary>
@@ -78,6 +122,15 @@ namespace Assets.Scripts.DDA
             itemSuccesses++;
             // Tell the DifficultyTracker the current percentage of succesful item usages
             DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)itemSuccesses / (float)totalItemsUsed);
+
+#if UNITY_EDITOR
+            // Update middle difficulty text
+            testTextFields[1].text = string.Format(baseTestMessage,
+                                                   "Succesful item usage",
+                                                   DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
+                                                   "succesful item ratio",
+                                                   ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"));
+#endif
         }
 
         private void UsedItem(int newAmmo)
@@ -89,6 +142,15 @@ namespace Assets.Scripts.DDA
                 totalItemsUsed++;
                 // Tell the DifficultyTracker the current percentage of succesful item usages
                 DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)itemSuccesses/(float)totalItemsUsed);
+
+#if UNITY_EDITOR
+                // Update middle difficulty text
+                testTextFields[1].text = string.Format(baseTestMessage,
+                                                       "Succesful item usage",
+                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
+                                                       "succesful item ratio",
+                                                       ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"));
+#endif
             }
 
             // Update the tracked ammo
