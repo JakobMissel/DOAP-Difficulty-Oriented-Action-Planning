@@ -53,7 +53,7 @@ Material:
     m_Floats:
     - _EdgeSoftness: 0
     - _FalloffPower: 0
-    - _Intensity: 0.5
+    - _Intensity: 0.01
     - _Length: 0
     - _MaxRadius: 0
     - _NoDivideBy0: 0
@@ -62,6 +62,6 @@ Material:
     - _SoftParticleFactor: 0
     - _SubtractVal: 3
     m_Colors:
-    - _Main_Color: {r: 0.6748744, g: 0.7075471, b: 0.13683686, a: 0}
+    - _Main_Color: {r: 0.98420835, g: 1, b: 0.6367924, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
