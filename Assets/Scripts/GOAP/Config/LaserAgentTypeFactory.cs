@@ -3,9 +3,8 @@ using System.Linq;
 using CrashKonijn.Goap.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
-using Assets.Scripts.GOAP.WorldKeys.DDA;
 
-namespace Assets.Scripts.GOAP.Config
+namespace GOAP.Config
 {
     public class LaserAgentTypeFactory : AgentTypeFactoryBase
     {
@@ -14,11 +13,6 @@ namespace Assets.Scripts.GOAP.Config
 
         [Header("Agent Type")]
         [SerializeField] private string agentTypeName = "Laser";
-
-        [Header("Difficulty Threshold")]
-        [Tooltip("Laser stays ON when Difficulty >= this value; turns OFF when below.")]
-        [Range(0, 100)]
-        [SerializeField] private int difficultyThreshold = 60;
 
         public override IAgentTypeConfig Create()
         {
@@ -43,10 +37,7 @@ namespace Assets.Scripts.GOAP.Config
 
             // Remove duplicate sensors that target the same key (capabilities may overlap)
             DeduplicateSensors(cfg);
-
-            // Apply threshold tuning to goals using the Difficulty world key
-            ApplyDifficultyThreshold(cfg);
-
+            
             return cfg;
         }
 
@@ -69,34 +60,6 @@ namespace Assets.Scripts.GOAP.Config
                     .GroupBy(ts => ts.Key?.Name)
                     .Select(g => g.First())
                     .ToList();
-            }
-        }
-
-        private void ApplyDifficultyThreshold(AgentTypeConfig cfg)
-        {
-            if (cfg?.Goals == null || cfg.Goals.Count == 0)
-                return;
-
-            foreach (var goal in cfg.Goals)
-            {
-                if (goal is GoalConfig g && g.Conditions != null)
-                {
-                    // Rebuild the list so we can change Amount (ICondition is read-only)
-                    g.Conditions = g.Conditions.Select(c =>
-                    {
-                        if (c.WorldKey != null && c.WorldKey.Name == nameof(DifficultyWK))
-                        {
-                            // Preserve comparison but override amount with the slider value
-                            return new Condition
-                            {
-                                WorldKey = c.WorldKey,
-                                Comparison = c.Comparison,
-                                Amount = difficultyThreshold,
-                            };
-                        }
-                        return c;
-                    }).ToList();
-                }
             }
         }
     }
