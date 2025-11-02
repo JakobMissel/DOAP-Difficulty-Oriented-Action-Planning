@@ -625,6 +625,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlashlightCones
       objectReference: {fileID: 0}
+    - target: {fileID: 2471213755354779898, guid: eb7de09f7e2938646b4d89a0d94f7955, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2543862540492766605, guid: eb7de09f7e2938646b4d89a0d94f7955, type: 3}
       propertyPath: m_Enabled
       value: 1

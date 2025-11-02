@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StealPainting : MonoBehaviour
 {
+    [SerializeField] string stealablePaintingName;
     [SerializeField] GameObject playerPaintingPosition;
     [SerializeField] Vector3 paintingPositionOffset;
     [SerializeField] Vector3 paintingRotationOffset;
@@ -53,7 +54,7 @@ public class StealPainting : MonoBehaviour
         {
             for (int i = 0; i < objective.subObjectives.Count; i++)
             {
-                if (objective.subObjectives[i].name.StartsWith("Painting") && !objective.subObjectives[i].isCompleted)
+                if (objective.subObjectives[i].name.StartsWith(stealablePaintingName) && !objective.subObjectives[i].isCompleted)
                 {
                     currentPaintingName = item.paintingName;
                     objective.subObjectives[i].completionText = $"You have stolen the painting \"{currentPaintingName}\". Now place it outside.";
@@ -105,7 +106,7 @@ public class StealPainting : MonoBehaviour
         var paintingNames = "";
         foreach (var subObjective in objective.subObjectives)
         {
-            if (subObjective.name.StartsWith("Painting"))
+            if (subObjective.name.StartsWith(stealablePaintingName))
             {
                 subObjective.goalText = "";
                 for (int i = 0; i < paintings.Length; i++)
