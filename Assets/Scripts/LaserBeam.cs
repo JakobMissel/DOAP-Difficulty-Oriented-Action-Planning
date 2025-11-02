@@ -44,12 +44,19 @@ public class LaserBeam : MonoBehaviour
     private bool _active = false;
     private float _activeSince = 0f;
     private bool _isEnabled = false;
+    
+    // Cache to prevent feedback loops during editing
+    private Vector3 _lastStartPos;
+    private Vector3 _lastEndPos;
+    private const float UPDATE_THRESHOLD = 0.001f;
+    private const float MAX_BEAM_LENGTH = 1000f; // safety limit
 
     public bool IsEnabled => _isEnabled;
 
     void Awake()
     {
         EnsureComponents();
+        InitializePositionCache();
         UpdateBeam();
         SetBeamColor(inactiveColor);
     }
@@ -57,6 +64,7 @@ public class LaserBeam : MonoBehaviour
     void OnEnable()
     {
         EnsureComponents();
+        InitializePositionCache();
         UpdateBeam();
         if (Application.isPlaying) SetBeamColor(_active ? activeColor : inactiveColor);
         // Apply starting enabled state
@@ -68,7 +76,7 @@ public class LaserBeam : MonoBehaviour
 
     void Update()
     {
-        UpdateBeam();
+        UpdateBeamIfNeeded();
 
         if (Application.isPlaying && _active)
         {
@@ -80,11 +88,35 @@ public class LaserBeam : MonoBehaviour
     void OnValidate()
     {
         EnsureComponents();
+        InitializePositionCache();
         UpdateBeam();
         if (!Application.isPlaying) SetBeamColor(_active ? activeColor : inactiveColor);
         // Keep editor visuals in sync
         if (!Application.isPlaying)
             EditorApplyEnabled(startEnabled);
+    }
+    
+    void InitializePositionCache()
+    {
+        if (startPoint != null) _lastStartPos = startPoint.position;
+        if (endPoint != null) _lastEndPos = endPoint.position;
+    }
+    
+    void UpdateBeamIfNeeded()
+    {
+        if (startPoint == null || endPoint == null) return;
+        
+        Vector3 currentStart = startPoint.position;
+        Vector3 currentEnd = endPoint.position;
+        
+        // Only update if positions have meaningfully changed
+        if (Vector3.Distance(currentStart, _lastStartPos) > UPDATE_THRESHOLD ||
+            Vector3.Distance(currentEnd, _lastEndPos) > UPDATE_THRESHOLD)
+        {
+            UpdateBeam();
+            _lastStartPos = currentStart;
+            _lastEndPos = currentEnd;
+        }
     }
 
     void EnsureComponents()
@@ -133,10 +165,29 @@ public class LaserBeam : MonoBehaviour
             boxCol.size = Vector3.zero;
             return;
         }
+        
+        // Safety check: prevent ridiculous distances
+        if (length > MAX_BEAM_LENGTH)
+        {
+            Debug.LogWarning($"LaserBeam [{gameObject.name}]: Distance between start and end points ({length:F2}) exceeds maximum ({MAX_BEAM_LENGTH}). Clamping.", this);
+            length = MAX_BEAM_LENGTH;
+            dir = dir.normalized * length;
+            b = a + dir;
+        }
 
         Vector3 mid = (a + b) * 0.5f;
         Quaternion rot = Quaternion.LookRotation(dir.normalized, Vector3.up);
-        transform.SetPositionAndRotation(mid, rot);
+        
+        // Only update position if not NaN and within reasonable bounds
+        if (!float.IsNaN(mid.x) && !float.IsNaN(mid.y) && !float.IsNaN(mid.z))
+        {
+            transform.SetPositionAndRotation(mid, rot);
+        }
+        else
+        {
+            Debug.LogError($"LaserBeam [{gameObject.name}]: Invalid midpoint calculated. Skipping position update.", this);
+            return;
+        }
 
         float half = length * 0.5f;
         lr.startWidth = thickness;
