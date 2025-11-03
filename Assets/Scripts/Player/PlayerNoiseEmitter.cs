@@ -30,10 +30,19 @@ public class PlayerNoiseEmitter : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("[PlayerNoiseEmitter] No Rigidbody found on player! Noise emission requires a Rigidbody to check velocity.");
+        }
+        else
+        {
+            Debug.Log("[PlayerNoiseEmitter] Initialized with Rigidbody");
+        }
     }
 
     void OnEnable()
     {
+        Debug.Log("[PlayerNoiseEmitter] OnEnable - Subscribing to PlayerActions events");
         PlayerActions.moveStatus += OnMoveStatus;
         PlayerActions.sneakStatus += OnSneakStatus;
         PlayerActions.isSneaking += OnSneakStatus;
@@ -41,6 +50,7 @@ public class PlayerNoiseEmitter : MonoBehaviour
 
     void OnDisable()
     {
+        Debug.Log("[PlayerNoiseEmitter] OnDisable - Unsubscribing from PlayerActions events");
         PlayerActions.moveStatus -= OnMoveStatus;
         PlayerActions.sneakStatus -= OnSneakStatus;
         PlayerActions.isSneaking -= OnSneakStatus;
@@ -62,7 +72,14 @@ public class PlayerNoiseEmitter : MonoBehaviour
     {
         float currentRadius = GetCurrentNoiseRadius();
         if (currentRadius <= 0f)
+        {
+            // Only log once when stopping noise emission
+            if (Time.frameCount % 60 == 0) // Log every 60 frames to avoid spam
+            {
+                Debug.Log($"[PlayerNoiseEmitter] Not emitting noise - currentRadius={currentRadius:F2}, isMoving={isMoving}, isSneaking={isSneaking}, velocity={(rb != null ? rb.linearVelocity.magnitude : 0):F2}");
+            }
             return;
+        }
 
         if (Time.time >= nextPulseTime)
         {
@@ -77,11 +94,16 @@ public class PlayerNoiseEmitter : MonoBehaviour
         {
             if (rb != null && rb.linearVelocity.sqrMagnitude < 0.01f)
             {
-                Debug.Log("[PlayerNoiseEmitter] Moving but velocity too low - no noise");
+                // Only log occasionally to avoid spam
+                if (Time.frameCount % 120 == 0)
+                {
+                    Debug.Log($"[PlayerNoiseEmitter] Moving but velocity too low - no noise (velocity: {rb.linearVelocity.magnitude:F3})");
+                }
                 return 0f;
             }
 
-            return isSneaking ? Mathf.Max(0f, sneakNoiseRadius) : Mathf.Max(0f, runNoiseRadius);
+            float radius = isSneaking ? Mathf.Max(0f, sneakNoiseRadius) : Mathf.Max(0f, runNoiseRadius);
+            return radius;
         }
 
         return Mathf.Max(0f, idleNoiseRadius);

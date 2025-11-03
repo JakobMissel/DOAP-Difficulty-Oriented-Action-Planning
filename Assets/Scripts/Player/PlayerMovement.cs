@@ -83,8 +83,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!canMove) return;
 
+        bool isCurrentlyMoving = moveInput != Vector2.zero;
+        
         // Send move action (for tutorial)
-        PlayerActions.OnMoveStatus(moveInput != Vector2.zero);
+        PlayerActions.OnMoveStatus(isCurrentlyMoving);
+        
+        // Debug log to verify event is firing
+        if (Time.frameCount % 60 == 0) // Log every 60 frames to avoid spam
+        {
+            Debug.Log($"[PlayerMovement] Move status: {isCurrentlyMoving}, moveInput: {moveInput}, velocity: {rb.linearVelocity.magnitude:F2}");
+        }
 
         // Convert velocity to local space
         velocity = transform.InverseTransformDirection(rb.linearVelocity);
