@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCompleted: 1
   isActive: 1
-  descriptionText: Hold [SPACE] near a pipe to climb it. Use [W][A][S][D] to move.\n
+  descriptionText: 
   goalText: Hold [SPACE] near a pipe to climb it. Use [W][A][S][D] to move.\n
-  completionText: Spider-man, Spider-man, breaking laws and other stuff.\n
+  completionText: Completed. \n

@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +8,9 @@ public class Tutorial : MonoBehaviour
     [SerializeField] Objective objective;
 
     [SerializeField] Image timerImage;
+    [SerializeField] int tutorialThrowCount = 5;
+    int throwCount;
+    
     [SerializeField] float delayBetweenGoals = 1f;
 
     [SerializeField] float moveTime;
@@ -17,13 +22,17 @@ public class Tutorial : MonoBehaviour
     [SerializeField] float aimTime;
     float aimT;
 
+
     void Awake()
     {
         timerImage.fillAmount = 0;
+        throwCount = 0;
         moveT = moveTime;
         sneakT = sneakTime;
         climbT = climbTime;
         aimT = aimTime;
+        PlayerActions.OnCanThrow(false);
+        PlayerActions.OnCanInteract(false);
     }
     void OnEnable()
     {
@@ -47,6 +56,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerMoved(bool isMoving)
     {
+        if (!objective.isActive) return;
         if(isMoving && IsPreviousGoalCompleted(0) && IsSubObjectiveActive(0))
         {
             moveT -= Time.deltaTime;
@@ -63,6 +73,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerSneaked(bool isSneaking)
     {
+        if (!objective.isActive) return;
         if (isSneaking && IsPreviousGoalCompleted(1) && IsSubObjectiveActive(1))
         {
             sneakT -= Time.deltaTime;
@@ -78,6 +89,7 @@ public class Tutorial : MonoBehaviour
 
     void PlayerClimbed(bool isClimbing)
     {
+        if (!objective.isActive) return;
         if (isClimbing && IsPreviousGoalCompleted(2) && IsSubObjectiveActive(2))
         {
             climbT -= Time.deltaTime;
@@ -86,24 +98,25 @@ public class Tutorial : MonoBehaviour
             if (climbT > 0) return;
             // Unsubscribe after completing the goal
             PlayerActions.climbStatus -= PlayerClimbed;
-            
+            StartCoroutine(EnableInteraction());
             CompleteSubObjective(2, delayBetweenGoals);
         }
     }
 
     void PlayerPickedUpItem(Pickup item)
     {
+        if (!objective.isActive) return;
         if (IsPreviousGoalCompleted(3) && IsSubObjectiveActive(3))
         {
             // Unsubscribe after completing the goal
             PlayerActions.pickedUpItem -= PlayerPickedUpItem;
-            
             CompleteSubObjective(3, delayBetweenGoals);
         }
     }
 
     void PlayerAimed(bool isAiming)
     {
+        if (!objective.isActive) return;
         if (isAiming && IsPreviousGoalCompleted(4) && IsSubObjectiveActive(4))
         {
             aimT -= Time.deltaTime;
@@ -112,18 +125,22 @@ public class Tutorial : MonoBehaviour
             if (aimT > 0) return;
             // Unsubscribe after completing the goal
             PlayerActions.isAiming -= PlayerAimed;
-            
+            StartCoroutine(EnableThrow());
             CompleteSubObjective(4, delayBetweenGoals);
         }
     }
 
     void PlayerAmmoUpdated(int ammo)
     {
-        if (ammo < 1 && IsPreviousGoalCompleted(5) && IsSubObjectiveActive(5))
+        if (!objective.isActive) return;
+        if (IsPreviousGoalCompleted(5) && IsSubObjectiveActive(5))
         {
+            throwCount++;
+            timerImage.fillAmount = throwCount / tutorialThrowCount;
+            if(throwCount < tutorialThrowCount) return;
             // Unsubscribe after completing the goal
             PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
-            
+            PlayerActions.OnLoseThrowables();
             CompleteSubObjective(5, delayBetweenGoals);
         }
     }
@@ -155,5 +172,17 @@ public class Tutorial : MonoBehaviour
         timerImage.fillAmount = 0;
         objective.CompleteSubObjective(subObjectiveIndex);
         objective.DisplayNextSubObjective(delay);
+    }
+
+    IEnumerator EnableInteraction()
+    {
+        yield return new WaitForSeconds(delayBetweenGoals);
+        PlayerActions.OnCanInteract(true);
+    }
+
+    IEnumerator EnableThrow()
+    {
+        yield return new WaitForSeconds(delayBetweenGoals);
+        PlayerActions.OnCanThrow(true);
     }
 }

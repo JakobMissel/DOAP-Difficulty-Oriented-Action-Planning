@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCompleted: 1
   isActive: 1
-  descriptionText: To sneak hold [CTRL], and move around.\n
+  descriptionText: 
   goalText: To sneak hold [CTRL], and move around.\n
-  completionText: So sneaky ;)\n
+  completionText: Completed. \n

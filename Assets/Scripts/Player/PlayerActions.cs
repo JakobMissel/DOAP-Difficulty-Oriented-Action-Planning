@@ -1,11 +1,21 @@
 using System;
 using Unity.Cinemachine;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerActions : MonoBehaviour
 {
     // Tutorial
+    public static Action<bool> canInteract;
+    public static void OnCanInteract(bool state) => canInteract?.Invoke(state);
+
+    public static Action<bool> canThrow;
+    public static void OnCanThrow(bool state) => canThrow?.Invoke(state);
+
+    public static Action removeAllThrowables;
+    public static void OnLoseThrowables() => removeAllThrowables?.Invoke();
+
     public static Action tutorialCompletion;
     public static void OnTutorialCompletion() => tutorialCompletion?.Invoke();
 
@@ -72,6 +82,7 @@ public class PlayerActions : MonoBehaviour
     bool previousSneakStatus;
     public bool carriesPainting;
     public bool canEscape;
+    public bool isOnWall;
 
 
 

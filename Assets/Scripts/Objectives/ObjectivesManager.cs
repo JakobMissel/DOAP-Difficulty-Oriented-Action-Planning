@@ -85,7 +85,7 @@ public class ObjectivesManager : MonoBehaviour
         if (objectives.Length > 0)
         {
             if (startFromFirstObjective)
-                currentObjective = objectives[0];
+                setNewObjective?.Invoke(objectives[0], 0, 0, 0);
             if(currentObjective != null)
                 setNewObjective?.Invoke(currentObjective, 0, 0, 0);
         }

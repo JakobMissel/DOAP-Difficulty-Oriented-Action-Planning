@@ -16,6 +16,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] Image interactImage;
     
     List<Pickup> pickups = new();
+    bool canInteract = false;
     bool isAiming = false;
 
     void Awake()
@@ -52,6 +53,7 @@ public class PlayerInteract : MonoBehaviour
         PlayerActions.addPickup += AddPickup;
         PlayerActions.removePickup += RemovePickup;
         PlayerActions.aimStatus += AimStatus;
+        PlayerActions.canInteract = CanInteract;
     }
 
     void OnDisable()
@@ -68,18 +70,24 @@ public class PlayerInteract : MonoBehaviour
         PlayerActions.addPickup -= AddPickup;
         PlayerActions.removePickup -= RemovePickup;
         PlayerActions.aimStatus -= AimStatus;
+        PlayerActions.canInteract -= CanInteract;
     }
 
-    void AimStatus(bool aimStatus)
+    void CanInteract(bool state)
     {
-        isAiming = aimStatus;
+        canInteract = state;
+    }
+
+    void AimStatus(bool state)
+    {
+        isAiming = state;
     }
 
     void Update()
     {
         var closest = ClosestPickup();
         // Don't show interact UI while carrying painting
-        if (isAiming)
+        if (!canInteract || isAiming)
         {
             if(closest)
                 closest.buttonHeld = false;
@@ -94,7 +102,7 @@ public class PlayerInteract : MonoBehaviour
     void Interact(InputAction.CallbackContext ctx)
     {
         // Don't allow interaction while aiming or carrying painting
-        if (isAiming) return;
+        if (!canInteract || isAiming) return;
         ResetGraphics();
 
         var closest = ClosestPickup();

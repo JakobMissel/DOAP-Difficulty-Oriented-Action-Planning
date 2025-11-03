@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections.Generic;
+using System;
 
 public class PlayerThrow : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class PlayerThrow : MonoBehaviour
 
     Vector3 throwDirection;
     RaycastHit currentHit;
+    bool isThrowActive = true;
 
     [HideInInspector] public bool isAiming = false;
 
@@ -50,19 +52,28 @@ public class PlayerThrow : MonoBehaviour
         playerInput.actions["Throw"].performed += OnThrow;
         playerInput.actions["Aim"].performed += OnAim;
         playerInput.actions["Aim"].canceled += OnAim;
+        PlayerActions.canThrow += OnCanThrow;
+        PlayerActions.removeAllThrowables += OnRemoveAllThrowables;
     }
 
     void OnDisable()
     {
         playerInput.actions["Throw"].performed -= OnThrow;
         playerInput.actions["Aim"].performed -= OnAim;
-        playerInput.actions["Aim"].canceled -= OnAim;    
+        playerInput.actions["Aim"].canceled -= OnAim;
+        PlayerActions.canThrow -= OnCanThrow;
+        PlayerActions.removeAllThrowables -= OnRemoveAllThrowables;
+    }
+
+    void OnCanThrow(bool state)
+    {
+        isThrowActive = state;
     }
 
     void Update()
     {
         // Prevent aiming while carrying painting
-        if (PlayerActions.Instance.carriesPainting && isAiming)
+        if (PlayerActions.Instance.carriesPainting && isAiming || PlayerActions.Instance.isOnWall && isAiming)
         {
             isAiming = false;
             PlayerActions.OnAimStatus(isAiming);
@@ -76,6 +87,7 @@ public class PlayerThrow : MonoBehaviour
 
     void OnThrow(InputAction.CallbackContext ctx)
     {
+        if (!isThrowActive) return;
         if (!isAiming || !canThrow || ammoCount <= 0) return;
         canThrow = false;
         SpawnThrownObject();
@@ -86,7 +98,7 @@ public class PlayerThrow : MonoBehaviour
     void OnAim(InputAction.CallbackContext ctx)
     {
         // Prevent aiming calls while carrying painting
-        if (PlayerActions.Instance.carriesPainting) return; 
+        if (PlayerActions.Instance.carriesPainting || PlayerActions.Instance.isOnWall) return; 
 
         isAiming = ctx.ReadValueAsButton();
         PlayerActions.OnAimStatus(isAiming);
@@ -183,6 +195,13 @@ public class PlayerThrow : MonoBehaviour
         }
     }
 
+    void OnRemoveAllThrowables()
+    {
+        throwablePrefabsList.Clear();
+        ammoCount = throwablePrefabsList.Count;
+        UpdateUICall();
+    }
+
     /// <summary>
     /// Account for different angles of impact by checking all directions to find the closest hit point
     /// </summary>
@@ -243,10 +262,15 @@ public class PlayerThrow : MonoBehaviour
 
     void UpdateUICall()
     {
+        print(ammoCount);
         if (throwablePrefabsList.Count > 0)
+        {
             PlayerActions.OnSpriteUpdate(throwablePrefabsList[0].GetComponent<ThrownObject>().thrownObjectImage);
+        }
         else
-            PlayerActions.OnSpriteUpdate(null); 
+        {
+            PlayerActions.OnSpriteUpdate(null);
+        }
         PlayerActions.OnAmmoUpdate(ammoCount);
     }
 }

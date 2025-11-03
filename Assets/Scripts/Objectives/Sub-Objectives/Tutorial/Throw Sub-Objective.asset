@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: Throw Sub-Objective
   m_EditorClassIdentifier: 
-  isCompleted: 1
-  isActive: 1
-  descriptionText: To throw an item, press [LEFT CLICK]. EMPTY THE F-ING CLIP ON
-    THAT PIECE OF SH*T!!!!\n
-  goalText: To throw an item, press [LEFT CLICK]. EMPTY THE F-ING CLIP ON THAT PIECE
-    OF SH*T!!!!\n
-  completionText: Goooood job :)\n
+  isCompleted: 0
+  isActive: 0
+  descriptionText: 
+  goalText: To throw an item, press [LEFT CLICK].
+  completionText: Completed. \n

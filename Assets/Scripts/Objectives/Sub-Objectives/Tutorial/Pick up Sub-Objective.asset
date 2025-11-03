@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Pick up Sub-Objective
   m_EditorClassIdentifier: 
   isCompleted: 0
+  isActive: 1
   descriptionText: 
   goalText: Pick stuff up with [E].\n
-  completionText: Nice finger coordination.\n
+  completionText: Your "ammo count" is in the right corner.

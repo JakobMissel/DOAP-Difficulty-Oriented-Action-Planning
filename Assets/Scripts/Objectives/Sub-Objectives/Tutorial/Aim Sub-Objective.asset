@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Aim Sub-Objective
   m_EditorClassIdentifier: 
   isCompleted: 0
+  isActive: 0
   descriptionText: 
   goalText: Hold [RIGHT CLICK] to aim.\n
-  completionText: Good boi.\n
+  completionText: Completed. \n

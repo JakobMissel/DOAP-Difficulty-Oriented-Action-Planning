@@ -87,6 +87,7 @@ public class PlayerClimb : MonoBehaviour
             return; 
         }
         Climb();
+        PlayerActions.Instance.isOnWall = onWall;
     }
 
     void OnClimb(InputAction.CallbackContext ctx)
