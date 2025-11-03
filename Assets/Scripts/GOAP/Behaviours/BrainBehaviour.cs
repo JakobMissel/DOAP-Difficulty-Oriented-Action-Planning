@@ -251,6 +251,7 @@ namespace Assets.Scripts.GOAP.Behaviours
                 if (IsHearingOccluded(from, to))
                 {
                     // Ignore occluded player noise
+                    Debug.Log($"[BrainBehaviour] Player noise at {noisePosition} was OCCLUDED by wall - not hearing it");
                     return;
                 }
             }
@@ -259,7 +260,7 @@ namespace Assets.Scripts.GOAP.Behaviours
             LastPlayerNoisePosition = noisePosition;
             LastHeardNoiseRadius = radius;
             lastPlayerNoiseTime = Time.time;
-            Debug.Log($"[BrainBehaviour] Player noise at {noisePosition} (r={radius:F1})");
+            Debug.Log($"[BrainBehaviour] Player noise HEARD at {noisePosition} (r={radius:F1})");
         }
 
         public void ClearDistractionNoise()

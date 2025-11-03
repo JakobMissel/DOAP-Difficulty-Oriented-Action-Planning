@@ -49,11 +49,13 @@ public class PlayerNoiseEmitter : MonoBehaviour
     void OnMoveStatus(bool moving)
     {
         isMoving = moving;
+        Debug.Log($"[PlayerNoiseEmitter] Move status changed: {moving}");
     }
 
     void OnSneakStatus(bool sneaking)
     {
         isSneaking = sneaking;
+        Debug.Log($"[PlayerNoiseEmitter] Sneak status changed: {sneaking}");
     }
 
     void Update()
@@ -74,7 +76,10 @@ public class PlayerNoiseEmitter : MonoBehaviour
         if (isMoving)
         {
             if (rb != null && rb.linearVelocity.sqrMagnitude < 0.01f)
+            {
+                Debug.Log("[PlayerNoiseEmitter] Moving but velocity too low - no noise");
                 return 0f;
+            }
 
             return isSneaking ? Mathf.Max(0f, sneakNoiseRadius) : Mathf.Max(0f, runNoiseRadius);
         }
@@ -87,9 +92,13 @@ public class PlayerNoiseEmitter : MonoBehaviour
         lastPulseRadius = radius;
         lastPulseTime = Time.time;
 
+        int brainCount = 0;
+        int notifiedCount = 0;
+
         // Notify all active brains within radius (no collider dependency)
         foreach (var brain in Assets.Scripts.GOAP.Behaviours.BrainBehaviour.GetActiveBrains())
         {
+            brainCount++;
             if (brain == null)
                 continue;
 
@@ -97,8 +106,11 @@ public class PlayerNoiseEmitter : MonoBehaviour
             if (dist <= radius)
             {
                 brain.OnPlayerNoiseHeard(transform.position, radius);
+                notifiedCount++;
             }
         }
+
+        Debug.Log($"[PlayerNoiseEmitter] Emitted noise r={radius:F1}m, found {brainCount} brains, notified {notifiedCount}");
     }
 
     void OnDrawGizmosSelected()

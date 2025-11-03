@@ -47,19 +47,22 @@ namespace Assets.Scripts.GOAP.Actions
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return ActionRunState.Stop;
-            // Debug.Log($"[PatrolAction] {mono.Transform.name} Perform tick. RemDist={agent.remainingDistance}, StopDist={agent.stoppingDistance}, PathPending={agent.pathPending}");
-
 
             if (!TryGetValidTargetPosition(data, out var pos))
             {
-                // Removed per-frame warning
                 return ActionRunState.Stop;
             }
 
-            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+            // Check horizontal distance only (ignore Y-level)
+            Vector3 agentPosFlat = new Vector3(mono.Transform.position.x, 0, mono.Transform.position.z);
+            Vector3 targetPosFlat = new Vector3(pos.x, 0, pos.z);
+            float horizontalDistance = Vector3.Distance(agentPosFlat, targetPosFlat);
+
+            // Consider arrived if within stopping distance horizontally
+            if (horizontalDistance <= agent.stoppingDistance + 0.5f)
             {
-                // Debug.Log($"[PatrolAction] {mono.Transform.name} reached patrol target at {pos}");
-                return ActionRunState.Completed; // ✅ triggers End()
+                Debug.Log($"[PatrolAction] {mono.Transform.name} reached waypoint (horizontal dist: {horizontalDistance:F2}m)");
+                return ActionRunState.Completed;
             }
 
             return ActionRunState.Continue;

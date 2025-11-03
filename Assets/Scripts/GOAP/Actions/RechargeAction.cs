@@ -32,12 +32,44 @@ namespace Assets.Scripts.GOAP.Actions
 
             hasReachedStation = false;
 
-            if (navAgent != null && navAgent.enabled && navAgent.isOnNavMesh && data.Target != null && data.Target.IsValid())
+            if (navAgent == null)
             {
-                navAgent.isStopped = false;
-                navAgent.SetDestination(data.Target.Position);
-                Debug.Log($"[RechargeAction] Started - moving to station at {data.Target.Position}");
+                Debug.LogError("[RechargeAction] NavMeshAgent is NULL!");
+                return;
             }
+
+            if (!navAgent.enabled)
+            {
+                Debug.LogWarning("[RechargeAction] NavMeshAgent is DISABLED!");
+                return;
+            }
+
+            if (!navAgent.isOnNavMesh)
+            {
+                Debug.LogWarning($"[RechargeAction] Agent is NOT on NavMesh! Position: {mono.Transform.position}");
+                // Try to warp onto NavMesh
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(mono.Transform.position, out hit, 5f, NavMesh.AllAreas))
+                {
+                    navAgent.Warp(hit.position);
+                    Debug.Log($"[RechargeAction] Warped agent to NavMesh at {hit.position}");
+                }
+                else
+                {
+                    Debug.LogError("[RechargeAction] Could not find nearby NavMesh position!");
+                    return;
+                }
+            }
+
+            if (data.Target == null || !data.Target.IsValid())
+            {
+                Debug.LogError("[RechargeAction] Target is NULL or invalid!");
+                return;
+            }
+
+            navAgent.isStopped = false;
+            bool pathSet = navAgent.SetDestination(data.Target.Position);
+            Debug.Log($"[RechargeAction] Started - moving to station at {data.Target.Position}, pathSet={pathSet}, hasPath={navAgent.hasPath}");
         }
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
