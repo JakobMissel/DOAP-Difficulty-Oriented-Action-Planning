@@ -89,6 +89,7 @@ public class ObjectivesManager : MonoBehaviour
                 PlayerActions.OnCanThrow(false);
                 PlayerActions.OnCanInteract(false);
                 setNewObjective?.Invoke(objectives[0], 0, 0, 0);
+                return;
             }
             if(currentObjective != null)
             {
@@ -141,7 +142,6 @@ public class ObjectivesManager : MonoBehaviour
         if(objective.nextObjective != null)
         {
             OnSetNewObjective(objective.nextObjective, 0, 0, objective.completionDelay);
-
         }
     }
 }

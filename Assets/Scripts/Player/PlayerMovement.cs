@@ -24,9 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground")]
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask stairLayer;
     [SerializeField] float groundCheckDistance = 0.1f;
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] float groundCheckHeight = 0.1f;
+    [SerializeField] float dampeningOnStairs = 4;
 
     [Header("Rotation")]
     [SerializeField] Transform orientation;
@@ -72,6 +74,14 @@ public class PlayerMovement : MonoBehaviour
             Move(maxSneakMoveSpeed, sneakMoveAcceleration, sneakMoveDeceleration);
         else
             Move(maxMoveSpeed, moveAcceleration, moveDeceleration);
+        if(OnStairs())
+        {
+            rb.linearDamping = dampeningOnStairs;
+        }
+        else
+        {
+            rb.linearDamping = 0;
+        }
     }
 
     void OnMove(InputAction.CallbackContext ctx)
@@ -160,6 +170,18 @@ public class PlayerMovement : MonoBehaviour
         return Physics.CheckBox(transform.position + Vector3.down * groundCheckDistance, new Vector3(groundCheckRadius, groundCheckHeight, groundCheckRadius), Quaternion.identity, groundLayer);
     }
 
+    public bool OnStairs()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, Vector3.down * groundCheckDistance * 10, out hit))
+        {
+            if(hit.collider.CompareTag("Stair"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     void Rotate()
     {

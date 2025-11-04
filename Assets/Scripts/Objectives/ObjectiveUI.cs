@@ -1,29 +1,36 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectiveUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI nameText;
+    [Header("Middle")]
     [SerializeField] GameObject objectivesTextPrefab;
     [SerializeField] GameObject middlePanel;
     [SerializeField] GameObject objectiveMiddlePanel;
+    [SerializeField] Image delayBar;
+    [Header("Side")]
     [SerializeField] GameObject sidePanel;
     [SerializeField] GameObject objectiveSidePanel;
 
     Objective currentObjective;
     int currentSubObjectiveIndex = 0;
+    float delayBarProgress;
+
 
     void Awake()
     {
         objectiveMiddlePanel.SetActive(false);
         objectiveSidePanel.SetActive(false);
+        delayBar.fillAmount = 0;
     }
 
     void OnEnable()
     {
         ObjectivesManager.displayObjective += UpdateObjectiveUI;
         ObjectivesManager.trackPaintings += TrackPaintings;
-        PlayerActions.stealItem += ActivateTextArea;
         PlayerActions.paintingDelivered += DeactivateTextArea;
     }
 
@@ -32,12 +39,6 @@ public class ObjectiveUI : MonoBehaviour
     {
         ObjectivesManager.displayObjective -= UpdateObjectiveUI;
         ObjectivesManager.trackPaintings -= TrackPaintings;
-        PlayerActions.stealItem += ActivateTextArea;
-    }
-
-    void ActivateTextArea(StealablePickup pickup)
-    {
-        //objectivesTextAreaMiddle.SetActive(true);
     }
     
     void DeactivateTextArea()
@@ -53,7 +54,9 @@ public class ObjectiveUI : MonoBehaviour
 
     void UpdateObjectiveUI(Objective objective, int subObjectiveIndex, float delay)
     {
+        ClearTextArea(middlePanel);
         objectiveMiddlePanel.SetActive(true);
+
         // Update current objective and sub-goal index
         currentObjective = objective;
         currentSubObjectiveIndex = subObjectiveIndex;
@@ -70,17 +73,25 @@ public class ObjectiveUI : MonoBehaviour
         }
 
         // If the objective is already completed, do not update UI / clear texts
-        Invoke(nameof(DelayedUpdateUI), delay);
+        StartCoroutine(DelayedUpdateUI(delay));
     }
 
-    void DelayedUpdateUI()
+    IEnumerator DelayedUpdateUI(float delay)
     {
+        while (delayBarProgress < delay)
+        {
+            delayBarProgress += Time.deltaTime;
+            delayBar.fillAmount = Mathf.Lerp(0, 1, delayBarProgress / delay);
+            yield return null;
+        }
+        delayBarProgress = 0;
+        delayBar.fillAmount = 0;
         // Show completion text
         if (currentObjective.isCompleted)
         {
             ClearTextArea(middlePanel);
             CreateObjectiveText($"{currentObjective.name} has been completed!");
-            return;
+            yield break;
         }
         
         // Update UI texts
@@ -90,7 +101,7 @@ public class ObjectiveUI : MonoBehaviour
         if (ObjectivesManager.Instance.completedTutorial && currentObjective.subObjectives[currentSubObjectiveIndex].name.Contains("Golden"))
         {
             DeactivateTextArea();
-            return; 
+            yield break; 
         }
 
         // Activate the current sub-objective

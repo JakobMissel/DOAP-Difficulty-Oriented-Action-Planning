@@ -48,8 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objective: {fileID: 11400000, guid: 2da7a914a78e19a46a477bfa63bcc5a1, type: 2}
   timerImage: {fileID: 0}
+  timerFadeTime: 0.3
   tutorialThrowCount: 5
-  delayBetweenGoals: 4
+  delayBetweenGoals: 8
   moveTime: 4
   sneakTime: 4
   climbTime: 4
@@ -69,7 +70,7 @@ MonoBehaviour:
   stealablePaintingName: GoldenPainting
   playerPaintingPosition: {fileID: 0}
   paintingPositionOffset: {x: 0, y: 0, z: 0}
-  paintingRotationOffset: {x: 90, y: 0, z: 90}
+  paintingRotationOffset: {x: 0, y: 0, z: 90}
   objective: {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}
   currentPaintingName: 
   paintings:

@@ -5,6 +5,7 @@ public class StealablePickup : Pickup
     [Header("Stealable Info")]
     public string paintingName;
     public string painterName;
+    public string value;
 
 
     protected override void Awake()

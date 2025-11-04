@@ -48,7 +48,7 @@ public class StealPainting : MonoBehaviour
         UpdatePaintingNames();
     }
 
-    void ItemStolen(StealablePickup item)
+    void ItemStolen(StealablePickup painting)
     {
         if (objective.isActive)
         {
@@ -56,10 +56,10 @@ public class StealPainting : MonoBehaviour
             {
                 if (objective.subObjectives[i].name.StartsWith(stealablePaintingName) && !objective.subObjectives[i].isCompleted)
                 {
-                    currentPaintingName = item.paintingName;
-                    objective.subObjectives[i].completionText = $"You have stolen the painting \"{currentPaintingName}\". Now place it outside.";
-                    objective.subObjectives[i + 1].goalText = $"Place the painting \"{currentPaintingName}\" back at the entrance.";
-                    objective.subObjectives[i + 1].completionText = $"\"{currentPaintingName}\" has been placed at the entrance.";
+                    currentPaintingName = painting.name;
+                    objective.subObjectives[i].completionText = $"You have stolen the painting \"{painting.paintingName}\". Now place it outside.";
+                    objective.subObjectives[i + 1].goalText = $"\"{painting.paintingName}\" by {painting.painterName} is valued at {painting.value}. Place it back at the entrance.";
+                    objective.subObjectives[i + 1].completionText = $"\"{painting.paintingName}\" has been placed at the entrance.";
                     OnPaintingStolen(objective.currentSubObjectiveIndex, 0);
                     break;
                 }
@@ -87,14 +87,14 @@ public class StealPainting : MonoBehaviour
     {
         for (int i = 0; i < paintings.Length; i++)
         {
-            if (paintings[i].paintingName == name)
+            if (paintings[i].name == name)
             {
                 currentPainting = paintings[i];
-                GameObject painting = Instantiate(currentPainting.gameObject);
+                GameObject newPainting = Instantiate(currentPainting.gameObject);
                 OnSendPaintingPrefab(currentPainting.gameObject);
-                painting.transform.SetParent(playerPaintingPosition.transform);
-                painting.transform.localPosition = paintingPositionOffset;
-                painting.transform.localRotation = Quaternion.Euler(paintingRotationOffset);
+                newPainting.transform.SetParent(playerPaintingPosition.transform);
+                newPainting.transform.localPosition = paintingPositionOffset;
+                newPainting.transform.localRotation = Quaternion.Euler(paintingRotationOffset);
                 break;
             }
         }
@@ -111,14 +111,14 @@ public class StealPainting : MonoBehaviour
                 subObjective.goalText = "";
                 for (int i = 0; i < paintings.Length; i++)
                 {
+                    var paintingText = $"<voffset=.4em><size=200%><sprite={i}></size></voffset>{paintings[i].paintingName}";
                     if (stolenPaintings.Contains(paintings[i]))
                     {
-                        subObjective.goalText += $"<color=#8FCDA1>{paintings[i].paintingName}</color>\n"; // change color of stolen paintings
-                        continue;
+                        subObjective.goalText += $"<color=#8FCDA1>{paintingText}</color>\n"; // change color of stolen paintings
                     }
                     else
                     {
-                        subObjective.goalText += $"{paintings[i].paintingName}\n";
+                        subObjective.goalText += $"{paintingText}\n";
                     }
                     paintingNames = subObjective.goalText;
                 }

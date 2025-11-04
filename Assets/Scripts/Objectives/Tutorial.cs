@@ -8,11 +8,12 @@ public class Tutorial : MonoBehaviour
     [SerializeField] Objective objective;
 
     [SerializeField] Image timerImage;
+    [SerializeField] float timerFadeTime = 0.5f;
+    float fadeT;
     [SerializeField] int tutorialThrowCount = 5;
     int throwCount;
     
     [SerializeField] float delayBetweenGoals = 1f;
-
     [SerializeField] float moveTime;
     float moveT;
     [SerializeField] float sneakTime;
@@ -134,7 +135,7 @@ public class Tutorial : MonoBehaviour
         if (IsPreviousGoalCompleted(5) && IsSubObjectiveActive(5))
         {
             throwCount++;
-            timerImage.fillAmount = throwCount / tutorialThrowCount;
+            timerImage.fillAmount = (float)throwCount / tutorialThrowCount;
             if(throwCount < tutorialThrowCount) return;
             // Unsubscribe after completing the goal
             PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
@@ -167,9 +168,23 @@ public class Tutorial : MonoBehaviour
 
     void CompleteSubObjective(int subObjectiveIndex, float delay)
     {
-        timerImage.fillAmount = 0;
+        StartCoroutine(TimerFadeOut(timerFadeTime));
         objective.CompleteSubObjective(subObjectiveIndex);
         objective.DisplayNextSubObjective(delay);
+    }
+
+    IEnumerator TimerFadeOut(float delay)
+    {
+        while (fadeT < delay)
+        {
+            fadeT += Time.deltaTime;
+            var alpha = Mathf.Lerp(1, 0, fadeT / delay);
+            timerImage.color = new Color(timerImage.color.r, timerImage.color.g, timerImage.color.b, alpha);
+            yield return null;
+        }
+        fadeT = 0;
+        timerImage.fillAmount = 0;
+        timerImage.color = new Color(timerImage.color.r, timerImage.color.g, timerImage.color.b, 1);
     }
 
     IEnumerator EnableInteraction()

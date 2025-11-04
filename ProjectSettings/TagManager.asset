@@ -13,6 +13,7 @@ TagManager:
   - Laser
   - PlayerPaintingPosition
   - CarriedPainting
+  - Stair
   layers:
   - Default
   - TransparentFX

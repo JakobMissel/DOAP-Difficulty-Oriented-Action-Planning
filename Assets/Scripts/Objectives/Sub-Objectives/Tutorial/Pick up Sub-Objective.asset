@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Pick up Sub-Objective
   m_EditorClassIdentifier: 
   isCompleted: 0
-  isActive: 1
+  isActive: 0
   descriptionText: 
-  goalText: Pick stuff up with [E].\n
-  completionText: Your "ammo count" is in the right corner.
+  goalText: To pick up items press [E].\n
+  completionText: You picked up some coins. Your total amount is in the bottom right
+    corner.

@@ -12,7 +12,7 @@ public class PlayerInteract : MonoBehaviour
     float currentDistance;
     [Header("UI")]
     [SerializeField] TextMeshProUGUI displayName;
-    [SerializeField] GameObject interactButton;
+    [SerializeField] GameObject interactField;
     [SerializeField] Image interactImage;
     
     List<Pickup> pickups = new();
@@ -24,8 +24,8 @@ public class PlayerInteract : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         ResolveUiReferencesIfMissing();
 
-        if (interactButton != null)
-            interactButton.SetActive(false);
+        if (interactField != null)
+            interactField.SetActive(false);
         else
             Debug.LogWarning("[PlayerInteract] 'interactButton' is not assigned and could not be auto-found. Interact UI will be hidden.", this);
     }
@@ -139,8 +139,8 @@ public class PlayerInteract : MonoBehaviour
 
     void ShowInteractGraphic(Pickup pickup)
     {
-        if (interactButton != null)
-            interactButton.SetActive(pickup);
+        if (interactField != null)
+            interactField.SetActive(pickup);
 
         if (!pickup || displayName == null)
             return;
@@ -182,11 +182,11 @@ public class PlayerInteract : MonoBehaviour
     private void ResolveUiReferencesIfMissing()
     {
         // Try to auto-find button by common name if not assigned
-        if (interactButton == null)
+        if (interactField == null)
         {
             var foundByName = GameObject.Find("InteractButton");
             if (foundByName != null)
-                interactButton = foundByName;
+                interactField = foundByName;
             else
             {
                 // Try to find any Button in children with a similar name
@@ -194,7 +194,7 @@ public class PlayerInteract : MonoBehaviour
                 {
                     if (btn.name.ToLower().Contains("interact"))
                     {
-                        interactButton = btn.gameObject;
+                        interactField = btn.gameObject;
                         break;
                     }
                 }
@@ -222,9 +222,9 @@ public class PlayerInteract : MonoBehaviour
         // Try to auto-find interact image if not assigned
         if (interactImage == null)
         {
-            if (interactButton != null)
+            if (interactField != null)
             {
-                interactImage = interactButton.GetComponentInChildren<Image>(true);
+                interactImage = interactField.GetComponentInChildren<Image>(true);
             }
             if (interactImage == null)
             {

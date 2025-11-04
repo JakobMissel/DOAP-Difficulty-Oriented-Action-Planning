@@ -15,5 +15,5 @@ MonoBehaviour:
   isCompleted: 0
   isActive: 0
   descriptionText: 
-  goalText: Hold [SPACE] near a red wall to climb it. Use [W][A][S][D] to move.\n
-  completionText: Completed. \n
+  goalText: Hold [SPACE] near a <b>SPECIAL WALL</b> it. Use [W][A][S][D] to move.\n
+  completionText: You need stamina to climb, shown as the green bar.
