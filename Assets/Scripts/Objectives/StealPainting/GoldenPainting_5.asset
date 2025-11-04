@@ -10,12 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
-  m_Name: GoldenPainting 3
+  m_Name: GoldenPainting_5
   m_EditorClassIdentifier: 
-  isCompleted: 1
-  isActive: 1
+  isCompleted: 0
+  isActive: 0
   descriptionText: 
-  goalText: "Woman Cooling Down\n<color=#8FCDA1>Hall\xF8j i skoven</color>\nJeg er
-    h\xF8j\nDiablo V\nEn lort\n"
+  goalText: 'Woman Cooling Down
+
+    Painting 2
+
+    Painting 3
+
+    Painting 4
+
+    Painting
+    5
+
+'
   completionText: "You have stolen the painting \"Hall\xF8j i skoven\". Now place
     it outside."

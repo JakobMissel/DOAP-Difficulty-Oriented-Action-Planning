@@ -103,6 +103,7 @@ public class PlayerClimb : MonoBehaviour
         // Do something else than sphere cast at some point - at the moment it is a bit unreliable for some reason 
         if (Physics.SphereCast(transform.position + detectionOffset, sphereCastRadius, orientation.forward, out climbableHit, climbCheckDistance, climbableLayer))
         {
+            if(!climbableHit.collider.CompareTag("Climbable")) return false;
             return true;
         }
         return false;

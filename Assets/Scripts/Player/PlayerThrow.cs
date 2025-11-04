@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections.Generic;
-using System;
 
 public class PlayerThrow : MonoBehaviour
 {
@@ -35,7 +34,7 @@ public class PlayerThrow : MonoBehaviour
 
     Vector3 throwDirection;
     RaycastHit currentHit;
-    bool isThrowActive = true;
+    bool isThrowActive = false;
 
     [HideInInspector] public bool isAiming = false;
 

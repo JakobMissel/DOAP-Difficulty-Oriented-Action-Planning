@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objective: {fileID: 11400000, guid: 2da7a914a78e19a46a477bfa63bcc5a1, type: 2}
   timerImage: {fileID: 0}
+  tutorialThrowCount: 5
   delayBetweenGoals: 4
   moveTime: 4
   sneakTime: 4
@@ -65,17 +66,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109234ce5bbdb8545bed2f86043f6ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stealablePaintingName: GoldenPainting
   playerPaintingPosition: {fileID: 0}
   paintingPositionOffset: {x: 0, y: 0, z: 0}
   paintingRotationOffset: {x: 90, y: 0, z: 90}
   objective: {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}
   currentPaintingName: 
   paintings:
-  - {fileID: 4279844000067428162, guid: 1421fad43eb61fe429ee3e8c0ad32b0d, type: 3}
-  - {fileID: 6438433605640342852, guid: 2405d8cb5a1b3a24e8681965cb1ea928, type: 3}
-  - {fileID: 5944078329822002359, guid: 146520557eaa78945afd3f3f0679615f, type: 3}
-  - {fileID: 5624694344710439689, guid: 65c6a24bb0591d64c878672040999d96, type: 3}
-  - {fileID: 1231924821368651526, guid: d6ddb6a94c45f484584bf9c236e241be, type: 3}
+  - {fileID: 4850288735026430459, guid: 6caad8b116bb5934282f36553a4c3a1f, type: 3}
+  - {fileID: 4832853743333910102, guid: 2cc02fac5bcea3f40af2cbf65c44b15b, type: 3}
+  - {fileID: 2434445546253681614, guid: 42190daf2daccbf4ba18c6c44bfdd8ab, type: 3}
+  - {fileID: 8166953277060519698, guid: 78705d05e29b2d040847e5a24287670f, type: 3}
+  - {fileID: 2577759154964920302, guid: 594a9e564fdff334f9f904a3889c3eb5, type: 3}
   stolenPaintings: []
 --- !u!114 &6111951887104273761
 MonoBehaviour:

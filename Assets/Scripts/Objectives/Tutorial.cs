@@ -31,8 +31,6 @@ public class Tutorial : MonoBehaviour
         sneakT = sneakTime;
         climbT = climbTime;
         aimT = aimTime;
-        PlayerActions.OnCanThrow(false);
-        PlayerActions.OnCanInteract(false);
     }
     void OnEnable()
     {

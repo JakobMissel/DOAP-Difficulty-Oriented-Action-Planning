@@ -85,9 +85,17 @@ public class ObjectivesManager : MonoBehaviour
         if (objectives.Length > 0)
         {
             if (startFromFirstObjective)
+            {
+                PlayerActions.OnCanThrow(false);
+                PlayerActions.OnCanInteract(false);
                 setNewObjective?.Invoke(objectives[0], 0, 0, 0);
+            }
             if(currentObjective != null)
+            {
+                PlayerActions.OnCanThrow(true);
+                PlayerActions.OnCanInteract(true);
                 setNewObjective?.Invoke(currentObjective, 0, 0, 0);
+            }
         }
         else
         {
