@@ -91,7 +91,7 @@ public class StealPainting : MonoBehaviour
             {
                 currentPainting = paintings[i];
                 GameObject painting = Instantiate(currentPainting.gameObject);
-                OnSendPaintingPrefab(painting);
+                OnSendPaintingPrefab(currentPainting.gameObject);
                 painting.transform.SetParent(playerPaintingPosition.transform);
                 painting.transform.localPosition = paintingPositionOffset;
                 painting.transform.localRotation = Quaternion.Euler(paintingRotationOffset);

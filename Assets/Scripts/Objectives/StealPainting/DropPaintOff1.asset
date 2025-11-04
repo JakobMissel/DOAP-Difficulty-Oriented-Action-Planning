@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: DropPaintOff1
   m_EditorClassIdentifier: 
-  isCompleted: 1
+  isCompleted: 0
   isActive: 1
   descriptionText: 
-  goalText: Place the painting "Woman Cooling Down" back at the entrance.
-  completionText: "\"Hall\xF8j i skoven\" has been placed at the entrance."
+  goalText: 
+  completionText: '
+
+'
