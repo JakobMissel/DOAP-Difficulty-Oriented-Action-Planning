@@ -5003,18 +5003,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7194873003361339793, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
-      propertyPath: rotate
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7194873003361339793, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
-      propertyPath: buttonRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7194873003361339793, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
-      propertyPath: verticalAnimation
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8828448958796923480, guid: d63d84f04f1f949418ecd487e35ea624, type: 3}
       propertyPath: m_Name
       value: ThrowablePickup 1
@@ -21587,10 +21575,6 @@ PrefabInstance:
       propertyPath: playerPaintingPosition
       value: 
       objectReference: {fileID: 1848066683}
-    - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
-      propertyPath: startFromFirstObjective
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

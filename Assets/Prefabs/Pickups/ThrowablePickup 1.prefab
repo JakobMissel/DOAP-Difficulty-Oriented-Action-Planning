@@ -124,15 +124,16 @@ MonoBehaviour:
   displayName: 'Throwable 1
 
 '
-  verticalAnimation: 1
+  verticalAnimation: 0
   verticalSpeed: 0.5
   verticalHeight: 0.5
-  rotate: 1
+  rotate: 0
   rotationSpeed: 50
   audioGameObject: {fileID: 2840963429894322711, guid: f33f6e2ec70e4c942b820c095de920ed, type: 3}
   audioClip: {fileID: 8300000, guid: 0ba8af16801dbf94e887f4f03b19bfae, type: 3}
+  destroyOnPickup: 1
   canBepickedUp: 1
-  buttonRequired: 0
+  buttonRequired: 1
   holdRequired: 0
   holdDuration: 0
   buttonPressed: 0
