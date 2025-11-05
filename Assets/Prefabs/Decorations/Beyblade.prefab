@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5987732741365351519}
   - component: {fileID: 6209702085470014681}
   - component: {fileID: 7162641302181370975}
+  - component: {fileID: 6379531169461765454}
   m_Layer: 0
   m_Name: Beyblade
   m_TagString: Untagged
@@ -88,6 +89,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6379531169461765454
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197295631682321115}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.019228773, y: 0.0128629245, z: 0.019869987}
+  m_Center: {x: -0.0000003008172, y: -0.0036496026, z: -0.0000040810555}
 --- !u!1 &1929757088002559965
 GameObject:
   m_ObjectHideFlags: 0
