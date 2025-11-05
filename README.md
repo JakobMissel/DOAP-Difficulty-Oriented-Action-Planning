@@ -3,6 +3,9 @@ Researching in Dynamic Difficulty Adjustment in a Goal Oriented Action Planning 
 
 Special Thanks To:
 
+Particle Sprite Effects.
+https://www.kenney.nl/assets/particle-pack
+
 Freestylized - Royalty Free License: Free to use for all Commercial and Non-Commercial purposes.
 - https://freestylized.com/material/wood_planks_09/
 - https://freestylized.com/material/wood_planks_02/
