@@ -618,7 +618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7de3aefa901374ba29464584a3109a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraRadius: 5
+  CameraRadius: 2
   Decollision:
     Enabled: 1
     ObstacleLayers:
@@ -723,7 +723,7 @@ Transform:
   m_GameObject: {fileID: 759634666257860209}
   serializedVersion: 2
   m_LocalRotation: {x: 0.42618662, y: -0.5414418, z: 0.37047836, w: 0.62285763}
-  m_LocalPosition: {x: 1.3017235, y: 4.601774, z: 0.32196903}
+  m_LocalPosition: {x: 1.2035332, y: 4.3466206, z: 0.3357687}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1843,7 +1843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {x: 0.5, y: 1.4, z: 0}
   hitWallPosition: {x: 0, y: 1.4, z: 0}
-  moveSpeed: 5
+  moveSpeed: 1
 --- !u!135 &5794147149388458330
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2056,7 +2056,7 @@ PrefabInstance:
     - target: {fileID: 127496348776469563, guid: ae234b959770a2c49883e663a678cb9c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 87281f9c4b06586478112a3d853fe604, type: 2}
+      objectReference: {fileID: 2100000, guid: 053982046b4c5a44b9ccb3dbedb8f65b, type: 2}
     - target: {fileID: 144171301309670029, guid: ae234b959770a2c49883e663a678cb9c, type: 3}
       propertyPath: m_Layer
       value: 8
