@@ -100,12 +100,15 @@ namespace Assets.Scripts.DDA
             DifficultyTracker.AlterDifficulty(PlayerDAAs.TimeBetweenPaintings, averageStealingTime);
 
 #if UNITY_EDITOR
-            // Update top difficulty text
-            testTextFields[0].text = string.Format(baseTestMessage,
-                                                   "Painting stealing time",
-                                                   DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
-                                                   "average stealing time",
-                                                   paintingStealingLengths.Average().ToString("N2"));
+            if (isTestingDdaPlayerActions)
+            {
+                // Update top difficulty text
+                testTextFields[0].text = string.Format(baseTestMessage,
+                                                       "Painting stealing time",
+                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
+                                                       "average stealing time",
+                                                       paintingStealingLengths.Average().ToString("N2"));
+            }
 #endif
         }
 
@@ -130,12 +133,15 @@ namespace Assets.Scripts.DDA
             DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)itemSuccesses / (float)totalItemsUsed);
 
 #if UNITY_EDITOR
-            // Update middle difficulty text
-            testTextFields[1].text = string.Format(baseTestMessage,
-                                                   "Succesful item usage",
-                                                   DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
-                                                   "succesful item ratio",
-                                                   ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"));
+            if (isTestingDdaPlayerActions)
+            {
+                // Update middle difficulty text
+                testTextFields[1].text = string.Format(baseTestMessage,
+                                                       "Succesful item usage",
+                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
+                                                       "succesful item ratio",
+                                                       ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"));
+            }
 #endif
         }
 
@@ -155,12 +161,15 @@ namespace Assets.Scripts.DDA
                 DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)itemSuccesses/(float)totalItemsUsed);
 
 #if UNITY_EDITOR
-                // Update middle difficulty text
-                testTextFields[1].text = string.Format(baseTestMessage,
-                                                       "Succesful item usage",
-                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
-                                                       "succesful item ratio",
-                                                       ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"));
+                if (isTestingDdaPlayerActions)
+                {
+                    // Update middle difficulty text
+                    testTextFields[1].text = string.Format(baseTestMessage,
+                                                           "Succesful item usage",
+                                                           DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
+                                                           "succesful item ratio",
+                                                           ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"));
+                }
 #endif
             }
 
