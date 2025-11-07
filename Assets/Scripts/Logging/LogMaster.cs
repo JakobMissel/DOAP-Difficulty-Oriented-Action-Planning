@@ -65,6 +65,17 @@ namespace Assets.Scripts.Logging
 #endif
 
         /// <summary>
+        /// Saves a log when the scene is unloaded or the logger is elsehow disabled
+        /// </summary>
+        private void OnDisable()
+        {
+#if UNITY_EDITOR
+            if (Application.isPlaying)
+#endif
+                SaveLogAsCsv();
+        }
+
+        /// <summary>
         /// Saves the log as a csv.
         /// To be called at scene end.
         /// </summary>
@@ -99,9 +110,7 @@ namespace Assets.Scripts.Logging
                 filePath = Path.Combine(folderPath, fileName + "_" + logNum + ".csv");
             }
 
-            Debug.Log($"Got {Application.dataPath}, using {myDataPath}");
-
-            Debug.Log($"Logging at {filePath}");
+            Debug.Log($"Logging at {filePath}. {ddaLogData.Count} ddaLogs");
 
             // Create text element
             StreamWriter writer = File.CreateText(filePath);
@@ -120,6 +129,9 @@ namespace Assets.Scripts.Logging
         }
     }
 
+    /// <summary>
+    /// Difficulty by time
+    /// </summary>
     public struct DdaLogData
     {
         public float time;
