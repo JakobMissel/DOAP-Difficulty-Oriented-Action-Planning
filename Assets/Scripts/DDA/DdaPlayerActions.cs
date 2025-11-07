@@ -25,6 +25,7 @@ namespace Assets.Scripts.DDA
         [SerializeField] private GameObject uiVisualisationPrefab;
         [Tooltip("0 = Painting stealing time\n1 = Succesful item usage\n2 = Times captured")] private TMPro.TextMeshProUGUI[] testTextFields;
         private string baseTestMessage = "{0} is at difficulty: <u><b>{1}</b></u>, with {2} at <u><b>{3}</b></u>";
+        private GameObject currentSpawnedPrefab = null;
 #endif
 
         private void Awake()
@@ -39,13 +40,29 @@ namespace Assets.Scripts.DDA
         }
 
 #if UNITY_EDITOR
-        private void Start()
+        private void OnValidate()
+        {
+            if (!Application.isPlaying) return;
+
+            Debug.Log($"{(isTestingDdaPlayerActions ? "Creat" : "Destroy")}ing {(currentSpawnedPrefab == null ? "prefab instance" : currentSpawnedPrefab)}");
+
+            if (isTestingDdaPlayerActions && currentSpawnedPrefab == null)
+            {
+                DoDdaTest();
+            }
+            else if (!isTestingDdaPlayerActions && currentSpawnedPrefab != null)
+            {
+                Destroy(currentSpawnedPrefab);
+            }
+        }
+
+        private void DoDdaTest()
         {
             if (isTestingDdaPlayerActions)
             {
-                GameObject spawnedPrefab = Instantiate(uiVisualisationPrefab, transform);
-                Debug.Log($"Spawned with {spawnedPrefab.transform.childCount} children\nThey have {spawnedPrefab.GetComponentsInChildren<TMPro.TextMeshProUGUI>().Length} TMProUGUI components");
-                testTextFields = spawnedPrefab.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+                currentSpawnedPrefab = Instantiate(uiVisualisationPrefab, transform);
+                Debug.Log($"Spawned with {currentSpawnedPrefab.transform.childCount} children\nThey have {currentSpawnedPrefab.GetComponentsInChildren<TMPro.TextMeshProUGUI>().Length} TMProUGUI components");
+                testTextFields = currentSpawnedPrefab.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
                 testTextFields[0].text = string.Format(baseTestMessage,
                                                        "Painting stealing time",
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
