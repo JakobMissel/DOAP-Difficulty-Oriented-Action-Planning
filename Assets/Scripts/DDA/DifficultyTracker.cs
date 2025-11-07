@@ -1,3 +1,4 @@
+using Assets.Scripts.Logging;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -145,7 +146,7 @@ namespace Assets.Scripts.DDA
         {
             CalledNow();
 
-            return effectiveDifficulties[(int)playerDifficultyAction];
+            return actualDifficulties[(int)playerDifficultyAction];
         }
 #endif
 
@@ -204,6 +205,8 @@ namespace Assets.Scripts.DDA
 #if UNITY_EDITOR
             Debug.Log($"Difficulty set to {GetDifficultyF().ToString("n2")}");
 #endif
+            // Add difficulty log data to LogMaster
+            LogMaster.Instance?.AddDdaLogData(Time.time, GetDifficultyF());
         }
 
         // --- Testing mode---
