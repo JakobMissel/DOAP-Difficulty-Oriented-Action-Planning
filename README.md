@@ -3,6 +3,9 @@ Researching in Dynamic Difficulty Adjustment in a Goal Oriented Action Planning 
 
 Special Thanks To:
 
+3D Models
+- https://rigmodels.com/model.php?view=LowPoly_Man_Body_Boss_Jacket_Suit-3d-model__19cd10742c6b48cb82d60fcb8183a68c&searchkeyword=security%20guard&manualsearch=1
+
 Particle Sprite Effects.
 https://www.kenney.nl/assets/particle-pack
 
