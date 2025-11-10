@@ -120,6 +120,9 @@ public class MainMenu : MonoBehaviour
 
         // Show gameplay UI elements
         ShowGameplayUI();
+        
+        // Re-display current objective if there is one
+        RefreshObjectiveDisplay();
 
         // Unpause the game
         Time.timeScale = 1f;
@@ -261,7 +264,7 @@ public class MainMenu : MonoBehaviour
         var playerActions = player.GetComponent<PlayerActions>();
         if (playerActions) playerActions.enabled = true;
 
-        // Re-enable movement
+        // Re-enable movement and interaction
         var allPlayerScripts = player.GetComponents<MonoBehaviour>();
         foreach (var script in allPlayerScripts)
         {
@@ -271,6 +274,24 @@ public class MainMenu : MonoBehaviour
             {
                 script.enabled = true;
             }
+        }
+        
+        // Restore PlayerInteract state - trigger the canInteract event to ensure proper state
+        var playerInteract = player.GetComponent<PlayerInteract>();
+        if (playerInteract)
+        {
+            // Re-trigger the interact permission based on current objective state
+            // This ensures the component gets the correct canInteract state after being re-enabled
+            PlayerActions.OnCanInteract(true);
+        }
+    }
+
+    private void RefreshObjectiveDisplay()
+    {
+        // Trigger the objectives manager to re-display the current objective
+        if (ObjectivesManager.Instance != null && ObjectivesManager.Instance.CurrentObjective != null)
+        {
+            ObjectivesManager.OnDisplayObjective(ObjectivesManager.Instance.CurrentObjective, 0, 0f);
         }
     }
 
