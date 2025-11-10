@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fab6747c6e8624cb5a941455f4a114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: 5x Coins
+  displayName: Coin
   verticalAnimation: 1
   verticalSpeed: 0.5
   verticalHeight: 0.5
@@ -116,7 +116,8 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   thrownObjectPrefab: {fileID: 7497630765312554297, guid: ce1798a13c0226b42904c21168489eaf, type: 3}
-  ammoCount: 5
+  ammoCount: 99
+  noiseRadius: 5
 --- !u!135 &2152200397279163435
 SphereCollider:
   m_ObjectHideFlags: 0

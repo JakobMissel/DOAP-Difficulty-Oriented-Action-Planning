@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ThrownObject : MonoBehaviour
 {
     [SerializeField] GameObject noiseAreaPrefab;
     [SerializeField] public Sprite thrownObjectImage;
-    [SerializeField] float noiseRadius = 5f;
     [SerializeField] bool destroyOnImpact = false;
+    [HideInInspector] public float noiseRadius = 5f;
     bool hasCollided = false;
 
     void OnCollisionEnter(Collision collision)

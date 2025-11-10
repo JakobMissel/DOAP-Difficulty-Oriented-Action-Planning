@@ -12,6 +12,10 @@ public class Pickup : MonoBehaviour
     [SerializeField][Tooltip("The height of the vertical movement.")] protected float verticalHeight = 0.5f;
     [SerializeField][Tooltip("Should the pickup rotate around itself?")] protected bool rotate = true;
     [SerializeField][Tooltip("The rotation speed of the pickup.")] protected float rotationSpeed = 100;
+    [SerializeField][Tooltip("Should the pickup rotate around the X axis?")] protected bool rotateX = false;
+    [SerializeField][Tooltip("Should the pickup rotate around the Y axis?")] protected bool rotateY = true;
+    [SerializeField][Tooltip("Should the pickup rotate around the Z axis?")] protected bool rotateZ = false;
+
     float initialY;
     [Header("Audio")]
     [SerializeField] GameObject audioGameObject;
@@ -113,7 +117,12 @@ public class Pickup : MonoBehaviour
     /// </summary>
     void Rotate(float speed)
     {
-        transform.Rotate(Vector3.up * speed * Time.deltaTime);
+        if(rotateX)
+            transform.Rotate(Vector3.right * speed * Time.deltaTime);
+        if(rotateY)
+            transform.Rotate(Vector3.up * speed * Time.deltaTime);
+        if(rotateZ)
+            transform.Rotate(Vector3.forward * speed * Time.deltaTime);
     }
 
     /// <summary>

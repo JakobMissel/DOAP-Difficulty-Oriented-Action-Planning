@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class NoiseArea : MonoBehaviour
 {
+    [SerializeField] bool drawGizmos;
     [SerializeField] public Transform noiseArea;
     [SerializeField] public Transform noiseCenter;
-    [HideInInspector] public float noiseRadius;
+    [SerializeField] public float noiseRadius;
     
     private bool hasTriggered = false;
 
@@ -17,6 +18,7 @@ public class NoiseArea : MonoBehaviour
     
     public void SetScale(float scale)
     {
+        noiseRadius = scale;
         var newScale = noiseArea.localScale;
         newScale.Set(scale, scale, scale);
         noiseArea.localScale = newScale;
@@ -48,6 +50,15 @@ public class NoiseArea : MonoBehaviour
         if (other.CompareTag("Agent"))
         {
             SendNoise(other);
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (noiseArea != null)
+        {
+            Gizmos.color = new Color(1f, 0f, 0f, 0.5f);
+            Gizmos.DrawSphere(noiseArea.position, noiseRadius);
         }
     }
 }
