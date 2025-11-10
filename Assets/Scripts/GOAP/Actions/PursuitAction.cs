@@ -60,10 +60,23 @@ namespace Assets.Scripts.GOAP.Actions
     
             if (dist <= catchDistance)
             {
+                Debug.Log($"[PursuitAction] Player caught at distance {dist:F2}m!");
+                
                 var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                 if (brain != null)
                 {
                     brain.SetPlayerCaught(true);
+                }
+                
+                // Show Game Over UI
+                if (MainMenu.Instance != null)
+                {
+                    MainMenu.Instance.ShowGameOverMenu();
+                    Debug.Log("[PursuitAction] Game Over menu shown!");
+                }
+                else
+                {
+                    Debug.LogError("[PursuitAction] MainMenu instance not found! Cannot show game over screen.");
                 }
                 
                 return ActionRunState.Completed;
@@ -76,10 +89,23 @@ namespace Assets.Scripts.GOAP.Actions
                 
                 if (data.CloseRangeTimer >= CLOSE_RANGE_CATCH_TIME)
                 {
+                    Debug.Log($"[PursuitAction] Player caught after {data.CloseRangeTimer:F1}s in close range!");
+                    
                     var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                     if (brain != null)
                     {
                         brain.SetPlayerCaught(true);
+                    }
+                    
+                    // Show Game Over UI
+                    if (MainMenu.Instance != null)
+                    {
+                        MainMenu.Instance.ShowGameOverMenu();
+                        Debug.Log("[PursuitAction] Game Over menu shown!");
+                    }
+                    else
+                    {
+                        Debug.LogError("[PursuitAction] MainMenu instance not found! Cannot show game over screen.");
                     }
                     
                     return ActionRunState.Completed;

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.DDA;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject difficultyPanel;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject howToPlayPanel;
     [SerializeField] private Button playButton;
     [SerializeField] private Button creditsButton;
     [SerializeField] private Button exitButton;
@@ -16,6 +20,15 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button easyButton;
     [SerializeField] private Button mediumButton;
     [SerializeField] private Button hardButton;
+    
+    [Header("Pause Panel Buttons")]
+    [SerializeField] private Button resumeButton;
+    [SerializeField] private Button pauseMainMenuButton;
+    [SerializeField] private Button howToPlayButton;
+    
+    [Header("Game Over Panel Buttons")]
+    [SerializeField] private Button retryButton;
+    [SerializeField] private Button gameOverMainMenuButton;
 
     [Header("Gameplay UI")]
     [SerializeField] private GameObject gameplayCanvas;
@@ -26,6 +39,22 @@ public class MainMenu : MonoBehaviour
 
     private GameObject player;
     private bool isGamePaused;
+    private bool isGameOver;
+    
+    public static MainMenu Instance { get; private set; }
+
+    private void Awake()
+    {
+        // Singleton pattern
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -49,6 +78,15 @@ public class MainMenu : MonoBehaviour
         if (easyButton) easyButton.onClick.AddListener(() => OnDifficultySelected(0));
         if (mediumButton) mediumButton.onClick.AddListener(() => OnDifficultySelected(50));
         if (hardButton) hardButton.onClick.AddListener(() => OnDifficultySelected(100));
+        
+        // Setup pause panel button listeners
+        if (resumeButton) resumeButton.onClick.AddListener(OnResumeClicked);
+        if (pauseMainMenuButton) pauseMainMenuButton.onClick.AddListener(OnPauseMenuToMainMenu);
+        if (howToPlayButton) howToPlayButton.onClick.AddListener(OnHowToPlayClicked);
+        
+        // Setup game over panel button listeners
+        if (retryButton) retryButton.onClick.AddListener(OnRetryClicked);
+        if (gameOverMainMenuButton) gameOverMainMenuButton.onClick.AddListener(OnGameOverToMainMenu);
 
         // Setup initial state
         if (showOnStart)
@@ -67,19 +105,19 @@ public class MainMenu : MonoBehaviour
             OnDDAToggleChanged(ddaToggle.isOn);
         }
 
-        // Hide difficulty panel initially
-        if (difficultyPanel)
-        {
-            difficultyPanel.SetActive(false);
-        }
+        // Hide all secondary panels initially
+        if (difficultyPanel) difficultyPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
+        if (gameOverPanel) gameOverPanel.SetActive(false);
+        if (howToPlayPanel) howToPlayPanel.SetActive(false);
     }
 
     private void Update()
     {
-        // Allow ESC key to toggle menu during gameplay
-        if (Input.GetKeyDown(KeyCode.Escape) && !isGamePaused)
+        // Allow ESC key to show pause menu during gameplay (not game over)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isGamePaused && !isGameOver)
         {
-            ShowMenu();
+            ShowPauseMenu();
         }
     }
 
@@ -91,6 +129,9 @@ public class MainMenu : MonoBehaviour
         if (mainPanel) mainPanel.SetActive(true);
         if (creditsPanel) creditsPanel.SetActive(false);
         if (difficultyPanel) difficultyPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
+        if (gameOverPanel) gameOverPanel.SetActive(false);
+        if (howToPlayPanel) howToPlayPanel.SetActive(false);
 
         // Hide gameplay UI elements
         HideGameplayUI();
@@ -109,14 +150,81 @@ public class MainMenu : MonoBehaviour
         Cursor.visible = true;
     }
 
+    public void ShowPauseMenu()
+    {
+        isGamePaused = true;
+        
+        // Show the pause menu
+        if (mainPanel) mainPanel.SetActive(false);
+        if (creditsPanel) creditsPanel.SetActive(false);
+        if (difficultyPanel) difficultyPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(true);
+        if (gameOverPanel) gameOverPanel.SetActive(false);
+        if (howToPlayPanel) howToPlayPanel.SetActive(false);
+
+        // Hide gameplay UI elements
+        HideGameplayUI();
+
+        // Pause the game
+        Time.timeScale = 0f;
+
+        // Disable player controls
+        if (player)
+        {
+            DisablePlayerControls();
+        }
+
+        // Unlock and show cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
+        Debug.Log("[MainMenu] Game Paused");
+    }
+
+    public void ShowGameOverMenu()
+    {
+        isGamePaused = true;
+        isGameOver = true;
+        
+        // Show the game over menu
+        if (mainPanel) mainPanel.SetActive(false);
+        if (creditsPanel) creditsPanel.SetActive(false);
+        if (difficultyPanel) difficultyPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
+        if (gameOverPanel) gameOverPanel.SetActive(true);
+        if (howToPlayPanel) howToPlayPanel.SetActive(false);
+
+        // Hide gameplay UI elements
+        HideGameplayUI();
+
+        // Pause the game
+        Time.timeScale = 0f;
+
+        // Disable player controls
+        if (player)
+        {
+            DisablePlayerControls();
+        }
+
+        // Unlock and show cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        
+        Debug.Log("[MainMenu] Game Over");
+    }
+
     public void HideMenu()
     {
         isGamePaused = false;
+        isGameOver = false;
 
         // Hide all panels
         if (mainPanel) mainPanel.SetActive(false);
         if (creditsPanel) creditsPanel.SetActive(false);
         if (difficultyPanel) difficultyPanel.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(false);
+        if (gameOverPanel) gameOverPanel.SetActive(false);
+        if (howToPlayPanel) howToPlayPanel.SetActive(false);
 
         // Show gameplay UI elements
         ShowGameplayUI();
@@ -295,6 +403,55 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    private void OnResumeClicked()
+    {
+        Debug.Log("[MainMenu] Resuming game");
+        HideMenu();
+    }
+
+    private void OnPauseMenuToMainMenu()
+    {
+        Debug.Log("[MainMenu] Returning to main menu from pause");
+        ShowMenu();
+    }
+
+    private void OnHowToPlayClicked()
+    {
+        Debug.Log("[MainMenu] Opening How to Play");
+        if (pausePanel) pausePanel.SetActive(false);
+        if (howToPlayPanel) howToPlayPanel.SetActive(true);
+    }
+
+    public void OnBackFromHowToPlay()
+    {
+        Debug.Log("[MainMenu] Returning from How to Play");
+        if (pausePanel) pausePanel.SetActive(true);
+        if (howToPlayPanel) howToPlayPanel.SetActive(false);
+    }
+
+    private void OnRetryClicked()
+    {
+        Debug.Log("[MainMenu] Retrying level");
+        isGameOver = false;
+        
+        // Reload the current scene
+        Time.timeScale = 1f; // Unpause before reloading
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnGameOverToMainMenu()
+    {
+        Debug.Log("[MainMenu] Returning to main menu from game over");
+        isGameOver = false;
+        
+        // Option 1: Show main menu in current scene
+        ShowMenu();
+        
+        // Option 2: If you want to reload the scene and show main menu (uncomment if preferred)
+        // Time.timeScale = 1f;
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     private void OnDestroy()
     {
         // Clean up listeners
@@ -305,5 +462,20 @@ public class MainMenu : MonoBehaviour
         if (easyButton) easyButton.onClick.RemoveListener(() => OnDifficultySelected(0));
         if (mediumButton) mediumButton.onClick.RemoveListener(() => OnDifficultySelected(50));
         if (hardButton) hardButton.onClick.RemoveListener(() => OnDifficultySelected(100));
+        
+        // Pause panel
+        if (resumeButton) resumeButton.onClick.RemoveListener(OnResumeClicked);
+        if (pauseMainMenuButton) pauseMainMenuButton.onClick.RemoveListener(OnPauseMenuToMainMenu);
+        if (howToPlayButton) howToPlayButton.onClick.RemoveListener(OnHowToPlayClicked);
+        
+        // Game over panel
+        if (retryButton) retryButton.onClick.RemoveListener(OnRetryClicked);
+        if (gameOverMainMenuButton) gameOverMainMenuButton.onClick.RemoveListener(OnGameOverToMainMenu);
+        
+        // Clear singleton instance
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 }
