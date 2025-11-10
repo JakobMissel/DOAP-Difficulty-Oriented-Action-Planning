@@ -4882,22 +4882,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vase 4
       objectReference: {fileID: 0}
-    - target: {fileID: 2846712212532932023, guid: 28ae39d6b80d89a4ab57eb096869aedb, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8399367843227193874, guid: 28ae39d6b80d89a4ab57eb096869aedb, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 44.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8399367843227193874, guid: 28ae39d6b80d89a4ab57eb096869aedb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 44.199997
-      objectReference: {fileID: 0}
-    - target: {fileID: 8399367843227193874, guid: 28ae39d6b80d89a4ab57eb096869aedb, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 44.199997
-      objectReference: {fileID: 0}
     - target: {fileID: 8399367843227193874, guid: 28ae39d6b80d89a4ab57eb096869aedb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.2309399
@@ -4937,10 +4921,6 @@ PrefabInstance:
     - target: {fileID: 8399367843227193874, guid: 28ae39d6b80d89a4ab57eb096869aedb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8399367843227193874, guid: 28ae39d6b80d89a4ab57eb096869aedb, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12257,18 +12237,6 @@ PrefabInstance:
       value: Vase 6
       objectReference: {fileID: 0}
     - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 42
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
       propertyPath: m_LocalPosition.x
       value: 24.806
       objectReference: {fileID: 0}
@@ -12307,10 +12275,6 @@ PrefabInstance:
     - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16795,18 +16759,6 @@ PrefabInstance:
     - target: {fileID: 197295631682321115, guid: 1a55183f4b22de14ba50ee8a17ff9d2f, type: 3}
       propertyPath: m_Name
       value: Beyblade
-      objectReference: {fileID: 0}
-    - target: {fileID: 5987732741365351519, guid: 1a55183f4b22de14ba50ee8a17ff9d2f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 62.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5987732741365351519, guid: 1a55183f4b22de14ba50ee8a17ff9d2f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 62.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5987732741365351519, guid: 1a55183f4b22de14ba50ee8a17ff9d2f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 62.8
       objectReference: {fileID: 0}
     - target: {fileID: 5987732741365351519, guid: 1a55183f4b22de14ba50ee8a17ff9d2f, type: 3}
       propertyPath: m_LocalPosition.x

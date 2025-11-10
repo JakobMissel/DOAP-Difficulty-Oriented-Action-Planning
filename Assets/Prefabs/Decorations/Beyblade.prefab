@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5987732741365351519}
   - component: {fileID: 6209702085470014681}
   - component: {fileID: 7162641302181370975}
-  - component: {fileID: 6379531169461765454}
+  - component: {fileID: 1215996477879239324}
   m_Layer: 0
   m_Name: Beyblade
   m_TagString: Untagged
@@ -27,15 +27,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197295631682321115}
   serializedVersion: 2
-  m_LocalRotation: {x: 1, y: 0, z: -0, w: 0.0000000754979}
+  m_LocalRotation: {x: -1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 11.802, y: 1.2, z: -12.767}
-  m_LocalScale: {x: 140.18, y: 140.18, z: 140.18}
+  m_LocalScale: {x: 62.8, y: 62.8, z: 62.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3467463269599094784}
   - {fileID: 1036025232318349825}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -180, y: 0, z: 0}
 --- !u!33 &6209702085470014681
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -89,14 +89,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6379531169461765454
-BoxCollider:
+--- !u!136 &1215996477879239324
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197295631682321115}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 9c18c832cfaeaaf44b6875593e07db07, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -107,9 +107,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.019228773, y: 0.0128629245, z: 0.019869987}
-  m_Center: {x: -0.0000003008172, y: -0.0036496026, z: -0.0000040810555}
+  serializedVersion: 2
+  m_Radius: 0.017093094
+  m_Height: 0.046296746
+  m_Direction: 1
+  m_Center: {x: -0.00000029992145, y: 0.0024056719, z: 0.00005196614}
 --- !u!1 &1929757088002559965
 GameObject:
   m_ObjectHideFlags: 0

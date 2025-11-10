@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8513974077304052193}
-  - component: {fileID: 2261587368185502286}
   m_Layer: 0
   m_Name: WeirdCubeOfDOOM
   m_TagString: Untagged
@@ -35,27 +34,6 @@ Transform:
   - {fileID: 3116730597591798444}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2261587368185502286
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3409550460167256350}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4304742928032401805
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,6 +217,7 @@ GameObject:
   - component: {fileID: 3116730597591798444}
   - component: {fileID: 8735857689460210631}
   - component: {fileID: 1801725474290547707}
+  - component: {fileID: 5740471036028634246}
   m_Layer: 0
   m_Name: PedestalThingy_1
   m_TagString: Untagged
@@ -314,3 +293,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &5740471036028634246
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7208008559985346206}
+  m_Material: {fileID: 13400000, guid: 9c18c832cfaeaaf44b6875593e07db07, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.060820416
+  m_Height: 0.44
+  m_Direction: 2
+  m_Center: {x: 0.000003779307, y: -0.00012405214, z: 0.03417401}
