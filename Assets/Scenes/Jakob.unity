@@ -17397,6 +17397,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8166953277060519698, guid: 6db0b3f997174fc4f8e88e522de62f2b, type: 3}
+      propertyPath: destroyOnPickup
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8502565187402675515, guid: 6db0b3f997174fc4f8e88e522de62f2b, type: 3}
       propertyPath: m_Name
       value: GoldenPainting_4
@@ -27264,6 +27268,50 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.016000004, y: 0.016, z: 0.0008818411}
   m_Center: {x: 0, y: 0, z: 0.00044092032}
+--- !u!1 &1969022957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1969022959}
+  - component: {fileID: 1969022958}
+  m_Layer: 0
+  m_Name: CheckpointManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1969022958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969022957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f81816cdcfb89994482768e72afe6dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1969022959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969022957}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 34.867157, y: 10.91152, z: -20.548527}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1970005431 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3399842018912120765, guid: d1c740b2029c43a49a430a3fc7167a50, type: 3}
@@ -29328,6 +29376,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4832853743333910102, guid: 02eed41c910e95948ac6b19f85d068ee, type: 3}
+      propertyPath: destroyOnPickup
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8664790796403646270, guid: 02eed41c910e95948ac6b19f85d068ee, type: 3}
       propertyPath: m_Name
       value: GoldenPainting_2
@@ -29761,6 +29813,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2425355460415314168, guid: f283d4e670d8a7646a14d41a00542e71, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2434445546253681614, guid: f283d4e670d8a7646a14d41a00542e71, type: 3}
+      propertyPath: destroyOnPickup
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6655915915483577842, guid: f283d4e670d8a7646a14d41a00542e71, type: 3}
@@ -30704,6 +30760,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 859464376562141491, guid: 02aff7596c607c449981437f270e865d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2577759154964920302, guid: 02aff7596c607c449981437f270e865d, type: 3}
+      propertyPath: destroyOnPickup
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2916502899299865950, guid: 02aff7596c607c449981437f270e865d, type: 3}
@@ -49678,7 +49738,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4850288735026430459, guid: 2b4d1033aeffdff42b9a43ec7b2b94c0, type: 3}
       propertyPath: destroyOnPickup
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8374694883643649507, guid: 2b4d1033aeffdff42b9a43ec7b2b94c0, type: 3}
       propertyPath: m_Name
@@ -51568,10 +51628,6 @@ PrefabInstance:
       propertyPath: interactImage
       value: 
       objectReference: {fileID: 229157726}
-    - target: {fileID: 5548852862455689320, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-      propertyPath: m_ControllerManager.Controllers.Array.data[1].Input.Gain
-      value: -0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -55826,6 +55882,7 @@ SceneRoots:
   - {fileID: 549953841}
   - {fileID: 1812411315}
   - {fileID: 982463567}
+  - {fileID: 1969022959}
   - {fileID: 1709073479}
   - {fileID: 127676974}
   - {fileID: 868074360}

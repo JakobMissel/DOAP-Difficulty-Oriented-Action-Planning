@@ -42,6 +42,13 @@ public class Pickup : MonoBehaviour
         initialY = transform.position.y;
     }
 
+    protected virtual void OnEnable()
+    {
+        holdTime = 0;
+        buttonHeld = false;
+        buttonPressed = false;
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (!canBepickedUp) return;
@@ -92,6 +99,7 @@ public class Pickup : MonoBehaviour
         }
         PlayerActions.OnRemovePickupFromInteractableList(this);
         PlayerActions.OnPickedUpItem(this);
+
         if (destroyOnPickup)
             Destroy(gameObject);
     }
@@ -144,7 +152,6 @@ public class Pickup : MonoBehaviour
             {
                 holdTime = 0;
                 buttonHeld = false;
-                canBepickedUp = false;
                 ActivatePickup(other);
 
             }

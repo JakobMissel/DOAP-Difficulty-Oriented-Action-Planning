@@ -12,20 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: GoldenPainting_2
   m_EditorClassIdentifier: 
-  isCompleted: 0
+  isCompleted: 1
   isActive: 0
   descriptionText: 
-  goalText: 'Woman Cooling Down
+  goalText: '<voffset=.4em><size=200%><sprite=0></size></voffset>Painting 3
 
-    Painting 2
+    <voffset=.4em><size=200%><sprite=1></size></voffset>Painting
+    4
 
-    Painting 3
-
-    Painting 4
-
-    Painting
-    5
+    <voffset=.4em><size=200%><sprite=2></size></voffset>Painting 5
 
 '
-  completionText: "You have stolen the painting \"Hall\xF8j i skoven\". Now place
-    it outside."
+  completionText: You have stolen the painting "Painting 1". Now place it outside.

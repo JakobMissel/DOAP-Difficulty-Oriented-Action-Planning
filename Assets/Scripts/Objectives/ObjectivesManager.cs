@@ -71,6 +71,7 @@ public class ObjectivesManager : MonoBehaviour
         setNewObjective += SetNewObjective;
         activateSubObjective += ActivateSubObjective;
         completeObjective += FlagCompletedObjective;
+        CheckpointManager.loadCheckpoint += ReloadPreviousSubObjective;
     }
 
     void OnDisable()
@@ -78,6 +79,7 @@ public class ObjectivesManager : MonoBehaviour
         setNewObjective -= SetNewObjective;
         activateSubObjective -= ActivateSubObjective;
         completeObjective -= FlagCompletedObjective;
+        CheckpointManager.loadCheckpoint -= ReloadPreviousSubObjective;
     }
 
     void Start()
@@ -123,7 +125,14 @@ public class ObjectivesManager : MonoBehaviour
     IEnumerator SetNewObjectiveEnumerator(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay)
     {
         yield return new WaitForSeconds(enumeratorDelay);
-        currentObjective.BeginObjective();
+        if(subObjectiveIndex == 0)
+        {
+            currentObjective.BeginObjective();
+        }
+        else
+        {
+            currentObjective.isActive = true;
+        }
         OnDisplayObjective(currentObjective, subObjectiveIndex, delay);
         if (currentObjective == objectives[objectives.Length - 1])
         {
@@ -143,5 +152,13 @@ public class ObjectivesManager : MonoBehaviour
         {
             OnSetNewObjective(objective.nextObjective, 0, 0, objective.completionDelay);
         }
+    }
+
+    void ReloadPreviousSubObjective()
+    {
+        if ((currentObjective.currentSubObjectiveIndex - 1) < 0 || currentObjective.subObjectives[currentObjective.currentSubObjectiveIndex].name.Contains("Golden")) return;
+        currentObjective.ReloadSubjective(currentObjective.currentSubObjectiveIndex - 1);
+        // Do not subtract 1 here because currentSubObjectiveIndex is updated in ReloadSubjective
+        SetNewObjective(currentObjective, currentObjective.currentSubObjectiveIndex, 0, 0);
     }
 }
