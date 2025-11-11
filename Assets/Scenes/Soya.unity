@@ -10191,6 +10191,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1187748200655663595, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3952467162627892989, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Name
       value: SimpleGuard_1
@@ -10223,6 +10227,10 @@ PrefabInstance:
       propertyPath: m_WalkableMask
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 5258478709933587936, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5333489739466423400, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: arriveDistance
       value: 1.5
@@ -10243,9 +10251,25 @@ PrefabInstance:
       propertyPath: hearingObstructionMask.m_Bits
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5560018131868818027, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: drainRate
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: spotlight
+      value: 
+      objectReference: {fileID: 1291371516}
+    - target: {fileID: 5775864616863681348, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855667424010391125, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalScale.x
@@ -10303,6 +10327,10 @@ PrefabInstance:
       propertyPath: waypointParent
       value: 
       objectReference: {fileID: 469853757}
+    - target: {fileID: 9215170935092780058, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -10312,7 +10340,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3952467162627892989, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 422486534}
+      addedObject: {fileID: 422486535}
     - targetCorrespondingSourceObject: {fileID: 5855667424010391125, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
@@ -14453,7 +14481,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3952467162627892989, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
   m_PrefabInstance: {fileID: 305609369}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &422486534
+--- !u!114 &422486535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14462,11 +14490,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 422486522}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c42c6d1141834b41a3429e5538065b86, type: 3}
+  m_Script: {fileID: 11500000, guid: 86555b29e27f4756966f8491183ff935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebugInfo: 1
-  debugColor: {r: 0, g: 1, b: 1, a: 1}
+  energyBehaviour: {fileID: 0}
+  offset: {x: 0, y: 3, z: 0}
+  chargingColor: {r: 0, g: 1, b: 1, a: 1}
+  lowEnergyColor: {r: 1, g: 0, b: 0, a: 1}
+  fontSize: 16
+  showWhenNotRecharging: 0
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 7927
+  raycastOriginOffset: 0.5
 --- !u!1001 &424134077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43236,6 +43272,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3868492933577769804, guid: 35031898ee3b99b4691ceab83c8577e9, type: 3}
   m_PrefabInstance: {fileID: 1290620020}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1291371516 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9215170935092780058, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+  m_PrefabInstance: {fileID: 305609369}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1291841863
 GameObject:
   m_ObjectHideFlags: 0
@@ -47238,6 +47279,10 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: spotlight
+      value: 
+      objectReference: {fileID: 2058960039}
+    - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: rechargeRate
       value: 12
       objectReference: {fileID: 0}
@@ -47329,11 +47374,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 198708682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c42c6d1141834b41a3429e5538065b86, type: 3}
+  m_Script: {fileID: 11500000, guid: 86555b29e27f4756966f8491183ff935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showDebugInfo: 1
-  debugColor: {r: 1, g: 0.15637589, b: 0, a: 1}
+  energyBehaviour: {fileID: 0}
+  offset: {x: 0, y: 3, z: 0}
+  chargingColor: {r: 0, g: 1, b: 1, a: 1}
+  lowEnergyColor: {r: 1, g: 0, b: 0, a: 1}
+  fontSize: 16
+  showWhenNotRecharging: 1
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 7927
+  raycastOriginOffset: 0.5
 --- !u!1 &1443286441
 GameObject:
   m_ObjectHideFlags: 0
@@ -63672,6 +63725,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.07897459, y: 0.0789746, z: 0.2529855}
   m_Center: {x: 0, y: -0.0029586726, z: 0.046640534}
+--- !u!1 &2058960039 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9215170935092780058, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+  m_PrefabInstance: {fileID: 1440753693}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2059730704
 GameObject:
   m_ObjectHideFlags: 0
@@ -66488,7 +66546,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6237077826422592914, guid: e7b422964181a2e4685faa34b5375380, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.1445081
+      value: 2.144512
       objectReference: {fileID: 0}
     - target: {fileID: 6237077826422592914, guid: e7b422964181a2e4685faa34b5375380, type: 3}
       propertyPath: m_LocalPosition.y
