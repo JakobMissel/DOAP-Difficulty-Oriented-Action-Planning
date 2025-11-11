@@ -22,18 +22,36 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
+            // Stop current movement to interrupt any patrol
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+            
+            // Brief pause to ensure clean transition
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
 
             data.InvestigationTime = 0f;
 
-            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigating noise at {data.Target?.Position}");
+            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} INTERRUPTING current action to investigate noise at {data.Target?.Position}");
         }
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            
+            // If guard sees the player during investigation, abort noise investigation and pursue
+            if (sight != null && sight.CanSeePlayer())
+            {
+                Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} spotted player during investigation - aborting noise investigation!");
+                var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+                if (brain != null)
+                {
+                    brain.ClearDistractionNoise();
+                }
+                return ActionRunState.Stop;
+            }
             
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
             {
@@ -58,7 +76,7 @@ namespace Assets.Scripts.GOAP.Actions
                 // After investigating for the duration, complete
                 if (data.InvestigationTime >= INVESTIGATION_DURATION)
                 {
-                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigation complete!");
+                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigation complete! Clearing noise and returning to patrol.");
                     
                     // Clear the distraction noise from the behaviour
                     var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
@@ -80,11 +98,22 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+            
+            // Ensure noise is cleared
             if (brain != null)
             {
                 brain.ClearDistractionNoise();
             }
+            
+            // Resume normal movement state
+            if (agent != null)
+            {
+                agent.isStopped = false;
+            }
+            
+            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} ending investigation - ready to resume patrol.");
         }
 
         public class Data : IActionData

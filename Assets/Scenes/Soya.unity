@@ -10213,7 +10213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4952139457798788515, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Speed
-      value: 3.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4952139457798788515, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Height
@@ -10241,7 +10241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333489739466423400, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: lastKnownChaseDuration
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5333489739466423400, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: lastKnownUpdateInterval
@@ -10257,12 +10257,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: drainRate
-      value: 2
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: spotlight
       value: 
       objectReference: {fileID: 1291371516}
+    - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: rechargeRate
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5775864616863681348, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -10285,7 +10289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 36.41
+      value: 24.21
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10293,7 +10297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.94
+      value: 3.97
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalRotation.w
@@ -47248,7 +47252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4952139457798788515, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Speed
-      value: 2
+      value: 2.8
       objectReference: {fileID: 0}
     - target: {fileID: 4952139457798788515, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Height
@@ -47268,7 +47272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5333489739466423400, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: lastKnownChaseDuration
-      value: 1.2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5333489739466423400, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: hearingObstructionMask.m_Bits
@@ -47276,7 +47280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: drainRate
-      value: 1.5
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: spotlight
@@ -47284,7 +47288,7 @@ PrefabInstance:
       objectReference: {fileID: 2058960039}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: rechargeRate
-      value: 12
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7660617999256208820, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: agentTypeName
@@ -56874,6 +56878,26 @@ PrefabInstance:
       propertyPath: interactImage
       value: 
       objectReference: {fileID: 1170275861}
+    - target: {fileID: 4603397739281048612, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: drawGizmos
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4603397739281048612, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: pulseInterval
+      value: 0.106
+      objectReference: {fileID: 0}
+    - target: {fileID: 4603397739281048612, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: runNoiseRadius
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4603397739281048612, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: idleNoiseRadius
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4603397739281048612, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: sneakNoiseRadius
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8440090710898492510, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -66546,7 +66570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6237077826422592914, guid: e7b422964181a2e4685faa34b5375380, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.144512
+      value: 2.1445162
       objectReference: {fileID: 0}
     - target: {fileID: 6237077826422592914, guid: e7b422964181a2e4685faa34b5375380, type: 3}
       propertyPath: m_LocalPosition.y
