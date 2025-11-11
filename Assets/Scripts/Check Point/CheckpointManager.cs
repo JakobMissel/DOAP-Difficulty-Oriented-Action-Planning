@@ -2,11 +2,20 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.InputSystem;
 
 public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager Instance;
-    
+
+    [SerializeField] float fadeTime = 1f;
+    float time;
+
+    Image checkpointLoadingScreen;
+    [HideInInspector] public bool isLoading = false;
+
     Rigidbody playerRb;
     CinemachineOrbitalFollow freeLookCamera;
 
@@ -32,6 +41,8 @@ public class CheckpointManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        checkpointLoadingScreen = GameObject.Find("CheckpointLoadingScreen").GetComponent<Image>();
+        checkpointLoadingScreen.color = new Color(0, 0, 0, 0);
     }
 
     void Start()
@@ -64,8 +75,77 @@ public class CheckpointManager : MonoBehaviour
         // Press K to test loading checkpoint
         if (Input.GetKeyDown(KeyCode.K))
         {
-            OnLoadCheckpoint();
+            BeginLoading();
         }
+    }
+
+    public void BeginLoading()
+    {
+        // If a loading sequence is already running, do not start another
+        if(isLoading) return;
+        StartCoroutine(LoadingSequence());
+    }
+
+    IEnumerator LoadingSequence()
+    {
+        isLoading = true;
+        ChangePlayerMovement();
+
+        // Fade to black
+        while (time < fadeTime)
+        {
+            time += Time.deltaTime;
+            // Fade to black
+            checkpointLoadingScreen.color = new Color(0, 0, 0, time / fadeTime);
+            yield return null;
+        }
+        time = 0;
+        
+        // While black, load checkpoint
+        OnLoadCheckpoint();
+        
+        // Keep black for a moment
+        yield return new WaitForSeconds(fadeTime);
+        
+        // Fade back from black
+        while (time < fadeTime)
+        {
+            time += Time.deltaTime;
+            // Fade to black
+            checkpointLoadingScreen.color = new Color(0, 0, 0, 1 - (time / fadeTime));
+            yield return null;
+        }
+        time = 0;
+        
+        isLoading = false;
+        ChangePlayerMovement();
+    }
+
+    /// <summary>
+    /// Enable/Disable player movement depending on loading state
+    /// </summary>
+    void ChangePlayerMovement()
+    {
+        if (isLoading)
+        {
+            playerRb.GetComponent<PlayerMovement>().canMove = false;
+            playerRb.GetComponent<PlayerMovement>().moveInput = Vector2.zero;
+            playerRb.linearVelocity = Vector3.zero;
+            playerRb.GetComponent<PlayerMovement>().velocity = Vector3.zero;
+            playerRb.GetComponent<PlayerMovement>().enabled = false;
+            return;
+        }
+        else
+        {
+            // Re-enable player movement
+            playerRb.GetComponent<PlayerMovement>().enabled = true;
+            playerRb.GetComponent<PlayerMovement>().canMove = true;
+        }
+    }
+
+    public void LoadCheckpointFromAnimationEvent()
+    {
+        OnLoadCheckpoint();
     }
 
     void SaveCheckpoint()
