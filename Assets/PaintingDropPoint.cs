@@ -13,14 +13,18 @@ public class PaintingDropPoint : Pickup
         base.Awake();
     }
 
-    void OnEnable()
+    protected override void OnEnable()
     {
         StealPainting.sendPaintingPrefab += GetPainting;
+        CheckpointManager.loadCheckpoint += () => canBepickedUp = false;
+        base.OnEnable();
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
         StealPainting.sendPaintingPrefab -= GetPainting;
+        CheckpointManager.loadCheckpoint -= () => canBepickedUp = false;
+        base.OnDisable();
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -29,24 +33,24 @@ public class PaintingDropPoint : Pickup
         {
             canBepickedUp = true;
             base.OnTriggerEnter(other);
+            return;
         }
-        
+        canBepickedUp = false;
     }
-    
+
     protected override void OnTriggerStay(Collider other)
     {
-        if (!PlayerActions.Instance.carriesPainting) return;
         if (PlayerActions.Instance.canEscape)
         {
             Debug.Log("Player escaped with the painting(s)!");
             return;
         }
+        if (!PlayerActions.Instance.carriesPainting) return;
         base.OnTriggerStay(other);
     }
 
     protected override void OnTriggerExit(Collider other)
     {
-        if (!PlayerActions.Instance.carriesPainting) return;
         base.OnTriggerExit(other);
     }
 

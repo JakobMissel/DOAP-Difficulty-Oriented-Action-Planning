@@ -44,9 +44,12 @@ public class Pickup : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        holdTime = 0;
-        buttonHeld = false;
-        buttonPressed = false;
+        CheckpointManager.loadCheckpoint += ResetPickup;
+    }
+
+    protected virtual void OnDisable()
+    {
+        CheckpointManager.loadCheckpoint -= ResetPickup;
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -55,9 +58,7 @@ public class Pickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (buttonRequired)
-            {
                 PlayerActions.OnAddPickupToInteractableList(this);
-            }
             else
                 ActivatePickup(other);
         }
@@ -70,15 +71,12 @@ public class Pickup : MonoBehaviour
             if(buttonPressed)
                 ActivatePickup(other);
             if (holdRequired)
-            {
                 HoldButton(other);
-            }
         }
     }
 
     protected virtual void OnTriggerExit(Collider other)
     {
-        if (!canBepickedUp) return;
         if (other.CompareTag("Player") && buttonRequired)
         {
             PlayerActions.OnRemovePickupFromInteractableList(this);
@@ -144,7 +142,6 @@ public class Pickup : MonoBehaviour
 
     void HoldButton(Collider other)
     {
-        if (!canBepickedUp) return;
         if (buttonHeld)
         {
             holdTime += Time.deltaTime;
@@ -153,7 +150,6 @@ public class Pickup : MonoBehaviour
                 holdTime = 0;
                 buttonHeld = false;
                 ActivatePickup(other);
-
             }
         }
         else
@@ -162,5 +158,12 @@ public class Pickup : MonoBehaviour
             if(holdTime <= 0)
                 holdTime = 0;
         }
+    }
+
+    void ResetPickup()
+    {
+        holdTime = 0;
+        buttonHeld = false;
+        buttonPressed = false;
     }
 }
