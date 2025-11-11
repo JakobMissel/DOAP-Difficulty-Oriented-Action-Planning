@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Fog: 1
+  m_FogColor: {r: 0, g: 0, b: 0, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.025
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -2369,7 +2369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1522483561842896855, guid: e4fa90972487c274591dc399c65617f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.428
+      value: -5.432
       objectReference: {fileID: 0}
     - target: {fileID: 1522483561842896855, guid: e4fa90972487c274591dc399c65617f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13883,6 +13883,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vase 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2759017991659776423, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
       propertyPath: m_LocalScale.x
       value: 25
@@ -13897,15 +13901,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 41.292
+      value: 41.247
       objectReference: {fileID: 0}
     - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.035
+      value: 2.089
       objectReference: {fileID: 0}
     - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.891
+      value: -6.119
       objectReference: {fileID: 0}
     - target: {fileID: 8304047488590512834, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14524,7 +14528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8513974077304052193, guid: 949015ca4690e7f4080bedfa6d4086aa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.21
+      value: 2.23
       objectReference: {fileID: 0}
     - target: {fileID: 8513974077304052193, guid: 949015ca4690e7f4080bedfa6d4086aa, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19935,7 +19939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9206909045905786788, guid: e59c36da8c2bfc3408c5c517906f5fb7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.336
+      value: 1.345
       objectReference: {fileID: 0}
     - target: {fileID: 9206909045905786788, guid: e59c36da8c2bfc3408c5c517906f5fb7, type: 3}
       propertyPath: m_LocalPosition.z
