@@ -131,6 +131,7 @@ public class CheckpointManager : MonoBehaviour
     {
         if (isLoading)
         {
+            // Disable player movement
             playerRb.GetComponent<PlayerMovement>().canMove = false;
             playerRb.GetComponent<PlayerMovement>().moveInput = Vector2.zero;
             playerRb.linearVelocity = Vector3.zero;
