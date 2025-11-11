@@ -9,8 +9,6 @@ namespace Assets.Scripts.GOAP.Actions
     [GoapId("InvestigateNoise-73e3c275-b47d-48a5-bcdf-9e503738a046")]
     public class InvestigateNoiseAction : GoapActionBase<InvestigateNoiseAction.Data>
     {
-        private NavMeshAgent agent;
-        private float investigationTime = 0f;
         private const float INVESTIGATION_DURATION = 3.0f; // How long to stay at noise location
 
         public override void Created()
@@ -19,8 +17,7 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void Start(IMonoAgent mono, Data data)
         {
-            if (agent == null)
-                agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -29,16 +26,18 @@ namespace Assets.Scripts.GOAP.Actions
             agent.updateRotation = true;
             agent.updatePosition = true;
 
-            investigationTime = 0f;
+            data.InvestigationTime = 0f;
 
             Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigating noise at {data.Target?.Position}");
         }
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
             {
-                Debug.LogWarning("[InvestigateNoiseAction] No valid target or agent!");
+                Debug.LogWarning($"[InvestigateNoiseAction] {mono.Transform.name} no valid target or agent!");
                 return ActionRunState.Stop;
             }
 
@@ -52,14 +51,14 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 // Stop at the location and investigate
                 agent.isStopped = true;
-                investigationTime += Time.deltaTime;
+                data.InvestigationTime += Time.deltaTime;
 
-                Debug.Log($"[InvestigateNoiseAction] Investigating... {investigationTime:F1}s / {INVESTIGATION_DURATION}s");
+                Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigating... {data.InvestigationTime:F1}s / {INVESTIGATION_DURATION}s");
 
                 // After investigating for the duration, complete
-                if (investigationTime >= INVESTIGATION_DURATION)
+                if (data.InvestigationTime >= INVESTIGATION_DURATION)
                 {
-                    Debug.Log("[InvestigateNoiseAction] Investigation complete!");
+                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigation complete!");
                     
                     // Clear the distraction noise from the behaviour
                     var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
@@ -73,7 +72,7 @@ namespace Assets.Scripts.GOAP.Actions
             }
             else
             {
-                Debug.Log($"[InvestigateNoiseAction] Moving to noise source... Distance: {dist:F1}m");
+                Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} moving to noise source... Distance: {dist:F1}m");
             }
 
             return ActionRunState.Continue;
@@ -81,18 +80,17 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
-            if (agent != null && agent.enabled && agent.isOnNavMesh)
+            var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+            if (brain != null)
             {
-                agent.isStopped = false;
+                brain.ClearDistractionNoise();
             }
-            
-            investigationTime = 0f;
-            Debug.Log("[InvestigateNoiseAction] Ended");
         }
 
         public class Data : IActionData
         {
             public ITarget Target { get; set; }
+            public float InvestigationTime { get; set; }
         }
     }
 }

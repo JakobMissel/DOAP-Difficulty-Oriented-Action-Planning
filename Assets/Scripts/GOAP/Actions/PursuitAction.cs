@@ -8,26 +8,20 @@ namespace Assets.Scripts.GOAP.Actions
     [GoapId("Pursuit-67f97c9c-9d66-42ce-853c-133448c53402")]
     public class PursuitAction : GoapActionBase<PursuitAction.Data>
     {
-        private NavMeshAgent agent;
-        private SimpleGuardSightNiko sight;
-        private Transform player;
-
         // Timer constants
         private const float CLOSE_RANGE_DISTANCE = 5.0f;
         private const float CLOSE_RANGE_CATCH_TIME = 5.0f;
         private const float TIMER_DECAY_SPEED = 1.0f;
+        
+        // Cache player reference statically since it's shared between all guards
+        private static Transform cachedPlayer;
 
         public override void Created() { }
 
         public override void Start(IMonoAgent mono, Data data)
         {
-            if (agent == null)
-                agent = mono.Transform.GetComponent<NavMeshAgent>();
-            if (sight == null)
-                sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
-            if (player == null)
-                player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
@@ -40,6 +34,12 @@ namespace Assets.Scripts.GOAP.Actions
         
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            
+            if (cachedPlayer == null)
+                cachedPlayer = GameObject.FindGameObjectWithTag("Player")?.transform;
+            
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
@@ -60,7 +60,7 @@ namespace Assets.Scripts.GOAP.Actions
     
             if (dist <= catchDistance)
             {
-                Debug.Log($"[PursuitAction] Player caught at distance {dist:F2}m!");
+                Debug.Log($"[PursuitAction] {mono.Transform.name} caught player at distance {dist:F2}m!");
                 
                 var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                 if (brain != null)
@@ -89,7 +89,7 @@ namespace Assets.Scripts.GOAP.Actions
                 
                 if (data.CloseRangeTimer >= CLOSE_RANGE_CATCH_TIME)
                 {
-                    Debug.Log($"[PursuitAction] Player caught after {data.CloseRangeTimer:F1}s in close range!");
+                    Debug.Log($"[PursuitAction] {mono.Transform.name} caught player after {data.CloseRangeTimer:F1}s in close range!");
                     
                     var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                     if (brain != null)
@@ -101,11 +101,6 @@ namespace Assets.Scripts.GOAP.Actions
                     if (MainMenu.Instance != null)
                     {
                         MainMenu.Instance.ShowGameOverMenu();
-                        Debug.Log("[PursuitAction] Game Over menu shown!");
-                    }
-                    else
-                    {
-                        Debug.LogError("[PursuitAction] MainMenu instance not found! Cannot show game over screen.");
                     }
                     
                     return ActionRunState.Completed;
@@ -113,11 +108,8 @@ namespace Assets.Scripts.GOAP.Actions
             }
             else
             {
-                if (data.CloseRangeTimer > 0f)
-                {
-                    data.CloseRangeTimer -= Time.deltaTime * TIMER_DECAY_SPEED;
-                    data.CloseRangeTimer = Mathf.Max(0f, data.CloseRangeTimer);
-                }
+                // Decay timer when not in close range
+                data.CloseRangeTimer = Mathf.Max(0f, data.CloseRangeTimer - (Time.deltaTime * TIMER_DECAY_SPEED));
             }
 
             return ActionRunState.Continue;
@@ -125,17 +117,13 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
-            if (agent != null && agent.enabled && agent.isOnNavMesh)
-            {
-                agent.isStopped = false;
-                agent.updateRotation = true;
-            }
+            // Optional cleanup
         }
 
         public class Data : IActionData
         {
             public ITarget Target { get; set; }
-            public float CloseRangeTimer { get; set; } = 0f;
+            public float CloseRangeTimer { get; set; }
         }
     }
 }
