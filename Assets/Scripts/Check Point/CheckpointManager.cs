@@ -79,6 +79,9 @@ public class CheckpointManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This starts the loading sequence coroutine
+    /// </summary>
     public void BeginLoading()
     {
         // If a loading sequence is already running, do not start another
@@ -141,11 +144,6 @@ public class CheckpointManager : MonoBehaviour
             playerRb.GetComponent<PlayerMovement>().enabled = true;
             playerRb.GetComponent<PlayerMovement>().canMove = true;
         }
-    }
-
-    public void LoadCheckpointFromAnimationEvent()
-    {
-        OnLoadCheckpoint();
     }
 
     void SaveCheckpoint()
