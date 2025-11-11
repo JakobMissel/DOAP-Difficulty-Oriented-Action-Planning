@@ -88,18 +88,55 @@ public class MainMenu : MonoBehaviour
         if (retryButton) retryButton.onClick.AddListener(OnRetryClicked);
         if (gameOverMainMenuButton) gameOverMainMenuButton.onClick.AddListener(OnGameOverToMainMenu);
 
-        // Setup initial state
-        if (showOnStart)
+        // Check if we're auto-starting from a retry
+        bool autoStart = PlayerPrefs.GetInt("RetryAutoStart", 0) == 1;
+        
+        if (autoStart)
         {
-            ShowMenu();
+            Debug.Log("[MainMenu] Auto-starting from retry");
+            
+            // Restore DDA settings
+            bool wasDDAEnabled = PlayerPrefs.GetInt("RetryDDAEnabled", 1) == 1;
+            int previousDifficulty = PlayerPrefs.GetInt("RetryDifficulty", 0);
+            
+            if (wasDDAEnabled)
+            {
+                // Restore DDA mode
+                DifficultyTracker.EnableTestingMode(false);
+                Debug.Log("[MainMenu] Restored DDA mode from retry");
+            }
+            else
+            {
+                // Restore static difficulty mode
+                DifficultyTracker.EnableTestingMode(true);
+                DifficultyTracker.SetTestingDifficultyPercent(previousDifficulty);
+                Debug.Log($"[MainMenu] Restored static difficulty {previousDifficulty}% from retry");
+            }
+            
+            // Clear the retry flag
+            PlayerPrefs.DeleteKey("RetryAutoStart");
+            PlayerPrefs.DeleteKey("RetryDDAEnabled");
+            PlayerPrefs.DeleteKey("RetryDifficulty");
+            PlayerPrefs.Save();
+            
+            // Start game immediately without showing menu
+            HideMenu();
         }
         else
         {
-            HideMenu();
+            // Normal start - setup initial state
+            if (showOnStart)
+            {
+                ShowMenu();
+            }
+            else
+            {
+                HideMenu();
+            }
         }
 
-        // Initialize DDA toggle state
-        if (ddaToggle)
+        // Initialize DDA toggle state (only if not auto-starting)
+        if (!autoStart && ddaToggle)
         {
             ddaToggle.isOn = true; // Default to DDA enabled
             OnDDAToggleChanged(ddaToggle.isOn);
@@ -411,8 +448,13 @@ public class MainMenu : MonoBehaviour
 
     private void OnPauseMenuToMainMenu()
     {
-        Debug.Log("[MainMenu] Returning to main menu from pause");
-        ShowMenu();
+        Debug.Log("[MainMenu] Returning to main menu from pause - reloading scene");
+        
+        // Unpause before reloading
+        Time.timeScale = 1f;
+        
+        // Reload the scene to reset everything
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnHowToPlayClicked()
@@ -431,25 +473,35 @@ public class MainMenu : MonoBehaviour
 
     private void OnRetryClicked()
     {
-        Debug.Log("[MainMenu] Retrying level");
+        Debug.Log("[MainMenu] Retrying level - Restarting scene with auto-start");
         isGameOver = false;
         
+        // Store the current DDA settings before reloading
+        bool wasDDAEnabled = !DifficultyTracker.IsTestingMode();
+        int currentDifficulty = DifficultyTracker.GetDifficultyI();
+        
+        PlayerPrefs.SetInt("RetryAutoStart", 1); // Flag to auto-start after reload
+        PlayerPrefs.SetInt("RetryDDAEnabled", wasDDAEnabled ? 1 : 0);
+        PlayerPrefs.SetInt("RetryDifficulty", currentDifficulty);
+        PlayerPrefs.Save();
+        
+        // Unpause before reloading
+        Time.timeScale = 1f;
+        
         // Reload the current scene
-        Time.timeScale = 1f; // Unpause before reloading
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnGameOverToMainMenu()
     {
-        Debug.Log("[MainMenu] Returning to main menu from game over");
+        Debug.Log("[MainMenu] Returning to main menu from game over - reloading scene");
         isGameOver = false;
         
-        // Option 1: Show main menu in current scene
-        ShowMenu();
+        // Unpause before reloading
+        Time.timeScale = 1f;
         
-        // Option 2: If you want to reload the scene and show main menu (uncomment if preferred)
-        // Time.timeScale = 1f;
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // Reload the scene to reset everything for a fresh start
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void OnDestroy()

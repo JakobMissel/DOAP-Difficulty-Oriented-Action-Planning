@@ -76,6 +76,10 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
+            // Safety check: if the agent is being destroyed (scene unloading), skip
+            if (mono == null || mono.Transform == null)
+                return;
+
             Debug.Log($"[PatrolAction] {mono.Transform.name} ending action, advancing route.");
 
             var route = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.PatrolRouteBehaviour>();

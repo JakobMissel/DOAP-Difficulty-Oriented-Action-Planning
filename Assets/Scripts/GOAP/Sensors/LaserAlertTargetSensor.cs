@@ -20,11 +20,20 @@ namespace Assets.Scripts.GOAP.Sensors
             Vector3 pos = LaserAlertSystem.GetCurrentPosition();
 
             // Optional fallback: use a tagged object if no anchor was provided
+            // Only try this if the tag actually exists (won't throw error if tag is undefined)
             if (LaserAlertSystem.Anchor == null)
             {
-                var tagged = GameObject.FindWithTag("LaserPosition");
-                if (tagged != null)
-                    pos = tagged.transform.position;
+                try
+                {
+                    var tagged = GameObject.FindWithTag("LaserPosition");
+                    if (tagged != null)
+                        pos = tagged.transform.position;
+                }
+                catch (UnityException)
+                {
+                    // Tag doesn't exist, ignore and use the position from LaserAlertSystem
+                    // This is not an error - just means no fallback GameObject is available
+                }
             }
 
             if (UnityEngine.AI.NavMesh.SamplePosition(pos, out var hit, 5f, UnityEngine.AI.NavMesh.AllAreas))

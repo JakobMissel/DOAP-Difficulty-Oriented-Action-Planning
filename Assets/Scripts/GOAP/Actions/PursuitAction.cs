@@ -13,6 +13,9 @@ namespace Assets.Scripts.GOAP.Actions
         private const float CLOSE_RANGE_CATCH_TIME = 5.0f;
         private const float TIMER_DECAY_SPEED = 1.0f;
         
+        // Catch distance - guard must be very close to catch player
+        private const float IMMEDIATE_CATCH_DISTANCE = 0.7f; //lower is closer
+        
         // Cache player reference statically since it's shared between all guards
         private static Transform cachedPlayer;
 
@@ -55,10 +58,8 @@ namespace Assets.Scripts.GOAP.Actions
 
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
 
-            // Catch distance check
-            float catchDistance = Mathf.Max(1.5f, agent.stoppingDistance + 0.5f);
-    
-            if (dist <= catchDistance)
+            // Immediate catch if guard is very close (touching the player)
+            if (dist <= IMMEDIATE_CATCH_DISTANCE)
             {
                 Debug.Log($"[PursuitAction] {mono.Transform.name} caught player at distance {dist:F2}m!");
                 
@@ -82,7 +83,7 @@ namespace Assets.Scripts.GOAP.Actions
                 return ActionRunState.Completed;
             }
             
-            // Close range timer logic
+            // Close range timer logic - if guard stays close for extended time, eventually catch
             if (dist <= CLOSE_RANGE_DISTANCE)
             {
                 data.CloseRangeTimer += Time.deltaTime;
