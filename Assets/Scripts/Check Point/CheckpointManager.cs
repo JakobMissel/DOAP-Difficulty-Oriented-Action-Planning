@@ -7,14 +7,14 @@ public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager Instance;
     
-    GameObject player;
+    Rigidbody playerRb;
     CinemachineOrbitalFollow freeLookCamera;
 
     List<GameObject> thrownObjects = new();
     int ammoCount;
 
     Vector3 playerCheckpointPosition;
-    Vector3 playerCheckpointRotation;
+    Quaternion playerCheckpointRotation;
 
     float cameraCheckpointHorizontal;
     float cameraCheckpointVertical;
@@ -36,9 +36,9 @@ public class CheckpointManager : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerCheckpointPosition = player.transform.position;
-        playerCheckpointRotation = player.transform.eulerAngles;
+        playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+        playerCheckpointPosition = playerRb.position;
+        playerCheckpointRotation = playerRb.rotation;
 
         freeLookCamera = GameObject.Find("Free Look Camera").GetComponent<CinemachineOrbitalFollow>();
         cameraCheckpointHorizontal = freeLookCamera.HorizontalAxis.Value;
@@ -70,25 +70,25 @@ public class CheckpointManager : MonoBehaviour
 
     void SaveCheckpoint()
     {
-        playerCheckpointPosition = player.transform.position;
-        playerCheckpointRotation = player.transform.eulerAngles;
+        playerCheckpointPosition = playerRb.position;
+        playerCheckpointRotation = playerRb.rotation;
 
         cameraCheckpointHorizontal = freeLookCamera.HorizontalAxis.Value;
         cameraCheckpointVertical = freeLookCamera.VerticalAxis.Value;
         
-        thrownObjects = player.GetComponent<PlayerThrow>().throwablePrefabsList;
-        ammoCount = player.GetComponent<PlayerThrow>().ammoCount;
+        thrownObjects = playerRb.GetComponent<PlayerThrow>().throwablePrefabsList;
+        ammoCount = playerRb.GetComponent<PlayerThrow>().ammoCount;
     }
 
     public void LoadCheckpoint()
     {
-        player.transform.position = playerCheckpointPosition;
-        player.transform.eulerAngles = playerCheckpointRotation;
+        playerRb.position = playerCheckpointPosition;
+        playerRb.rotation = playerCheckpointRotation;
 
         freeLookCamera.HorizontalAxis.Value = cameraCheckpointHorizontal;
         freeLookCamera.VerticalAxis.Value = cameraCheckpointVertical;
         
-        player.GetComponent<PlayerThrow>().throwablePrefabsList = thrownObjects;
-        player.GetComponent<PlayerThrow>().ammoCount = ammoCount;
+        playerRb.GetComponent<PlayerThrow>().throwablePrefabsList = thrownObjects;
+        playerRb.GetComponent<PlayerThrow>().ammoCount = ammoCount;
     }
 }
