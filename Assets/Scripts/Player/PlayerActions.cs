@@ -73,6 +73,10 @@ public class PlayerActions : MonoBehaviour
     public static Action<Sprite> spriteUpdate;
     public static void OnSpriteUpdate(Sprite sprite) => spriteUpdate?.Invoke(sprite);
 
+    // Caught by guard action
+    public static Action playerCaught;
+    public static void OnPlayerCaught() => playerCaught?.Invoke();
+
     //========================================================================//
 
     public static PlayerActions Instance;

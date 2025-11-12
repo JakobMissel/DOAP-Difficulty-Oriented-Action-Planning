@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         playerInput.actions["Move"].canceled += OnMove;
         PlayerActions.aimStatus += OnAimStatus;
         PlayerActions.sneakStatus += OnSneakStatus;
+        PlayerActions.playerCaught += OnPlayerCaught;
     }
 
     void OnDisable()
@@ -61,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         playerInput.actions["Move"].canceled -= OnMove;
         PlayerActions.aimStatus -= OnAimStatus;
         PlayerActions.sneakStatus -= OnSneakStatus;
+        PlayerActions.playerCaught -= OnPlayerCaught;
     }
 
     void LateUpdate()
@@ -211,9 +213,18 @@ public class PlayerMovement : MonoBehaviour
         isAiming = aimStatus;
     }
 
-    void OnSneakStatus(bool isSneaking)
+    void OnSneakStatus(bool status)
     {
-        this.isSneaking = isSneaking;
+        isSneaking = status;
+    }
+    
+    void OnPlayerCaught()
+    {
+        canMove = false;
+        canRotate = false;
+        moveInput = Vector2.zero;
+        rb.linearVelocity = Vector3.zero;
+        Debug.Log("[PlayerMovement] Player caught! Movement disabled.");
     }
 
     void OnDrawGizmosSelected()

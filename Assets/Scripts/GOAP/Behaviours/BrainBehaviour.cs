@@ -195,7 +195,7 @@ namespace Assets.Scripts.GOAP.Behaviours
             
             if (caught)
             {
-                Debug.Log("[BrainBehaviour] Player has been caught!");
+                Debug.Log($"[BrainBehaviour] {name} has caught the player! GameOverManager will handle the rest.");
             }
         }
         

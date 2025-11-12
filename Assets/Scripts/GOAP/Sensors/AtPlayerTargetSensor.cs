@@ -34,8 +34,8 @@ namespace Assets.Scripts.GOAP.Sensors
             if (cachedPlayer == null)
                 return new SenseValue(0);
 
-            // Compute catch distance similar to PursuitAction
-            float catchDistance = 1.5f;
+            // Compute catch distance
+            float catchDistance = 1.0f;
             var nav = refs.GetCachedComponent<NavMeshAgent>();
             if (nav != null)
                 catchDistance = Mathf.Max(catchDistance, nav.stoppingDistance + 0.5f);

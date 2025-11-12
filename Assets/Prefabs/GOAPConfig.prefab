@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3042979143944750646}
   - component: {fileID: 2572555349785727668}
   - component: {fileID: 1292335085838311828}
+  - component: {fileID: 7256544441878993437}
   m_Layer: 0
   m_Name: GOAPConfig
   m_TagString: Untagged
@@ -103,4 +104,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3570c8b62e70db14a91ef240c0552979, type: 2}
   - {fileID: 11400000, guid: c13e26afb227ea046afd2fd41c733fb0, type: 2}
   agentTypeName: Laser
-  difficultyThreshold: 60
+--- !u!114 &7256544441878993437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6805938617046531353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e4f8b2a9c1d4e5f8a7b9c0d1e2f3a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugMode: 1

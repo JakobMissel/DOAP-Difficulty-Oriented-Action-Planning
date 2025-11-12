@@ -35,7 +35,7 @@ MonoBehaviour:
     baseCost: 5
     stoppingDistance: 0
     validateTarget: 1
-    requiresTarget: 1
+    requiresTarget: 0
     validateConditions: 1
     moveMode: 1
     conditions:
