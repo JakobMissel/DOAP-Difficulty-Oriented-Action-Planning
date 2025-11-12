@@ -28,7 +28,7 @@ namespace Assets.Scripts.GOAP.Actions
         public override void Start(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
-            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -66,7 +66,7 @@ namespace Assets.Scripts.GOAP.Actions
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
-            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
             
             // Abort instantly if we can see the player; clear alert so pursuit wins
             if (sight != null && sight.CanSeePlayer())

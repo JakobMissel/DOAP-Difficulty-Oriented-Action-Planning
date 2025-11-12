@@ -29,7 +29,7 @@ namespace Assets.Scripts.GOAP.Sensors
 
             // IMPORTANT: Only return true if guard has VISUAL contact
             // Do NOT include last-known position here, as that should trigger ClearLastKnownGoal, not PursuitGoal
-            if (agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var sight))
+            if (agent.Transform.TryGetComponent<GuardSight>(out var sight))
             {
                 bool canSee = sight.CanSeePlayer();
                 return new SenseValue(canSee ? 1 : 0);

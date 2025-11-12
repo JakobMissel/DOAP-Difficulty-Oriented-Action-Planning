@@ -22,7 +22,7 @@ namespace Assets.Scripts.GOAP.Sensors
                 return null;
 
             bool hasVisual = false;
-            if (agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var sight))
+            if (agent.Transform.TryGetComponent<GuardSight>(out var sight))
             {
                 hasVisual = sight.CanSeePlayer();
             }

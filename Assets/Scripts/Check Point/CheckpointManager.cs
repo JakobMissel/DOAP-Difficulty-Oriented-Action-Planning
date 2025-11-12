@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.InputSystem;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -19,7 +18,7 @@ public class CheckpointManager : MonoBehaviour
     Rigidbody playerRb;
     CinemachineOrbitalFollow freeLookCamera;
 
-    List<GameObject> thrownObjects = new();
+    List<GameObject> thrownObjects;
     int ammoCount;
 
     Vector3 playerCheckpointPosition;
@@ -154,9 +153,10 @@ public class CheckpointManager : MonoBehaviour
 
         cameraCheckpointHorizontal = freeLookCamera.HorizontalAxis.Value;
         cameraCheckpointVertical = freeLookCamera.VerticalAxis.Value;
-        
-        thrownObjects = playerRb.GetComponent<PlayerThrow>().throwablePrefabsList;
-        ammoCount = playerRb.GetComponent<PlayerThrow>().ammoCount;
+
+        // Out commented out for now since throwables do not respawn between checkpoints
+        //thrownObjects = playerRb.GetComponent<PlayerThrow>().throwablePrefabsList;
+        //ammoCount = playerRb.GetComponent<PlayerThrow>().ammoCount;
     }
 
     public void LoadCheckpoint()
@@ -166,8 +166,9 @@ public class CheckpointManager : MonoBehaviour
 
         freeLookCamera.HorizontalAxis.Value = cameraCheckpointHorizontal;
         freeLookCamera.VerticalAxis.Value = cameraCheckpointVertical;
-        
-        playerRb.GetComponent<PlayerThrow>().throwablePrefabsList = thrownObjects;
-        playerRb.GetComponent<PlayerThrow>().ammoCount = ammoCount;
+
+        // Out commented out for now since throwables do not respawn between checkpoints
+        //playerRb.GetComponent<PlayerThrow>().throwablePrefabsList = thrownObjects;
+        //playerRb.GetComponent<PlayerThrow>().ammoCount = ammoCount;
     }
 }

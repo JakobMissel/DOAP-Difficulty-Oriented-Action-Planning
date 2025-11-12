@@ -48,7 +48,7 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         // References
         private Transform playerTransform;
-        private SimpleGuardSightNiko sight;
+        private GuardSight sight;
         private bool wasSeenLastFrame = false;
         private bool hasInvestigated = false; // Prevent re-capturing after investigation
 
@@ -90,7 +90,7 @@ namespace Assets.Scripts.GOAP.Behaviours
             this.goap = FindAnyObjectByType<GoapBehaviour>();
             this.agent = this.GetComponent<AgentBehaviour>();
             this.provider = this.GetComponent<GoapActionProvider>();
-            this.sight = this.GetComponent<SimpleGuardSightNiko>();
+            this.sight = this.GetComponent<GuardSight>();
             this.playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
             
             // Configure NavMeshAgent turning speed

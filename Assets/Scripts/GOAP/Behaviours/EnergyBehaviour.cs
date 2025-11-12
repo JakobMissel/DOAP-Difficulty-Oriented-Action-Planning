@@ -18,7 +18,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         
         private float currentEnergy;
         private bool isRecharging;
-        private SimpleGuardSightNiko sight;
+        private GuardSight sight;
 
         public float CurrentEnergy => currentEnergy;
         public float MaxEnergy => maxEnergy;
@@ -28,7 +28,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         private void Awake()
         {
             currentEnergy = maxEnergy;
-            sight = GetComponent<SimpleGuardSightNiko>();
+            sight = GetComponent<GuardSight>();
             
             // Try to find spotlight if not assigned
             if (spotlight == null && sight != null && sight.Eyes != null)

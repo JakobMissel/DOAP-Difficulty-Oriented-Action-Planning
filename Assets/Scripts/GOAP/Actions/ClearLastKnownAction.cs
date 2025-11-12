@@ -15,7 +15,7 @@ namespace Assets.Scripts.GOAP.Actions
         public override void Start(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
-            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
             var brain = mono.Transform.GetComponent<BrainBehaviour>();
 
             // How long to "check" the last known position once arrived
@@ -74,7 +74,7 @@ namespace Assets.Scripts.GOAP.Actions
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
-            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
             var brain = mono.Transform.GetComponent<BrainBehaviour>();
             
             if (sight != null && sight.CanSeePlayer())

@@ -39,7 +39,7 @@ namespace Assets.Scripts.GOAP.Actions
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
-            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
             
             // If guard sees the player during investigation, abort noise investigation and pursue
             if (sight != null && sight.CanSeePlayer())

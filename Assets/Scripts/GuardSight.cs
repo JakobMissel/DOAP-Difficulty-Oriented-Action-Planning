@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SimpleGuardSightNiko : MonoBehaviour
+public class GuardSight : MonoBehaviour
 {
     [SerializeField] LayerMask obstacleLayer;
     [SerializeField] Vector3 playerOffset = new Vector3(0, 1, 0);
@@ -9,15 +10,21 @@ public class SimpleGuardSightNiko : MonoBehaviour
     [SerializeField] float hFieldOfView = 100f;
     [SerializeField] float vFieldOfView = 100f;
     [SerializeField] float viewDistance = 10f;
-    [SerializeField] [Tooltip("*** DOES NOT WORK *** Gives the detection cone an angle.")]Vector3 sightRotationOffset = new(0,-0.55f,0);
+    [SerializeField] [Tooltip("Gives the detection cone an angle.")] Vector3 sightRotationOffset = new(0,-0.55f,0);
+    [SerializeField] float detectionDelay = 1f;
+    [SerializeField] Image detectionIcon;
+    float detectionTime;
+
     GameObject player;
     bool playerHit;
+    bool playerSpotted;
 
     // Allow other systems to read/rotate the eyes explicitly
     public Transform Eyes => eyes;
 
     [Header("Gizmo")]
     [SerializeField] [Range(0,50)] int rayCount;
+    
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -25,7 +32,7 @@ public class SimpleGuardSightNiko : MonoBehaviour
 
     public bool CanSeePlayer()
     {
-        exclamationMark.SetActive(playerHit);
+        exclamationMark.SetActive(playerSpotted);
         Quaternion sightRotation = Quaternion.Euler(sightRotationOffset);
         var direction = (player.transform.position + playerOffset - eyes.position).normalized;
         var distance = Vector3.Distance(player.transform.position, eyes.position);
@@ -52,30 +59,62 @@ public class SimpleGuardSightNiko : MonoBehaviour
                 if (Physics.Raycast(eyes.position, direction, distance, obstacleLayer))
                 {
                     playerHit = false;
-                    return false;
+                    return playerHit;
                 }
                 playerHit = true;
-                PlayerSpotted();
-                return true;
+                return playerHit;
             }
             else
             {
                 playerHit = false;
-                return false;
+                return playerHit;
             }
         }
         else
         {
             playerHit = false;
-            return false;
+            return playerHit;
         }
     }
 
-    void PlayerSpotted()
+    void Update()
     {
-        print("Gotcha!!");
+        DetectPlayer();
     }
 
+    void DetectPlayer()
+    {
+        if (playerHit)
+        {
+            if(detectionTime < detectionDelay)
+            {
+                detectionTime += Time.deltaTime;
+                detectionIcon.fillAmount = detectionTime / detectionDelay;
+            }
+            if (detectionTime >= detectionDelay)
+            {
+                detectionIcon.fillAmount = 0;
+                detectionTime = detectionDelay;
+                playerSpotted = true;
+            }
+        }
+        else
+        {
+            playerSpotted = false;
+            detectionTime -= Time.deltaTime;
+            detectionIcon.fillAmount = detectionTime / detectionDelay;
+            if(detectionTime <= 0f)
+            {
+                detectionTime = 0f;
+            }
+        }
+    }
+
+    public bool PlayerSpotted()
+    {
+        return playerSpotted;
+    }
+    
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
