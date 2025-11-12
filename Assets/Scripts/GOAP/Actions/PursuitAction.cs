@@ -55,7 +55,21 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
-            // Optional cleanup
+            // Mark that this guard should reset to closest waypoint when returning to patrol
+            var patrolAction = typeof(PatrolAction);
+            var guardId = mono.Transform.GetInstanceID();
+            
+            // Access the static dictionary via reflection to set the reset flag
+            var fieldInfo = patrolAction.GetField("GuardNeedsReset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            if (fieldInfo != null)
+            {
+                var dict = fieldInfo.GetValue(null) as System.Collections.Generic.Dictionary<int, bool>;
+                if (dict != null)
+                {
+                    dict[guardId] = true;
+                    Debug.Log($"[PursuitAction] {mono.Transform.name} marked to reset patrol to closest waypoint");
+                }
+            }
         }
 
         public class Data : IActionData

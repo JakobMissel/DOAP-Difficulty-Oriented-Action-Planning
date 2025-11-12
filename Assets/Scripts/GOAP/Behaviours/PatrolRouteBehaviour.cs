@@ -18,6 +18,7 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         private Transform[] waypoints;
         private int currentIndex = 0;
+        private bool hasInitializedToClosest = false;
 
         private void Awake()
         {
@@ -84,10 +85,63 @@ namespace Assets.Scripts.GOAP.Behaviours
             }
         }
 
+        /// <summary>
+        /// Finds and sets the current index to the closest waypoint to the guard's position.
+        /// Call this when starting patrol or resuming after pursuit.
+        /// </summary>
+        public void InitializeToClosestWaypoint()
+        {
+            if (waypoints == null || waypoints.Length == 0)
+            {
+                Debug.LogWarning($"[PatrolRouteBehaviour] {gameObject.name} has no waypoints to initialize to!");
+                return;
+            }
+
+            Vector3 currentPos = transform.position;
+            float closestDistance = float.MaxValue;
+            int closestIndex = 0;
+
+            // Find the closest waypoint
+            for (int i = 0; i < waypoints.Length; i++)
+            {
+                if (waypoints[i] == null)
+                    continue;
+
+                float distance = Vector3.Distance(currentPos, waypoints[i].position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestIndex = i;
+                }
+            }
+
+            currentIndex = closestIndex;
+            hasInitializedToClosest = true;
+
+            string waypointName = waypoints[currentIndex] != null ? waypoints[currentIndex].name : "null";
+            Debug.Log($"[PatrolRouteBehaviour] {gameObject.name} initialized to closest waypoint {currentIndex} ({waypointName}) at distance {closestDistance:F2}m");
+        }
+
+        /// <summary>
+        /// Resets the patrol route to start from the closest waypoint.
+        /// Useful when resuming patrol after losing pursuit.
+        /// </summary>
+        public void ResetToClosestWaypoint()
+        {
+            hasInitializedToClosest = false;
+            InitializeToClosestWaypoint();
+        }
+
         public Transform GetCurrent()
         {
             if (waypoints == null || waypoints.Length == 0)
                 return null;
+
+            // Auto-initialize to closest waypoint on first call if not done yet
+            if (!hasInitializedToClosest)
+            {
+                InitializeToClosestWaypoint();
+            }
 
             return waypoints[currentIndex];
         }
@@ -109,6 +163,22 @@ namespace Assets.Scripts.GOAP.Behaviours
             string currName = (waypoints[currentIndex] != null) ? waypoints[currentIndex].name : "destroyed";
             
             Debug.Log($"[PatrolRouteBehaviour] {gameObject.name} advanced from waypoint {previousIndex} ({prevName}) to {currentIndex} ({currName})");
+        }
+
+        /// <summary>
+        /// Get the current waypoint index for debugging/diagnostics
+        /// </summary>
+        public int GetCurrentIndex()
+        {
+            return currentIndex;
+        }
+
+        /// <summary>
+        /// Get total number of waypoints
+        /// </summary>
+        public int GetWaypointCount()
+        {
+            return waypoints != null ? waypoints.Length : 0;
         }
     }
 }

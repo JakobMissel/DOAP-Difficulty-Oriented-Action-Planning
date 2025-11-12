@@ -9,6 +9,9 @@ namespace Assets.Scripts.GOAP.Actions
     [GoapId("Patrol-7a350849-db29-4d18-9bb8-70adcb964707")]
     public class PatrolAction : GoapActionBase<PatrolAction.Data>
     {
+        // Track if this is the first time patrol is starting (for closest waypoint initialization)
+        private static readonly System.Collections.Generic.Dictionary<int, bool> GuardNeedsReset = new System.Collections.Generic.Dictionary<int, bool>();
+        
         public override void Created()
         {
             Debug.Log("[PatrolAction] Created");
@@ -28,14 +31,53 @@ namespace Assets.Scripts.GOAP.Actions
             if (LaserAlertSystem.WorldKeyActive)
                 return;
 
-            if (TryGetValidTargetPosition(data, out var pos))
+            var route = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.PatrolRouteBehaviour>();
+            if (route == null)
             {
-                agent.SetDestination(pos);
-                Debug.Log($"[PatrolAction] {mono.Transform.name} starting patrol towards {pos}");
+                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no PatrolRouteBehaviour!");
+                return;
+            }
+
+            int guardId = mono.Transform.GetInstanceID();
+            
+            // Check if this guard needs to reset to closest waypoint (first time or after pursuit)
+            bool needsReset = !GuardNeedsReset.ContainsKey(guardId) || GuardNeedsReset[guardId];
+            
+            if (needsReset)
+            {
+                // Reset to closest waypoint when starting patrol for first time or resuming after pursuit
+                route.ResetToClosestWaypoint();
+                GuardNeedsReset[guardId] = false; // Mark as no longer needing reset
+                Debug.Log($"[PatrolAction] {mono.Transform.name} reset to closest waypoint for patrol");
+            }
+            
+            // Get the current waypoint (either the new closest one, or the next in sequence)
+            var currentWaypoint = route.GetCurrent();
+            if (currentWaypoint != null)
+            {
+                Vector3 targetPos = currentWaypoint.position;
+                
+                // Update the data target with the current position
+                if (data.Target is PositionTarget posTarget)
+                {
+                    posTarget.SetPosition(targetPos);
+                }
+                else
+                {
+                    data.Target = new PositionTarget(targetPos);
+                }
+                
+                // Set the NavMeshAgent destination
+                agent.SetDestination(targetPos);
+                agent.isStopped = false;
+                agent.updateRotation = true;
+                agent.updatePosition = true;
+                
+                Debug.Log($"[PatrolAction] {mono.Transform.name} patrolling to waypoint {route.GetCurrentIndex()} at {targetPos}");
             }
             else
             {
-                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no valid target to patrol to!");
+                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} could not get current waypoint!");
             }
         }
 

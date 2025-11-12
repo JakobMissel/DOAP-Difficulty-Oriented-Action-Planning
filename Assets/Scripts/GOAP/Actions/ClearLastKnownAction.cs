@@ -194,6 +194,22 @@ namespace Assets.Scripts.GOAP.Actions
                 data.LookTransform.localEulerAngles = Vector3.zero;
                 Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} scan ended, resetting eyes to forward.");
             }
+            
+            // Mark that this guard should reset to closest waypoint when returning to patrol
+            var patrolAction = typeof(PatrolAction);
+            var guardId = mono.Transform.GetInstanceID();
+            
+            // Access the static dictionary via reflection to set the reset flag
+            var fieldInfo = patrolAction.GetField("GuardNeedsReset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            if (fieldInfo != null)
+            {
+                var dict = fieldInfo.GetValue(null) as System.Collections.Generic.Dictionary<int, bool>;
+                if (dict != null)
+                {
+                    dict[guardId] = true;
+                    Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} marked to reset patrol to closest waypoint");
+                }
+            }
         }
 
         public class Data : IActionData
