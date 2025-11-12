@@ -12,8 +12,10 @@ public class GuardSight : MonoBehaviour
     [SerializeField] float viewDistance = 10f;
     [SerializeField] [Tooltip("Gives the detection cone an angle.")] Vector3 sightRotationOffset = new(0,-0.55f,0);
     [SerializeField] float detectionDelay = 1f;
+    [SerializeField] [Tooltip("How long PlayerSpotted() remains true after losing sight of player")] float spottedGracePeriod = 2f;
     [SerializeField] Image detectionIcon;
     float detectionTime;
+    float timeLastSawPlayer; // Track when we last had visual contact
 
     GameObject player;
     bool playerHit;
@@ -86,6 +88,8 @@ public class GuardSight : MonoBehaviour
     {
         if (playerHit)
         {
+            timeLastSawPlayer = Time.time; // Update the last seen time
+            
             if(detectionTime < detectionDelay)
             {
                 // Charge up detection visual
@@ -102,11 +106,20 @@ public class GuardSight : MonoBehaviour
         }
         else
         {
+            // Check if we should maintain playerSpotted during grace period
+            if(playerSpotted && Time.time - timeLastSawPlayer < spottedGracePeriod)
+            {
+                // Keep playerSpotted true during grace period
+                // Don't reset detection time yet
+                return;
+            }
+            
             if(playerSpotted)
             {
-                // If the player was previously spotted, they are no longer spotted
+                // Grace period has ended, player is no longer spotted
                 playerSpotted = false;
             }
+            
             // Charge down detection visual
             detectionTime -= Time.deltaTime;
             detectionIcon.fillAmount = detectionTime / detectionDelay;

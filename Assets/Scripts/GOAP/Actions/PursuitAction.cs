@@ -14,7 +14,7 @@ namespace Assets.Scripts.GOAP.Actions
         private const float TIMER_DECAY_SPEED = 1.0f;
         
         // Catch distance - guard must be very close to catch player
-        private const float IMMEDIATE_CATCH_DISTANCE = 0.7f; //lower is closer
+        private const float IMMEDIATE_CATCH_DISTANCE = 1.0f; //lower is closer
         
         // Cache player reference statically since it's shared between all guards
         private static Transform cachedPlayer;
@@ -46,10 +46,14 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
-            // Stop if player is no longer fully spotted (detection charge lost)
-            bool playerSpotted = sight != null && sight.PlayerSpotted();
-            if (!playerSpotted)
+            // During pursuit, continue as long as we CAN see the player (visual contact)
+            // PlayerSpotted() is used to START pursuit, CanSeePlayer() is used to MAINTAIN it
+            bool canSeePlayer = sight != null && sight.CanSeePlayer();
+            if (!canSeePlayer)
+            {
+                Debug.Log($"[PursuitAction] {mono.Transform.name} lost visual contact with player, stopping pursuit.");
                 return ActionRunState.Stop;
+            }
 
             // Chase the player
             agent.SetDestination(data.Target.Position);
