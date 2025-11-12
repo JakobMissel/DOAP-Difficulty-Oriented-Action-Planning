@@ -10054,9 +10054,9 @@ MonoBehaviour:
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
   m_OverrideTileSize: 1
-  m_TileSize: 356
+  m_TileSize: 333
   m_OverrideVoxelSize: 1
-  m_VoxelSize: 0.32
+  m_VoxelSize: 0.26
   m_MinRegionArea: 1
   m_NavMeshData: {fileID: 23800000, guid: 310bb52de8eb4404dbca92eae0bce746, type: 2}
   m_BuildHeightMesh: 1
@@ -12491,17 +12491,57 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -866781053136647888, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 6272
+      objectReference: {fileID: 0}
     - target: {fileID: 3952467162627892989, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Name
       value: Guard_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4952139457798788515, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Radius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333489739466423400, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: lookTurnSpeed
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333489739466423400, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: lastKnownChaseDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5378461782985941175, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: normalSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5378461782985941175, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: spottedSpeed
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5378461782985941175, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: detectingSpeed
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: spotlight
       value: 
       objectReference: {fileID: 1548382962}
+    - target: {fileID: 6872165123577439737, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872165123577439737, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: offset.y
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6872165123577439737, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: showWhenNotRecharging
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 29.54
+      value: 28.822
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12509,7 +12549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.65
+      value: -20.626
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalRotation.w
@@ -20376,21 +20416,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -866781053136647888, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: obstacleLayer.m_Bits
+      value: 6272
+      objectReference: {fileID: 0}
     - target: {fileID: 3952467162627892989, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Name
       value: Guard_01
       objectReference: {fileID: 0}
+    - target: {fileID: 4290358222653134371, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4952139457798788515, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Radius
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32.735
+      value: 1.914
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.26
+      value: 2.074
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 28.817
+      value: 4.375
       objectReference: {fileID: 0}
     - target: {fileID: 7868287841011645394, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_LocalRotation.w

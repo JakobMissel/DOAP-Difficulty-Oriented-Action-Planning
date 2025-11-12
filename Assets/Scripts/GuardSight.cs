@@ -23,6 +23,9 @@ public class GuardSight : MonoBehaviour
 
     // Allow other systems to read/rotate the eyes explicitly
     public Transform Eyes => eyes;
+    
+    // Allow other systems to read the current detection charge (0 to 1)
+    public float DetectionCharge => detectionDelay > 0 ? Mathf.Clamp01(detectionTime / detectionDelay) : 0f;
 
     [Header("Gizmo")]
     [SerializeField] [Range(0,50)] int rayCount;
@@ -81,6 +84,10 @@ public class GuardSight : MonoBehaviour
 
     void Update()
     {
+        // Update playerHit by checking if we can see the player
+        CanSeePlayer();
+        
+        // Then handle detection charge/discharge based on playerHit
         DetectPlayer();
     }
 

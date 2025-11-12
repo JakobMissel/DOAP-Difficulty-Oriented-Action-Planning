@@ -181,8 +181,19 @@ namespace Assets.Scripts.GOAP.Actions
         public override void End(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
+            
+            // Re-enable NavMeshAgent rotation
             if (agent != null)
                 agent.updateRotation = true;
+            
+            // Reset the eyes to forward-facing (local rotation zero)
+            if (data.LookTransform != null && sight != null && sight.Eyes != null)
+            {
+                // Reset eyes to default forward position
+                data.LookTransform.localEulerAngles = Vector3.zero;
+                Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} scan ended, resetting eyes to forward.");
+            }
         }
 
         public class Data : IActionData

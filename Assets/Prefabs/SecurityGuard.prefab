@@ -19,8 +19,10 @@ GameObject:
   - component: {fileID: 5333489739466423400}
   - component: {fileID: 8043971814689888828}
   - component: {fileID: 5571413653655331725}
+  - component: {fileID: 6872165123577439737}
   - component: {fileID: 7660617999256208820}
   - component: {fileID: 8720987919181587321}
+  - component: {fileID: 5378461782985941175}
   m_Layer: 0
   m_Name: SecurityGuard
   m_TagString: Agent
@@ -159,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 6336
   playerOffset: {x: 0, y: 1, z: 0}
   eyes: {fileID: 5423502645447837394}
   exclamationMark: {fileID: 5855667424010391125}
@@ -264,6 +266,28 @@ MonoBehaviour:
   drainRate: 2
   rechargeRate: 8
   spotlight: {fileID: 9215170935092780058}
+--- !u!114 &6872165123577439737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952467162627892989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86555b29e27f4756966f8491183ff935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energyBehaviour: {fileID: 0}
+  offset: {x: 0, y: 1.8, z: 0}
+  chargingColor: {r: 0, g: 1, b: 1, a: 1}
+  lowEnergyColor: {r: 1, g: 0, b: 0, a: 1}
+  fontSize: 16
+  showWhenNotRecharging: 1
+  occlusionLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  raycastOriginOffset: 0.5
 --- !u!114 &7660617999256208820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +316,24 @@ MonoBehaviour:
   useTrigger: 1
   debugMode: 1
   playerTag: Player
+--- !u!114 &5378461782985941175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952467162627892989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4e8f1a3c2b5d6e7f8a9b0c1d2e3f4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalSpeed: 2.8
+  detectingSpeed: 1.3
+  spottedSpeed: 3.2
+  speedTransitionSpeed: 5
+  detectionSlowdownThreshold: 0.1
+  debugMode: 0
 --- !u!1 &4178085492515687170
 GameObject:
   m_ObjectHideFlags: 0

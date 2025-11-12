@@ -124,6 +124,24 @@ namespace Assets.Scripts.GOAP.Behaviours
                 return;
 
             bool canSeePlayer = sight.CanSeePlayer();
+            
+            // Check if we should manually control rotation (hearing noise or detecting player)
+            bool shouldLookAtNoise = !canSeePlayer && Time.time - lastPlayerNoiseTime <= lookAtPlayerNoiseDuration;
+            bool isDetecting = canSeePlayer && !sight.PlayerSpotted(); // Detecting but not fully spotted yet
+            
+            // Disable NavMeshAgent rotation when we're manually controlling it
+            var navAgent = GetComponent<NavMeshAgent>();
+            if (navAgent != null)
+            {
+                if (shouldLookAtNoise || isDetecting)
+                {
+                    navAgent.updateRotation = false; // We'll handle rotation manually
+                }
+                else
+                {
+                    navAgent.updateRotation = true; // Let NavMeshAgent handle rotation normally
+                }
+            }
 
             if (canSeePlayer)
             {
@@ -177,13 +195,25 @@ namespace Assets.Scripts.GOAP.Behaviours
             }
 
             // Head-turn toward recent player noise if not seeing the player
-            if (!canSeePlayer && Time.time - lastPlayerNoiseTime <= lookAtPlayerNoiseDuration)
+            if (shouldLookAtNoise)
             {
                 Vector3 dir = LastPlayerNoisePosition - transform.position;
                 dir.y = 0f;
                 if (dir.sqrMagnitude > 0.0001f)
                 {
                     Quaternion targetRot = Quaternion.LookRotation(dir.normalized, Vector3.up);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, lookTurnSpeed * Time.deltaTime);
+                }
+            }
+            
+            // Also manually rotate towards player when detecting (before fully spotted)
+            if (isDetecting && canSeePlayer)
+            {
+                Vector3 dirToPlayer = playerTransform.position - transform.position;
+                dirToPlayer.y = 0f;
+                if (dirToPlayer.sqrMagnitude > 0.0001f)
+                {
+                    Quaternion targetRot = Quaternion.LookRotation(dirToPlayer.normalized, Vector3.up);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, lookTurnSpeed * Time.deltaTime);
                 }
             }
