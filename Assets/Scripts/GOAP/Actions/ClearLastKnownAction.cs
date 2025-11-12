@@ -77,9 +77,9 @@ namespace Assets.Scripts.GOAP.Actions
             var sight = mono.Transform.GetComponent<GuardSight>();
             var brain = mono.Transform.GetComponent<BrainBehaviour>();
             
-            if (sight != null && sight.CanSeePlayer())
+            if (sight != null && sight.PlayerSpotted())
             {
-                Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} player seen again, aborting clear.");
+                Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} player spotted again, aborting clear.");
                 return ActionRunState.Stop;
             }
 

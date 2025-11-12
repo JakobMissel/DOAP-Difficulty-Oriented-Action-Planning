@@ -41,8 +41,8 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
             
-            // If guard sees the player during investigation, abort noise investigation and pursue
-            if (sight != null && sight.CanSeePlayer())
+            // If guard fully spots the player during investigation, abort noise investigation and pursue
+            if (sight != null && sight.PlayerSpotted())
             {
                 Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} spotted player during investigation - aborting noise investigation!");
                 var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();

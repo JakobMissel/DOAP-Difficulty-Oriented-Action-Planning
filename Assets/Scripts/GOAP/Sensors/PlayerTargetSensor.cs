@@ -21,13 +21,13 @@ namespace Assets.Scripts.GOAP.Sensors
             if (player == null)
                 return null;
 
-            bool hasVisual = false;
+            bool playerSpotted = false;
             if (agent.Transform.TryGetComponent<GuardSight>(out var sight))
             {
-                hasVisual = sight.CanSeePlayer();
+                playerSpotted = sight.PlayerSpotted();
             }
 
-            if (hasVisual)
+            if (playerSpotted)
             {
                 if (existingTarget is TransformTarget t)
                     return t.SetTransform(player);

@@ -33,8 +33,8 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
-            // If we already see the player, abort and clear the alert so pursuit can take over immediately
-            if (sight != null && sight.CanSeePlayer())
+            // If we already fully spotted the player, abort and clear the alert so pursuit can take over immediately
+            if (sight != null && sight.PlayerSpotted())
             {
                 LaserAlertSystem.ClearWorldKey();
                 return;
@@ -68,8 +68,8 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
             
-            // Abort instantly if we can see the player; clear alert so pursuit wins
-            if (sight != null && sight.CanSeePlayer())
+            // Abort instantly if we fully spotted the player; clear alert so pursuit wins
+            if (sight != null && sight.PlayerSpotted())
             {
                 LaserAlertSystem.ClearWorldKey();
                 Debug.Log($"[GoToLaserAction] {mono.Transform.name} spotted player, aborting laser investigation");

@@ -46,9 +46,9 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
-            // Stop if we no longer have visual contact
-            bool hasVisual = sight != null && sight.CanSeePlayer();
-            if (!hasVisual)
+            // Stop if player is no longer fully spotted (detection charge lost)
+            bool playerSpotted = sight != null && sight.PlayerSpotted();
+            if (!playerSpotted)
                 return ActionRunState.Stop;
 
             // Chase the player

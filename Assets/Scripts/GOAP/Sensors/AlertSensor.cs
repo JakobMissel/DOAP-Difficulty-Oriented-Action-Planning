@@ -27,12 +27,12 @@ namespace Assets.Scripts.GOAP.Sensors
                 return new SenseValue(false);
             }
 
-            // IMPORTANT: Only return true if guard has VISUAL contact
+            //  Only returns true if guard has FULLY DETECTED the player (DetectPlayer() fully charged up)
             // Do NOT include last-known position here, as that should trigger ClearLastKnownGoal, not PursuitGoal
             if (agent.Transform.TryGetComponent<GuardSight>(out var sight))
             {
-                bool canSee = sight.CanSeePlayer();
-                return new SenseValue(canSee ? 1 : 0);
+                bool playerSpotted = sight.PlayerSpotted();
+                return new SenseValue(playerSpotted ? 1 : 0);
             }
 
             return new SenseValue(false);
