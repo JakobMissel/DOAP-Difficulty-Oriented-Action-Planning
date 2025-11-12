@@ -50,3 +50,17 @@ Unsplash - Free to use under the Unsplash License
 - https://unsplash.com/photos/XWr8xsCDAWs
 - https://unsplash.com/photos/149d9GAl7ww
 - https://unsplash.com/photos/SLTRRzBPzKE
+
+FreeSound - 
+- Flashlight battery compartment unscrew by Sadiquecat -- https://freesound.org/s/706440/ -- License: Creative Commons 0
+- handling picture frame.wav by DrDufus -- https://freesound.org/s/553368/ -- License: Creative Commons 0
+- key_drop.wav by Kyanite_ -- https://freesound.org/s/432913/ -- License: Creative Commons 0
+- swoosh22.wav by kwahmah_02 -- https://freesound.org/s/269292/ -- License: Attribution 3.0
+- 04-Lanza_Moneda.wav by UsuarioLeal -- https://freesound.org/s/446437/ -- License: Creative Commons 0
+- Rubber Shoe Squeak.wav by baidonovan -- https://freesound.org/s/187343/ -- License: Creative Commons 0
+- stepshh.wav by nhaudio -- https://freesound.org/s/179203/ -- License: Creative Commons 0
+- police3.wav by guitarguy1985 -- https://freesound.org/s/70939/ -- License: Creative Commons 0
+- Laser Charge Up by magnuswaker -- https://freesound.org/s/588242/ -- License: Creative Commons 0
+- soldering station noise by Yuval -- https://freesound.org/s/210989/ -- License: Creative Commons 0
+- Footsteps_Stiletto_Stone_Walk01.wav by marb7e -- https://freesound.org/s/620343/ -- License: Attribution 4.0
+
