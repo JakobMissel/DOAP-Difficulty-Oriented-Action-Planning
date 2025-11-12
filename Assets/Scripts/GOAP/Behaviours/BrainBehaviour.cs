@@ -181,7 +181,20 @@ namespace Assets.Scripts.GOAP.Behaviours
                     if (lastKnownUpdateAccumulator >= Mathf.Max(0.01f, lastKnownUpdateInterval))
                     {
                         lastKnownUpdateAccumulator = 0f;
-                        LastKnownPlayerPosition = ClampToNavMesh(playerTransform.position);
+                        Vector3 newPosition = ClampToNavMesh(playerTransform.position);
+                        
+                        // Check if player has moved significantly vertically (likely climbed a wall)
+                        float verticalDifference = Mathf.Abs(newPosition.y - LastKnownPlayerPosition.y);
+                        if (verticalDifference > 2.0f) // Player is now on a different level
+                        {
+                            // Stop following immediately - player is unreachable
+                            isLastKnownFollowActive = false;
+                            Debug.Log($"[BrainBehaviour] Player moved to different vertical level ({verticalDifference:F1}m difference). Ending follow window early.");
+                        }
+                        else
+                        {
+                            LastKnownPlayerPosition = newPosition;
+                        }
                     }
 
                     if (lastKnownFollowTimer >= lastKnownChaseDuration)
