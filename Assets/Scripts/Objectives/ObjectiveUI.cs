@@ -98,7 +98,7 @@ public class ObjectiveUI : MonoBehaviour
         nameText.text = currentObjective.name;
         ClearTextArea(middlePanel);
 
-        if (ObjectivesManager.Instance.completedTutorial && currentObjective.subObjectives[currentSubObjectiveIndex].name.Contains("Golden"))
+        if (ObjectivesManager.Instance.completedTutorial && currentObjective.subObjectives[currentSubObjectiveIndex].name.Contains("Golden") && currentSubObjectiveIndex < 2)
         {
             DeactivateTextArea();
             yield break; 
