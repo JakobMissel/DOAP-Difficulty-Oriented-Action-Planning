@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 2577759154964920302}
   - component: {fileID: 4495456046387160270}
   - component: {fileID: 6867491760666524126}
+  - component: {fileID: 7795298201282590410}
   m_Layer: 0
   m_Name: GoldenPainting_5
   m_TagString: POI
@@ -281,6 +282,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.013127333, y: 0.021127334, z: 0.0008818409}
   m_Center: {x: 0, y: 0, z: 0.0004409202}
+--- !u!114 &7795298201282590410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2916502899299865950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfeecc75c6ff65f4aa5a0bed3e969863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowPrefab: {fileID: 5254197656323544541, guid: 750b201d6d2527f429a33185dfd215c2, type: 3}
 --- !u!1 &5385598809538666392
 GameObject:
   m_ObjectHideFlags: 0
