@@ -12,5 +12,6 @@ public class SubObjective : ScriptableObject
     public void MarkAsCompleted()
     {
         isCompleted = true;
+        isActive = false;
     }
 }

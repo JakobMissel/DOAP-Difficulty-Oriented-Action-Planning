@@ -1,7 +1,6 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -52,9 +51,15 @@ namespace Assets.Scripts.GOAP.Actions
         {
             Debug.Log("[CatchAction] You have been caught! Game Over!");
 
-            
-            // TODO: Show Game Over UI here
-            // TODO: Add restart/quit buttons
+            // Show Game Over UI
+            if (MainMenu.Instance != null)
+            {
+                MainMenu.Instance.ShowGameOverMenu();
+            }
+            else
+            {
+                Debug.LogError("[CatchAction] MainMenu instance not found! Cannot show game over screen.");
+            }
         }
 
         public override void End(IMonoAgent agent, Data data)

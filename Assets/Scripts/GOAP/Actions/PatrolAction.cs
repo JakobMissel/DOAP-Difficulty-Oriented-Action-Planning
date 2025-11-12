@@ -9,8 +9,6 @@ namespace Assets.Scripts.GOAP.Actions
     [GoapId("Patrol-7a350849-db29-4d18-9bb8-70adcb964707")]
     public class PatrolAction : GoapActionBase<PatrolAction.Data>
     {
-        private NavMeshAgent agent;
-
         public override void Created()
         {
             Debug.Log("[PatrolAction] Created");
@@ -18,11 +16,13 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void Start(IMonoAgent mono, Data data)
         {
-            if (agent == null)
-                agent = mono.Transform.GetComponent<NavMeshAgent>();
-
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+            {
+                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has invalid NavMeshAgent!");
                 return;
+            }
 
             // If a laser alert is active, abort starting patrol and let the planner switch immediately
             if (LaserAlertSystem.WorldKeyActive)
@@ -31,11 +31,11 @@ namespace Assets.Scripts.GOAP.Actions
             if (TryGetValidTargetPosition(data, out var pos))
             {
                 agent.SetDestination(pos);
-                // Debug.Log($"[PatrolAction] {mono.Transform.name} starting patrol towards {pos}");
+                Debug.Log($"[PatrolAction] {mono.Transform.name} starting patrol towards {pos}");
             }
             else
             {
-                // Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no valid target to patrol to!");
+                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no valid target to patrol to!");
             }
         }
 
@@ -45,11 +45,17 @@ namespace Assets.Scripts.GOAP.Actions
             if (LaserAlertSystem.WorldKeyActive)
                 return ActionRunState.Stop;
 
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+            {
+                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} NavMeshAgent became invalid!");
                 return ActionRunState.Stop;
+            }
 
             if (!TryGetValidTargetPosition(data, out var pos))
             {
+                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} lost valid target!");
                 return ActionRunState.Stop;
             }
 
@@ -70,6 +76,10 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
+            // Safety check: if the agent is being destroyed (scene unloading), skip
+            if (mono == null || mono.Transform == null)
+                return;
+
             Debug.Log($"[PatrolAction] {mono.Transform.name} ending action, advancing route.");
 
             var route = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.PatrolRouteBehaviour>();
@@ -79,8 +89,7 @@ namespace Assets.Scripts.GOAP.Actions
             }
             else
             {
-                // Reduced warning noise
-                // Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no PatrolRouteBehaviour!");
+                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has no PatrolRouteBehaviour!");
             }
         }
 
@@ -88,7 +97,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             pos = default;
 
-            if (agent == null || data?.Target == null || !data.Target.IsValid())
+            if (data?.Target == null || !data.Target.IsValid())
                 return false;
 
             pos = data.Target.Position;

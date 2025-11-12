@@ -27,16 +27,12 @@ namespace Assets.Scripts.GOAP.Sensors
                 return new SenseValue(false);
             }
 
-            var brain = refs.GetCachedComponent<BrainBehaviour>();
-            
-            // Use the SimpleGuardSightNiko component to check if player is visible
+            // IMPORTANT: Only return true if guard has VISUAL contact
+            // Do NOT include last-known position here, as that should trigger ClearLastKnownGoal, not PursuitGoal
             if (agent.Transform.TryGetComponent<SimpleGuardSightNiko>(out var sight))
             {
                 bool canSee = sight.CanSeePlayer();
-                bool hasLastKnown = brain != null && brain.HasLastKnownPosition;
-                bool isAlert = canSee || hasLastKnown;
-                
-                return new SenseValue(isAlert ? 1 : 0);
+                return new SenseValue(canSee ? 1 : 0);
             }
 
             return new SenseValue(false);

@@ -9,9 +9,6 @@ namespace Assets.Scripts.GOAP.Actions
     [GoapId("GoToLaser-a8fbbe83-4db9-486c-89f5-ad58636d61bb")]
     public class GoToLaserAction : GoapActionBase<GoToLaserAction.Data>
     {
-        private NavMeshAgent agent;
-        private SimpleGuardSightNiko sight;
-
         // This method is called when the action is created
         // This method is optional and can be removed
         public override void Created()
@@ -30,10 +27,8 @@ namespace Assets.Scripts.GOAP.Actions
         // This method is optional and can be removed
         public override void Start(IMonoAgent mono, Data data)
         {
-            if (agent == null)
-                agent = mono.Transform.GetComponent<NavMeshAgent>();
-            if (sight == null)
-                sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -56,6 +51,7 @@ namespace Assets.Scripts.GOAP.Actions
             if (data.Target != null && data.Target.IsValid())
             {
                 agent.SetDestination(data.Target.Position);
+                Debug.Log($"[GoToLaserAction] {mono.Transform.name} heading to laser at {data.Target.Position}");
             }
         }
 
@@ -69,26 +65,29 @@ namespace Assets.Scripts.GOAP.Actions
         // This method is required
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
+            var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var sight = mono.Transform.GetComponent<SimpleGuardSightNiko>();
+            
             // Abort instantly if we can see the player; clear alert so pursuit wins
             if (sight != null && sight.CanSeePlayer())
             {
                 LaserAlertSystem.ClearWorldKey();
+                Debug.Log($"[GoToLaserAction] {mono.Transform.name} spotted player, aborting laser investigation");
                 return ActionRunState.Stop;
             }
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
-            // Continuously head to the target position
+            // Keep updating destination in case the laser alert target changes
             agent.SetDestination(data.Target.Position);
 
-            // Arrive when close enough
-            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.5f)
+            // Check if we've arrived
+            float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
+            if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 1.0f)
             {
-                agent.isStopped = true;
-
-                // Arrival reached; do not auto-clear the global alert here.
-                // Alert will clear when the laser deactivates (via LaserAlertSystem.OnLaserDeactivated()).
+                Debug.Log($"[GoToLaserAction] {mono.Transform.name} arrived at laser position");
+                LaserAlertSystem.ClearWorldKey();
                 return ActionRunState.Completed;
             }
 
@@ -113,10 +112,8 @@ namespace Assets.Scripts.GOAP.Actions
         // This method is optional and can be removed
         public override void End(IMonoAgent mono, Data data)
         {
-            if (agent != null && agent.enabled && agent.isOnNavMesh)
-            {
-                agent.isStopped = false;
-            }
+            // Ensure alert is cleared when action ends
+            LaserAlertSystem.ClearWorldKey();
         }
 
         // The action class itself must be stateless!

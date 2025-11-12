@@ -98,9 +98,10 @@ public class PlayerActions : MonoBehaviour
         }
         canEscape = false;
         carriesPainting = false;
+        isOnWall = false;
     }
 
-void OnEnable()
+    void OnEnable()
     {
         if (debugEvents)
         {
@@ -114,6 +115,7 @@ void OnEnable()
             aimStatus += DebugAim;
             ammoUpdate += DebugAmmoUpdate;
         }
+        CheckpointManager.loadCheckpoint += CheckpointLoaded;
     }
 
     void OnDisable()
@@ -130,6 +132,14 @@ void OnEnable()
             aimStatus -= DebugAim;
             ammoUpdate -= DebugAmmoUpdate;
         }
+        CheckpointManager.loadCheckpoint -= CheckpointLoaded;
+    }
+
+    void CheckpointLoaded()
+    {
+        canEscape = false;
+        carriesPainting = false;
+        isOnWall = false;
     }
 
     void DebugTutorialCompleted()

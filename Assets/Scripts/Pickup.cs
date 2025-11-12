@@ -12,6 +12,10 @@ public class Pickup : MonoBehaviour
     [SerializeField][Tooltip("The height of the vertical movement.")] protected float verticalHeight = 0.5f;
     [SerializeField][Tooltip("Should the pickup rotate around itself?")] protected bool rotate = true;
     [SerializeField][Tooltip("The rotation speed of the pickup.")] protected float rotationSpeed = 100;
+    [SerializeField][Tooltip("Should the pickup rotate around the X axis?")] protected bool rotateX = false;
+    [SerializeField][Tooltip("Should the pickup rotate around the Y axis?")] protected bool rotateY = true;
+    [SerializeField][Tooltip("Should the pickup rotate around the Z axis?")] protected bool rotateZ = false;
+
     float initialY;
     [Header("Audio")]
     [SerializeField] GameObject audioGameObject;
@@ -38,15 +42,23 @@ public class Pickup : MonoBehaviour
         initialY = transform.position.y;
     }
 
+    protected virtual void OnEnable()
+    {
+        CheckpointManager.loadCheckpoint += ResetPickup;
+    }
+
+    protected virtual void OnDisable()
+    {
+        CheckpointManager.loadCheckpoint -= ResetPickup;
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (!canBepickedUp) return;
         if (other.CompareTag("Player"))
         {
             if (buttonRequired)
-            {
                 PlayerActions.OnAddPickupToInteractableList(this);
-            }
             else
                 ActivatePickup(other);
         }
@@ -59,15 +71,12 @@ public class Pickup : MonoBehaviour
             if(buttonPressed)
                 ActivatePickup(other);
             if (holdRequired)
-            {
                 HoldButton(other);
-            }
         }
     }
 
     protected virtual void OnTriggerExit(Collider other)
     {
-        if (!canBepickedUp) return;
         if (other.CompareTag("Player") && buttonRequired)
         {
             PlayerActions.OnRemovePickupFromInteractableList(this);
@@ -88,6 +97,7 @@ public class Pickup : MonoBehaviour
         }
         PlayerActions.OnRemovePickupFromInteractableList(this);
         PlayerActions.OnPickedUpItem(this);
+
         if (destroyOnPickup)
             Destroy(gameObject);
     }
@@ -113,7 +123,12 @@ public class Pickup : MonoBehaviour
     /// </summary>
     void Rotate(float speed)
     {
-        transform.Rotate(Vector3.up * speed * Time.deltaTime);
+        if(rotateX)
+            transform.Rotate(Vector3.right * speed * Time.deltaTime);
+        if(rotateY)
+            transform.Rotate(Vector3.up * speed * Time.deltaTime);
+        if(rotateZ)
+            transform.Rotate(Vector3.forward * speed * Time.deltaTime);
     }
 
     /// <summary>
@@ -127,7 +142,6 @@ public class Pickup : MonoBehaviour
 
     void HoldButton(Collider other)
     {
-        if (!canBepickedUp) return;
         if (buttonHeld)
         {
             holdTime += Time.deltaTime;
@@ -135,9 +149,7 @@ public class Pickup : MonoBehaviour
             {
                 holdTime = 0;
                 buttonHeld = false;
-                canBepickedUp = false;
                 ActivatePickup(other);
-
             }
         }
         else
@@ -146,5 +158,12 @@ public class Pickup : MonoBehaviour
             if(holdTime <= 0)
                 holdTime = 0;
         }
+    }
+
+    void ResetPickup()
+    {
+        holdTime = 0;
+        buttonHeld = false;
+        buttonPressed = false;
     }
 }

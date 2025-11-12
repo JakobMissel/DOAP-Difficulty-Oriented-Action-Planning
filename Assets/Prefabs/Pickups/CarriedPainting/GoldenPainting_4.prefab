@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 1996046279174089413}
   - component: {fileID: 5635164638821347501}
   - component: {fileID: 8355910340045921239}
-  - component: {fileID: 2786423807544102224}
   m_Layer: 0
   m_Name: Backside
   m_TagString: Untagged
@@ -173,28 +172,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2786423807544102224
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2707593837182452115}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &7700923137401465061
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,6 +367,9 @@ MonoBehaviour:
   verticalHeight: 0
   rotate: 0
   rotationSpeed: 0
+  rotateX: 0
+  rotateY: 1
+  rotateZ: 0
   audioGameObject: {fileID: 2840963429894322711, guid: f33f6e2ec70e4c942b820c095de920ed, type: 3}
   audioClip: {fileID: 8300000, guid: 48c1c4833b656964f8e650a4d2008e07, type: 3}
   destroyOnPickup: 0

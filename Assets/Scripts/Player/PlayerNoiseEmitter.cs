@@ -1,22 +1,35 @@
 using UnityEngine;
 
 // Emits periodic noise pulses around the player.
-// - Larger radius when moving and not sneaking ("running").
+// - Larger radius when moving and not sneaking ("running/walking").
 // - Smaller radius when moving and sneaking.
 // Agents with BrainBehaviour within the pulse radius will be notified via OnPlayerNoiseHeard(position, radius).
 [DefaultExecutionOrder(10)]
 public class PlayerNoiseEmitter : MonoBehaviour
 {
-    [Header("Noise Radii (meters)")]
-    [Tooltip("Noise radius when moving and NOT sneaking")] public float runNoiseRadius = 12f;
-    [Tooltip("Noise radius when moving and sneaking")] public float sneakNoiseRadius = 4f;
-    [Tooltip("Optional noise radius when idle (0 to disable)")] public float idleNoiseRadius = 0f;
+    [Header("Hearing Radius Settings")]
+    [Tooltip("How far guards can hear the player when WALKING/RUNNING (not sneaking)")]
+    [Range(0f, 30f)]
+    public float runNoiseRadius = 12f;
+    
+    [Tooltip("How far guards can hear the player when SNEAKING")]
+    [Range(0f, 15f)]
+    public float sneakNoiseRadius = 4f;
+    
+    [Tooltip("Optional: How far guards can hear when player is IDLE/STANDING STILL (0 = silent when idle)")]
+    [Range(0f, 10f)]
+    public float idleNoiseRadius = 0f;
 
-    [Header("Emission")]
-    [Tooltip("Seconds between noise pulses while active")] public float pulseInterval = 0.25f;
+    [Header("Emission Settings")]
+    [Tooltip("How often noise pulses are emitted (in seconds). Lower = more frequent checks")]
+    [Range(0.05f, 1f)]
+    public float pulseInterval = 0.25f;
 
-    [Header("Debug")] public bool drawGizmos = true;
-    [Tooltip("Seconds to keep debug gizmo visible")] public float gizmoFade = 0.3f;
+    [Header("Debug Visualization")] 
+    public bool drawGizmos = true;
+    [Tooltip("How long to show the noise pulse gizmo (in seconds)")]
+    [Range(0.1f, 2f)]
+    public float gizmoFade = 0.3f;
 
     private bool isMoving;
     private bool isSneaking;

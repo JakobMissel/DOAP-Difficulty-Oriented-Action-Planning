@@ -29,6 +29,14 @@ public class Objective : ScriptableObject
         completions.Add(subObjectives[subObjectiveIndex]);
     }
 
+    public void ReloadSubjective(int subObjectiveIndex)
+    {
+        subObjectives[subObjectiveIndex + 1].isActive = false;
+        subObjectives[subObjectiveIndex].isCompleted = false;
+        completions.Remove(subObjectives[subObjectiveIndex]);
+        currentSubObjectiveIndex = subObjectiveIndex;
+    }
+
     public void DisplayNextSubObjective(float delay)
     {
         for (int i = 0; i < subObjectives.Count; i++)

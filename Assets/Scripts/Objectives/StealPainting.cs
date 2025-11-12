@@ -10,10 +10,11 @@ public class StealPainting : MonoBehaviour
     [SerializeField] Vector3 paintingRotationOffset;
     [SerializeField] Objective objective;
     [SerializeField] string currentPaintingName;
-    [SerializeField] StealablePickup[] paintings;
-    [SerializeField] List<StealablePickup> stolenPaintings;
+    [SerializeField] List<StealablePickup> paintings = new();
+    [SerializeField] List<StealablePickup> stolenPaintings = new();
 
     StealablePickup currentPainting;
+    GameObject wallPainting;
 
     public static Action<int, float> paintingStolen;
     public static void OnPaintingStolen(int subObjectiveIndex, float delay) => paintingStolen?.Invoke(subObjectiveIndex, delay);
@@ -32,6 +33,7 @@ public class StealPainting : MonoBehaviour
         paintingStolen += PaintingStolen;
         PlayerActions.paintingDelivered += PaintingDelivered;
         ObjectivesManager.displayObjective += CheckActive;
+        CheckpointManager.loadCheckpoint += LoadCheckpoint;
     }
 
     void OnDisable()
@@ -40,6 +42,7 @@ public class StealPainting : MonoBehaviour
         paintingStolen -= PaintingStolen;
         PlayerActions.paintingDelivered -= PaintingDelivered;
         ObjectivesManager.displayObjective -= CheckActive;
+        CheckpointManager.loadCheckpoint -= LoadCheckpoint;
     }
 
     void CheckActive(Objective objective, int arg2, float arg3)
@@ -56,10 +59,15 @@ public class StealPainting : MonoBehaviour
             {
                 if (objective.subObjectives[i].name.StartsWith(stealablePaintingName) && !objective.subObjectives[i].isCompleted)
                 {
+                    wallPainting = painting.gameObject;
                     currentPaintingName = painting.name;
+
                     objective.subObjectives[i].completionText = $"You have stolen the painting \"{painting.paintingName}\". Now place it outside.";
                     objective.subObjectives[i + 1].goalText = $"\"{painting.paintingName}\" by {painting.painterName} is valued at {painting.value}. Place it back at the entrance.";
                     objective.subObjectives[i + 1].completionText = $"\"{painting.paintingName}\" has been placed at the entrance.";
+                    
+                    wallPainting.gameObject.SetActive(false);
+                    
                     OnPaintingStolen(objective.currentSubObjectiveIndex, 0);
                     break;
                 }
@@ -77,15 +85,20 @@ public class StealPainting : MonoBehaviour
     void PaintingDelivered()
     {
         // Add to "stolen list" and destroy the carried painting accounting for its siblings.
+        wallPainting = null;
         stolenPaintings.Add(currentPainting);
-        Destroy(playerPaintingPosition.transform.GetChild(2).gameObject);
+        paintings.Remove(currentPainting);
+        if (playerPaintingPosition.transform.childCount > 2)
+        {
+            Destroy(playerPaintingPosition.transform.GetChild(2).gameObject);
+        }
         objective.CompleteSubObjective(objective.currentSubObjectiveIndex);
         objective.DisplayNextSubObjective(0);
     }
 
     void AddPaintingToStolenList(string name)
     {
-        for (int i = 0; i < paintings.Length; i++)
+        for (int i = 0; i < paintings.Count; i++)
         {
             if (paintings[i].name == name)
             {
@@ -109,7 +122,7 @@ public class StealPainting : MonoBehaviour
             if (subObjective.name.StartsWith(stealablePaintingName))
             {
                 subObjective.goalText = "";
-                for (int i = 0; i < paintings.Length; i++)
+                for (int i = 0; i < paintings.Count; i++)
                 {
                     var paintingText = $"<voffset=.4em><size=200%><sprite={i}></size></voffset>{paintings[i].paintingName}";
                     if (stolenPaintings.Contains(paintings[i]))
@@ -125,5 +138,20 @@ public class StealPainting : MonoBehaviour
             }
         }
         ObjectivesManager.OnTrackPaintings(paintingNames, objective.name);
+    }
+
+    void LoadCheckpoint()
+    {
+        if(wallPainting != null)
+        {
+            wallPainting.SetActive(true);
+            wallPainting = null;
+        }
+        if (playerPaintingPosition.transform.childCount > 2)
+        { 
+            Destroy(playerPaintingPosition.transform.GetChild(2).gameObject);
+            currentPainting = null;
+            currentPaintingName = "";
+        }
     }
 }

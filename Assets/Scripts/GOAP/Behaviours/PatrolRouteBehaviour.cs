@@ -97,10 +97,18 @@ namespace Assets.Scripts.GOAP.Behaviours
             if (waypoints == null || waypoints.Length == 0)
                 return;
 
+            // Check if we're being destroyed (scene unloading) - skip advancement
+            if (this == null || !gameObject.activeInHierarchy)
+                return;
+
             int previousIndex = currentIndex;
             currentIndex = (currentIndex + 1) % waypoints.Length;
             
-            Debug.Log($"[PatrolRouteBehaviour] Advanced from waypoint {previousIndex} ({waypoints[previousIndex]?.name}) to {currentIndex} ({waypoints[currentIndex]?.name})");
+            // Safety check: ensure waypoints still exist before accessing them
+            string prevName = (waypoints[previousIndex] != null) ? waypoints[previousIndex].name : "destroyed";
+            string currName = (waypoints[currentIndex] != null) ? waypoints[currentIndex].name : "destroyed";
+            
+            Debug.Log($"[PatrolRouteBehaviour] {gameObject.name} advanced from waypoint {previousIndex} ({prevName}) to {currentIndex} ({currName})");
         }
     }
 }
