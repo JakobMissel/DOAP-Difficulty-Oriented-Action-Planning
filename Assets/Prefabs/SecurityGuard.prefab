@@ -263,7 +263,7 @@ MonoBehaviour:
   maxEnergy: 100
   drainRate: 2
   rechargeRate: 8
-  spotlight: {fileID: 0}
+  spotlight: {fileID: 9215170935092780058}
 --- !u!114 &7660617999256208820
 MonoBehaviour:
   m_ObjectHideFlags: 0
