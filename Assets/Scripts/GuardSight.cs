@@ -88,11 +88,13 @@ public class GuardSight : MonoBehaviour
         {
             if(detectionTime < detectionDelay)
             {
+                // Charge up detection visual
                 detectionTime += Time.deltaTime;
                 detectionIcon.fillAmount = detectionTime / detectionDelay;
             }
             if (detectionTime >= detectionDelay)
             {
+                // Player has been spotted
                 detectionIcon.fillAmount = 0;
                 detectionTime = detectionDelay;
                 playerSpotted = true;
@@ -100,11 +102,17 @@ public class GuardSight : MonoBehaviour
         }
         else
         {
-            playerSpotted = false;
+            if(playerSpotted)
+            {
+                // If the player was previously spotted, they are no longer spotted
+                playerSpotted = false;
+            }
+            // Charge down detection visual
             detectionTime -= Time.deltaTime;
             detectionIcon.fillAmount = detectionTime / detectionDelay;
             if(detectionTime <= 0f)
             {
+                // Reset detection time
                 detectionTime = 0f;
             }
         }
