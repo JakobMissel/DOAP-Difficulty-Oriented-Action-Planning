@@ -113,6 +113,14 @@ namespace Assets.Scripts.GOAP.Actions
             // Immediately interrupt patrol when a laser alert is active so we can replan to GoToLaser
             if (LaserAlertSystem.WorldKeyActive)
                 return ActionRunState.Stop;
+            
+            // Interrupt patrol if distraction noise is heard
+            var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+            if (brain != null && brain.HasHeardDistractionNoise)
+            {
+                Debug.Log($"[PatrolAction] {mono.Transform.name} heard distraction noise - stopping patrol to investigate!");
+                return ActionRunState.Stop;
+            }
 
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             

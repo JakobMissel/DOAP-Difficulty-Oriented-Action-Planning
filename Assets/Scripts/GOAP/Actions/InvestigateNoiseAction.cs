@@ -22,18 +22,16 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
-            // Stop current movement to interrupt any patrol
-            agent.isStopped = true;
+            // Forcefully stop any current movement
+            agent.ResetPath();
             agent.velocity = Vector3.zero;
+            agent.isStopped = true;
             
-            // Brief pause to ensure clean transition
-            agent.isStopped = false;
-            agent.updateRotation = true;
-            agent.updatePosition = true;
-
+            // Small delay to ensure clean state
+            data.StartDelay = 0.1f;
             data.InvestigationTime = 0f;
 
-            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} INTERRUPTING current action to investigate noise at {data.Target?.Position}");
+            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} STARTING investigation of noise at {data.Target?.Position}");
         }
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
@@ -59,6 +57,22 @@ namespace Assets.Scripts.GOAP.Actions
                 return ActionRunState.Stop;
             }
 
+            // Handle start delay
+            if (data.StartDelay > 0f)
+            {
+                data.StartDelay -= Time.deltaTime;
+                if (data.StartDelay <= 0f)
+                {
+                    // Now start moving
+                    agent.isStopped = false;
+                    agent.updateRotation = true;
+                    agent.updatePosition = true;
+                    agent.SetDestination(data.Target.Position);
+                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.Target.Position}");
+                }
+                return ActionRunState.Continue;
+            }
+
             // Move to the noise location
             agent.SetDestination(data.Target.Position);
 
@@ -71,7 +85,10 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.isStopped = true;
                 data.InvestigationTime += Time.deltaTime;
 
-                Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigating... {data.InvestigationTime:F1}s / {INVESTIGATION_DURATION}s");
+                if (data.InvestigationTime < INVESTIGATION_DURATION)
+                {
+                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigating... {data.InvestigationTime:F1}s / {INVESTIGATION_DURATION}s");
+                }
 
                 // After investigating for the duration, complete
                 if (data.InvestigationTime >= INVESTIGATION_DURATION)
@@ -120,6 +137,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             public ITarget Target { get; set; }
             public float InvestigationTime { get; set; }
+            public float StartDelay { get; set; }
         }
     }
 }

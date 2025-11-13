@@ -121,7 +121,7 @@ MonoBehaviour:
   buttonHeld: 0
   thrownObjectPrefab: {fileID: 7497630765312554297, guid: ce1798a13c0226b42904c21168489eaf, type: 3}
   ammoCount: 99
-  noiseRadius: 5
+  noiseRadius: 15
 --- !u!135 &2152200397279163435
 SphereCollider:
   m_ObjectHideFlags: 0

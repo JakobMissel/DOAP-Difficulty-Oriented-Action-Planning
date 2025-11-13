@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class NoiseArea : MonoBehaviour
 {
@@ -6,14 +7,20 @@ public class NoiseArea : MonoBehaviour
     [SerializeField] public Transform noiseArea;
     [SerializeField] public Transform noiseCenter;
     [SerializeField] public float noiseRadius;
+    [SerializeField] private float noiseDuration = 8f; // How long the noise persists
     
     private bool hasTriggered = false;
+    private float spawnTime;
 
     
     private void Start()
     {
+        spawnTime = Time.time;
         // Trigger noise when this object is created/spawned
         TriggerNoise();
+        
+        // Destroy this noise area after the duration
+        Destroy(gameObject, noiseDuration);
     }
     
     public void SetScale(float scale)
@@ -31,18 +38,55 @@ public class NoiseArea : MonoBehaviour
             return;
 
         hasTriggered = true;
+        
+        Vector3 noisePosition = noiseCenter != null ? noiseCenter.position : transform.position;
+        Debug.Log($"[NoiseArea] Noise triggered at {noisePosition} with radius {noiseRadius}");
+
+        // Immediately broadcast to all guards within range instead of waiting for OnTriggerEnter
+        BroadcastNoiseToNearbyGuards(noisePosition);
+    }
+
+    void BroadcastNoiseToNearbyGuards(Vector3 noisePosition)
+    {
+        // Find all active guard brains and notify those within range
+        var allBrains = Assets.Scripts.GOAP.Behaviours.BrainBehaviour.GetActiveBrains();
+        
+        int guardsNotified = 0;
+        foreach (var brain in allBrains)
+        {
+            if (brain == null || brain.gameObject == null)
+                continue;
+                
+            float distance = Vector3.Distance(brain.transform.position, noisePosition);
+            
+            // Only notify guards within the noise radius
+            if (distance <= noiseRadius)
+            {
+                brain.OnDistractionNoiseHeard(noisePosition, noiseRadius);
+                guardsNotified++;
+                Debug.Log($"[NoiseArea] Notified guard '{brain.name}' at distance {distance:F1}m");
+            }
+        }
+        
+        if (guardsNotified == 0)
+        {
+            Debug.Log($"[NoiseArea] No guards within radius {noiseRadius}m to notify");
+        }
     }
 
     void SendNoise(Collider other)
     {
         Vector3 noisePosition = noiseCenter != null ? noiseCenter.position : transform.position;
 
-        Debug.Log($"[NoiseArea] Noise triggered at {noisePosition}");
+        Debug.Log($"[NoiseArea] Additional guard entered noise area at {noisePosition}");
 
         // Find all agents in NoiseArea, with BrainBehaviour, and notify them
         var agent = other.gameObject?.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
 
-        agent.OnNoiseHeard(noisePosition);
+        if (agent != null)
+        {
+            agent.OnDistractionNoiseHeard(noisePosition, noiseRadius);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -62,4 +106,3 @@ public class NoiseArea : MonoBehaviour
         }
     }
 }
-
