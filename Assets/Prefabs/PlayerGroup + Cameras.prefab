@@ -398,11 +398,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5794cf6b7ec9456b919d2d096e2e008e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runNoiseRadius: 3
-  sneakNoiseRadius: 1
-  idleNoiseRadius: 0.01
-  pulseInterval: 0.25
-  drawGizmos: 1
+  runNoiseRadius: 5.2
+  sneakNoiseRadius: 2.8
+  idleNoiseRadius: 0.1
+  pulseInterval: 0.15
+  drawGizmos: 0
   gizmoFade: 0.3
 --- !u!1 &410561352586511272
 GameObject:
