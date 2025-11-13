@@ -12,6 +12,17 @@ namespace Assets.Scripts.GOAP.Actions
         // Track if this is the first time patrol is starting (for closest waypoint initialization)
         private static readonly System.Collections.Generic.Dictionary<int, bool> GuardNeedsReset = new System.Collections.Generic.Dictionary<int, bool>();
         
+        // Stuck detection tracking per guard
+        private static readonly System.Collections.Generic.Dictionary<int, StuckDetectionData> StuckTracking = new System.Collections.Generic.Dictionary<int, StuckDetectionData>();
+        
+        private class StuckDetectionData
+        {
+            public Vector3 LastPosition;
+            public float TimeAtPosition;
+            public float StuckThreshold = 3.0f; // Seconds before considering guard stuck
+            public float MinMovementDistance = 0.5f; // Minimum distance to consider guard has moved
+        }
+        
         public override void Created()
         {
             Debug.Log("[PatrolAction] Created");
@@ -39,6 +50,22 @@ namespace Assets.Scripts.GOAP.Actions
             }
 
             int guardId = mono.Transform.GetInstanceID();
+            
+            // Initialize stuck detection for this guard
+            if (!StuckTracking.ContainsKey(guardId))
+            {
+                StuckTracking[guardId] = new StuckDetectionData
+                {
+                    LastPosition = mono.Transform.position,
+                    TimeAtPosition = Time.time
+                };
+            }
+            else
+            {
+                // Reset stuck detection when starting patrol
+                StuckTracking[guardId].LastPosition = mono.Transform.position;
+                StuckTracking[guardId].TimeAtPosition = Time.time;
+            }
             
             // Check if this guard needs to reset to closest waypoint (first time or after pursuit)
             bool needsReset = !GuardNeedsReset.ContainsKey(guardId) || GuardNeedsReset[guardId];
@@ -99,6 +126,69 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 Debug.LogWarning($"[PatrolAction] {mono.Transform.name} lost valid target!");
                 return ActionRunState.Stop;
+            }
+
+            int guardId = mono.Transform.GetInstanceID();
+            
+            // Check for stuck detection
+            if (StuckTracking.ContainsKey(guardId))
+            {
+                var stuckData = StuckTracking[guardId];
+                var energyBehaviour = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.EnergyBehaviour>();
+                
+                // Only check for stuck if guard has energy and is not recharging
+                bool hasEnergy = energyBehaviour == null || (!energyBehaviour.IsRecharging && energyBehaviour.CurrentEnergy > 0f);
+                
+                if (hasEnergy)
+                {
+                    Vector3 currentPos = mono.Transform.position;
+                    float distanceMoved = Vector3.Distance(currentPos, stuckData.LastPosition);
+                    
+                    if (distanceMoved < stuckData.MinMovementDistance)
+                    {
+                        // Guard hasn't moved significantly
+                        float timeStuck = Time.time - stuckData.TimeAtPosition;
+                        
+                        if (timeStuck >= stuckData.StuckThreshold)
+                        {
+                            // Guard is stuck! Reset route to closest waypoint
+                            Debug.LogWarning($"[PatrolAction] {mono.Transform.name} appears stuck (stationary for {timeStuck:F1}s). Resetting route!");
+                            
+                            var route = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.PatrolRouteBehaviour>();
+                            if (route != null)
+                            {
+                                route.ResetToClosestWaypoint();
+                                var newWaypoint = route.GetCurrent();
+                                if (newWaypoint != null)
+                                {
+                                    Vector3 newTargetPos = newWaypoint.position;
+                                    
+                                    if (data.Target is PositionTarget posTarget)
+                                    {
+                                        posTarget.SetPosition(newTargetPos);
+                                    }
+                                    else
+                                    {
+                                        data.Target = new PositionTarget(newTargetPos);
+                                    }
+                                    
+                                    agent.SetDestination(newTargetPos);
+                                    Debug.Log($"[PatrolAction] {mono.Transform.name} reset to waypoint {route.GetCurrentIndex()} at {newTargetPos}");
+                                }
+                            }
+                            
+                            // Reset stuck tracking
+                            stuckData.LastPosition = currentPos;
+                            stuckData.TimeAtPosition = Time.time;
+                        }
+                    }
+                    else
+                    {
+                        // Guard has moved, update position and reset timer
+                        stuckData.LastPosition = currentPos;
+                        stuckData.TimeAtPosition = Time.time;
+                    }
+                }
             }
 
             // Check horizontal distance only (ignore Y-level)
