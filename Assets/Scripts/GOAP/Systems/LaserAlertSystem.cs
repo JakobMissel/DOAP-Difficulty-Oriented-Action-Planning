@@ -14,6 +14,9 @@ namespace Assets.Scripts.GOAP.Systems
         public static Vector3 Position { get; private set; }
         /// <summary>Optional anchor transform of the triggering laser (preferred source for live position).</summary>
         public static Transform Anchor { get; private set; }
+        
+        /// <summary>The specific guard assigned to respond to this alert (only this guard will respond).</summary>
+        public static Transform AssignedGuard { get; private set; }
 
         /// <summary>Seconds to keep the alert after the laser deactivates.</summary>
         public static float HoldSecondsAfterDeactivate { get; set; } = 8f;
@@ -29,12 +32,13 @@ namespace Assets.Scripts.GOAP.Systems
             Active = true;
             Position = pos;
             Anchor = null; // explicit position provided
+            AssignedGuard = null; // no specific guard assigned
             WorldKeyActive = true; // immediately set world key on
             _clearAt = -1f; // cancel any pending clear
         }
 
-        /// <summary>Raise or refresh the alert anchored at a specific transform (laser).</summary>
-        public static void RaiseAlert(Transform anchor)
+        /// <summary>Raise or refresh the alert anchored at a specific transform (laser), and assign a specific guard to respond.</summary>
+        public static void RaiseAlert(Transform anchor, Transform assignedGuard = null)
         {
             if (anchor != null)
             {
@@ -42,8 +46,19 @@ namespace Assets.Scripts.GOAP.Systems
                 Anchor = anchor;
             }
             Active = true;
+            AssignedGuard = assignedGuard;
             WorldKeyActive = true; // immediately set world key on
             _clearAt = -1f; // cancel any pending clear
+        }
+
+        /// <summary>Check if a specific guard is assigned to respond to the current alert.</summary>
+        public static bool IsGuardAssigned(Transform guard)
+        {
+            // If no specific guard is assigned, all guards can respond (backward compatibility)
+            if (AssignedGuard == null)
+                return true;
+            
+            return AssignedGuard == guard;
         }
 
         /// <summary>Call when the laser deactivates (player left the beam). Schedules a clear.</summary>
@@ -60,6 +75,7 @@ namespace Assets.Scripts.GOAP.Systems
         {
             Active = false;
             Anchor = null;
+            AssignedGuard = null;
             WorldKeyActive = false;
             _clearAt = -1f;
         }

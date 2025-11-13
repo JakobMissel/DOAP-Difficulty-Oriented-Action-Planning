@@ -17,6 +17,10 @@ namespace Assets.Scripts.GOAP.Sensors
             if (!LaserAlertSystem.Active)
                 return null;
 
+            // Check if this specific guard is assigned to respond
+            if (!LaserAlertSystem.IsGuardAssigned(agent.Transform))
+                return null;
+
             Vector3 pos = LaserAlertSystem.GetCurrentPosition();
 
             // Optional fallback: use a tagged object if no anchor was provided
