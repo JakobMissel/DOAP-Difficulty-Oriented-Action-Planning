@@ -22,12 +22,19 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var navAgent = mono.Transform.GetComponent<NavMeshAgent>();
             var energy = mono.Transform.GetComponent<EnergyBehaviour>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
 
             // Stop the guard where they are
             if (navAgent != null)
             {
                 navAgent.isStopped = true;
                 navAgent.velocity = Vector3.zero;
+            }
+            
+            // Trigger Idle animation when recharging
+            if (animation != null)
+            {
+                animation.Idle();
             }
             
             // Start recharging immediately on the spot

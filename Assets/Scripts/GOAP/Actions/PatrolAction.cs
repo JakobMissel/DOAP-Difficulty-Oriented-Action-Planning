@@ -31,12 +31,20 @@ namespace Assets.Scripts.GOAP.Actions
         public override void Start(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
             
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
-            {
-                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} has invalid NavMeshAgent!");
                 return;
+
+            // Trigger Walking animation for patrol
+            if (animation != null)
+            {
+                animation.Walk();
             }
+
+            agent.isStopped = false;
+            agent.updateRotation = true;
+            agent.updatePosition = true;
 
             // If a laser alert is active, abort starting patrol and let the planner switch immediately
             if (LaserAlertSystem.WorldKeyActive)

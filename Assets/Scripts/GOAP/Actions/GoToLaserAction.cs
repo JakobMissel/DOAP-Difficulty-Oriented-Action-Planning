@@ -29,6 +29,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -38,6 +39,12 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 LaserAlertSystem.ClearWorldKey();
                 return;
+            }
+
+            // Trigger Walking animation when going to investigate laser
+            if (animation != null)
+            {
+                animation.Walk();
             }
 
             agent.isStopped = false;

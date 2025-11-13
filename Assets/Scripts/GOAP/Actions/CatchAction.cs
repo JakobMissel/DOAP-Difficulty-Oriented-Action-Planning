@@ -13,6 +13,14 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void Start(IMonoAgent agent, Data data)
         {
+            var animation = agent.Transform.GetComponent<GuardAnimation>();
+            
+            // Trigger Running animation when attempting to catch (chasing player)
+            if (animation != null)
+            {
+                animation.Run();
+            }
+            
             Debug.Log($"[CatchAction] {agent.Transform.name} starting catch sequence - waiting for physical contact!");
             
             // Stop the agent from moving during catch attempt

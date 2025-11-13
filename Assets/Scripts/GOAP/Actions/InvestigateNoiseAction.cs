@@ -18,6 +18,7 @@ namespace Assets.Scripts.GOAP.Actions
         public override void Start(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -26,6 +27,12 @@ namespace Assets.Scripts.GOAP.Actions
             agent.ResetPath();
             agent.velocity = Vector3.zero;
             agent.isStopped = true;
+            
+            // Trigger Searching animation for investigation
+            if (animation != null)
+            {
+                animation.Search();
+            }
             
             // Small delay to ensure clean state
             data.StartDelay = 0.1f;

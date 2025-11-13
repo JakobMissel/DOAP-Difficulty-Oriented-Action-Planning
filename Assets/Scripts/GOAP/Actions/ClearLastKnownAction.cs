@@ -17,6 +17,7 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
             var brain = mono.Transform.GetComponent<BrainBehaviour>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
 
             // How long to "check" the last known position once arrived
             // Defaults; will be overridden by BrainBehaviour values if present
@@ -49,6 +50,12 @@ namespace Assets.Scripts.GOAP.Actions
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
+
+            // Trigger Searching animation when investigating last known position
+            if (animation != null)
+            {
+                animation.Search();
+            }
 
             agent.isStopped = false;
             agent.updateRotation = true;

@@ -16,9 +16,16 @@ namespace Assets.Scripts.GOAP.Actions
         public override void Start(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
             
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
+
+            // Trigger Running animation for pursuit
+            if (animation != null)
+            {
+                animation.Run();
+            }
 
             agent.isStopped = false;
             agent.updateRotation = true;
