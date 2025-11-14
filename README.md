@@ -3,7 +3,7 @@ Researching in Dynamic Difficulty Adjustment in a Goal Oriented Action Planning 
 
 Special Thanks To:
 
-3D Models
+3D Models.
 - https://rigmodels.com/model.php?view=LowPoly_Man_Body_Boss_Jacket_Suit-3d-model__19cd10742c6b48cb82d60fcb8183a68c&searchkeyword=security%20guard&manualsearch=1
 
 Particle Sprite Effects.
@@ -24,7 +24,17 @@ Poliigon assets are royalty-free.
 Ambient CG - Free 3D Assets for Everyone and Everything.
 - https://ambientcg.com/view?id=Wallpaper001A
 
-Unsplash - Free to use under the Unsplash License
+Interactable Paintings under free use.
+- http://art-matisse.com/1900_43.html
+- https://medium.com/the-worlds-great-art/woman-with-a-fan-a-painting-by-amedeo-modigliani-eab1a548148e
+  
+Interactable Paintings Unsplash - Free to use under the Unsplash License.
+- https://unsplash.com/photos/arhzLwMIBwo
+- https://unsplash.com/photos/uKu_NsNNZwY
+- https://unsplash.com/photos/7FR4e8n2AGI
+
+
+Non-Interactable Paintings Unsplash - Free to use under the Unsplash License.
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-zZPeoLxLRyM
 - https://unsplash.com/photos/orange-white-and-teal-abstract-painting-1_WMZARl81c
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-4kHLQBBM6p4
