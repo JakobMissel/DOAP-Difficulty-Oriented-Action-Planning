@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 8720987919181587321}
   - component: {fileID: 5378461782985941175}
   - component: {fileID: 6225111968134631068}
+  - component: {fileID: 4400444903212447625}
   m_Layer: 0
   m_Name: SecurityGuard
   m_TagString: Agent
@@ -349,6 +350,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7f8e9d1c2b3a4f5e6d7c8b9a0f1e2d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4400444903212447625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952467162627892989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8568e01a2e3308e4d8aa31cf4e615d5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4762678072612841825}
 --- !u!1 &4178085492515687170
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,25 +983,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7868287841011645394}
     m_Modifications:
-    - target: {fileID: 4023208931061611895, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
-      propertyPath: m_Name
-      value: SecurityGuard_Animator
-      objectReference: {fileID: 0}
     - target: {fileID: 7699564137531448525, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
       propertyPath: m_Name
       value: SecurityGuard_Skin
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531903259750781443, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531903259750781443, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531903259750781443, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8531903259750781443, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1037,5 +1035,10 @@ PrefabInstance:
 --- !u!4 &1755837688497479857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8531903259750781443, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
+  m_PrefabInstance: {fileID: 7942825667720377010}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4762678072612841825 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3180380975329876947, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
   m_PrefabInstance: {fileID: 7942825667720377010}
   m_PrefabAsset: {fileID: 0}

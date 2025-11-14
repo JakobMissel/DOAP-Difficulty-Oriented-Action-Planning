@@ -2,12 +2,7 @@ using UnityEngine;
 
 public class GuardAnimation : MonoBehaviour
 {
-    Animator animator;
-
-    void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
+    [SerializeField] Animator animator;
 
     public void Walk()
     {
