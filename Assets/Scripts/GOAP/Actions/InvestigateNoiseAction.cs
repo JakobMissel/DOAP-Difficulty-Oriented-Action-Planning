@@ -19,6 +19,13 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
+
+            // Notify speed controller that we're investigating noise
+            if (speedController != null)
+            {
+                speedController.SetInvestigatingNoise(true);
+            }
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -124,6 +131,13 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+            var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
+            
+            // Reset speed controller state
+            if (speedController != null)
+            {
+                speedController.SetInvestigatingNoise(false);
+            }
             
             // Ensure noise is cleared
             if (brain != null)

@@ -143,8 +143,33 @@ public class GuardSight : MonoBehaviour
         return playerSpotted;
     }
     
+    /// <summary>
+    /// Resets the detection state to initial values.
+    /// Used when resetting guards to their starting positions.
+    /// </summary>
+    public void ResetDetection()
+    {
+        detectionTime = 0f;
+        timeLastSawPlayer = -999f;
+        playerHit = false;
+        playerSpotted = false;
+        if (detectionIcon != null)
+        {
+            detectionIcon.fillAmount = 0f;
+        }
+        if (exclamationMark != null)
+        {
+            exclamationMark.SetActive(false);
+        }
+        Debug.Log($"[GuardSight] {name} detection reset");
+    }
+    
     void OnDrawGizmosSelected()
     {
+        // Prevent division by zero when rayCount is 0 or 1
+        if (rayCount <= 1 || eyes == null)
+            return;
+            
         Gizmos.color = Color.red;
         for (int y = -rayCount / 2; y <= rayCount / 2; y++)
         {

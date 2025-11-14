@@ -30,6 +30,13 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
+
+            // Notify speed controller that we're investigating a laser
+            if (speedController != null)
+            {
+                speedController.SetInvestigatingLaser(true);
+            }
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -38,13 +45,17 @@ namespace Assets.Scripts.GOAP.Actions
             if (sight != null && sight.PlayerSpotted())
             {
                 LaserAlertSystem.ClearWorldKey();
+                if (speedController != null)
+                {
+                    speedController.SetInvestigatingLaser(false);
+                }
                 return;
             }
 
-            // Trigger Walking animation when going to investigate laser
+            // Trigger Running animation when going to investigate laser
             if (animation != null)
             {
-                animation.Walk();
+                animation.Run();
             }
 
             agent.isStopped = false;
@@ -119,6 +130,14 @@ namespace Assets.Scripts.GOAP.Actions
         // This method is optional and can be removed
         public override void End(IMonoAgent mono, Data data)
         {
+            var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
+            
+            // Reset speed controller state
+            if (speedController != null)
+            {
+                speedController.SetInvestigatingLaser(false);
+            }
+            
             // Ensure alert is cleared when action ends
             LaserAlertSystem.ClearWorldKey();
         }

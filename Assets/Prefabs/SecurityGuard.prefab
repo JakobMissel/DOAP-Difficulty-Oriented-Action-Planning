@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 7660617999256208820}
   - component: {fileID: 8720987919181587321}
   - component: {fileID: 5378461782985941175}
+  - component: {fileID: 6225111968134631068}
   m_Layer: 0
   m_Name: SecurityGuard
   m_TagString: Agent
@@ -328,12 +329,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4e8f1a3c2b5d6e7f8a9b0c1d2e3f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 2.7
+  normalSpeed: 2.5
   detectingSpeed: 1.2
-  spottedSpeed: 3.2
+  spottedSpeed: 3.8
+  laserInvestigationSpeed: 5
+  noiseInvestigationSpeed: 2
   speedTransitionSpeed: 5
   detectionSlowdownThreshold: 0.25
   debugMode: 0
+--- !u!114 &6225111968134631068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3952467162627892989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f8e9d1c2b3a4f5e6d7c8b9a0f1e2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4178085492515687170
 GameObject:
   m_ObjectHideFlags: 0

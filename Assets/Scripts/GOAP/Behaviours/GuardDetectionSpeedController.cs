@@ -15,6 +15,8 @@ namespace Assets.Scripts.GOAP.Behaviours
         [SerializeField] private float normalSpeed = 2.6f;
         [SerializeField] private float detectingSpeed = 1.0f;
         [SerializeField] private float spottedSpeed = 3.2f;
+        [SerializeField] private float laserInvestigationSpeed = 3.5f;
+        [SerializeField] private float noiseInvestigationSpeed = 2.8f;
         
         [Header("Transition Settings")]
         [SerializeField] private float speedTransitionSpeed = 5f;
@@ -32,6 +34,10 @@ namespace Assets.Scripts.GOAP.Behaviours
         
         private bool wasDetecting = false;
         private bool wasSpotted = false;
+        
+        // Track current action state
+        private bool isInvestigatingLaser = false;
+        private bool isInvestigatingNoise = false;
 
         private void Awake()
         {
@@ -75,6 +81,19 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         private void UpdateSpeedBasedOnDetectionState()
         {
+            // Check if currently performing special investigation actions first
+            if (isInvestigatingLaser)
+            {
+                SetTargetSpeed(laserInvestigationSpeed, "Investigating Laser");
+                return;
+            }
+            
+            if (isInvestigatingNoise)
+            {
+                SetTargetSpeed(noiseInvestigationSpeed, "Investigating Noise");
+                return;
+            }
+            
             bool canSee = sight.CanSeePlayer();
             bool isSpotted = sight.PlayerSpotted();
             
@@ -132,6 +151,30 @@ namespace Assets.Scripts.GOAP.Behaviours
         }
 
         /// <summary>
+        /// Set when the guard starts investigating a laser alert
+        /// </summary>
+        public void SetInvestigatingLaser(bool investigating)
+        {
+            isInvestigatingLaser = investigating;
+            if (debugMode)
+            {
+                Debug.Log($"[GuardDetectionSpeedController] {name} investigating laser: {investigating}");
+            }
+        }
+        
+        /// <summary>
+        /// Set when the guard starts investigating a noise
+        /// </summary>
+        public void SetInvestigatingNoise(bool investigating)
+        {
+            isInvestigatingNoise = investigating;
+            if (debugMode)
+            {
+                Debug.Log($"[GuardDetectionSpeedController] {name} investigating noise: {investigating}");
+            }
+        }
+
+        /// <summary>
         /// Manually set the normal patrol speed
         /// </summary>
         public void SetNormalSpeed(float speed)
@@ -153,6 +196,22 @@ namespace Assets.Scripts.GOAP.Behaviours
         public void SetSpottedSpeed(float speed)
         {
             spottedSpeed = speed;
+        }
+        
+        /// <summary>
+        /// Manually set the laser investigation speed
+        /// </summary>
+        public void SetLaserInvestigationSpeed(float speed)
+        {
+            laserInvestigationSpeed = speed;
+        }
+        
+        /// <summary>
+        /// Manually set the noise investigation speed
+        /// </summary>
+        public void SetNoiseInvestigationSpeed(float speed)
+        {
+            noiseInvestigationSpeed = speed;
         }
 
         private void OnValidate()

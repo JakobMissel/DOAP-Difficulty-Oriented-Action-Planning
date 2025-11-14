@@ -40,6 +40,7 @@ public class MainMenu : MonoBehaviour
     private GameObject player;
     private bool isGamePaused;
     private bool isGameOver;
+    private bool isRetrying; // Track if we're currently in a retry flow
     
     public static MainMenu Instance { get; private set; }
 
@@ -67,6 +68,9 @@ public class MainMenu : MonoBehaviour
             // Try to find a canvas named "Canvas" or "GameplayCanvas" or "HUD"
             gameplayCanvas = GameObject.Find("Canvas") ?? GameObject.Find("GameplayCanvas") ?? GameObject.Find("HUD");
         }
+
+        // Subscribe to checkpoint load completion
+        CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
 
         // Setup button listeners
         if (playButton) playButton.onClick.AddListener(OnPlayClicked);
@@ -266,8 +270,12 @@ public class MainMenu : MonoBehaviour
         // Show gameplay UI elements
         ShowGameplayUI();
         
-        // Re-display current objective if there is one
-        RefreshObjectiveDisplay();
+        // Only refresh objective display if not coming from game over (retry)
+        // The checkpoint system will handle objectives properly during retry
+        if (!isGameOver && !isRetrying)
+        {
+            RefreshObjectiveDisplay();
+        }
 
         // Unpause the game
         Time.timeScale = 1f;
@@ -471,25 +479,37 @@ public class MainMenu : MonoBehaviour
         if (howToPlayPanel) howToPlayPanel.SetActive(false);
     }
 
+    private void OnCheckpointLoaded()
+    {
+        // Reset the retry flag after checkpoint is loaded
+        if (isRetrying)
+        {
+            isRetrying = false;
+            Debug.Log("[MainMenu] Checkpoint loaded, retry complete");
+            
+            // Reset the GameOverManager so it can trigger game over again
+            if (GameOverManager.Instance != null)
+            {
+                GameOverManager.Instance.ResetGameOver();
+                Debug.Log("[MainMenu] GameOverManager reset for new attempt");
+            }
+        }
+    }
+
     private void OnRetryClicked()
     {
-        Debug.Log("[MainMenu] Retrying level - Restarting scene with auto-start");
+        Debug.Log("[MainMenu] Retrying level - Using checkpoint system");
+        
+        // Set the retry flag BEFORE changing other states
+        isRetrying = true;
         isGameOver = false;
         
-        // Store the current DDA settings before reloading
-        bool wasDDAEnabled = !DifficultyTracker.IsTestingMode();
-        int currentDifficulty = DifficultyTracker.GetDifficultyI();
+        // Hide the game over menu
+        HideMenu();
         
-        PlayerPrefs.SetInt("RetryAutoStart", 1); // Flag to auto-start after reload
-        PlayerPrefs.SetInt("RetryDDAEnabled", wasDDAEnabled ? 1 : 0);
-        PlayerPrefs.SetInt("RetryDifficulty", currentDifficulty);
-        PlayerPrefs.Save();
-        
-        // Unpause before reloading
-        Time.timeScale = 1f;
-        
-        // Reload the current scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        // Use the checkpoint system to reset the game state
+        // This will reset the player and all guards to their initial/checkpoint positions
+        CheckpointManager.Instance.BeginLoading();
     }
 
     private void OnGameOverToMainMenu()
@@ -506,6 +526,9 @@ public class MainMenu : MonoBehaviour
 
     private void OnDestroy()
     {
+        // Unsubscribe from checkpoint events
+        CheckpointManager.loadCheckpoint -= OnCheckpointLoaded;
+        
         // Clean up listeners
         if (playButton) playButton.onClick.RemoveListener(OnPlayClicked);
         if (creditsButton) creditsButton.onClick.RemoveListener(OnCreditsClicked);
