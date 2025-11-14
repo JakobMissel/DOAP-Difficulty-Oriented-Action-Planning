@@ -4932,7 +4932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoneName: Patrol Zone
-  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  gizmoColor: {r: 0.5641509, g: 0.634675, b: 1, a: 1}
   showWaypointNumbers: 1
 --- !u!1001 &232456863
 PrefabInstance:
@@ -12756,6 +12756,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 488726939469151329, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_text
+      value: Exit Game
+      objectReference: {fileID: 0}
     - target: {fileID: 2224073318164172312, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Name
       value: MainMenu Canvas
@@ -12768,6 +12772,30 @@ PrefabInstance:
       propertyPath: gameplayCanvas
       value: 
       objectReference: {fileID: 815550376}
+    - target: {fileID: 2934124673675773306, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: pauseExitButton
+      value: 
+      objectReference: {fileID: 1433756908}
+    - target: {fileID: 2934124673675773306, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: gameOverExitButton
+      value: 
+      objectReference: {fileID: 2054468829}
+    - target: {fileID: 3477041110945696411, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_Name
+      value: GameOverExitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684579244439289032, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_text
+      value: Exit Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 5389293143453892273, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_text
+      value: Exit Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 5389293143453892273, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_fontSize
+      value: 71.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6779242357583961838, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -12847,6 +12875,10 @@ PrefabInstance:
     - target: {fileID: 6779242357583961838, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7960371575503683834, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_Name
+      value: PauseExitButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29695,6 +29727,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.016000004, y: 0.016, z: 0.0008818411}
   m_Center: {x: 0, y: 0, z: 0.00044092032}
+--- !u!114 &1433756908 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5382457767132595749, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+  m_PrefabInstance: {fileID: 697388254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1434302789 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 964671465113737016, guid: 571207c47cc934047aa5e2eba9f3a16f, type: 3}
@@ -44003,6 +44046,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1194744102}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2054468829 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7114693219220740789, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+  m_PrefabInstance: {fileID: 697388254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2056213801
 PrefabInstance:
   m_ObjectHideFlags: 0

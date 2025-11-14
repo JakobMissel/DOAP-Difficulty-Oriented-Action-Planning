@@ -23,12 +23,12 @@ public class MainMenu : MonoBehaviour
     
     [Header("Pause Panel Buttons")]
     [SerializeField] private Button resumeButton;
-    [SerializeField] private Button pauseMainMenuButton;
+    [SerializeField] private Button pauseExitButton;
     [SerializeField] private Button howToPlayButton;
     
     [Header("Game Over Panel Buttons")]
     [SerializeField] private Button retryButton;
-    [SerializeField] private Button gameOverMainMenuButton;
+    [SerializeField] private Button gameOverExitButton;
 
     [Header("Gameplay UI")]
     [SerializeField] private GameObject gameplayCanvas;
@@ -85,12 +85,12 @@ public class MainMenu : MonoBehaviour
         
         // Setup pause panel button listeners
         if (resumeButton) resumeButton.onClick.AddListener(OnResumeClicked);
-        if (pauseMainMenuButton) pauseMainMenuButton.onClick.AddListener(OnPauseMenuToMainMenu);
+        if (pauseExitButton) pauseExitButton.onClick.AddListener(OnExitClicked);
         if (howToPlayButton) howToPlayButton.onClick.AddListener(OnHowToPlayClicked);
         
         // Setup game over panel button listeners
         if (retryButton) retryButton.onClick.AddListener(OnRetryClicked);
-        if (gameOverMainMenuButton) gameOverMainMenuButton.onClick.AddListener(OnGameOverToMainMenu);
+        if (gameOverExitButton) gameOverExitButton.onClick.AddListener(OnExitClicked);
 
         // Check if we're auto-starting from a retry
         bool autoStart = PlayerPrefs.GetInt("RetryAutoStart", 0) == 1;
@@ -540,12 +540,12 @@ public class MainMenu : MonoBehaviour
         
         // Pause panel
         if (resumeButton) resumeButton.onClick.RemoveListener(OnResumeClicked);
-        if (pauseMainMenuButton) pauseMainMenuButton.onClick.RemoveListener(OnPauseMenuToMainMenu);
+        if (pauseExitButton) pauseExitButton.onClick.RemoveListener(OnExitClicked);
         if (howToPlayButton) howToPlayButton.onClick.RemoveListener(OnHowToPlayClicked);
         
         // Game over panel
         if (retryButton) retryButton.onClick.RemoveListener(OnRetryClicked);
-        if (gameOverMainMenuButton) gameOverMainMenuButton.onClick.RemoveListener(OnGameOverToMainMenu);
+        if (gameOverExitButton) gameOverExitButton.onClick.RemoveListener(OnExitClicked);
         
         // Clear singleton instance
         if (Instance == this)
