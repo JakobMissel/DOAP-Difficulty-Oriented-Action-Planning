@@ -38,7 +38,6 @@ public class LookAtPOI : MonoBehaviour
     void SetHitArea(GameObject hitArea)
     {
         this.hitArea = hitArea;
-        print(this.hitArea.name);
     }
 
     void Update()
@@ -59,6 +58,7 @@ public class LookAtPOI : MonoBehaviour
         foreach (var poi in pois)
         {
             if (!poi) continue;
+            if (!poi.activeSelf) continue;
             float distance = Vector3.Distance(transform.position, poi.transform.position);
             if (distance < minDistance)
             {
@@ -72,7 +72,12 @@ public class LookAtPOI : MonoBehaviour
 
     void LookAtTarget(GameObject poi)
     {
-        if(poi && !isAiming)
+        if(poi == null || !poi.activeSelf)
+        {
+            headTracker.weight = 0;
+            return;
+        }
+        if (poi && !isAiming)
         {
             headTrackerSourceObject.transform.position = poi.transform.position;
             headTracker.weight = Mathf.Lerp(0, 1, Mathf.Clamp01(1 - (distance / lookDistance)));

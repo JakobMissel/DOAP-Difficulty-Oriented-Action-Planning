@@ -4,7 +4,7 @@ using UnityEngine.Animations.Rigging;
 public class IKArmControl : MonoBehaviour
 {
     Rig rig;
-    [SerializeField] float differenceThreshold = 0.25f;
+    [SerializeField] float differenceThreshold = 0.4f;
     [Header("Left")]
     [SerializeField] GameObject leftArmConstraints;
     [SerializeField] GameObject leftTarget;
@@ -91,6 +91,21 @@ public class IKArmControl : MonoBehaviour
         var leftDistance = Vector3.Distance(leftShoulder.position, leftClosestPoint);
         var rightDistance = Vector3.Distance(rightShoulder.position, rightClosestPoint);
 
+        if (Mathf.Abs(leftDistance - rightDistance) < differenceThreshold && leftDistance < leftDistanceToShoulder && rightDistance < rightDistanceToShoulder)
+        {
+            var leftWeight = Mathf.Clamp01(1 - (leftDistance / leftDistanceToShoulder));
+            var rightWeight = Mathf.Clamp01(1 - (rightDistance / rightDistanceToShoulder));
+            var weight = leftDistance > rightDistance ? leftWeight + differenceThreshold : rightWeight + differenceThreshold;
+
+            rightArmIK.weight = weight;
+            rightHandRotation.weight = weight;
+            rightTarget.transform.position = rightClosestPoint;
+
+            leftArmIK.weight = weight;
+            leftHandRotation.weight = weight;
+            leftTarget.transform.position = leftClosestPoint;
+            return;
+        }
         if ((leftDistance < leftDistanceToShoulder) && leftDistance < rightDistance)
         {
             var weight = Mathf.Clamp01(1 - (leftDistance / leftDistanceToShoulder));
@@ -117,20 +132,6 @@ public class IKArmControl : MonoBehaviour
             rightHandRotation.weight = 0;
             rightTarget.transform.position = rightTargetStartPosition;
         }
-        if (Mathf.Abs(rightDistance - leftDistanceToShoulder) < differenceThreshold)
-        {
-            var leftWeight = Mathf.Clamp01(1 - (leftDistance / leftDistanceToShoulder));
-            var rightWeight = Mathf.Clamp01(1 - (rightDistance / rightDistanceToShoulder));
-            var weight = leftDistance > rightDistance ? leftWeight + differenceThreshold : rightWeight + differenceThreshold;
-
-            rightArmIK.weight = weight;
-            rightHandRotation.weight = weight;
-            rightTarget.transform.position = rightClosestPoint;
-
-            leftArmIK.weight = weight;
-            leftHandRotation.weight = weight;
-            leftTarget.transform.position = leftClosestPoint;
-        }
     }
 
     void SetTargetsToPainting()
@@ -151,10 +152,6 @@ public class IKArmControl : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-    }
-
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Climbable") && !PlayerActions.Instance.carriesPainting)
@@ -171,10 +168,6 @@ public class IKArmControl : MonoBehaviour
             rightArmIK.weight = 0;
             rightHandRotation.weight = 0;
         }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
     }
 
     void OnDrawGizmosSelected()
