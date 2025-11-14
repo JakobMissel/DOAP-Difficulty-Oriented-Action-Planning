@@ -39,8 +39,9 @@ public class ObjectiveUI : MonoBehaviour
     {
         ObjectivesManager.displayObjective -= UpdateObjectiveUI;
         ObjectivesManager.trackPaintings -= TrackPaintings;
+        PlayerActions.paintingDelivered -= DeactivateTextArea;
     }
-    
+
     void DeactivateTextArea()
     {
         objectiveMiddlePanel.SetActive(false);
@@ -98,7 +99,8 @@ public class ObjectiveUI : MonoBehaviour
         nameText.text = currentObjective.name;
         ClearTextArea(middlePanel);
 
-        if (ObjectivesManager.Instance.completedTutorial && currentObjective.subObjectives[currentSubObjectiveIndex].name.Contains("Golden") || currentSubObjectiveIndex < 2)
+        // Special case: If the current objective is the second one (the objective where the player steals paintings) and the sub-objective contains "Golden" (need to pick up painting), do not show it
+        if (currentObjective == ObjectivesManager.Instance.objectives[1] && currentObjective.subObjectives[currentSubObjectiveIndex].name.Contains("Golden"))
         {
             DeactivateTextArea();
             yield break; 

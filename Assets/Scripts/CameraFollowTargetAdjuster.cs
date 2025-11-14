@@ -2,22 +2,30 @@ using UnityEngine;
 
 public class CameraFollowTargetAdjuster : MonoBehaviour
 {
-    [SerializeField] Vector3 targetPosition = new(0.5f, 1.4f, 0);
+    [SerializeField] Vector3 startPosition = new(0.5f, 1.4f, 0);
     [SerializeField] Vector3 hitWallPosition = new(0, 1.4f, 0);
-    [SerializeField] float moveSpeed = 1f;
+    [SerializeField] float moveTime = 1f;
+    [SerializeField] float delayBeforeReturn = 2f;
 
-    bool isInContactWithWall = false;
-
+    private Vector3 velocity = Vector3.zero;  
+    private bool isInContactWithWall = false;
+    private float timer = 0f;
 
     void Update()
     {
         if (isInContactWithWall)
         {
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, hitWallPosition, moveSpeed * Time.deltaTime);
+            transform.localPosition = Vector3.SmoothDamp(transform.localPosition, hitWallPosition, ref velocity, moveTime);
+            timer = 0f;
         }
         else
         {
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, targetPosition, moveSpeed * Time.deltaTime);
+            timer += Time.deltaTime;
+
+            if (timer >= delayBeforeReturn)
+            {
+                transform.localPosition = Vector3.SmoothDamp(transform.localPosition, startPosition, ref velocity, moveTime);
+            }
         }
     }
 
@@ -25,7 +33,7 @@ public class CameraFollowTargetAdjuster : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            isInContactWithWall = true;
+            isInContactWithWall = true;  
         }
     }
 
@@ -36,29 +44,4 @@ public class CameraFollowTargetAdjuster : MonoBehaviour
             isInContactWithWall = false;
         }
     }
-
-
-    //void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))  
-    //    {
-    //        if (!isInContactWithWall)  
-    //        {
-    //            isInContactWithWall = true;
-    //            transform.localPosition = hitWallPosition; 
-    //        }
-    //    }
-    //}
-
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
-    //    {
-    //        if (isInContactWithWall) 
-    //        {
-    //            isInContactWithWall = false;  
-    //            transform.localPosition = targetPosition;  
-    //        }
-    //    }
-    //}
 }

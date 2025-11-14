@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +25,7 @@ public class Tutorial : MonoBehaviour
     float aimT;
 
 
-    void Awake()
+    void Start()
     {
         timerImage.fillAmount = 0;
         throwCount = 0;
@@ -32,6 +33,8 @@ public class Tutorial : MonoBehaviour
         sneakT = sneakTime;
         climbT = climbTime;
         aimT = aimTime;
+        if(timerImage == null)
+            timerImage = GameObject.Find("TimerImage").GetComponent<Image>();
     }
     void OnEnable()
     {

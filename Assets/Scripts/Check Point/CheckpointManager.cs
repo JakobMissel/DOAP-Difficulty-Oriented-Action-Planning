@@ -42,10 +42,7 @@ public class CheckpointManager : MonoBehaviour
         }
         checkpointLoadingScreen = GameObject.Find("CheckpointLoadingScreen").GetComponent<Image>();
         checkpointLoadingScreen.color = new Color(0, 0, 0, 0);
-    }
-
-    void Start()
-    {
+        
         playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         playerCheckpointPosition = playerRb.position;
         playerCheckpointRotation = playerRb.rotation;
@@ -53,6 +50,10 @@ public class CheckpointManager : MonoBehaviour
         freeLookCamera = GameObject.Find("Free Look Camera").GetComponent<CinemachineOrbitalFollow>();
         cameraCheckpointHorizontal = freeLookCamera.HorizontalAxis.Value;
         cameraCheckpointVertical = freeLookCamera.VerticalAxis.Value;
+    }
+
+    void Start()
+    {
     }
 
     void OnEnable()
@@ -85,6 +86,11 @@ public class CheckpointManager : MonoBehaviour
     {
         // If a loading sequence is already running, do not start another
         if(isLoading) return;
+        if(checkpointLoadingScreen == null)
+        {
+            Debug.LogWarning("Checkpoint loading screen not found, cannot begin loading sequence.");
+            return;
+        }
         StartCoroutine(LoadingSequence());
     }
 
@@ -130,6 +136,11 @@ public class CheckpointManager : MonoBehaviour
     {
         if (isLoading)
         {
+            if(playerRb == null)
+            {
+                Debug.LogWarning("Player Rigidbody not found, cannot disable player movement.");
+                return;
+            }
             // Disable player movement
             playerRb.GetComponent<PlayerMovement>().canMove = false;
             playerRb.GetComponent<PlayerMovement>().moveInput = Vector2.zero;
@@ -140,6 +151,11 @@ public class CheckpointManager : MonoBehaviour
         }
         else
         {
+            if (playerRb == null)
+            {
+                Debug.LogWarning("Player Rigidbody not found, cannot re-enable player movement.");
+                return;
+            }
             // Re-enable player movement
             playerRb.GetComponent<PlayerMovement>().enabled = true;
             playerRb.GetComponent<PlayerMovement>().canMove = true;
@@ -148,9 +164,19 @@ public class CheckpointManager : MonoBehaviour
 
     void SaveCheckpoint()
     {
+        if (playerRb == null)
+        {
+            Debug.LogWarning("Player Rigidbody not found, cannot save checkpoint.");
+            return;
+        }
         playerCheckpointPosition = playerRb.position;
         playerCheckpointRotation = playerRb.rotation;
 
+        if(freeLookCamera == null)
+        {
+            Debug.LogWarning("Cinemachine Free Look Camera not found, cannot save camera checkpoint.");
+            return;
+        }
         cameraCheckpointHorizontal = freeLookCamera.HorizontalAxis.Value;
         cameraCheckpointVertical = freeLookCamera.VerticalAxis.Value;
 
@@ -161,9 +187,19 @@ public class CheckpointManager : MonoBehaviour
 
     public void LoadCheckpoint()
     {
+        if (playerRb == null)
+        {
+            Debug.LogWarning("Player Rigidbody not found, cannot load checkpoint.");
+            return;
+        }
         playerRb.position = playerCheckpointPosition;
         playerRb.rotation = playerCheckpointRotation;
 
+        if(freeLookCamera == null)
+        {
+            Debug.LogWarning("Cinemachine Free Look Camera not found, cannot load camera checkpoint.");
+            return;
+        }
         freeLookCamera.HorizontalAxis.Value = cameraCheckpointHorizontal;
         freeLookCamera.VerticalAxis.Value = cameraCheckpointVertical;
 

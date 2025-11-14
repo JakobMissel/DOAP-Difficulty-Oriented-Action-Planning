@@ -22,9 +22,10 @@ public class StealPainting : MonoBehaviour
     public static Action<GameObject> sendPaintingPrefab;
     public static void OnSendPaintingPrefab(GameObject painting) => sendPaintingPrefab?.Invoke(painting);
 
-    void Awake()
+    void Start()
     {
-        playerPaintingPosition = GameObject.FindGameObjectWithTag("PlayerPaintingPosition");
+        if(playerPaintingPosition == null)
+            playerPaintingPosition = GameObject.FindGameObjectWithTag("PlayerPaintingPosition");
     }
 
     void OnEnable()

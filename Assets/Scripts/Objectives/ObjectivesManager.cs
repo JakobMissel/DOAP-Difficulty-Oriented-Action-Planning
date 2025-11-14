@@ -34,36 +34,12 @@ public class ObjectivesManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-        for (int i = 0; i < objectives.Length; i++) 
-        {
-            if(objectives[i] == null)
-            {
-                Debug.LogWarning($"Objective at index {i} is null in ObjectivesManager.");
-                continue;
-            }
-            objectives[i].isCompleted = false;
-            objectives[i].isActive = false;
-            objectives[i].completions.Clear();
-
-            for (int j = 0; j < objectives[i].subObjectives.Count; j++) 
-            {
-                if(objectives[i].subObjectives[j] == null)
-                {
-                    Debug.LogWarning($"SubObjective at index {j} in Objective {objectives[i].name} is null in ObjectivesManager.");
-                    continue;
-                }
-                objectives[i].subObjectives[j].isCompleted = false;
-                objectives[i].subObjectives[j].isActive = false;
-                objectives[i].subObjectives[j].descriptionText = "";
-            }
-        }
-        completedTutorial = false;
+        RestartObjectives();
     }
 
     void OnEnable()
@@ -160,5 +136,34 @@ public class ObjectivesManager : MonoBehaviour
         currentObjective.ReloadSubjective(currentObjective.currentSubObjectiveIndex - 1);
         // Do not subtract 1 here because currentSubObjectiveIndex is updated in ReloadSubjective
         SetNewObjective(currentObjective, currentObjective.currentSubObjectiveIndex, 0, 0);
+    }
+
+    void RestartObjectives()
+    {
+        for (int i = 0; i < objectives.Length; i++)
+        {
+            if (objectives[i] == null)
+            {
+                Debug.LogWarning($"Objective at index {i} is null in ObjectivesManager.");
+                continue;
+            }
+            objectives[i].isCompleted = false;
+            objectives[i].isActive = false;
+            objectives[i].completions.Clear();
+
+            for (int j = 0; j < objectives[i].subObjectives.Count; j++)
+            {
+                if (objectives[i].subObjectives[j] == null)
+                {
+                    Debug.LogWarning($"SubObjective at index {j} in Objective {objectives[i].name} is null in ObjectivesManager.");
+                    continue;
+                }
+                objectives[i].subObjectives[j].isCompleted = false;
+                objectives[i].subObjectives[j].isActive = false;
+                objectives[i].subObjectives[j].descriptionText = "";
+            }
+        }
+        if (!startFromFirstObjective)
+            completedTutorial = false;
     }
 }
