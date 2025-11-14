@@ -9,7 +9,8 @@ namespace Assets.Scripts.GOAP.Actions
     [GoapId("InvestigateNoise-73e3c275-b47d-48a5-bcdf-9e503738a046")]
     public class InvestigateNoiseAction : GoapActionBase<InvestigateNoiseAction.Data>
     {
-        private const float INVESTIGATION_DURATION = 3.0f; // How long to stay at noise location
+        private const float INVESTIGATION_DURATION = 2.0f; // How long to stay at noise location
+        private const float CONFUSION_PAUSE_DURATION = 1.5f; // How long to pause in confusion before moving
 
         public override void Created()
         {
@@ -34,24 +35,29 @@ namespace Assets.Scripts.GOAP.Actions
             agent.ResetPath();
             agent.velocity = Vector3.zero;
             agent.isStopped = true;
+            agent.updateRotation = false; // We'll manually rotate towards the noise
             
-            // Trigger Searching animation for investigation
-            if (animation != null)
-            {
-                animation.Search();
-            }
-            
-            // Small delay to ensure clean state
+            // Initialize state for the confused pause phase
             data.StartDelay = 0.1f;
             data.InvestigationTime = 0f;
+            data.ConfusionPauseTime = 0f;
+            data.IsInConfusionPhase = true;
+            data.HasStartedMoving = false;
+            
+            // Trigger Idle animation initially (will switch to searching during confusion)
+            if (animation != null)
+            {
+                animation.Idle();
+            }
 
-            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} STARTING investigation of noise at {data.Target?.Position}");
+            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} STARTING - heard noise at {data.Target?.Position}");
         }
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
             
             // If guard fully spots the player during investigation, abort noise investigation and pursue
             if (sight != null && sight.PlayerSpotted())
@@ -75,24 +81,69 @@ namespace Assets.Scripts.GOAP.Actions
             if (data.StartDelay > 0f)
             {
                 data.StartDelay -= Time.deltaTime;
-                if (data.StartDelay <= 0f)
-                {
-                    // Now start moving
-                    agent.isStopped = false;
-                    agent.updateRotation = true;
-                    agent.updatePosition = true;
-                    agent.SetDestination(data.Target.Position);
-                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.Target.Position}");
-                }
                 return ActionRunState.Continue;
             }
 
-            // Move to the noise location
+            // Phase 1: Confusion phase - rotate towards noise and pause with "huh?" animation
+            if (data.IsInConfusionPhase)
+            {
+                // Calculate direction to noise
+                Vector3 directionToNoise = (data.Target.Position - mono.Transform.position).normalized;
+                directionToNoise.y = 0; // Keep rotation horizontal
+                
+                if (directionToNoise.magnitude > 0.01f)
+                {
+                    // Smoothly rotate towards the noise
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToNoise);
+                    mono.Transform.rotation = Quaternion.Slerp(
+                        mono.Transform.rotation, 
+                        targetRotation, 
+                        Time.deltaTime * 5f // Rotation speed
+                    );
+                }
+                
+                // Play search animation during pause
+                if (animation != null && data.ConfusionPauseTime < 0.1f)
+                {
+                    animation.Search();
+                }
+                
+                // Wait in confusion
+                data.ConfusionPauseTime += Time.deltaTime;
+                
+                if (data.ConfusionPauseTime >= CONFUSION_PAUSE_DURATION)
+                {
+                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} finished confusion pause, now moving to investigate");
+                    data.IsInConfusionPhase = false;
+                    
+                    // Start movement towards noise
+                    agent.updateRotation = true;
+                    agent.updatePosition = true;
+                    agent.isStopped = false;
+                    agent.SetDestination(data.Target.Position);
+                    data.HasStartedMoving = true;
+                }
+                
+                return ActionRunState.Continue;
+            }
+
+            // Phase 2: Move to the noise location
+            if (!data.HasStartedMoving)
+            {
+                agent.isStopped = false;
+                agent.updateRotation = true;
+                agent.updatePosition = true;
+                agent.SetDestination(data.Target.Position);
+                data.HasStartedMoving = true;
+                Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.Target.Position}");
+            }
+
+            // Keep updating destination
             agent.SetDestination(data.Target.Position);
 
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
 
-            // Check if we've reached the noise location
+            // Phase 3: Arrived at noise location - investigate
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.5f)
             {
                 // Stop at the location and investigate
@@ -149,6 +200,8 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent != null)
             {
                 agent.isStopped = false;
+                agent.updateRotation = true;
+                agent.updatePosition = true;
             }
             
             Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} ending investigation - ready to resume patrol.");
@@ -159,6 +212,9 @@ namespace Assets.Scripts.GOAP.Actions
             public ITarget Target { get; set; }
             public float InvestigationTime { get; set; }
             public float StartDelay { get; set; }
+            public float ConfusionPauseTime { get; set; }
+            public bool IsInConfusionPhase { get; set; }
+            public bool HasStartedMoving { get; set; }
         }
     }
 }
