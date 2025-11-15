@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class NoiseArea : MonoBehaviour
 {
@@ -8,7 +9,11 @@ public class NoiseArea : MonoBehaviour
     [SerializeField] public Transform noiseCenter;
     [SerializeField] public float noiseRadius;
     [SerializeField] private float noiseDuration = 8f; // How long the noise persists
-    
+    [Header("Visual")] // The visual representation of the noise area
+    [SerializeField] GameObject noiseVisual;
+    [SerializeField] float expansionTime = 1f;
+    float maxScale = 0.125f; // Maximum scale for the visual representation (size scales with the noise area since noiseVisual already is a child of noiseArea)
+
     private bool hasTriggered = false;
     private float spawnTime;
 
@@ -18,6 +23,8 @@ public class NoiseArea : MonoBehaviour
         spawnTime = Time.time;
         // Trigger noise when this object is created/spawned
         TriggerNoise();
+
+        StartCoroutine(ExpandNoiseVisual());
         
         // Destroy this noise area after the duration
         Destroy(gameObject, noiseDuration);
@@ -29,6 +36,20 @@ public class NoiseArea : MonoBehaviour
         var newScale = noiseArea.localScale;
         newScale.Set(scale, scale, scale);
         noiseArea.localScale = newScale;
+    }
+
+    IEnumerator ExpandNoiseVisual()
+    {
+        float elapsedTime = 0f;
+        noiseVisual.transform.localScale = Vector3.zero;
+        while (elapsedTime < expansionTime)
+        {
+            float scale = Mathf.Lerp(0f, maxScale, elapsedTime / expansionTime);
+            noiseVisual.transform.localScale = new Vector3(scale, scale, scale);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        yield return null;
     }
 
     // Call this method to trigger the noise and notify agents

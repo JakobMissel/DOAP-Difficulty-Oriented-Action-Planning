@@ -342,7 +342,7 @@ MonoBehaviour:
   climbCheckDistance: 0.3
   detectionOffset: {x: 0, y: 0.3, z: 0}
   stickToWallForce: 0.2
-  maxClimbSpeed: {x: 0.8, y: 1}
+  maxClimbSpeed: {x: 1, y: 1.2}
   climbAcceleration: {x: 3, y: 3}
   climbDeceleration: {x: 15, y: 15}
   maxStamina: 10
@@ -1099,6 +1099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 180950564769169283}
   - component: {fileID: 1641866657404732643}
+  - component: {fileID: 2497804656406166504}
   m_Layer: 0
   m_Name: PlayerGroup + Cameras
   m_TagString: Untagged
@@ -1127,6 +1128,26 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1641866657404732643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890421074633751972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
+--- !u!114 &2497804656406166504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1862,9 +1883,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5258b1dcd171f9b4484d45cffafdde7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: 0.5, y: 1.4, z: 0}
+  startPosition: {x: 0.5, y: 1.4, z: 0}
   hitWallPosition: {x: 0, y: 1.4, z: 0}
-  moveSpeed: 1
+  moveTime: 1
+  delayBeforeReturn: 2
 --- !u!135 &5794147149388458330
 SphereCollider:
   m_ObjectHideFlags: 0
