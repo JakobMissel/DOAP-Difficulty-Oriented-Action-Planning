@@ -819,7 +819,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Exit
+  m_text: Exit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1336,10 +1336,10 @@ MonoBehaviour:
   mediumButton: {fileID: 5120000319965420745}
   hardButton: {fileID: 2725371472356160734}
   resumeButton: {fileID: 883122741992530391}
-  pauseMainMenuButton: {fileID: 5382457767132595749}
+  pauseExitButton: {fileID: 5382457767132595749}
   howToPlayButton: {fileID: 8795313982795652933}
   retryButton: {fileID: 5581497664605335674}
-  gameOverMainMenuButton: {fileID: 7114693219220740789}
+  gameOverExitButton: {fileID: 7114693219220740789}
   gameplayCanvas: {fileID: 0}
   showOnStart: 1
   playerTag: Player
@@ -1356,7 +1356,7 @@ GameObject:
   - component: {fileID: 8532020021943925394}
   - component: {fileID: 7114693219220740789}
   m_Layer: 5
-  m_Name: GameOverMainMenuButton
+  m_Name: GameOverExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2984,7 +2984,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Main Menu
+  m_text: Exit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3549,7 +3549,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Main Menu
+  m_text: Exit Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3708,7 +3708,7 @@ GameObject:
   - component: {fileID: 2059259496761517176}
   - component: {fileID: 5382457767132595749}
   m_Layer: 5
-  m_Name: PauseMainMenuButton
+  m_Name: PauseExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
