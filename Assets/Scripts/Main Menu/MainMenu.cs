@@ -36,25 +36,38 @@ public class MainMenu : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool showOnStart = true;
     [SerializeField] private string playerTag = "Player";
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
+    [SerializeField] private string gameplaySceneName = "Jakob";
 
     private GameObject player;
     private bool isGamePaused;
     private bool isGameOver;
     private bool isRetrying; // Track if we're currently in a retry flow
-    
+    private bool isTransitioningToGameplay;
+
     public static MainMenu Instance { get; private set; }
 
     private void Awake()
     {
-        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Start()
@@ -124,7 +137,7 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.Save();
             
             // Start game immediately without showing menu
-            HideMenu();
+            StartGameplayScene();
         }
         else
         {
@@ -311,7 +324,7 @@ public class MainMenu : MonoBehaviour
             // DDA is enabled - start game immediately with dynamic difficulty
             DifficultyTracker.EnableTestingMode(false);
             Debug.Log("Dynamic Difficulty Adjustment: ENABLED - Starting game");
-            HideMenu();
+            StartGameplayScene();
         }
         else
         {
@@ -339,7 +352,7 @@ public class MainMenu : MonoBehaviour
         Debug.Log($"Static Difficulty Set: {difficultyName} ({difficultyPercent}%) - Starting game");
         
         // Start the game
-        HideMenu();
+        StartGameplayScene();
     }
 
     private void OnCreditsClicked()
@@ -448,84 +461,75 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void OnResumeClicked()
+    private void StartGameplayScene()
     {
-        Debug.Log("[MainMenu] Resuming game");
+        isTransitioningToGameplay = true;
         HideMenu();
+        Debug.Log($"[MainMenu] Loading gameplay scene '{gameplaySceneName}'");
+        SceneManager.LoadScene(gameplaySceneName);
     }
 
-    private void OnPauseMenuToMainMenu()
+    private void LoadMainMenuScene()
     {
-        Debug.Log("[MainMenu] Returning to main menu from pause - reloading scene");
-        
-        // Unpause before reloading
-        Time.timeScale = 1f;
-        
-        // Reload the scene to reset everything
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        isTransitioningToGameplay = false;
+        Debug.Log($"[MainMenu] Loading main menu scene '{mainMenuSceneName}'");
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 
-    private void OnHowToPlayClicked()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("[MainMenu] Opening How to Play");
-        if (pausePanel) pausePanel.SetActive(false);
-        if (howToPlayPanel) howToPlayPanel.SetActive(true);
-    }
-
-    public void OnBackFromHowToPlay()
-    {
-        Debug.Log("[MainMenu] Returning from How to Play");
-        if (pausePanel) pausePanel.SetActive(true);
-        if (howToPlayPanel) howToPlayPanel.SetActive(false);
-    }
-
-    private void OnCheckpointLoaded()
-    {
-        // Reset the retry flag after checkpoint is loaded
-        if (isRetrying)
+        if (scene.name == gameplaySceneName)
         {
-            isRetrying = false;
-            Debug.Log("[MainMenu] Checkpoint loaded, retry complete");
-            
-            // Reset the GameOverManager so it can trigger game over again
-            if (GameOverManager.Instance != null)
+            CacheGameplayReferences(scene);
+            if (isTransitioningToGameplay)
             {
-                GameOverManager.Instance.ResetGameOver();
-                Debug.Log("[MainMenu] GameOverManager reset for new attempt");
+                HideMenu();
+                isTransitioningToGameplay = false;
             }
+        }
+        else if (scene.name == mainMenuSceneName)
+        {
+            ShowMenu();
         }
     }
 
-    private void OnRetryClicked()
+    private void CacheGameplayReferences(Scene scene)
     {
-        Debug.Log("[MainMenu] Retrying level - Using checkpoint system");
-        
-        // Set the retry flag BEFORE changing other states
-        isRetrying = true;
-        isGameOver = false;
-        
-        // Hide the game over menu
-        HideMenu();
-        
-        // Use the checkpoint system to reset the game state
-        // This will reset the player and all guards to their initial/checkpoint positions
-        CheckpointManager.Instance.BeginLoading();
+        player = GameObject.FindGameObjectWithTag(playerTag);
+        if (gameplayCanvas == null || gameplayCanvas.scene != scene)
+        {
+            gameplayCanvas = FindGameplayCanvas(scene);
+        }
     }
 
-    private void OnGameOverToMainMenu()
+    private GameObject FindGameplayCanvas(Scene scene)
     {
-        Debug.Log("[MainMenu] Returning to main menu from game over - reloading scene");
-        isGameOver = false;
-        
-        // Unpause before reloading
-        Time.timeScale = 1f;
-        
-        // Reload the scene to reset everything for a fresh start
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        string[] candidateNames = { "GameplayCanvas", "HUD", "Canvas" };
+        foreach (var candidateName in candidateNames)
+        {
+            var candidate = GameObject.Find(candidateName);
+            if (candidate && candidate.scene == scene)
+            {
+                return candidate;
+            }
+        }
+
+        foreach (var root in scene.GetRootGameObjects())
+        {
+            var canvas = root.GetComponentInChildren<Canvas>(true);
+            if (canvas)
+            {
+                return canvas.gameObject;
+            }
+        }
+
+        return null;
     }
 
     private void OnDestroy()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        
         // Unsubscribe from checkpoint events
         CheckpointManager.loadCheckpoint -= OnCheckpointLoaded;
         
@@ -552,5 +556,43 @@ public class MainMenu : MonoBehaviour
         {
             Instance = null;
         }
+    }
+
+    private void OnHowToPlayClicked()
+    {
+        Debug.Log("[MainMenu] Opening How to Play");
+        if (pausePanel) pausePanel.SetActive(false);
+        if (howToPlayPanel) howToPlayPanel.SetActive(true);
+    }
+
+    public void OnBackFromHowToPlay()
+    {
+        Debug.Log("[MainMenu] Returning from How to Play");
+        if (pausePanel) pausePanel.SetActive(true);
+        if (howToPlayPanel) howToPlayPanel.SetActive(false);
+    }
+
+    private void OnResumeClicked()
+    {
+        Debug.Log("[MainMenu] Resuming game");
+        HideMenu();
+    }
+
+    private void OnRetryClicked()
+    {
+        Debug.Log("[MainMenu] Retrying level - Using checkpoint system");
+        isRetrying = true;
+        isGameOver = false;
+        HideMenu();
+        CheckpointManager.Instance?.BeginLoading();
+    }
+
+    private void OnCheckpointLoaded()
+    {
+        if (!isRetrying) return;
+
+        isRetrying = false;
+        Debug.Log("[MainMenu] Checkpoint loaded, retry complete");
+        GameOverManager.Instance?.ResetGameOver();
     }
 }
