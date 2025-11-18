@@ -31,6 +31,7 @@ public class PlayerThrow : MonoBehaviour
     float cooldownTimer = 0f;
     bool canThrow = true;
     bool resetCamera;
+    bool isInputBlocked;
 
     Vector3 throwDirection;
     RaycastHit currentHit;
@@ -53,6 +54,7 @@ public class PlayerThrow : MonoBehaviour
         playerInput.actions["Aim"].canceled += OnAim;
         PlayerActions.canThrow += OnCanThrow;
         PlayerActions.removeAllThrowables += OnRemoveAllThrowables;
+        PlayerActions.gameOverState += OnGameOverState;
     }
 
     void OnDisable()
@@ -62,6 +64,7 @@ public class PlayerThrow : MonoBehaviour
         playerInput.actions["Aim"].canceled -= OnAim;
         PlayerActions.canThrow -= OnCanThrow;
         PlayerActions.removeAllThrowables -= OnRemoveAllThrowables;
+        PlayerActions.gameOverState -= OnGameOverState;
     }
 
     void OnCanThrow(bool state)
@@ -69,6 +72,17 @@ public class PlayerThrow : MonoBehaviour
         isThrowActive = state;
     }
 
+    void OnGameOverState(bool isBlocked)
+    {
+        isInputBlocked = isBlocked;
+        if (isBlocked && isAiming)
+        {
+            isAiming = false;
+            PlayerActions.OnAimStatus(false);
+            PlayerActions.OnSetHitArea(hitArea);
+        }
+    }
+    
     void Update()
     {
         // Prevent aiming while carrying painting
@@ -86,6 +100,7 @@ public class PlayerThrow : MonoBehaviour
 
     void OnThrow(InputAction.CallbackContext ctx)
     {
+        if (isInputBlocked) return;
         if (!isThrowActive) return;
         if (!isAiming || !canThrow || ammoCount <= 0) return;
         canThrow = false;
@@ -96,6 +111,7 @@ public class PlayerThrow : MonoBehaviour
 
     void OnAim(InputAction.CallbackContext ctx)
     {
+        if (isInputBlocked) return;
         // Prevent aiming calls while carrying painting
         if (PlayerActions.Instance.carriesPainting || PlayerActions.Instance.isOnWall) return; 
 

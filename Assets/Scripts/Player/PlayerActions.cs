@@ -77,6 +77,9 @@ public class PlayerActions : MonoBehaviour
     public static Action playerCaught;
     public static void OnPlayerCaught() => playerCaught?.Invoke();
 
+    public static Action<bool> gameOverState;
+    public static void OnGameOverState(bool isBlocked) => gameOverState?.Invoke(isBlocked);
+
     //========================================================================//
 
     public static PlayerActions Instance;

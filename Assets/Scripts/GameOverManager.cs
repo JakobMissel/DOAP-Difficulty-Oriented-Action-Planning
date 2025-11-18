@@ -62,6 +62,9 @@ public class GameOverManager : MonoBehaviour
             Debug.Log("[GameOverManager] Game Over sequence initiated!");
         }
 
+        // Block player input globally
+        PlayerActions.OnGameOverState(true);
+
         // Disable player movement via the event system
         PlayerActions.OnPlayerCaught();
 
@@ -106,6 +109,8 @@ public class GameOverManager : MonoBehaviour
         {
             Debug.Log("[GameOverManager] Game Over state reset.");
         }
+
+        PlayerActions.OnGameOverState(false);
     }
 
     // Singleton pattern for easy access
@@ -123,4 +128,3 @@ public class GameOverManager : MonoBehaviour
         }
     }
 }
-

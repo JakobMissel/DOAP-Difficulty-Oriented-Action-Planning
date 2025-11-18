@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using TMPro;
 using Assets.Scripts.DDA;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -38,21 +41,44 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private string playerTag = "Player";
     [SerializeField] private string mainMenuSceneName = "MainMenu";
     [SerializeField] private string gameplaySceneName = "Jakob";
+    
+    [Header("Input")]
+    [SerializeField] private InputActionAsset uiInputActions;
 
     private GameObject player;
     private bool isGamePaused;
     private bool isGameOver;
     private bool isRetrying; // Track if we're currently in a retry flow
     private bool isTransitioningToGameplay;
+    private EventSystem menuEventSystem;
+    private PlayerInput playerInput;
+    private InputSystemUIInputModule menuInputModule;
 
     public static MainMenu Instance { get; private set; }
+
+    private bool IsGameplaySceneLoaded => SceneManager.GetSceneByName(gameplaySceneName).isLoaded;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            
+            // Make the entire canvas hierarchy persistent (not just this script object)
+            // Find the root canvas object
+            Transform canvasRoot = transform;
+            while (canvasRoot.parent != null)
+            {
+                canvasRoot = canvasRoot.parent;
+            }
+            
+            // Ensure it's at root and make it persistent
+            canvasRoot.SetParent(null);
+            DontDestroyOnLoad(canvasRoot.gameObject);
+            
+            Debug.Log($"[MainMenu] Made {canvasRoot.name} persistent across scenes");
+            
+            EnsureEventSystem();
         }
         else
         {
@@ -86,24 +112,7 @@ public class MainMenu : MonoBehaviour
         CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
 
         // Setup button listeners
-        if (playButton) playButton.onClick.AddListener(OnPlayClicked);
-        if (creditsButton) creditsButton.onClick.AddListener(OnCreditsClicked);
-        if (exitButton) exitButton.onClick.AddListener(OnExitClicked);
-        if (ddaToggle) ddaToggle.onValueChanged.AddListener(OnDDAToggleChanged);
-        
-        // Setup difficulty button listeners
-        if (easyButton) easyButton.onClick.AddListener(() => OnDifficultySelected(0));
-        if (mediumButton) mediumButton.onClick.AddListener(() => OnDifficultySelected(50));
-        if (hardButton) hardButton.onClick.AddListener(() => OnDifficultySelected(100));
-        
-        // Setup pause panel button listeners
-        if (resumeButton) resumeButton.onClick.AddListener(OnResumeClicked);
-        if (pauseExitButton) pauseExitButton.onClick.AddListener(OnExitClicked);
-        if (howToPlayButton) howToPlayButton.onClick.AddListener(OnHowToPlayClicked);
-        
-        // Setup game over panel button listeners
-        if (retryButton) retryButton.onClick.AddListener(OnRetryClicked);
-        if (gameOverExitButton) gameOverExitButton.onClick.AddListener(OnExitClicked);
+        SetupButtonListeners();
 
         // Check if we're auto-starting from a retry
         bool autoStart = PlayerPrefs.GetInt("RetryAutoStart", 0) == 1;
@@ -168,10 +177,19 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
-        // Allow ESC key to show pause menu during gameplay (not game over)
+        // Allow ESC key to show pause menu during gameplay (not game over, not already paused)
         if (Input.GetKeyDown(KeyCode.Escape) && !isGamePaused && !isGameOver)
         {
+            Debug.Log("[MainMenu] ESC pressed - showing pause menu");
             ShowPauseMenu();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isGameOver)
+        {
+            Debug.Log("[MainMenu] ESC pressed but game is over - ignoring");
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isGamePaused)
+        {
+            Debug.Log("[MainMenu] ESC pressed but game is already paused - ignoring");
         }
     }
 
@@ -179,6 +197,7 @@ public class MainMenu : MonoBehaviour
     {
         isGamePaused = true;
         
+        SetGameplayInputActive(false);
         // Show the main menu
         if (mainPanel) mainPanel.SetActive(true);
         if (creditsPanel) creditsPanel.SetActive(false);
@@ -208,11 +227,24 @@ public class MainMenu : MonoBehaviour
     {
         isGamePaused = true;
         
+        SetGameplayInputActive(false);
+        
+        // Ensure EventSystem is active and ready
+        EnsureEventSystemActive();
+        
         // Show the pause menu
         if (mainPanel) mainPanel.SetActive(false);
         if (creditsPanel) creditsPanel.SetActive(false);
         if (difficultyPanel) difficultyPanel.SetActive(false);
-        if (pausePanel) pausePanel.SetActive(true);
+        if (pausePanel) 
+        {
+            pausePanel.SetActive(true);
+            Debug.Log($"[MainMenu] PausePanel.SetActive(true) called - ActiveSelf={pausePanel.activeSelf}, ActiveInHierarchy={pausePanel.activeInHierarchy}");
+        }
+        else
+        {
+            Debug.LogError("[MainMenu] PausePanel reference is NULL!");
+        }
         if (gameOverPanel) gameOverPanel.SetActive(false);
         if (howToPlayPanel) howToPlayPanel.SetActive(false);
 
@@ -232,13 +264,28 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         
-        Debug.Log("[MainMenu] Game Paused");
+        // Force enable button GameObjects if they're disabled
+        ForceEnableButtons();
+        
+        // Debug button states AFTER showing panels
+        DebugButtonStates();
+        
+        // Check for Graphic Raycaster
+        CheckGraphicRaycaster();
+        
+        Debug.Log("[MainMenu] Game Paused - Pause Panel Active");
     }
 
     public void ShowGameOverMenu()
     {
+        Debug.Log("[MainMenu] ========== SHOWING GAME OVER MENU ==========");
         isGamePaused = true;
         isGameOver = true;
+        
+        SetGameplayInputActive(false);
+        
+        // Ensure EventSystem is active and ready
+        EnsureEventSystemActive();
         
         // Show the game over menu
         if (mainPanel) mainPanel.SetActive(false);
@@ -264,21 +311,44 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         
-        Debug.Log("[MainMenu] Game Over");
+        // Force enable button GameObjects if they're disabled
+        ForceEnableButtons();
+        
+        // Debug button states
+        DebugButtonStates();
+        
+        // Check for Graphic Raycaster
+        CheckGraphicRaycaster();
+        
+        Debug.Log("[MainMenu] Game Over - Game Over Panel Active");
     }
 
     public void HideMenu()
     {
+        Debug.Log("[MainMenu] ========== HIDING ALL MENUS ==========");
+        Debug.Log($"[MainMenu] Previous state - isGamePaused: {isGamePaused}, isGameOver: {isGameOver}");
+        
         isGamePaused = false;
         isGameOver = false;
 
-        // Hide all panels
+        // Hide ALL panels
         if (mainPanel) mainPanel.SetActive(false);
         if (creditsPanel) creditsPanel.SetActive(false);
         if (difficultyPanel) difficultyPanel.SetActive(false);
-        if (pausePanel) pausePanel.SetActive(false);
-        if (gameOverPanel) gameOverPanel.SetActive(false);
+        if (pausePanel) 
+        {
+            pausePanel.SetActive(false);
+            Debug.Log("[MainMenu] Deactivated Pause panel");
+        }
+        if (gameOverPanel) 
+        {
+            gameOverPanel.SetActive(false);
+            Debug.Log("[MainMenu] Deactivated GameOver panel");
+        }
         if (howToPlayPanel) howToPlayPanel.SetActive(false);
+
+        // Re-enable gameplay EventSystems
+        RestoreGameplayEventSystems();
 
         // Show gameplay UI elements
         ShowGameplayUI();
@@ -302,6 +372,8 @@ public class MainMenu : MonoBehaviour
         // Lock and hide cursor for gameplay
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        SetGameplayInputActive(true);
     }
 
     private void HideGameplayUI()
@@ -463,17 +535,35 @@ public class MainMenu : MonoBehaviour
 
     private void StartGameplayScene()
     {
+        if (IsGameplaySceneLoaded)
+        {
+            Debug.Log("[MainMenu] Gameplay scene already loaded, resuming");
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(gameplaySceneName));
+            HideMenu();
+            return;
+        }
+
         isTransitioningToGameplay = true;
         HideMenu();
-        Debug.Log($"[MainMenu] Loading gameplay scene '{gameplaySceneName}'");
-        SceneManager.LoadScene(gameplaySceneName);
+        Debug.Log($"[MainMenu] Loading gameplay scene '{gameplaySceneName}' (additive)");
+        SceneManager.LoadSceneAsync(gameplaySceneName, LoadSceneMode.Additive);
     }
 
     private void LoadMainMenuScene()
     {
         isTransitioningToGameplay = false;
-        Debug.Log($"[MainMenu] Loading main menu scene '{mainMenuSceneName}'");
-        SceneManager.LoadScene(mainMenuSceneName);
+        Debug.Log($"[MainMenu] Returning to main menu scene '{mainMenuSceneName}'");
+        var menuScene = SceneManager.GetSceneByName(mainMenuSceneName);
+        if (menuScene.isLoaded)
+        {
+            SceneManager.SetActiveScene(menuScene);
+            ShowMenu();
+            UnloadGameplayScene();
+        }
+        else
+        {
+            Debug.LogWarning($"[MainMenu] Main menu scene '{mainMenuSceneName}' is not loaded yet.");
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -481,6 +571,7 @@ public class MainMenu : MonoBehaviour
         if (scene.name == gameplaySceneName)
         {
             CacheGameplayReferences(scene);
+            SceneManager.SetActiveScene(scene);
             if (isTransitioningToGameplay)
             {
                 HideMenu();
@@ -489,6 +580,7 @@ public class MainMenu : MonoBehaviour
         }
         else if (scene.name == mainMenuSceneName)
         {
+            SceneManager.SetActiveScene(scene);
             ShowMenu();
         }
     }
@@ -496,6 +588,7 @@ public class MainMenu : MonoBehaviour
     private void CacheGameplayReferences(Scene scene)
     {
         player = GameObject.FindGameObjectWithTag(playerTag);
+        playerInput = player?.GetComponent<PlayerInput>();
         if (gameplayCanvas == null || gameplayCanvas.scene != scene)
         {
             gameplayCanvas = FindGameplayCanvas(scene);
@@ -595,4 +688,599 @@ public class MainMenu : MonoBehaviour
         Debug.Log("[MainMenu] Checkpoint loaded, retry complete");
         GameOverManager.Instance?.ResetGameOver();
     }
+
+    private void UnloadGameplayScene()
+    {
+        var gameplayScene = SceneManager.GetSceneByName(gameplaySceneName);
+        if (gameplayScene.isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(gameplayScene);
+        }
+    }
+
+    private void EnsureEventSystem()
+    {
+        if (menuEventSystem && menuEventSystem.gameObject)
+        {
+            SetupInputModule();
+            return;
+        }
+
+        // Search for existing EventSystem in the entire hierarchy
+        menuEventSystem = FindFirstObjectByType<EventSystem>();
+        
+        if (menuEventSystem == null)
+        {
+            // Create EventSystem as child of the canvas root, not this script object
+            Transform canvasRoot = transform;
+            while (canvasRoot.parent != null)
+            {
+                canvasRoot = canvasRoot.parent;
+            }
+            
+            var eventSystemContainer = new GameObject("MainMenu EventSystem");
+            eventSystemContainer.transform.SetParent(canvasRoot);
+            menuEventSystem = eventSystemContainer.AddComponent<EventSystem>();
+            Debug.Log("[MainMenu] Created persistent EventSystem for menu interaction");
+        }
+        else
+        {
+            Debug.Log($"[MainMenu] Found existing EventSystem: {menuEventSystem.name}");
+        }
+
+        SetupInputModule();
+    }
+
+    private void EnsureEventSystemActive()
+    {
+        // CRITICAL: Get canvas root and ensure it's on top
+        Transform canvasRoot = transform;
+        while (canvasRoot.parent != null)
+        {
+            canvasRoot = canvasRoot.parent;
+        }
+        
+        var canvas = canvasRoot.GetComponent<Canvas>();
+        if (canvas)
+        {
+            // FORCE canvas to render on top of everything else
+            canvas.sortingOrder = 9999;
+            canvas.overrideSorting = true;
+            Debug.Log($"[MainMenu] Set Canvas sortingOrder to 9999 to render on top");
+            
+            // Ensure canvas render mode allows interaction
+            if (canvas.renderMode == RenderMode.ScreenSpaceCamera && canvas.worldCamera == null)
+            {
+                Debug.LogWarning("[MainMenu] Canvas is in Camera mode but has no camera assigned!");
+            }
+            
+            // Ensure Graphic Raycaster is enabled
+            var raycaster = canvas.GetComponent<GraphicRaycaster>();
+            if (raycaster)
+            {
+                if (!raycaster.enabled)
+                {
+                    raycaster.enabled = true;
+                    Debug.Log("[MainMenu] Enabled Graphic Raycaster on Canvas");
+                }
+            }
+            else
+            {
+                Debug.LogError("[MainMenu] GraphicRaycaster MISSING! Adding it...");
+                raycaster = canvas.gameObject.AddComponent<GraphicRaycaster>();
+                Debug.Log("[MainMenu] GraphicRaycaster added to Canvas!");
+            }
+        }
+        
+        // Find all EventSystems in the scene
+        EventSystem[] allEventSystems = FindObjectsByType<EventSystem>(FindObjectsSortMode.None);
+        
+        Debug.Log($"[MainMenu] Found {allEventSystems.Length} EventSystem(s) in scene");
+        
+        // Disable all EventSystems except our menu one
+        foreach (var es in allEventSystems)
+        {
+            if (es == menuEventSystem)
+            {
+                // Ensure our menu EventSystem is enabled
+                if (!es.enabled)
+                {
+                    es.enabled = true;
+                    Debug.Log("[MainMenu] Enabled menu EventSystem");
+                }
+                if (!es.gameObject.activeInHierarchy)
+                {
+                    es.gameObject.SetActive(true);
+                    Debug.Log("[MainMenu] Activated menu EventSystem GameObject");
+                }
+            }
+            else
+            {
+                // Temporarily disable other EventSystems to avoid conflicts
+                if (es.enabled)
+                {
+                    es.enabled = false;
+                    Debug.Log($"[MainMenu] Disabled gameplay EventSystem: {es.name}");
+                }
+            }
+        }
+        
+        // Ensure our EventSystem exists
+        if (menuEventSystem == null)
+        {
+            Debug.LogWarning("[MainMenu] Menu EventSystem is null! Recreating...");
+            EnsureEventSystem();
+        }
+        
+        // Make sure the current selected object is cleared to allow button interactions
+        if (menuEventSystem != null)
+        {
+            menuEventSystem.SetSelectedGameObject(null);
+        }
+        
+        // CRITICAL: Disable gameplay camera raycasting
+        DisableGameplayCameraRaycasting();
+        
+        // Ensure input module is properly configured
+        SetupInputModule();
+        
+        // Force enable UI input actions
+        if (menuInputModule != null && uiInputActions != null)
+        {
+            var uiActionMap = uiInputActions.FindActionMap("UI");
+            if (uiActionMap != null && !uiActionMap.enabled)
+            {
+                uiActionMap.Enable();
+                Debug.Log("[MainMenu] Re-enabled UI input actions");
+            }
+        }
+    }
+    
+    private void DisableGameplayCameraRaycasting()
+    {
+        // Find all cameras and disable their PhysicsRaycaster during menu
+        Camera[] allCameras = FindObjectsByType<Camera>(FindObjectsSortMode.None);
+        
+        foreach (var cam in allCameras)
+        {
+            // Skip UI/Menu cameras
+            if (cam.gameObject.name.Contains("UI") || cam.gameObject.name.Contains("Menu"))
+                continue;
+            
+            // Disable PhysicsRaycaster on gameplay cameras
+            var physicsRaycaster = cam.GetComponent<PhysicsRaycaster>();
+            if (physicsRaycaster && physicsRaycaster.enabled)
+            {
+                physicsRaycaster.enabled = false;
+                Debug.Log($"[MainMenu] Disabled PhysicsRaycaster on camera: {cam.name}");
+            }
+        }
+    }
+
+    private void RestoreGameplayEventSystems()
+    {
+        // Find all EventSystems and re-enable the gameplay ones
+        EventSystem[] allEventSystems = FindObjectsByType<EventSystem>(FindObjectsSortMode.None);
+        
+        foreach (var es in allEventSystems)
+        {
+            if (es != menuEventSystem)
+            {
+                es.enabled = true;
+                Debug.Log($"[MainMenu] Re-enabled gameplay EventSystem: {es.name}");
+            }
+            else
+            {
+                // Keep menu EventSystem active but it won't interfere
+                Debug.Log("[MainMenu] Menu EventSystem remains active for future use");
+            }
+        }
+        
+        // Re-enable gameplay camera raycasting
+        Camera[] allCameras = FindObjectsByType<Camera>(FindObjectsSortMode.None);
+        foreach (var cam in allCameras)
+        {
+            if (cam.gameObject.name.Contains("UI") || cam.gameObject.name.Contains("Menu"))
+                continue;
+            
+            var physicsRaycaster = cam.GetComponent<UnityEngine.EventSystems.PhysicsRaycaster>();
+            if (physicsRaycaster && !physicsRaycaster.enabled)
+            {
+                physicsRaycaster.enabled = true;
+                Debug.Log($"[MainMenu] Re-enabled PhysicsRaycaster on camera: {cam.name}");
+            }
+        }
+    }
+
+    private void SetupInputModule()
+    {
+        if (menuEventSystem == null)
+            return;
+
+        menuInputModule = menuEventSystem.GetComponent<InputSystemUIInputModule>();
+        if (menuInputModule == null)
+        {
+            menuInputModule = menuEventSystem.gameObject.AddComponent<InputSystemUIInputModule>();
+        }
+
+        if (menuInputModule != null && uiInputActions != null)
+        {
+            menuInputModule.actionsAsset = uiInputActions;
+            
+            // Enable the UI input actions so they can receive input
+            var uiActionMap = uiInputActions.FindActionMap("UI");
+            if (uiActionMap != null)
+            {
+                uiActionMap.Enable();
+                Debug.Log("[MainMenu] UI Input actions enabled for menu interaction");
+            }
+        }
+        else if (uiInputActions == null)
+        {
+            Debug.LogWarning("[MainMenu] UI Input Actions asset is not assigned! Menu buttons will not be clickable.");
+        }
+    }
+
+    private void SetGameplayInputActive(bool isActive)
+    {
+        if (playerInput == null)
+        {
+            // Try to find player input if not cached
+            if (player)
+            {
+                playerInput = player.GetComponent<PlayerInput>();
+            }
+        }
+
+        if (isActive)
+        {
+            if (playerInput)
+            {
+                playerInput.enabled = true;
+                playerInput.actions?.Enable();
+                Debug.Log("[MainMenu] Enabled gameplay input");
+            }
+        }
+        else
+        {
+            if (playerInput)
+            {
+                playerInput.actions?.Disable();
+                playerInput.enabled = false;
+                Debug.Log("[MainMenu] Disabled gameplay input");
+            }
+            
+            // Also disable ALL PlayerInput components in the scene to be absolutely sure
+            var allPlayerInputs = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
+            foreach (var pi in allPlayerInputs)
+            {
+                if (pi.enabled)
+                {
+                    pi.actions?.Disable();
+                    pi.enabled = false;
+                    Debug.Log($"[MainMenu] Force-disabled PlayerInput on: {pi.gameObject.name}");
+                }
+            }
+        }
+    }
+
+    private void SetupButtonListeners()
+    {
+        Debug.Log("[MainMenu] Setting up button listeners...");
+        
+        // Main menu buttons
+        if (playButton) 
+        {
+            playButton.onClick.RemoveAllListeners();
+            playButton.onClick.AddListener(OnPlayClicked);
+            Debug.Log("[MainMenu] Play button listener added");
+        }
+        else Debug.LogWarning("[MainMenu] Play button is NULL!");
+        
+        if (creditsButton)
+        {
+            creditsButton.onClick.RemoveAllListeners();
+            creditsButton.onClick.AddListener(OnCreditsClicked);
+        }
+        
+        if (exitButton)
+        {
+            exitButton.onClick.RemoveAllListeners();
+            exitButton.onClick.AddListener(OnExitClicked);
+        }
+        
+        if (ddaToggle)
+        {
+            ddaToggle.onValueChanged.RemoveAllListeners();
+            ddaToggle.onValueChanged.AddListener(OnDDAToggleChanged);
+        }
+        
+        // Setup difficulty button listeners
+        if (easyButton)
+        {
+            easyButton.onClick.RemoveAllListeners();
+            easyButton.onClick.AddListener(() => OnDifficultySelected(0));
+        }
+        
+        if (mediumButton)
+        {
+            mediumButton.onClick.RemoveAllListeners();
+            mediumButton.onClick.AddListener(() => OnDifficultySelected(50));
+        }
+        
+        if (hardButton)
+        {
+            hardButton.onClick.RemoveAllListeners();
+            hardButton.onClick.AddListener(() => OnDifficultySelected(100));
+        }
+        
+        // Setup pause panel button listeners
+        if (resumeButton)
+        {
+            resumeButton.onClick.RemoveAllListeners();
+            resumeButton.onClick.AddListener(OnResumeClicked);
+            Debug.Log("[MainMenu] Resume button listener added");
+        }
+        else Debug.LogWarning("[MainMenu] Resume button is NULL!");
+        
+        if (pauseExitButton)
+        {
+            pauseExitButton.onClick.RemoveAllListeners();
+            pauseExitButton.onClick.AddListener(OnExitClicked);
+        }
+        
+        if (howToPlayButton)
+        {
+            howToPlayButton.onClick.RemoveAllListeners();
+            howToPlayButton.onClick.AddListener(OnHowToPlayClicked);
+        }
+        
+        // Setup game over panel button listeners
+        if (retryButton)
+        {
+            retryButton.onClick.RemoveAllListeners();
+            retryButton.onClick.AddListener(OnRetryClicked);
+            Debug.Log("[MainMenu] Retry button listener added");
+        }
+        else Debug.LogWarning("[MainMenu] Retry button is NULL!");
+        
+        if (gameOverExitButton)
+        {
+            gameOverExitButton.onClick.RemoveAllListeners();
+            gameOverExitButton.onClick.AddListener(OnExitClicked);
+        }
+        
+        Debug.Log("[MainMenu] Button listeners setup complete!");
+    }
+
+    private void DebugButtonStates()
+    {
+        Debug.Log("[MainMenu] === BUTTON DEBUG INFO ===");
+        
+        // Check pause panel state
+        if (pausePanel)
+        {
+            Debug.Log($"[MainMenu] Pause Panel: ActiveSelf={pausePanel.activeSelf}, ActiveInHierarchy={pausePanel.activeInHierarchy}");
+        }
+        
+        if (resumeButton)
+        {
+            string hierarchy = GetGameObjectPath(resumeButton.gameObject);
+            Debug.Log($"[MainMenu] Resume Button: Path='{hierarchy}'");
+            Debug.Log($"[MainMenu] Resume Button: ActiveSelf={resumeButton.gameObject.activeSelf}, " +
+                     $"ActiveInHierarchy={resumeButton.gameObject.activeInHierarchy}, " +
+                     $"Enabled={resumeButton.enabled}, Interactable={resumeButton.interactable}, " +
+                     $"Listeners={resumeButton.onClick.GetPersistentEventCount()}");
+            
+            // Check if button's GameObject itself is disabled
+            if (!resumeButton.gameObject.activeSelf)
+            {
+                Debug.LogError($"[MainMenu] >>> RESUME BUTTON GAMEOBJECT IS DISABLED! <<<");
+            }
+        }
+        else
+        {
+            Debug.LogError("[MainMenu] Resume Button reference is NULL!");
+        }
+        
+        // Check game over panel state
+        if (gameOverPanel)
+        {
+            Debug.Log($"[MainMenu] GameOver Panel: ActiveSelf={gameOverPanel.activeSelf}, ActiveInHierarchy={gameOverPanel.activeInHierarchy}");
+        }
+        
+        if (retryButton)
+        {
+            string hierarchy = GetGameObjectPath(retryButton.gameObject);
+            Debug.Log($"[MainMenu] Retry Button: Path='{hierarchy}'");
+            Debug.Log($"[MainMenu] Retry Button: ActiveSelf={retryButton.gameObject.activeSelf}, " +
+                     $"ActiveInHierarchy={retryButton.gameObject.activeInHierarchy}, " +
+                     $"Enabled={retryButton.enabled}, Interactable={retryButton.interactable}, " +
+                     $"Listeners={retryButton.onClick.GetPersistentEventCount()}");
+            
+            // Check if button's GameObject itself is disabled
+            if (!retryButton.gameObject.activeSelf)
+            {
+                Debug.LogError($"[MainMenu] >>> RETRY BUTTON GAMEOBJECT IS DISABLED! <<<");
+            }
+        }
+        else
+        {
+            Debug.LogError("[MainMenu] Retry Button reference is NULL!");
+        }
+        
+        if (pauseExitButton)
+        {
+            Debug.Log($"[MainMenu] Pause Exit Button: ActiveInHierarchy={pauseExitButton.gameObject.activeInHierarchy}, " +
+                     $"Enabled={pauseExitButton.enabled}, Interactable={pauseExitButton.interactable}");
+        }
+        
+        if (gameOverExitButton)
+        {
+            Debug.Log($"[MainMenu] GameOver Exit Button: ActiveInHierarchy={gameOverExitButton.gameObject.activeInHierarchy}, " +
+                     $"Enabled={gameOverExitButton.enabled}, Interactable={gameOverExitButton.interactable}");
+        }
+    }
+    
+    private string GetGameObjectPath(GameObject obj)
+    {
+        string path = obj.name;
+        Transform current = obj.transform.parent;
+        while (current != null)
+        {
+            path = current.name + "/" + path;
+            current = current.parent;
+        }
+        return path;
+    }
+
+    private void ForceEnableButtons()
+    {
+        Debug.Log("[MainMenu] === FORCE ENABLING BUTTONS ===");
+        
+        // ONLY process the panel that is CURRENTLY ACTIVE - don't activate inactive ones!
+        
+        // If pause panel is active, fix its buttons and CanvasGroup
+        if (pausePanel && pausePanel.activeSelf)
+        {
+            Debug.Log("[MainMenu] Processing Pause Panel buttons (panel is active)");
+            
+            // Check for CanvasGroup that might be blocking interaction
+            var canvasGroup = pausePanel.GetComponent<CanvasGroup>();
+            if (canvasGroup)
+            {
+                if (!canvasGroup.interactable)
+                {
+                    Debug.LogWarning($"[MainMenu] Pause Panel has CanvasGroup with interactable=false! Enabling it...");
+                    canvasGroup.interactable = true;
+                }
+                if (canvasGroup.blocksRaycasts == false)
+                {
+                    Debug.LogWarning($"[MainMenu] Pause Panel CanvasGroup blocksRaycasts=false! Enabling it...");
+                    canvasGroup.blocksRaycasts = true;
+                }
+            }
+            
+            // Force enable pause panel buttons ONLY
+            if (resumeButton && !resumeButton.gameObject.activeSelf)
+            {
+                Debug.LogWarning($"[MainMenu] Resume button GameObject was disabled! Enabling it now...");
+                resumeButton.gameObject.SetActive(true);
+            }
+            
+            if (pauseExitButton && !pauseExitButton.gameObject.activeSelf)
+            {
+                Debug.LogWarning($"[MainMenu] Pause Exit button GameObject was disabled! Enabling it now...");
+                pauseExitButton.gameObject.SetActive(true);
+            }
+            
+            if (howToPlayButton && !howToPlayButton.gameObject.activeSelf)
+            {
+                Debug.LogWarning($"[MainMenu] HowToPlay button GameObject was disabled! Enabling it now...");
+                howToPlayButton.gameObject.SetActive(true);
+            }
+        }
+        else if (pausePanel)
+        {
+            Debug.Log("[MainMenu] Pause Panel exists but is INACTIVE - skipping button processing");
+        }
+        
+        // If game over panel is active, fix its buttons and CanvasGroup
+        if (gameOverPanel && gameOverPanel.activeSelf)
+        {
+            Debug.Log("[MainMenu] Processing GameOver Panel buttons (panel is active)");
+            
+            // Check for CanvasGroup that might be blocking interaction
+            var canvasGroup = gameOverPanel.GetComponent<CanvasGroup>();
+            if (canvasGroup)
+            {
+                if (!canvasGroup.interactable)
+                {
+                    Debug.LogWarning($"[MainMenu] GameOver Panel has CanvasGroup with interactable=false! Enabling it...");
+                    canvasGroup.interactable = true;
+                }
+                if (canvasGroup.blocksRaycasts == false)
+                {
+                    Debug.LogWarning($"[MainMenu] GameOver Panel CanvasGroup blocksRaycasts=false! Enabling it...");
+                    canvasGroup.blocksRaycasts = true;
+                }
+            }
+            
+            // Force enable game over panel buttons ONLY
+            if (retryButton && !retryButton.gameObject.activeSelf)
+            {
+                Debug.LogWarning($"[MainMenu] Retry button GameObject was disabled! Enabling it now...");
+                retryButton.gameObject.SetActive(true);
+            }
+            
+            if (gameOverExitButton && !gameOverExitButton.gameObject.activeSelf)
+            {
+                Debug.LogWarning($"[MainMenu] GameOver Exit button GameObject was disabled! Enabling it now...");
+                gameOverExitButton.gameObject.SetActive(true);
+            }
+        }
+        else if (gameOverPanel)
+        {
+            Debug.Log("[MainMenu] GameOver Panel exists but is INACTIVE - skipping button processing");
+        }
+    }
+    
+
+
+    private void CheckGraphicRaycaster()
+    {
+        Debug.Log("[MainMenu] === CANVAS RAYCASTER CHECK ===");
+        
+        // Get the canvas root
+        Transform canvasRoot = transform;
+        while (canvasRoot.parent != null)
+        {
+            canvasRoot = canvasRoot.parent;
+        }
+        
+        var canvas = canvasRoot.GetComponent<Canvas>();
+        if (canvas)
+        {
+            Debug.Log($"[MainMenu] Canvas found: {canvas.name}");
+            
+            var raycaster = canvas.GetComponent<UnityEngine.UI.GraphicRaycaster>();
+            if (raycaster)
+            {
+                Debug.Log($"[MainMenu] GraphicRaycaster FOUND: Enabled={raycaster.enabled}, " +
+                         $"IgnoreReversedGraphics={raycaster.ignoreReversedGraphics}");
+            }
+            else
+            {
+                Debug.LogError("[MainMenu] GraphicRaycaster MISSING! Adding it now...");
+                raycaster = canvas.gameObject.AddComponent<UnityEngine.UI.GraphicRaycaster>();
+                Debug.Log("[MainMenu] GraphicRaycaster added to Canvas!");
+            }
+        }
+        else
+        {
+            Debug.LogError("[MainMenu] Canvas component not found!");
+        }
+        
+        // Check EventSystem
+        if (menuEventSystem)
+        {
+            Debug.Log($"[MainMenu] EventSystem: Enabled={menuEventSystem.enabled}, " +
+                     $"CurrentSelected={menuEventSystem.currentSelectedGameObject}");
+            
+            if (menuInputModule)
+            {
+                Debug.Log($"[MainMenu] InputModule: Enabled={menuInputModule.enabled}, " +
+                         $"ActionsAsset={(menuInputModule.actionsAsset != null ? "Assigned" : "NULL")}");
+            }
+            else
+            {
+                Debug.LogError("[MainMenu] InputModule is NULL!");
+            }
+        }
+        else
+        {
+            Debug.LogError("[MainMenu] EventSystem is NULL!");
+        }
+    }
 }
+

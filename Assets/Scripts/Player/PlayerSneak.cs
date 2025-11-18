@@ -12,6 +12,7 @@ public class PlayerSneak : MonoBehaviour
     float time;
     Color startColor;
     Color transparentColor;
+    bool isInputBlocked;
 
     void Awake()
     {
@@ -57,6 +58,7 @@ public class PlayerSneak : MonoBehaviour
 
         sneakAction.performed += OnSneak;
         sneakAction.canceled += OnSneak;
+        PlayerActions.gameOverState += OnGameOverState;
     }
 
     void OnDisable()
@@ -70,10 +72,13 @@ public class PlayerSneak : MonoBehaviour
 
         sneakAction.performed -= OnSneak;
         sneakAction.canceled -= OnSneak;
+        PlayerActions.gameOverState -= OnGameOverState;
     }
 
     void OnSneak(InputAction.CallbackContext context)
     {
+        if (isInputBlocked)
+            return;
         isSneaking = context.ReadValueAsButton();
         PlayerActions.OnSneakStatus(isSneaking);
     }
@@ -94,6 +99,14 @@ public class PlayerSneak : MonoBehaviour
             if (!vignette.gameObject.activeSelf)
                 vignette.gameObject.SetActive(true);
 
+            if (isInputBlocked)
+            {
+                isSneaking = false;
+                PlayerActions.OnSneakStatus(false);
+                vignette.gameObject.SetActive(false);
+                return;
+            }
+
             time += Time.deltaTime / fateDuration;
             vignette.color = Color.Lerp(vignette.color, startColor, time);
         }
@@ -104,6 +117,16 @@ public class PlayerSneak : MonoBehaviour
             vignette.color = transparentColor;
             if (vignette.gameObject.activeSelf)
                 vignette.gameObject.SetActive(false);
+        }
+    }
+
+    void OnGameOverState(bool isBlocked)
+    {
+        isInputBlocked = isBlocked;
+        if (isBlocked && isSneaking)
+        {
+            isSneaking = false;
+            PlayerActions.OnSneakStatus(false);
         }
     }
 }
