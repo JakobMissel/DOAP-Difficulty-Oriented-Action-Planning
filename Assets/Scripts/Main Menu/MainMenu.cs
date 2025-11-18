@@ -923,13 +923,9 @@ public class MainMenu : MonoBehaviour
 
     private void SetGameplayInputActive(bool isActive)
     {
-        if (playerInput == null)
+        if (playerInput == null && player)
         {
-            // Try to find player input if not cached
-            if (player)
-            {
-                playerInput = player.GetComponent<PlayerInput>();
-            }
+            playerInput = player.GetComponent<PlayerInput>();
         }
 
         if (isActive)
@@ -938,19 +934,11 @@ public class MainMenu : MonoBehaviour
             {
                 playerInput.enabled = true;
                 playerInput.actions?.Enable();
-                Debug.Log("[MainMenu] Enabled gameplay input");
             }
         }
         else
         {
-            if (playerInput)
-            {
-                playerInput.actions?.Disable();
-                playerInput.enabled = false;
-                Debug.Log("[MainMenu] Disabled gameplay input");
-            }
-            
-            // Also disable ALL PlayerInput components in the scene to be absolutely sure
+            // Disable all PlayerInput components to prevent gameplay input during menus
             var allPlayerInputs = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
             foreach (var pi in allPlayerInputs)
             {
@@ -958,7 +946,6 @@ public class MainMenu : MonoBehaviour
                 {
                     pi.actions?.Disable();
                     pi.enabled = false;
-                    Debug.Log($"[MainMenu] Force-disabled PlayerInput on: {pi.gameObject.name}");
                 }
             }
         }
