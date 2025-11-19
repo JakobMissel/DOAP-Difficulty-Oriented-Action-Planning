@@ -111,7 +111,7 @@ MonoBehaviour:
   rotateY: 0
   rotateZ: 0
   audioGameObject: {fileID: 2840963429894322711, guid: f33f6e2ec70e4c942b820c095de920ed, type: 3}
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: d53364713abbd1042b0836fdef50f495, type: 3}
   destroyOnPickup: 1
   canBepickedUp: 1
   buttonRequired: 1
@@ -121,7 +121,7 @@ MonoBehaviour:
   buttonHeld: 0
   thrownObjectPrefab: {fileID: 7497630765312554297, guid: ce1798a13c0226b42904c21168489eaf, type: 3}
   ammoCount: 99
-  noiseRadius: 15
+  noiseRadius: 5
 --- !u!135 &2152200397279163435
 SphereCollider:
   m_ObjectHideFlags: 0

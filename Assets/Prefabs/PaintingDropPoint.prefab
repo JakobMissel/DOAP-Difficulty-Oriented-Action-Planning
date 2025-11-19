@@ -181,8 +181,11 @@ MonoBehaviour:
   verticalHeight: 0.5
   rotate: 0
   rotationSpeed: 100
-  audioGameObject: {fileID: 0}
-  audioClip: {fileID: 0}
+  rotateX: 0
+  rotateY: 1
+  rotateZ: 0
+  audioGameObject: {fileID: 2840963429894322711, guid: f33f6e2ec70e4c942b820c095de920ed, type: 3}
+  audioClip: {fileID: 8300000, guid: 374e95723961b924680712887f444cda, type: 3}
   destroyOnPickup: 0
   canBepickedUp: 0
   buttonRequired: 1

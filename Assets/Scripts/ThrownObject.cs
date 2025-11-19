@@ -7,12 +7,15 @@ public class ThrownObject : MonoBehaviour
     [SerializeField] public Sprite thrownObjectImage;
     [SerializeField] bool destroyOnImpact = false;
     [SerializeField] float bounceMultiplier = 0.5f;
-    [HideInInspector] public float noiseRadius = 5f;
+    [SerializeField] public float noiseRadius = 5f;
+    [Header("Audio")]
+    AudioSource audioSource;
     bool hasCollided = false;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -27,10 +30,21 @@ public class ThrownObject : MonoBehaviour
         transform.Rotate(500 * Time.deltaTime, 0, 0);
     }
 
+    void PlayAudio()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Play();
+            return;
+        }
+        Debug.LogWarning($"ThrownObject ({name}) has no AudioSource component to play audio.");
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         Vector3 bounceDirection = Vector3.Reflect(-collision.relativeVelocity, collision.GetContact(0).normal);
         rb.linearVelocity = bounceDirection * bounceMultiplier;
+        PlayAudio();
         if (hasCollided) return;
         hasCollided = true;
         GameObject noiseArea = null;

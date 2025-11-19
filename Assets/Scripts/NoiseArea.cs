@@ -12,12 +12,16 @@ public class NoiseArea : MonoBehaviour
     [Header("Visual")] // The visual representation of the noise area
     [SerializeField] GameObject noiseVisual;
     [SerializeField] float expansionTime = 1f;
-    float maxScale = 0.125f; // Maximum scale for the visual representation (size scales with the noise area since noiseVisual already is a child of noiseArea)
+    float maxScale;
 
     private bool hasTriggered = false;
     private float spawnTime;
 
-    
+    void Awake()
+    {
+        maxScale = noiseVisual.transform.localScale.x;
+    }
+
     private void Start()
     {
         spawnTime = Time.time;

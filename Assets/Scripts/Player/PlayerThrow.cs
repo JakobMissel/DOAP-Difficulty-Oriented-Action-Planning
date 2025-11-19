@@ -28,6 +28,9 @@ public class PlayerThrow : MonoBehaviour
     [SerializeField] float throwForce = 7f;
     [SerializeField] float throwGravity = -9.81f;
     [SerializeField] float throwCooldown = 1f;
+    [Header("Throw Settings")]
+    [SerializeField] AudioClip audioClip;
+
     float cooldownTimer = 0f;
     bool canThrow = true;
     bool resetCamera;
@@ -105,8 +108,9 @@ public class PlayerThrow : MonoBehaviour
         if (!isAiming || !canThrow || ammoCount <= 0) return;
         canThrow = false;
         SpawnThrownObject();
+        PlayerAudio.Instance.PlayAudio(audioClip);
         ammoCount = throwablePrefabsList.Count;
-        UpdateUICall();
+        UpdateAmmoFeedback();
     }
 
     void OnAim(InputAction.CallbackContext ctx)
@@ -114,10 +118,9 @@ public class PlayerThrow : MonoBehaviour
         if (isInputBlocked) return;
         // Prevent aiming calls while carrying painting
         if (PlayerActions.Instance.carriesPainting || PlayerActions.Instance.isOnWall) return; 
-
         isAiming = ctx.ReadValueAsButton();
         PlayerActions.OnAimStatus(isAiming);
-        PlayerActions.OnSetHitArea(hitArea);
+        PlayerActions.OnSetHitArea(hitArea);   
     }
 
     void ThrowCooldown()
@@ -129,6 +132,13 @@ public class PlayerThrow : MonoBehaviour
             canThrow = true;
             cooldownTimer = 0f;
         }
+    }
+
+    void AdjustHitAreaSize()
+    {
+        if(throwablePrefabsList.Count <= 0) return;
+        var noiseRadius = throwablePrefabsList[0].GetComponent<ThrownObject>().noiseRadius;
+        hitArea.transform.GetChild(0).localScale = new Vector3(noiseRadius, noiseRadius, noiseRadius);
     }
 
     void SpawnThrownObject()
@@ -214,7 +224,7 @@ public class PlayerThrow : MonoBehaviour
     {
         throwablePrefabsList.Clear();
         ammoCount = throwablePrefabsList.Count;
-        UpdateUICall();
+        UpdateAmmoFeedback();
     }
 
     /// <summary>
@@ -272,10 +282,10 @@ public class PlayerThrow : MonoBehaviour
             throwablePrefabsList.Add(throwableOject);
         }
         ammoCount = throwablePrefabsList.Count;
-        UpdateUICall();
+        UpdateAmmoFeedback();
     }
 
-    void UpdateUICall()
+    void UpdateAmmoFeedback()
     {
         print(ammoCount);
         if (throwablePrefabsList.Count > 0)
@@ -287,5 +297,6 @@ public class PlayerThrow : MonoBehaviour
             PlayerActions.OnSpriteUpdate(null);
         }
         PlayerActions.OnAmmoUpdate(ammoCount);
+        AdjustHitAreaSize();
     }
 }
