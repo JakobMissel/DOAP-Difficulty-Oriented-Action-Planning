@@ -47,15 +47,10 @@ namespace Assets.Scripts.GOAP.Actions
             data.BaseYaw = 0f;
             data.LookTransform = null;
             data.BaseLocalEuler = Vector3.zero;
+            data.HasTriggeredSearchAnimation = false;
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
-
-            // Trigger Searching animation when investigating last known position
-            if (animation != null)
-            {
-                animation.Search();
-            }
 
             agent.isStopped = false;
             agent.updateRotation = true;
@@ -83,6 +78,7 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
             var brain = mono.Transform.GetComponent<BrainBehaviour>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
             
             if (sight != null && sight.PlayerSpotted())
             {
@@ -128,9 +124,16 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.updateRotation = true;
                 agent.isStopped = false;
                 agent.SetDestination(currentTargetPos);
+                
+                // Animation: Running when actively following (only trigger once)
+                if (!data.HasTriggeredSearchAnimation && animation != null)
+                {
+                    animation.Run();
+                }
 
                 data.ScanningInitialized = false;
                 data.ArrivalTimer = 0f;
+                data.HasTriggeredSearchAnimation = false; // Reset for when we stop following
                 return ActionRunState.Continue;
             }
 
@@ -139,11 +142,25 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.updateRotation = true;
                 agent.isStopped = false;
                 agent.SetDestination(currentTargetPos);
+                
+                // Animation: Running when moving (only trigger once)
+                if (!data.HasTriggeredSearchAnimation && animation != null)
+                {
+                    animation.Run();
+                }
+                
                 return ActionRunState.Continue;
             }
 
             // Arrived: stop and run scan pattern
             agent.isStopped = true;
+            
+            // Animation: Searching when stopped and scanning (only trigger once)
+            if (!data.HasTriggeredSearchAnimation && animation != null)
+            {
+                animation.Search();
+                data.HasTriggeredSearchAnimation = true;
+            }
 
             if (!data.ScanningInitialized)
             {
@@ -228,6 +245,7 @@ namespace Assets.Scripts.GOAP.Actions
             public float BaseYaw { get; set; }
             public Transform LookTransform { get; set; }
             public Vector3 BaseLocalEuler { get; set; }
+            public bool HasTriggeredSearchAnimation { get; set; }
             
             // Store per-guard settings
             public float ClearDuration { get; set; }

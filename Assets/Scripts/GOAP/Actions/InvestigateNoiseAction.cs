@@ -43,11 +43,12 @@ namespace Assets.Scripts.GOAP.Actions
             data.ConfusionPauseTime = 0f;
             data.IsInConfusionPhase = true;
             data.HasStartedMoving = false;
+            data.HasReachedDestination = false;
             
-            // Trigger Idle animation initially (will switch to searching during confusion)
+            // Trigger Search animation for the "huh?" confusion phase
             if (animation != null)
             {
-                animation.Idle();
+                animation.Search();
             }
 
             Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} STARTING - heard noise at {data.Target?.Position}");
@@ -102,11 +103,7 @@ namespace Assets.Scripts.GOAP.Actions
                     );
                 }
                 
-                // Play search animation during pause
-                if (animation != null && data.ConfusionPauseTime < 0.1f)
-                {
-                    animation.Search();
-                }
+                // Animation is already set to Search in Start() - no need to call every frame
                 
                 // Wait in confusion
                 data.ConfusionPauseTime += Time.deltaTime;
@@ -122,6 +119,12 @@ namespace Assets.Scripts.GOAP.Actions
                     agent.isStopped = false;
                     agent.SetDestination(data.Target.Position);
                     data.HasStartedMoving = true;
+                    
+                    // Animation: Walking towards noise (only trigger once on transition)
+                    if (animation != null)
+                    {
+                        animation.Walk();
+                    }
                 }
                 
                 return ActionRunState.Continue;
@@ -135,10 +138,17 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.updatePosition = true;
                 agent.SetDestination(data.Target.Position);
                 data.HasStartedMoving = true;
+                
+                // Animation: Walking towards noise (only trigger once when starting)
+                if (animation != null)
+                {
+                    animation.Walk();
+                }
+                
                 Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.Target.Position}");
             }
 
-            // Keep updating destination
+            // Keep updating destination (but don't re-trigger walk animation every frame)
             agent.SetDestination(data.Target.Position);
 
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
@@ -148,6 +158,14 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 // Stop at the location and investigate
                 agent.isStopped = true;
+                
+                // Animation: Searching at noise location (only trigger once on arrival)
+                if (!data.HasReachedDestination && animation != null)
+                {
+                    animation.Search();
+                    data.HasReachedDestination = true;
+                }
+                
                 data.InvestigationTime += Time.deltaTime;
 
                 if (data.InvestigationTime < INVESTIGATION_DURATION)
@@ -215,6 +233,7 @@ namespace Assets.Scripts.GOAP.Actions
             public float ConfusionPauseTime { get; set; }
             public bool IsInConfusionPhase { get; set; }
             public bool HasStartedMoving { get; set; }
+            public bool HasReachedDestination { get; set; }
         }
     }
 }
