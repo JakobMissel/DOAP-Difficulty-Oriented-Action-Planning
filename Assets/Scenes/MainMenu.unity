@@ -47840,6 +47840,10 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 550177992735488627, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: DifficultyElement
+      objectReference: {fileID: 0}
     - target: {fileID: 821896602097451637, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -47871,6 +47875,10 @@ PrefabInstance:
     - target: {fileID: 821896602097451637, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -771
+      objectReference: {fileID: 0}
+    - target: {fileID: 867562220819927736, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: MainPanelElement
       objectReference: {fileID: 0}
     - target: {fileID: 1154682153054601019, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -47964,13 +47972,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 1499101036809825095, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: DifficultyElement
+      objectReference: {fileID: 0}
     - target: {fileID: 1551672621526551438, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1551672621526551438, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: DifficultyElement
+      objectReference: {fileID: 0}
     - target: {fileID: 1595653196741640453, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 185
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057809754786675072, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: MainPanelElement
       objectReference: {fileID: 0}
     - target: {fileID: 2224073318164172312, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Name
@@ -48116,6 +48136,18 @@ PrefabInstance:
       propertyPath: uiInputActions
       value: 
       objectReference: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 2934124673675773306, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: nonBlockingGraphics.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934124673675773306, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: 'nonBlockingGraphics.Array.data[0]'
+      value: 
+      objectReference: {fileID: 607255595}
+    - target: {fileID: 2934124673675773306, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: nonBlockingCanvasGroups.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2969138544545652097, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -48195,6 +48227,10 @@ PrefabInstance:
     - target: {fileID: 4045111137407937836, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4045111137407937836, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: MainPanelElement
       objectReference: {fileID: 0}
     - target: {fileID: 4105751563937837759, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_TargetGraphic
@@ -48280,6 +48316,10 @@ PrefabInstance:
       propertyPath: m_Colors.m_HighlightedColor.r
       value: 0.48900002
       objectReference: {fileID: 0}
+    - target: {fileID: 4107658783247265128, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: DifficultyElement
+      objectReference: {fileID: 0}
     - target: {fileID: 4139122147979322226, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Colors.m_NormalColor.a
       value: 0.2
@@ -48350,15 +48390,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4139122147979322226, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.48900002
+      value: 0.5907511
       objectReference: {fileID: 0}
     - target: {fileID: 4139122147979322226, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.48900002
+      value: 0.6654818
       objectReference: {fileID: 0}
     - target: {fileID: 4139122147979322226, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.48900002
+      value: 0.7132075
       objectReference: {fileID: 0}
     - target: {fileID: 4196529420506628677, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Color.a
@@ -48371,6 +48411,10 @@ PrefabInstance:
     - target: {fileID: 4262577228629036120, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 324.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 4664521017142351594, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: MainPanelElement
       objectReference: {fileID: 0}
     - target: {fileID: 4669778185779705561, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -49000,6 +49044,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7230639514422766832, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: MainPanelElement
+      objectReference: {fileID: 0}
     - target: {fileID: 7497746424408357405, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -49112,6 +49160,10 @@ PrefabInstance:
       propertyPath: m_VertexColorAlwaysGammaSpace
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8400420502973088096, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: DifficultyElement
+      objectReference: {fileID: 0}
     - target: {fileID: 8682150362946257936, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Color.a
       value: 0
@@ -49124,8 +49176,18 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9185108089869491734, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_TagString
+      value: MainPanelElement
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 333721269692014492, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+    - {fileID: 5422489198783891256, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+    - {fileID: 1673281945218817146, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+    - {fileID: 5518897296823741423, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+    - {fileID: 1201623130045263736, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+    - {fileID: 6540060353904316421, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6779242357583961838, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       insertIndex: -1
