@@ -11974,10 +11974,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.29
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -12077,9 +12077,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 0}
-  loopClip: {fileID: 0}
-  deactivateClip: {fileID: 0}
+  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
+  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -15313,6 +15313,10 @@ PrefabInstance:
     - target: {fileID: -866781053136647888, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: obstacleLayer.m_Bits
       value: 6272
+      objectReference: {fileID: 0}
+    - target: {fileID: 2795140971610399696, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: MaxDistance
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 3952467162627892989, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Name
@@ -25086,6 +25090,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 2795140971610399696, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: MaxDistance
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 3221435276121157628, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -26775,10 +26783,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.29
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -26878,9 +26886,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 0}
-  loopClip: {fileID: 0}
-  deactivateClip: {fileID: 0}
+  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
+  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -30606,10 +30614,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.29
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -30709,9 +30717,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 0}
-  loopClip: {fileID: 0}
-  deactivateClip: {fileID: 0}
+  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
+  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -39013,10 +39021,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.29
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -39116,9 +39124,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 0}
-  loopClip: {fileID: 0}
-  deactivateClip: {fileID: 0}
+  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
+  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -41363,10 +41371,10 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.29
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -41466,9 +41474,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 0}
-  loopClip: {fileID: 0}
-  deactivateClip: {fileID: 0}
+  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
+  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -65020,7 +65028,7 @@ GameObject:
   - component: {fileID: 6211369512281206002}
   - component: {fileID: 7029752985311602645}
   - component: {fileID: 7029752985311602646}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube.106
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68313,7 +68321,7 @@ GameObject:
   - component: {fileID: 3475707242244091077}
   - component: {fileID: 5987426365725579761}
   - component: {fileID: 8580188406043799530}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube.107
   m_TagString: Untagged
   m_Icon: {fileID: 0}
