@@ -44,6 +44,14 @@ public class MainMenu : MonoBehaviour
     
     [Header("Input")]
     [SerializeField] private InputActionAsset uiInputActions;
+    
+    [Header("Decor Overlays")]
+    [SerializeField] private Graphic[] nonBlockingGraphics;
+    [SerializeField] private CanvasGroup[] nonBlockingCanvasGroups;
+    
+    // Cached text elements by tag
+    private GameObject[] mainPanelTextElements;
+    private GameObject[] difficultyPanelTextElements;
 
     private GameObject player;
     private bool isGamePaused;
@@ -108,11 +116,18 @@ public class MainMenu : MonoBehaviour
             gameplayCanvas = GameObject.Find("Canvas") ?? GameObject.Find("GameplayCanvas") ?? GameObject.Find("HUD");
         }
 
+        // Cache text elements by tags
+        CacheTextElements();
+
         // Subscribe to checkpoint load completion
         CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
 
         // Setup button listeners
         SetupButtonListeners();
+        
+        // Ensure canvas is properly configured for input
+        EnsureCanvasConfiguration();
+        ConfigureDecorativeOverlays();
 
         // Check if we're auto-starting from a retry
         bool autoStart = PlayerPrefs.GetInt("RetryAutoStart", 0) == 1;
@@ -205,6 +220,9 @@ public class MainMenu : MonoBehaviour
         if (pausePanel) pausePanel.SetActive(false);
         if (gameOverPanel) gameOverPanel.SetActive(false);
         if (howToPlayPanel) howToPlayPanel.SetActive(false);
+
+        // Show MainPanel text elements
+        ShowMainPanelText();
 
         // Hide gameplay UI elements
         HideGameplayUI();
@@ -347,6 +365,9 @@ public class MainMenu : MonoBehaviour
         }
         if (howToPlayPanel) howToPlayPanel.SetActive(false);
 
+        // Hide all text elements
+        HideAllPanelText();
+
         // Re-enable gameplay EventSystems
         RestoreGameplayEventSystems();
 
@@ -397,6 +418,9 @@ public class MainMenu : MonoBehaviour
             Debug.Log("Static Difficulty Mode - Select difficulty");
             if (mainPanel) mainPanel.SetActive(false);
             if (difficultyPanel) difficultyPanel.SetActive(true);
+            
+            // Show difficulty panel text elements
+            ShowDifficultyPanelText();
         }
     }
 
@@ -436,6 +460,9 @@ public class MainMenu : MonoBehaviour
     {
         if (mainPanel) mainPanel.SetActive(true);
         if (difficultyPanel) difficultyPanel.SetActive(false);
+        
+        // Show main panel text elements
+        ShowMainPanelText();
     }
 
     private void OnExitClicked()
@@ -1276,5 +1303,187 @@ public class MainMenu : MonoBehaviour
             Debug.LogError("[MainMenu] EventSystem is NULL!");
         }
     }
-}
 
+    private void CacheTextElements()
+    {
+        // Find all GameObjects with MainPanelElement tag
+        try
+        {
+            mainPanelTextElements = GameObject.FindGameObjectsWithTag("MainPanelElement");
+            Debug.Log($"[MainMenu] Found {mainPanelTextElements.Length} text elements with MainPanelElement tag");
+        }
+        catch (UnityException)
+        {
+            Debug.LogWarning("[MainMenu] Tag 'MainPanelElement' not defined in Tags and Layers. Please add it in Project Settings > Tags and Layers");
+            mainPanelTextElements = new GameObject[0];
+        }
+
+        // Find all GameObjects with DifficultyElement tag
+        try
+        {
+            difficultyPanelTextElements = GameObject.FindGameObjectsWithTag("DifficultyElement");
+            Debug.Log($"[MainMenu] Found {difficultyPanelTextElements.Length} text elements with DifficultyElement tag");
+        }
+        catch (UnityException)
+        {
+            Debug.LogWarning("[MainMenu] Tag 'DifficultyElement' not defined in Tags and Layers. Please add it in Project Settings > Tags and Layers");
+            difficultyPanelTextElements = new GameObject[0];
+        }
+    }
+
+    private void ShowMainPanelText()
+    {
+        // Show MainPanel text elements
+        if (mainPanelTextElements != null)
+        {
+            foreach (var textElement in mainPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(true);
+                }
+            }
+            Debug.Log($"[MainMenu] Showed {mainPanelTextElements.Length} MainPanel text elements");
+        }
+
+        // Hide DifficultyPanel text elements
+        if (difficultyPanelTextElements != null)
+        {
+            foreach (var textElement in difficultyPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+    }
+
+    private void ShowDifficultyPanelText()
+    {
+        // Hide MainPanel text elements
+        if (mainPanelTextElements != null)
+        {
+            foreach (var textElement in mainPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+
+        // Show DifficultyPanel text elements
+        if (difficultyPanelTextElements != null)
+        {
+            foreach (var textElement in difficultyPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(true);
+                }
+            }
+            Debug.Log($"[MainMenu] Showed {difficultyPanelTextElements.Length} DifficultyPanel text elements");
+        }
+    }
+
+    private void HideAllPanelText()
+    {
+        // Hide all text elements when no panel is showing
+        if (mainPanelTextElements != null)
+        {
+            foreach (var textElement in mainPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+
+        if (difficultyPanelTextElements != null)
+        {
+            foreach (var textElement in difficultyPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+    }
+
+    private void EnsureCanvasConfiguration()
+    {
+        // Get the canvas root
+        Transform canvasRoot = transform;
+        while (canvasRoot.parent != null)
+        {
+            canvasRoot = canvasRoot.parent;
+        }
+
+        var canvas = canvasRoot.GetComponent<Canvas>();
+        if (canvas == null)
+        {
+            Debug.LogError("[MainMenu] Canvas component not found on root!");
+            return;
+        }
+
+        Debug.Log($"[MainMenu] Ensuring Canvas configuration - RenderMode: {canvas.renderMode}");
+
+        // Ensure Canvas has GraphicRaycaster
+        var raycaster = canvas.GetComponent<GraphicRaycaster>();
+        if (raycaster == null)
+        {
+            raycaster = canvas.gameObject.AddComponent<GraphicRaycaster>();
+            Debug.Log("[MainMenu] Added GraphicRaycaster to Canvas");
+        }
+        raycaster.enabled = true;
+
+        // If using Screen Space - Camera, ensure camera is assigned
+        if (canvas.renderMode == RenderMode.ScreenSpaceCamera && canvas.worldCamera == null)
+        {
+            canvas.worldCamera = Camera.main;
+            Debug.Log("[MainMenu] Assigned Main Camera to Canvas");
+        }
+
+        // Set canvas to render on top
+        canvas.sortingOrder = 1000;
+        Debug.Log($"[MainMenu] Canvas configured - Raycaster enabled, SortingOrder: {canvas.sortingOrder}");
+    }
+
+    private void ConfigureDecorativeOverlays()
+    {
+        if (nonBlockingGraphics != null)
+        {
+            foreach (var graphic in nonBlockingGraphics)
+            {
+                if (!graphic)
+                {
+                    continue;
+                }
+                if (graphic.raycastTarget)
+                {
+                    graphic.raycastTarget = false;
+                    Debug.Log($"[MainMenu] Disabled raycast target on decor graphic '{graphic.name}'");
+                }
+            }
+        }
+        
+        if (nonBlockingCanvasGroups != null)
+        {
+            foreach (var canvasGroup in nonBlockingCanvasGroups)
+            {
+                if (!canvasGroup)
+                {
+                    continue;
+                }
+                if (canvasGroup.blocksRaycasts)
+                {
+                    canvasGroup.blocksRaycasts = false;
+                    Debug.Log($"[MainMenu] Disabled raycast blocking on decor CanvasGroup '{canvasGroup.name}'");
+                }
+            }
+        }
+    }
+}

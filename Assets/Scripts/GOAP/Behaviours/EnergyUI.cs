@@ -19,9 +19,14 @@ public class EnergyUI : MonoBehaviour
     [SerializeField] private bool showWhenNotRecharging;
     
     [Header("Occlusion Settings")]
-    [SerializeField] private LayerMask occlusionLayers = -1; // Check all layers by default
-    [Tooltip("Offset from guard's position for raycast origin (to avoid self-collision)")]
-    [SerializeField] private float raycastOriginOffset = 0.5f;
+    [Tooltip("Layers that can block the UI visibility. IMPORTANT: Should only include solid walls/floors. Exclude: Guards, Lamps, Decorations, UI, Ignore Raycast")]
+    [SerializeField] private LayerMask occlusionLayers = -1;
+    [Tooltip("Offset from guard's position for raycast target (chest height)")]
+    [SerializeField] private float raycastHeightOffset = 1.0f;
+    [Tooltip("Small offset to prevent hitting guard's own collider")]
+    [SerializeField] private float raycastDistanceBuffer = 0.1f;
+    [Tooltip("Enable to see debug rays in Scene view (green = visible, red = occluded)")]
+    [SerializeField] private bool debugOcclusion = false;
     
     private void Awake()
     {
@@ -106,24 +111,30 @@ public class EnergyUI : MonoBehaviour
         if (Camera.main == null)
             return false;
 
-        // Get direction from camera to guard
+        // Target position on the guard (chest height)
+        Vector3 guardPos = transform.position + Vector3.up * raycastHeightOffset;
         Vector3 cameraPos = Camera.main.transform.position;
-        Vector3 guardPos = transform.position + Vector3.up * raycastOriginOffset;
         Vector3 direction = guardPos - cameraPos;
         float distance = direction.magnitude;
 
-        // Raycast from camera to guard
-        if (Physics.Raycast(cameraPos, direction, out RaycastHit hit, distance, occlusionLayers))
+        // Reduce distance slightly to avoid hitting guard's own collider
+        float checkDistance = Mathf.Max(0.1f, distance - raycastDistanceBuffer);
+
+        // Raycast from camera to guard, checking for obstructions
+        RaycastHit[] hits = Physics.RaycastAll(cameraPos, direction.normalized, checkDistance, occlusionLayers);
+        
+        // Filter out hits on the guard itself or its children
+        foreach (RaycastHit hit in hits)
         {
-            // Check if we hit the guard or something else
-            // If we hit the guard (or its children), it's visible
-            if (hit.transform == transform || hit.transform.IsChildOf(transform))
+            // If we hit something that's not the guard or its children, it's occluded
+            if (hit.transform != transform && !hit.transform.IsChildOf(transform) && !transform.IsChildOf(hit.transform))
             {
-                return true;
+                if (debugOcclusion)
+                {
+                    Debug.Log($"[EnergyUI] {transform.name} occluded by {hit.transform.name} on layer {LayerMask.LayerToName(hit.transform.gameObject.layer)}");
+                }
+                return false;
             }
-            
-            // We hit something else (wall, obstacle) before reaching the guard
-            return false;
         }
         
         // No obstruction detected, guard is visible
@@ -165,6 +176,9 @@ public class EnergyUI : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!debugOcclusion)
+            return;
+            
         // Draw a small sphere to show where the UI will appear
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position + offset, 0.2f);
@@ -172,9 +186,15 @@ public class EnergyUI : MonoBehaviour
         // Draw line from camera to guard (for debugging occlusion)
         if (Camera.main != null)
         {
-            Vector3 guardPos = transform.position + Vector3.up * raycastOriginOffset;
-            Gizmos.color = IsVisibleToCamera() ? Color.green : Color.red;
+            Vector3 guardPos = transform.position + Vector3.up * raycastHeightOffset;
+            bool visible = IsVisibleToCamera();
+            
+            // Green = visible, Red = occluded
+            Gizmos.color = visible ? Color.green : Color.red;
             Gizmos.DrawLine(Camera.main.transform.position, guardPos);
+            
+            // Draw sphere at raycast target point
+            Gizmos.DrawWireSphere(guardPos, 0.15f);
         }
     }
 }

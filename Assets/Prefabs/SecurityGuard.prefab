@@ -235,7 +235,7 @@ MonoBehaviour:
   hearPlayerThroughWalls: 0
   hearingObstructionMask:
     serializedVersion: 2
-    m_Bits: 6336
+    m_Bits: 6337
   hearingRayHeight: 1.5
 --- !u!114 &8043971814689888828
 MonoBehaviour:
@@ -282,14 +282,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyBehaviour: {fileID: 0}
   offset: {x: 0, y: 1.8, z: 0}
-  chargingColor: {r: 0, g: 1, b: 1, a: 1}
+  chargingColor: {r: 0.3448647, g: 0.645283, b: 0.18384477, a: 1}
   lowEnergyColor: {r: 1, g: 0, b: 0, a: 1}
   fontSize: 16
-  showWhenNotRecharging: 1
+  showWhenNotRecharging: 0
   occlusionLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
-  raycastOriginOffset: 0.5
+    m_Bits: 32704
+  raycastHeightOffset: 1
+  raycastDistanceBuffer: 0.1
+  debugOcclusion: 0
 --- !u!114 &7660617999256208820
 MonoBehaviour:
   m_ObjectHideFlags: 0
