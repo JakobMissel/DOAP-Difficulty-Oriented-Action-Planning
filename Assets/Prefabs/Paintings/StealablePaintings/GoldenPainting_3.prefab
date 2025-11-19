@@ -238,7 +238,7 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Painting 3
-  painterName: Painter 3
+  painterName: "Fernand L\xE9ger"
   value: 100 DKK
 --- !u!65 &6090733777565063556
 BoxCollider:
@@ -445,7 +445,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 576e68b1718a224429a4f34c5830b682, type: 2}
+  - {fileID: 2100000, guid: cc2a9b4800c8383499f2e6f665654496, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
