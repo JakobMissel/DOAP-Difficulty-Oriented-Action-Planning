@@ -576,6 +576,10 @@ public class MainMenu : MonoBehaviour
             {
                 HideMenu();
                 isTransitioningToGameplay = false;
+                
+                // Unload the MainMenu scene after gameplay scene is loaded
+                // DontDestroyOnLoad objects (like the menu canvas) will persist
+                UnloadMainMenuScene();
             }
         }
         else if (scene.name == mainMenuSceneName)
@@ -695,6 +699,16 @@ public class MainMenu : MonoBehaviour
         if (gameplayScene.isLoaded)
         {
             SceneManager.UnloadSceneAsync(gameplayScene);
+        }
+    }
+
+    private void UnloadMainMenuScene()
+    {
+        var mainMenuScene = SceneManager.GetSceneByName(mainMenuSceneName);
+        if (mainMenuScene.isLoaded)
+        {
+            Debug.Log($"[MainMenu] Unloading MainMenu scene - DontDestroyOnLoad objects will persist");
+            SceneManager.UnloadSceneAsync(mainMenuScene);
         }
     }
 
