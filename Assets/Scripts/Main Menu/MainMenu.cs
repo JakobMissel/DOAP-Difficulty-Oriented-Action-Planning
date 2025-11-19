@@ -352,13 +352,6 @@ public class MainMenu : MonoBehaviour
 
         // Show gameplay UI elements
         ShowGameplayUI();
-        
-        // Only refresh objective display if not coming from game over (retry)
-        // The checkpoint system will handle objectives properly during retry
-        if (!isGameOver && !isRetrying)
-        {
-            RefreshObjectiveDisplay();
-        }
 
         // Unpause the game
         Time.timeScale = 1f;
