@@ -15,11 +15,6 @@ MonoBehaviour:
   nameSpace: Assets.Scripts.GOAP
   scripts:
     goals:
-    - <Name>k__BackingField: BreakGoal
-      fullName: Assets.Scripts.GOAP.BreakGoal, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/BreakGoal.cs
-      <Id>k__BackingField: Break-3fbb6fe8-6a30-42bb-a731-3d1003d9a4b5
     - <Name>k__BackingField: CatchGoal
       fullName: Assets.Scripts.GOAP.Goals.CatchGoal, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -30,11 +25,6 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/ClearLastKnownGoal.cs
       <Id>k__BackingField: ClearLastKnown-85419734-05f9-4234-9ba3-fdd34120ceb4
-    - <Name>k__BackingField: ConctactBackupGoal
-      fullName: Assets.Scripts.GOAP.ConctactBackupGoal, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/ConctactBackupGoal.cs
-      <Id>k__BackingField: ConctactBackup-6385187a-cc24-470a-94a5-2b1527bccda5
     - <Name>k__BackingField: GoToLaserGoal
       fullName: Assets.Scripts.GOAP.GoToLaserGoal, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -45,11 +35,6 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/InvestigateNoiseGoal.cs
       <Id>k__BackingField: InvestigateNoise-ce8984c9-1451-44bb-a15a-eb0c4dc9d8f7
-    - <Name>k__BackingField: InvestigatePlayerNoiseGoal
-      fullName: Assets.Scripts.GOAP.InvestigatePlayerNoiseGoal, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/Goals/InvestigatePlayerNoiseGoal.cs
-      <Id>k__BackingField: InvestigatePlayerNoise-7b6245d4-dac0-40df-bcf5-f30cc6ed9297
     - <Name>k__BackingField: LaserMaintainOffGoal
       fullName: Assets.Scripts.GOAP.Goals.LaserMaintainOffGoal, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -81,11 +66,6 @@ MonoBehaviour:
       <Path>k__BackingField: Assets/Scripts/GOAP/Goals/RechargeGoal.cs
       <Id>k__BackingField: Recharge-b6a22d6b-bcb7-43b9-8de2-24d37fb909f8
     actions:
-    - <Name>k__BackingField: BreakAction
-      fullName: Assets.Scripts.GOAP.BreakAction, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/BreakAction.cs
-      <Id>k__BackingField: Break-f39d68ed-d6b8-4b86-b32b-6eebb6ea748e
     - <Name>k__BackingField: CatchAction
       fullName: Assets.Scripts.GOAP.Actions.CatchAction, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -96,11 +76,6 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Actions/ClearLastKnownAction.cs
       <Id>k__BackingField: ClearLastKnown-11630d95-435f-4d5b-8ad2-dcf0edec684f
-    - <Name>k__BackingField: ConctactBackupAction
-      fullName: Assets.Scripts.GOAP.Actions.ConctactBackupAction, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/ConctactBackupAction.cs
-      <Id>k__BackingField: ConctactBackup-c56b48c2-f65a-480e-ac16-feba162620c9
     - <Name>k__BackingField: GoToLaserAction
       fullName: Assets.Scripts.GOAP.Actions.GoToLaserAction, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -111,11 +86,6 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Actions/InvestigateNoiseAction.cs
       <Id>k__BackingField: InvestigateNoise-73e3c275-b47d-48a5-bcdf-9e503738a046
-    - <Name>k__BackingField: InvestigatePlayerNoiseAction
-      fullName: Assets.Scripts.GOAP.Actions.InvestigatePlayerNoiseAction, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      <Path>k__BackingField: Assets/Scripts/GOAP/Actions/InvestigatePlayerNoiseAction.cs
-      <Id>k__BackingField: InvestigatePlayerNoise-a20df32e-1993-4188-856a-4fd9f4b4cfa3
     - <Name>k__BackingField: AlertGuardsAction
       fullName: Assets.Scripts.GOAP.Actions.Laser.AlertGuardsAction, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
