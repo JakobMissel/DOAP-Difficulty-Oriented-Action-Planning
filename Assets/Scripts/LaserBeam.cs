@@ -38,6 +38,7 @@ public class LaserBeam : MonoBehaviour
     private LineRenderer lr;
     private BoxCollider boxCol;
     private AudioSource audioSource;
+    private bool idleLoopPlaying;
     private Material runtimeMat;
 
     private readonly HashSet<Collider> _inside = new HashSet<Collider>();
@@ -216,6 +217,11 @@ public class LaserBeam : MonoBehaviour
         {
             if (_active)
                 Deactivate();
+            StopIdleLoop();
+        }
+        else
+        {
+            StartIdleLoop();
         }
     }
 
@@ -265,19 +271,9 @@ public class LaserBeam : MonoBehaviour
         SetBeamColor(activeColor);
         onActivated?.Invoke();
 
-        if (playAudio && audioSource)
+        if (playAudio && audioSource && activateClip)
         {
-            // one-shot start
-            if (activateClip) audioSource.PlayOneShot(activateClip);
-
-            // start looping alarm
-            if (loopClip)
-            {
-                audioSource.clip = loopClip;
-                audioSource.loop = true;
-                // if a one-shot just played, layering is fine; otherwise start loop immediately
-                audioSource.Play();
-            }
+            audioSource.PlayOneShot(activateClip);
         }
     }
 
@@ -287,17 +283,9 @@ public class LaserBeam : MonoBehaviour
         SetBeamColor(inactiveColor);
         onDeactivated?.Invoke();
 
-        if (playAudio && audioSource)
+        if (playAudio && audioSource && deactivateClip)
         {
-            // stop loop if any
-            if (audioSource.loop)
-            {
-                audioSource.loop = false;
-                audioSource.Stop();
-                audioSource.clip = null;
-            }
-            // play end blip
-            if (deactivateClip) audioSource.PlayOneShot(deactivateClip);
+            audioSource.PlayOneShot(deactivateClip);
         }
     }
 
@@ -306,6 +294,7 @@ public class LaserBeam : MonoBehaviour
         // clean state to avoid stuck audio in editor
         _inside.Clear();
         if (_active) Deactivate();
+        StopIdleLoop();
     }
 
     void OnDrawGizmosSelected()
@@ -318,5 +307,31 @@ public class LaserBeam : MonoBehaviour
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = new Color(1, 0, 0, 0.6f);
         if (boxCol != null) Gizmos.DrawWireCube(boxCol.center, boxCol.size);
+    }
+
+    private void StartIdleLoop()
+    {
+        if (!Application.isPlaying || !playAudio || loopClip == null)
+            return;
+
+        EnsureComponents();
+        if (!audioSource || idleLoopPlaying)
+            return;
+
+        audioSource.clip = loopClip;
+        audioSource.loop = true;
+        audioSource.Play();
+        idleLoopPlaying = true;
+    }
+
+    private void StopIdleLoop()
+    {
+        if (!audioSource || !idleLoopPlaying)
+            return;
+
+        audioSource.loop = false;
+        audioSource.Stop();
+        audioSource.clip = null;
+        idleLoopPlaying = false;
     }
 }
