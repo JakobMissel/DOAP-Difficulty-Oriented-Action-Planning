@@ -64,7 +64,7 @@ namespace Assets.Scripts.DDA
                 if (pde.playerActions[i].action != action) continue;
 
 
-                if (pde.playerActions[i].rememberAction)
+                if (pde.playerActions[i].useOnlyMostRecentDifficulty)
                 {
                     unweightedPlayerActionDifficulties[specificAction][0] = unweightedDifficulty;
                 }
@@ -96,7 +96,7 @@ namespace Assets.Scripts.DDA
                 if (pde.playerActions[i].action != actionToTranslate) continue;
 
 
-                if (pde.playerActions[i].rememberAction)
+                if (pde.playerActions[i].useOnlyMostRecentDifficulty)
                 {
                     difficultyTranslation = unweightedPlayerActionDifficulties[(int)actionToTranslate][0];
                 }
