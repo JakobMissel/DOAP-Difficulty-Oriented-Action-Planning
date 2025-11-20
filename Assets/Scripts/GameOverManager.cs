@@ -53,10 +53,25 @@ public class GameOverManager : MonoBehaviour
     {
         if (hasTriggeredGameOver)
             return;
-
+ 
         hasTriggeredGameOver = true;
         isGameOver = true;
-
+ 
+        var guards = BrainBehaviour.GetActiveBrains()?.Where(b => b != null).ToList();
+        if (guards != null)
+        {
+            foreach (var brain in guards)
+            {
+                var audio = brain.GetComponent<ActionAudioBehaviour>();
+                audio?.StopAllLooping();
+                audio?.StopWalkLoop();
+            }
+ 
+            // Use the guard that actually caught the player if possible.
+            var catcher = guards.FirstOrDefault(b => b.IsPlayerCaught) ?? guards.FirstOrDefault();
+            catcher?.GetComponent<ActionAudioBehaviour>()?.PlayCaptured();
+        }
+ 
         if (debugMode)
         {
             Debug.Log("[GameOverManager] Game Over sequence initiated!");

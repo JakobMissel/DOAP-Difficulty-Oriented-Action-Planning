@@ -1202,6 +1202,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7868287841011645394}
     m_Modifications:
+    - target: {fileID: 5255912125324956002, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7699564137531448525, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
       propertyPath: m_Name
       value: SecurityGuard_Skin
