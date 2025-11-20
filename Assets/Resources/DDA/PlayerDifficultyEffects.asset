@@ -50,7 +50,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
     _actionsRemembered: 0
-    _rememberAction: 1
+    _useOnlyMostRecentDifficulty: 1
     _startDifficulty: 0.25
     developerNote: 'At no captures the game should be at the top easy difficulty;
       0.25
@@ -94,7 +94,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
     _actionsRemembered: 3
-    _rememberAction: 0
+    _useOnlyMostRecentDifficulty: 0
     _startDifficulty: 0
     developerNote: At 20 seconds per painting, add 1 to the difficulty, then add
       less to the dfficulty up to 60 seconds per painting, which adds nothing
@@ -133,7 +133,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 0
     _actionsRemembered: 10
-    _rememberAction: 1
+    _useOnlyMostRecentDifficulty: 0
     _startDifficulty: 0
     developerNote: 'At 20% or less correct usage, don''t add anything to the difficulty
 
