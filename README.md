@@ -75,4 +75,5 @@ FreeSound.
 - Footsteps_Stiletto_Stone_Walk01.wav by marb7e -- https://freesound.org/s/620343/ -- License: Attribution 4.0
 
 Pixabay. 
-- https://pixabay.com/da/music/hovedtitel-carefully-does-it-176848/
+- Carefully Does It by geoffharvey (https://pixabay.com/music/main-title-carefully-does-it-176848/)
+- Road to Peace by Grand Project (https://pixabay.com/music/crime-scene-road-to-peace-391119/)
