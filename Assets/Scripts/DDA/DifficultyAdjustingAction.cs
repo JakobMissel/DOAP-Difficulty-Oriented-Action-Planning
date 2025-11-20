@@ -39,8 +39,12 @@ namespace Assets.Scripts.DDA
     {
         [SerializeField, Tooltip("Action to assign difficulty adjustements to")] public PlayerDAAs action;
         [SerializeField, Tooltip("How this action affects difficulty. 0 as value means no effect, 1 means max difficulty. Negative values would lower total difficulty.\nTime to be based on the action (Eg 10 captures for times captured)")] public AnimationCurve curve;
+        [SerializeField, Tooltip("The amount of actions this should remember to calculate the difficulty from")] private uint _actionsRemembered = 3;
+        [HideInInspector, Tooltip("The amount of actions this should remember to calculate the difficulty from")] public int actionsRemembered => (int)_actionsRemembered;
+        [SerializeField, Tooltip("Whether this remembers difficulty or action values")] private bool _rememberAction = false;
+        [HideInInspector, Tooltip("Whether this remembers difficulty or action values")] public bool rememberAction => _rememberAction;
         [SerializeField, Tooltip("Start difficulty of this")] private float _startDifficulty = 0.16f;
-        [HideInInspector, Tooltip("Start difficulty of this")] public float startDifficulty { get { return _startDifficulty; } }
+        [HideInInspector, Tooltip("Start difficulty of this")] public float startDifficulty => _startDifficulty;
 #if UNITY_EDITOR
         // Gonna ignore the warning that this isn't a used variable. Its use is providing clarity in the editor.
 #pragma warning disable 0414

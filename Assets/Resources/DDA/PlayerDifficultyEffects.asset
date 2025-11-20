@@ -49,6 +49,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    _actionsRemembered: 0
+    _rememberAction: 1
     _startDifficulty: 0.25
     developerNote: 'At no captures the game should be at the top easy difficulty;
       0.25
@@ -62,16 +64,16 @@ MonoBehaviour:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 30
-        value: 1
-        inSlope: -0.040567953
-        outSlope: -0.040567953
+        time: 20
+        value: 0.5
+        inSlope: -0.011259676
+        outSlope: -0.011259676
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.14166665
+        outWeight: 0.2821177
       - serializedVersion: 3
-        time: 95.13239
+        time: 60
         value: 0.2327538
         inSlope: -0.0009993723
         outSlope: -0.0009993723
@@ -80,7 +82,7 @@ MonoBehaviour:
         inWeight: 0.3586591
         outWeight: 0.49680197
       - serializedVersion: 3
-        time: 120
+        time: 80
         value: 0
         inSlope: -0.014874916
         outSlope: -0.014874916
@@ -91,6 +93,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    _actionsRemembered: 3
+    _rememberAction: 0
     _startDifficulty: 0
     developerNote: At 20 seconds per painting, add 1 to the difficulty, then add
       less to the dfficulty up to 60 seconds per painting, which adds nothing
@@ -128,6 +132,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
+    _actionsRemembered: 10
+    _rememberAction: 1
     _startDifficulty: 0
     developerNote: 'At 20% or less correct usage, don''t add anything to the difficulty
 

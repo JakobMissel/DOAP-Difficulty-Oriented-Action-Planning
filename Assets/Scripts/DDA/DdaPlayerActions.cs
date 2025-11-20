@@ -6,15 +6,13 @@ namespace Assets.Scripts.DDA
 {
     public class DdaPlayerActions : MonoBehaviour
     {
-        // Paintings
-        private List<float> paintingStealingLengths = new List<float>();
         // TODO: Make startmonent be updated to whatever time the tutorial ended
         private float startMoment = 0f;
 
         // Item usage / Throwables
         private int currentAmmo = 0;
-        private int itemSuccesses = 0;
-        private int totalItemsUsed = 0;
+        private List<int> successes = new List<int>();
+        private int maxRememberedThrows = 10;
         private int timesCaptured = 0;
 
         public static DdaPlayerActions Instance;
@@ -37,6 +35,12 @@ namespace Assets.Scripts.DDA
             }
             Instance = this;
             DontDestroyOnLoad(this);
+        }
+
+        private void Start()
+        {
+            maxRememberedThrows = DifficultyTracker.GetMaxRemembered(PlayerDAAs.SuccesfulItemUsage);
+            Debug.LogWarning($"I am remembering up to {maxRememberedThrows} throws");
         }
 
 #if UNITY_EDITOR
@@ -66,13 +70,13 @@ namespace Assets.Scripts.DDA
                 testTextFields[0].text = string.Format(baseTestMessage,
                                                        "Painting stealing time",
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
-                                                       "average stealing time",
-                                                       paintingStealingLengths.Count > 0 ? paintingStealingLengths.Average().ToString("N2") : "N/A");
+                                                       "latest stealing time",
+                                                       "N/A");
                 testTextFields[1].text = string.Format(baseTestMessage,
                                                        "Succesful item usage",
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
                                                        "succesful item ratio",
-                                                       totalItemsUsed > 0 ? ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"): "0");
+                                                       successes.Count > 0 ? ((float)successes.Sum() / (float)successes.Count).ToString("N2"): "0");
                 testTextFields[2].text = string.Format(baseTestMessage,
                                                        "Captures",
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured).ToString("N2"),
@@ -104,17 +108,14 @@ namespace Assets.Scripts.DDA
         /// </summary>
         private void PaintingPickedUp()
         {
-            // Remember the time it took to find this painting (In case we want only the last X paintings to affect difficulty)
-            paintingStealingLengths.Add(Time.time - startMoment);
+            // Remember the time it took to find this painting
+            float paintingStealingLength = Time.time - startMoment;
 
             // Remember this time so that next painting stealing length can be the length of time it between this one and that one
             startMoment = Time.time;
 
-            // Get the average stealing time (sum of stealing times / amount of paintings stolen)
-            float averageStealingTime = paintingStealingLengths.Average();
-
-            // Tell the difficulty tracker the average time it takes to steal a painting
-            DifficultyTracker.AlterDifficulty(PlayerDAAs.TimeBetweenPaintings, averageStealingTime);
+            // Tell the difficulty tracker the average time it took to steal the current painting
+            DifficultyTracker.AlterDifficulty(PlayerDAAs.TimeBetweenPaintings, paintingStealingLength);
 
 #if UNITY_EDITOR
             if (isTestingDdaPlayerActions)
@@ -123,8 +124,8 @@ namespace Assets.Scripts.DDA
                 testTextFields[0].text = string.Format(baseTestMessage,
                                                        "Painting stealing time",
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
-                                                       "average stealing time",
-                                                       paintingStealingLengths.Average().ToString("N2"));
+                                                       "latest stealing time",
+                                                       paintingStealingLength.ToString("N2"));
             }
 #endif
         }
@@ -145,9 +146,9 @@ namespace Assets.Scripts.DDA
         /// </summary>
         public void SuccesfulItemUsage()
         {
-            itemSuccesses++;
+            successes[successes.Count - 1]++;
             // Tell the DifficultyTracker the current percentage of succesful item usages
-            DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)itemSuccesses / (float)totalItemsUsed);
+            DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)successes.Sum() / (float)successes.Count);
 
 #if UNITY_EDITOR
             if (isTestingDdaPlayerActions)
@@ -157,7 +158,7 @@ namespace Assets.Scripts.DDA
                                                        "Succesful item usage",
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
                                                        "succesful item ratio",
-                                                       ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"));
+                                                       ((float)successes.Sum() / (float)successes.Count).ToString("N2"));
             }
 #endif
         }
@@ -173,9 +174,16 @@ namespace Assets.Scripts.DDA
             if (currentAmmo > newAmmo)
             {
                 // Count up the total items used
-                totalItemsUsed++;
+                successes.Add(0);
+
+                // Forget oldest if there are more than the max throws
+                if (successes.Count > maxRememberedThrows)
+                {
+                    successes.RemoveAt(0);
+                }
+
                 // Tell the DifficultyTracker the current percentage of succesful item usages
-                DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)itemSuccesses/(float)totalItemsUsed);
+                DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)successes.Sum() / (float)successes.Count);
 
 #if UNITY_EDITOR
                 if (isTestingDdaPlayerActions)
@@ -185,7 +193,7 @@ namespace Assets.Scripts.DDA
                                                            "Succesful item usage",
                                                            DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
                                                            "succesful item ratio",
-                                                           ((float)itemSuccesses / (float)totalItemsUsed).ToString("N2"));
+                                                           ((float)successes.Sum() / (float)successes.Count).ToString("N2"));
                 }
 #endif
             }

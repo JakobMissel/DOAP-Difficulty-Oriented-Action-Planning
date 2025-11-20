@@ -17,6 +17,8 @@ namespace Assets.Scripts.DDA
         private static List<float> actualDifficulties = new List<float>();
         private static List<float> effectiveDifficulties = new List<float>();
 
+        [Tooltip("Unweighted difficulties of player actions and lists that carry last X player actions")] private static List<float>[] unweightedPlayerActionDifficulties;
+
         // Testing-mode override
         private static bool testingMode = false;
         private static float testingDifficulty01 = 0f; // 0..1
@@ -34,14 +36,49 @@ namespace Assets.Scripts.DDA
             pde = Resources.Load<PlayerDifficultyEffects>("DDA/PlayerDifficultyEffects");
             ede = Resources.Load<EnemyDifficultyEffects>("DDA/EnemyDifficultyEffects");
 
+            // Create an array of unweighted player action difficulties
+            unweightedPlayerActionDifficulties = new List<float>[pde.playerActions.Count];
+
             // Assign pde values to base values
             for (int i = 0; i < pde.playerActions.Count; i++)
             {
                 actualDifficulties.Add(pde.playerActions[i].startDifficulty);
+                // Add this actions base difficulty
+                unweightedPlayerActionDifficulties[(int)pde.playerActions[i].action] = new List<float>() { pde.playerActions[i].startDifficulty };
             }
 
             // Effective difficulties should be equal to the starting difficulties
             PutDifficultyIntoEffect();
+        }
+
+        private static void RememberUnweightedAction(PlayerDAAs action, float unweightedDifficulty, int maxLength)
+        {
+            CalledNow();
+
+            // Remember this action difficulty or whatever
+            int specificAction = (int)action;
+
+
+            for (int i = 0; i < pde.playerActions.Count; i++)
+            {
+                if (pde.playerActions[i].action != action) continue;
+
+
+                if (pde.playerActions[i].rememberAction)
+                {
+                    unweightedPlayerActionDifficulties[specificAction][0] = unweightedDifficulty;
+                }
+                else
+                {
+                    unweightedPlayerActionDifficulties[specificAction].Add(unweightedDifficulty);
+
+                    // Forget the oldest if we are remembering too many
+                    if (unweightedPlayerActionDifficulties[specificAction].Count > maxLength)
+                        unweightedPlayerActionDifficulties[specificAction].RemoveAt(0);
+                }
+
+                break;
+            }
         }
 
         /// <summary>
@@ -58,7 +95,33 @@ namespace Assets.Scripts.DDA
             {
                 if (pde.playerActions[i].action != actionToTranslate) continue;
 
-                difficultyTranslation = pde.playerActions[i].curve.Evaluate(GetDifficultyF());
+
+                if (pde.playerActions[i].rememberAction)
+                {
+                    difficultyTranslation = unweightedPlayerActionDifficulties[(int)actionToTranslate][0];
+                }
+                else
+                {
+                    float totalActionValue = 0f;
+
+                    int maxActionsRemembered = pde.playerActions[i].actionsRemembered;
+                    int actualActionsRemembered = unweightedPlayerActionDifficulties[(int)actionToTranslate].Count;
+
+                    Debug.Log($"Did {actionToTranslate} action. This actions is remembered {maxActionsRemembered} times and has been performed {actualActionsRemembered} times.");
+
+                    for (int j = 1; j <= actualActionsRemembered; j++)
+                    {
+                        // Figure out what weight this action should have based on how many actions of this type are remembered
+                        float thisWeight = Mathf.Log(j + 1, maxActionsRemembered + 1) - Mathf.Log(j, maxActionsRemembered + 1);
+
+                        // Get this difficulty with applied weight. More recent actions weighted heavier
+                        totalActionValue += unweightedPlayerActionDifficulties[(int)actionToTranslate][actualActionsRemembered - j] * thisWeight;
+
+                        Debug.Log($"Weight {j} is {thisWeight}, and the difficulty multiplied by that weight {unweightedPlayerActionDifficulties[(int)actionToTranslate][actualActionsRemembered - j]}, resulting in {unweightedPlayerActionDifficulties[(int)actionToTranslate][actualActionsRemembered - j] * thisWeight}, totalling {totalActionValue}");
+                    }
+
+                    difficultyTranslation = totalActionValue;
+                }
 
                 break;
             }
@@ -102,7 +165,13 @@ namespace Assets.Scripts.DDA
                 if (pde.playerActions[i].action != actionToAdjust) continue;
 
                 // Evaluates the effective difficulty based on the updates info about the player action
-                actualDifficulties[i] = pde.playerActions[i].curve.Evaluate(actionInputValue);
+                RememberUnweightedAction(actionToAdjust, pde.playerActions[i].curve.Evaluate(actionInputValue), pde.playerActions[i].actionsRemembered);
+
+                // Assigns the actual difficulties as the weighted difficulties
+                actualDifficulties[i] = DifficultyTranslation(actionToAdjust);
+
+                // Evaluates the effective difficulty based on the updates info about the player action
+                //actualDifficulties[i] = pde.playerActions[i].curve.Evaluate(actionInputValue);
 
                 break;
             }
@@ -209,6 +278,31 @@ namespace Assets.Scripts.DDA
             LogMaster.Instance?.AddDdaLogData(Time.time, GetDifficultyF());
         }
 
+        /// <summary>
+        /// Get the max amount of actions/difficulties remembered for an action
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static int GetMaxRemembered(PlayerDAAs action)
+        {
+            CalledNow();
+
+            int maxRemembered = 0;
+
+            // Goes through all playerDAAs
+            for (int i = 0; i < pde.playerActions.Count; i++)
+            {
+                // Skips non-selected ones
+                if (pde.playerActions[i].action != action) continue;
+
+                maxRemembered = pde.playerActions[i].actionsRemembered;
+
+                break;
+            }
+
+            return maxRemembered;
+        }
+#region Testing Region
         // --- Testing mode---
         public static void EnableTestingMode(bool enabled)
         {
@@ -256,5 +350,6 @@ namespace Assets.Scripts.DDA
             SetTestingDifficultyPercent(newPercent);
             return newPercent;
         }
+#endregion
     }
 }
