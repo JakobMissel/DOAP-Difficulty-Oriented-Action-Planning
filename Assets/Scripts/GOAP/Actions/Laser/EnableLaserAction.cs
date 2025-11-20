@@ -10,12 +10,14 @@ namespace Assets.Scripts.GOAP.Actions.Laser
         public override void Start(IMonoAgent agent, Data data)
         {
             var laser = agent.Transform.GetComponent<LaserBehaviour>();
+            var audio = agent.Transform.GetComponent<ActionAudioBehaviour>();
             if (laser != null)
             {
                 var beam = agent.Transform.GetComponent<LaserBeam>();
                 if (beam != null)
                 {
                     beam.SetEnabled(true);
+                    audio?.PlayLaserActivate();
                 }
             }
         }

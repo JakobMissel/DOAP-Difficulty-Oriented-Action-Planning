@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using CrashKonijn.Goap.Runtime;
 using CrashKonijn.Agent.Core;
+using Assets.Scripts.GOAP.Behaviours;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -20,6 +21,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
 
             // Notify speed controller that we're investigating noise
@@ -49,6 +51,7 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 animation.Search();
             }
+            audio?.PlayGuardHuh();
 
             Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} STARTING - heard noise at {data.Target?.Position}");
         }
@@ -58,6 +61,7 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             // If guard fully spots the player during investigation, abort noise investigation and pursue
             if (sight != null && sight.PlayerSpotted())
@@ -128,6 +132,7 @@ namespace Assets.Scripts.GOAP.Actions
                     {
                         animation.Walk();
                     }
+                    audio?.PlayWalkLoop();
                 }
                 
                 return ActionRunState.Continue;
@@ -147,6 +152,7 @@ namespace Assets.Scripts.GOAP.Actions
                 {
                     animation.Walk();
                 }
+                audio?.PlayWalkLoop();
                 
                 Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.Target.Position}");
             }
@@ -158,6 +164,10 @@ namespace Assets.Scripts.GOAP.Actions
             if (animation != null && agent.velocity.magnitude > 0.1f)
             {
                 animation.Walk();
+            }
+            else if (agent != null && agent.velocity.magnitude <= 0.1f)
+            {
+                audio?.StopWalkLoop();
             }
 
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
@@ -174,6 +184,7 @@ namespace Assets.Scripts.GOAP.Actions
                 {
                     animation.Search();
                 }
+                audio?.StopWalkLoop();
 
                 if (data.InvestigationTime < INVESTIGATION_DURATION)
                 {
@@ -199,6 +210,15 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} moving to noise source... Distance: {dist:F1}m");
             }
+            
+            if (agent != null && agent.velocity.magnitude > 0.1f)
+            {
+                audio?.PlayWalkLoop();
+            }
+            else
+            {
+                audio?.StopWalkLoop();
+            }
 
             return ActionRunState.Continue;
         }
@@ -208,6 +228,7 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
             var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             // Reset speed controller state
             if (speedController != null)
@@ -228,7 +249,8 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.updateRotation = true;
                 agent.updatePosition = true;
             }
-            
+            audio?.StopWalkLoop();
+ 
             Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} ending investigation - ready to resume patrol.");
         }
 
@@ -240,6 +262,6 @@ namespace Assets.Scripts.GOAP.Actions
             public float ConfusionPauseTime { get; set; }
             public bool IsInConfusionPhase { get; set; }
             public bool HasStartedMoving { get; set; }
-        }
-    }
-}
+         }
+     }
+ }

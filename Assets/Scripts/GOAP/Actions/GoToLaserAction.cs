@@ -3,6 +3,7 @@ using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 using Assets.Scripts.GOAP.Systems;
+using Assets.Scripts.GOAP.Behaviours;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -33,6 +34,7 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
 
             // Notify speed controller that we're investigating a laser
@@ -60,6 +62,7 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 animation.Run();
             }
+            audio?.PlayWalkLoop();
 
             agent.isStopped = false;
             agent.updateRotation = true;
@@ -96,6 +99,7 @@ namespace Assets.Scripts.GOAP.Actions
             var sight = mono.Transform.GetComponent<GuardSight>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             // Abort instantly if we fully spotted the player; clear alert so pursuit wins
             if (sight != null && sight.PlayerSpotted())
@@ -131,6 +135,7 @@ namespace Assets.Scripts.GOAP.Actions
                     {
                         animation.Search();
                     }
+                    audio?.PlayGuardHuh();
                 }
                 
                 return ActionRunState.Continue;
@@ -182,6 +187,7 @@ namespace Assets.Scripts.GOAP.Actions
                     {
                         animation.Run();
                     }
+                    audio?.PlayWalkLoop();
                 }
                 else
                 {
@@ -215,6 +221,7 @@ namespace Assets.Scripts.GOAP.Actions
                     
                     // Stop and complete the action
                     agent.isStopped = true;
+                    audio?.StopWalkLoop();
                     
                     return ActionRunState.Completed;
                 }
@@ -245,6 +252,7 @@ namespace Assets.Scripts.GOAP.Actions
         public override void End(IMonoAgent mono, Data data)
         {
             var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             // Reset speed controller state
             if (speedController != null)
@@ -254,6 +262,7 @@ namespace Assets.Scripts.GOAP.Actions
             
             // Ensure alert is cleared when action ends
             LaserAlertSystem.ClearWorldKey();
+            audio?.StopWalkLoop();
         }
 
         // The action class itself must be stateless!
@@ -271,4 +280,3 @@ namespace Assets.Scripts.GOAP.Actions
         }
     }
 }
-

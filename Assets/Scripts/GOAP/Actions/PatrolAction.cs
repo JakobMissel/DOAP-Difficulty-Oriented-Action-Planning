@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using CrashKonijn.Goap.Runtime;
 using CrashKonijn.Agent.Core;
 using Assets.Scripts.GOAP.Systems;
+using Assets.Scripts.GOAP.Behaviours;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -32,6 +33,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -41,6 +43,7 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 animation.Walk();
             }
+            audio?.PlayWalkLoop();
 
             agent.isStopped = false;
             agent.updateRotation = true;
@@ -224,6 +227,8 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
+            audio?.StopWalkLoop();
             // Safety check: if the agent is being destroyed (scene unloading), skip
             if (mono == null || mono.Transform == null)
                 return;

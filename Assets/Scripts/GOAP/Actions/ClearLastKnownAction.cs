@@ -18,6 +18,7 @@ namespace Assets.Scripts.GOAP.Actions
             var sight = mono.Transform.GetComponent<GuardSight>();
             var brain = mono.Transform.GetComponent<BrainBehaviour>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
 
             // How long to "check" the last known position once arrived
             // Defaults; will be overridden by BrainBehaviour values if present
@@ -56,14 +57,12 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 animation.Search();
             }
-
-            agent.isStopped = false;
-            agent.updateRotation = true;
-            agent.updatePosition = true;
+            audio?.StopWalkLoop();
 
             if (data.Target != null && data.Target.IsValid())
             {
                 agent.SetDestination(data.Target.Position);
+                audio?.PlayWalkLoop();
                 
                 // Prefer rotating the eyes during scan; fallback to the root transform
                 var eyes = (sight != null) ? sight.Eyes : null;
@@ -84,6 +83,7 @@ namespace Assets.Scripts.GOAP.Actions
             var sight = mono.Transform.GetComponent<GuardSight>();
             var brain = mono.Transform.GetComponent<BrainBehaviour>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             if (sight != null && sight.PlayerSpotted())
             {
@@ -135,6 +135,7 @@ namespace Assets.Scripts.GOAP.Actions
                 {
                     animation.Run();
                 }
+                audio?.PlayWalkLoop();
 
                 data.ScanningInitialized = false;
                 data.ArrivalTimer = 0f;
@@ -152,13 +153,22 @@ namespace Assets.Scripts.GOAP.Actions
                 {
                     animation.Run();
                 }
-                
+                if (agent.velocity.magnitude > 0.1f)
+                {
+                    audio?.PlayWalkLoop();
+                }
+                else
+                {
+                    audio?.StopWalkLoop();
+                }
+                 
                 return ActionRunState.Continue;
             }
 
             // Arrived: stop and run scan pattern
             agent.isStopped = true;
-            
+            audio?.StopWalkLoop();
+ 
             // Animation: Searching when stopped and scanning
             if (animation != null)
             {
@@ -209,6 +219,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             // Re-enable NavMeshAgent rotation
             if (agent != null)
@@ -221,6 +232,7 @@ namespace Assets.Scripts.GOAP.Actions
                 data.LookTransform.localEulerAngles = Vector3.zero;
                 Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} scan ended, resetting eyes to forward.");
             }
+            audio?.StopWalkLoop();
             
             // Mark that this guard should reset to closest waypoint when returning to patrol
             var patrolAction = typeof(PatrolAction);

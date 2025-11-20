@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using CrashKonijn.Goap.Runtime;
 using CrashKonijn.Agent.Core;
+using Assets.Scripts.GOAP.Behaviours;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -17,6 +18,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -26,6 +28,7 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 animation.Run();
             }
+            audio?.PlayWalkLoop();
 
             agent.isStopped = false;
             agent.updateRotation = true;
@@ -62,6 +65,8 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void End(IMonoAgent mono, Data data)
         {
+            var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
+            audio?.StopWalkLoop();
             // Mark that this guard should reset to closest waypoint when returning to patrol
             var patrolAction = typeof(PatrolAction);
             var guardId = mono.Transform.GetInstanceID();

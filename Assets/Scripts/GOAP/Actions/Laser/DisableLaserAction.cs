@@ -1,5 +1,6 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
+using Assets.Scripts.GOAP.Behaviours;
 
 namespace Assets.Scripts.GOAP.Actions.Laser
 {
@@ -9,9 +10,11 @@ namespace Assets.Scripts.GOAP.Actions.Laser
         public override void Start(IMonoAgent agent, Data data)
         {
             var beam = agent.Transform.GetComponent<LaserBeam>();
+            var audio = agent.Transform.GetComponent<ActionAudioBehaviour>();
             if (beam != null)
             {
                 beam.SetEnabled(false);
+                audio?.PlayLaserDeactivate();
             }
         }
 

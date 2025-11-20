@@ -1,12 +1,15 @@
 using CrashKonijn.Agent.Core;
 using CrashKonijn.Goap.Runtime;
 using UnityEngine;
+using Assets.Scripts.GOAP.Behaviours;
 
 namespace Assets.Scripts.GOAP.Actions
 {
     [GoapId("Catch-5fe8c2cb-3a74-49ca-a008-19cf7bdba069")]
     public class CatchAction : GoapActionBase<CatchAction.Data>
     {
+        private ActionAudioBehaviour audio;
+
         public override void Created()
         {
         }
@@ -14,6 +17,8 @@ namespace Assets.Scripts.GOAP.Actions
         public override void Start(IMonoAgent agent, Data data)
         {
             var animation = agent.Transform.GetComponent<GuardAnimation>();
+            audio = agent.Transform.GetComponent<ActionAudioBehaviour>();
+            audio?.StopWalkLoop();
             
             // Trigger Running animation when attempting to catch (chasing player)
             if (animation != null)
@@ -50,6 +55,7 @@ namespace Assets.Scripts.GOAP.Actions
         public override void Complete(IMonoAgent agent, Data data)
         {
             Debug.Log($"[CatchAction] {agent.Transform.name} - Catch action completed! Player has been caught.");
+            audio?.PlayCaptured();
         }
 
         public override void End(IMonoAgent agent, Data data)
