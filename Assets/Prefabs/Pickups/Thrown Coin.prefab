@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseAreaPrefab: {fileID: 7242639918687743175, guid: 1f4d710b31a24dc499b66036a1467386, type: 3}
-  thrownObjectImage: {fileID: 21300000, guid: 368e69111d6447145825c9af4c943db0, type: 3}
   destroyOnImpact: 0
+  thrownObjectTexture: {fileID: 8400000, guid: 10137ad539937114e98261559bc090ad, type: 2}
   bounceMultiplier: 0.3
   noiseRadius: 10
 --- !u!114 &-6946774023319014515
