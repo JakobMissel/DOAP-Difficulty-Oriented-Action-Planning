@@ -1247,9 +1247,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  activateClip: {fileID: 8300000, guid: f1ae66edcadcc1146ba4411103b8ba77, type: 3}
   loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
-  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
+  deactivateClip: {fileID: 0}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -6965,9 +6965,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  activateClip: {fileID: 8300000, guid: f1ae66edcadcc1146ba4411103b8ba77, type: 3}
   loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
-  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
+  deactivateClip: {fileID: 0}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -17985,9 +17985,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  activateClip: {fileID: 8300000, guid: f1ae66edcadcc1146ba4411103b8ba77, type: 3}
   loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
-  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
+  deactivateClip: {fileID: 0}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -26010,9 +26010,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  activateClip: {fileID: 8300000, guid: f1ae66edcadcc1146ba4411103b8ba77, type: 3}
   loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
-  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
+  deactivateClip: {fileID: 0}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -29205,9 +29205,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  activateClip: {fileID: 8300000, guid: f1ae66edcadcc1146ba4411103b8ba77, type: 3}
   loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
-  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
+  deactivateClip: {fileID: 0}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
@@ -39064,9 +39064,9 @@ MonoBehaviour:
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   triggerTag: Player
-  activateClip: {fileID: 8300000, guid: 75dd0bb7ab7aecd49ae90308f8c71215, type: 3}
+  activateClip: {fileID: 8300000, guid: f1ae66edcadcc1146ba4411103b8ba77, type: 3}
   loopClip: {fileID: 8300000, guid: a4b8c6f5fbe67844b8d9ecfd41cd0ec0, type: 3}
-  deactivateClip: {fileID: 8300000, guid: 688f5f61c4eddfc46bbc3dab2d77dbe5, type: 3}
+  deactivateClip: {fileID: 0}
   playAudio: 1
   onActivated:
     m_PersistentCalls:
