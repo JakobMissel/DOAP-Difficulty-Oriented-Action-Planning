@@ -18030,7 +18030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &607255593
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48365,6 +48365,38 @@ PrefabInstance:
       propertyPath: m_TagString
       value: MainPanelElement
       objectReference: {fileID: 0}
+    - target: {fileID: 1135864927061332033, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 15787c469163d8945bcfee2e66e36981, type: 2}
+    - target: {fileID: 1135864927061332033, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 1135864927061332033, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.9450981
+      objectReference: {fileID: 0}
+    - target: {fileID: 1135864927061332033, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2513584052846762598, guid: 15787c469163d8945bcfee2e66e36981, type: 2}
+    - target: {fileID: 1135864927061332033, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4290572799
+      objectReference: {fileID: 0}
+    - target: {fileID: 1135864927061332033, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 1135864927061332033, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1135864927061332033, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1154682153054601019, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -49231,7 +49263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6207952564313451343, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_fontSize
-      value: 75
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 6207952564313451343, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_fontAsset
@@ -49239,7 +49271,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 15787c469163d8945bcfee2e66e36981, type: 2}
     - target: {fileID: 6207952564313451343, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_fontStyle
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6207952564313451343, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_fontColor.b
@@ -49251,7 +49283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6207952564313451343, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_fontSizeBase
-      value: 75
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 6207952564313451343, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_sharedMaterial
@@ -49267,7 +49299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6207952564313451343, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: checkPaddingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6207952564313451343, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_enableExtraPadding
