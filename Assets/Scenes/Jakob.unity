@@ -45053,7 +45053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3250239011355141522, guid: e0e055977fcc7774f94e173047e029dd, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3334353485922052048, guid: e0e055977fcc7774f94e173047e029dd, type: 3}
       propertyPath: spinSpeed.x
