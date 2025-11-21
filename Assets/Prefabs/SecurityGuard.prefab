@@ -308,6 +308,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e59c897a694ec0aaca150b4e2cce75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guardDuration: 5
+  cooldownDuration: 10
+  arrivalThreshold: 1.5
+  rotationSpeed: 2
 --- !u!114 &7660617999256208820
 MonoBehaviour:
   m_ObjectHideFlags: 0

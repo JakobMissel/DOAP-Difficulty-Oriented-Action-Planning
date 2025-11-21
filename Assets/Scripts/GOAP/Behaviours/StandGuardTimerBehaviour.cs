@@ -8,34 +8,76 @@ namespace Assets.Scripts.GOAP.Behaviours
     /// </summary>
     public class StandGuardTimerBehaviour : MonoBehaviour
     {
-        private float lastGuardTime = -1000f; // Start with a large negative value so guard can stand immediately
+        [Header("Timing Configuration")]
+        [SerializeField] [Tooltip("How long the guard stands at the guard point (in seconds)")]
+        private float guardDuration = 10f;
+        
+        [SerializeField] [Tooltip("Cooldown duration after standing guard (in seconds)")]
+        private float cooldownDuration = 15f;
+        
+        [Header("Movement Configuration")]
+        [SerializeField] [Tooltip("How close the guard needs to be to the guard point to stop")]
+        private float arrivalThreshold = 1.5f;
+        
+        [SerializeField] [Tooltip("Speed of rotation between angle points")]
+        private float rotationSpeed = 2f;
+        
+        private float guardStartTime;
+        private bool isGuarding;
+        
+        // Public properties for action to access
+        public float GuardDuration => guardDuration;
+        public float ArrivalThreshold => arrivalThreshold;
+        public float RotationSpeed => rotationSpeed;
         
         /// <summary>
-        /// Call this when the guard completes the StandGuard action
+        /// Public property to check if currently guarding (0 or 1 for GOAP)
         /// </summary>
-        public void StartCooldown()
+        public bool IsGuarding => isGuarding;
+        
+        /// <summary>
+        /// Call this when the guard starts the StandGuard action (sets IsGuarding to 1)
+        /// </summary>
+        public void StartGuarding()
         {
-            lastGuardTime = Time.time;
-            Debug.Log($"[StandGuardTimer] {gameObject.name} started cooldown at {lastGuardTime}");
+            isGuarding = true;
+            guardStartTime = Time.time;
+            Debug.Log($"[StandGuardTimer] {gameObject.name} started guarding (IsGuarding = 1)");
         }
         
         /// <summary>
-        /// Returns the time in seconds since the guard last stood guard
+        /// Returns the time in seconds since guard duty started (for sensor)
+        /// If not guarding, returns time since cooldown started
         /// </summary>
-        public float GetTimeSinceLastGuard()
+        public float GetTimeSinceGuardStart()
         {
-            if (lastGuardTime < 0)
-                return 1000f; // Return large value if never stood guard
+            if (guardStartTime <= 0)
+                return 1000f; // Never guarded, return large value
                 
-            return Time.time - lastGuardTime;
+            return Time.time - guardStartTime;
         }
         
         /// <summary>
-        /// Check if the cooldown period has passed
+        /// Update checks if cooldown is complete and resets state
         /// </summary>
-        public bool IsCooldownComplete(float cooldownDuration = 15f)
+        private void Update()
         {
-            return GetTimeSinceLastGuard() >= cooldownDuration;
+            // If guarding and cooldown period has passed
+            if (isGuarding && GetTimeSinceGuardStart() >= cooldownDuration)
+            {
+                // Reset to not guarding
+                isGuarding = false;
+                guardStartTime = 0f;
+                Debug.Log($"[StandGuardTimer] {gameObject.name} cooldown complete - reset (IsGuarding = 0, timer = 0)");
+            }
+        }
+        
+        /// <summary>
+        /// Check if the cooldown period has passed (for manual checks)
+        /// </summary>
+        public bool IsCooldownComplete()
+        {
+            return !isGuarding && guardStartTime <= 0;
         }
     }
 }

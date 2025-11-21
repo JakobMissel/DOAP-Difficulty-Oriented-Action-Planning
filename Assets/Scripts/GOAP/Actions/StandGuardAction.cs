@@ -9,14 +9,10 @@ namespace Assets.Scripts.GOAP
     [GoapId("StandGuard-3abae1a9-8686-4be1-a79b-bfc0a95a47e3")]
     public class StandGuardAction : GoapActionBase<StandGuardAction.Data>
     {
-        private const float GUARD_DURATION = 10f; // Stand guard for 10 seconds
-        private const float ARRIVAL_THRESHOLD = 1.5f; // How close to be considered "at" the guard point
-        private const float ROTATION_SPEED = 2f; // Speed of rotation between angle points
-
         public override void Created()
         {
+            Debug.Log("[StandGuardAction] Created() called");
         }
-
         public override bool IsValid(IActionReceiver agent, Data data)
         {
             // Validate that the target is still valid
@@ -65,10 +61,17 @@ namespace Assets.Scripts.GOAP
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
+            var timerBehaviour = mono.Transform.GetComponent<StandGuardTimerBehaviour>();
+
+            if (timerBehaviour == null)
+            {
+                Debug.LogError($"[StandGuardAction] {mono.Transform.name} has no StandGuardTimerBehaviour! Adding it now.");
+                timerBehaviour = mono.Transform.gameObject.AddComponent<StandGuardTimerBehaviour>();
+            }
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
             {
-                Debug.LogWarning($"[StandGuardAction] {mono.Transform.name} no valid target or agent!");
+                Debug.LogWarning($"[StandGuardAction] {mono.Transform.name} validation failed - Agent: {agent != null}, Enabled: {agent?.enabled}, OnNavMesh: {agent?.isOnNavMesh}, Target: {data.Target != null}, TargetValid: {data.Target?.IsValid()}");
                 return ActionRunState.Stop;
             }
 
@@ -76,8 +79,15 @@ namespace Assets.Scripts.GOAP
             if (!data.HasArrived)
             {
                 float distanceToTarget = Vector3.Distance(mono.Transform.position, data.Target.Position);
+                float arrivalThreshold = timerBehaviour.ArrivalThreshold;
                 
-                if (distanceToTarget <= ARRIVAL_THRESHOLD)
+                // Log every 2 seconds while moving
+                if (Time.frameCount % 120 == 0)
+                {
+                    Debug.Log($"[StandGuardAction] {mono.Transform.name} moving to guard point - Distance: {distanceToTarget:F2}m, Threshold: {arrivalThreshold:F2}m");
+                }
+                
+                if (distanceToTarget <= arrivalThreshold)
                 {
                     // Arrived at guard point
                     data.HasArrived = true;
@@ -95,7 +105,7 @@ namespace Assets.Scripts.GOAP
                     // Find the two nearest angle points
                     FindNearestAnglePoints(mono.Transform.position, data);
 
-                    Debug.Log($"[StandGuardAction] {mono.Transform.name} arrived at guard point, starting {GUARD_DURATION}s guard duty");
+                    Debug.Log($"[StandGuardAction] {mono.Transform.name} ARRIVED at guard point, starting {timerBehaviour.GuardDuration}s guard duty");
                 }
                 
                 return ActionRunState.Continue;
@@ -107,7 +117,7 @@ namespace Assets.Scripts.GOAP
             // Rotate between the two angle points
             if (data.LeftAnglePoint != null && data.RightAnglePoint != null)
             {
-                RotateBetweenPoints(mono.Transform, data);
+                RotateBetweenPoints(mono.Transform, data, timerBehaviour.RotationSpeed);
             }
             else
             {
@@ -117,11 +127,17 @@ namespace Assets.Scripts.GOAP
                     animation.Idle();
                 }
             }
+            
+            // Log every 2 seconds during guard duty
+            if (Mathf.RoundToInt(data.GuardTime) % 2 == 0 && Time.frameCount % 60 == 0)
+            {
+                Debug.Log($"[StandGuardAction] {mono.Transform.name} standing guard - Time: {data.GuardTime:F1}/{timerBehaviour.GuardDuration}s");
+            }
 
             // Check if guard duration is complete
-            if (data.GuardTime >= GUARD_DURATION)
+            if (data.GuardTime >= timerBehaviour.GuardDuration)
             {
-                Debug.Log($"[StandGuardAction] {mono.Transform.name} completed {GUARD_DURATION}s guard duty");
+                Debug.Log($"[StandGuardAction] {mono.Transform.name} COMPLETED {timerBehaviour.GuardDuration}s guard duty");
                 return ActionRunState.Completed;
             }
 
@@ -130,15 +146,15 @@ namespace Assets.Scripts.GOAP
 
         public override void Complete(IMonoAgent mono, Data data)
         {
-            // Start the cooldown timer
+            // Set IsGuarding to 1 (starts the 15-second timer and effect)
             var timerBehaviour = mono.Transform.GetComponent<StandGuardTimerBehaviour>();
             if (timerBehaviour == null)
             {
                 timerBehaviour = mono.Transform.gameObject.AddComponent<StandGuardTimerBehaviour>();
             }
-            timerBehaviour.StartCooldown();
+            timerBehaviour.StartGuarding();
 
-            Debug.Log($"[StandGuardAction] {mono.Transform.name} completed and started cooldown");
+            Debug.Log($"[StandGuardAction] {mono.Transform.name} completed guard duty - IsGuarding set to 1, 15s cooldown started");
         }
 
         public override void End(IMonoAgent mono, Data data)
@@ -156,11 +172,11 @@ namespace Assets.Scripts.GOAP
 
         private void FindNearestAnglePoints(Vector3 guardPosition, Data data)
         {
-            GameObject[] anglePoints = GameObject.FindGameObjectsWithTag("StandGuardAnglePoint");
+            GameObject[] anglePoints = GameObject.FindGameObjectsWithTag("StandGuardWatchAnglePoint");
             
             if (anglePoints == null || anglePoints.Length < 2)
             {
-                Debug.LogWarning("[StandGuardAction] Need at least 2 StandGuardAnglePoint objects in the scene!");
+                Debug.LogWarning("[StandGuardAction] Need at least 2 StandGuardWatchAnglePoint objects in the scene!");
                 return;
             }
 
@@ -196,7 +212,7 @@ namespace Assets.Scripts.GOAP
             Debug.Log($"[StandGuardAction] Found angle points: {closest1?.name} and {closest2?.name}");
         }
 
-        private void RotateBetweenPoints(Transform guardTransform, Data data)
+        private void RotateBetweenPoints(Transform guardTransform, Data data, float rotationSpeed)
         {
             // Determine target point
             Transform targetPoint = data.RotatingToRight ? data.RightAnglePoint : data.LeftAnglePoint;
@@ -218,7 +234,7 @@ namespace Assets.Scripts.GOAP
             guardTransform.rotation = Quaternion.Slerp(
                 guardTransform.rotation,
                 targetRotation,
-                Time.deltaTime * ROTATION_SPEED
+                Time.deltaTime * rotationSpeed
             );
 
             // Check if we've reached the target rotation (within threshold)
@@ -227,6 +243,8 @@ namespace Assets.Scripts.GOAP
             {
                 // Switch direction
                 data.RotatingToRight = !data.RotatingToRight;
+                string targetName = data.RotatingToRight ? data.RightAnglePoint?.name : data.LeftAnglePoint?.name;
+                Debug.Log($"[StandGuardAction] {guardTransform.name} switching rotation direction to {targetName}");
             }
         }
 

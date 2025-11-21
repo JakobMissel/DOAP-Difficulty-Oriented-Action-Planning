@@ -8,8 +8,6 @@ namespace Assets.Scripts.GOAP.Sensors
     [GoapId("LastStoodGuardSensor-a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d")]
     public class LastStoodGuardSensor : LocalWorldSensorBase
     {
-        private const float COOLDOWN_DURATION = 15f;
-
         public override void Created() { }
         public override void Update() { }
 
@@ -19,12 +17,13 @@ namespace Assets.Scripts.GOAP.Sensors
             
             if (timerBehaviour == null)
             {
-                // No timer behaviour means the guard has never stood guard, so it's available
-                return new SenseValue(Mathf.RoundToInt(COOLDOWN_DURATION + 1)); // Return value > 15
+                // No timer behaviour means never guarded, return 0 (ready to guard)
+                return new SenseValue(0);
             }
 
-            float timeSinceLastGuard = timerBehaviour.GetTimeSinceLastGuard();
-            return new SenseValue(Mathf.RoundToInt(timeSinceLastGuard));
+            // Return time since guard duty started (will be 0 when not guarding, counts up during cooldown)
+            float timeSinceGuardStart = timerBehaviour.GetTimeSinceGuardStart();
+            return new SenseValue(Mathf.RoundToInt(timeSinceGuardStart));
         }
     }
 }

@@ -114,7 +114,8 @@ namespace Assets.Scripts.GOAP.Behaviours
                 typeof(ClearLastKnownGoal),
                 typeof(RechargeGoal),
                 typeof(InvestigateNoiseGoal),
-                typeof(Assets.Scripts.GOAP.GoToLaserGoal)
+                typeof(Assets.Scripts.GOAP.GoToLaserGoal),
+                typeof(StandGuardGoal)
             });
         }
 
