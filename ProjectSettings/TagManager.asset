@@ -17,6 +17,8 @@ TagManager:
   - MainPanelElement
   - DifficultyElement
   - CreditsPanelElement
+  - StandGuardPoint
+  - StandGuardWatchAnglePoint
   layers:
   - Default
   - TransparentFX
