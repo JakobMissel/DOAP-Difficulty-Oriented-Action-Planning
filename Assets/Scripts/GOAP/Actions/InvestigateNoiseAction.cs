@@ -120,19 +120,12 @@ namespace Assets.Scripts.GOAP.Actions
                     Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} finished confusion pause, now moving to investigate");
                     data.IsInConfusionPhase = false;
                     
-                    // Start movement towards noise
+                    // Start movement towards noise (animation will be handled by velocity check in Phase 2)
                     agent.updateRotation = true;
                     agent.updatePosition = true;
                     agent.isStopped = false;
                     agent.SetDestination(data.Target.Position);
                     data.HasStartedMoving = true;
-                    
-                    // Animation: Walking towards noise
-                    if (animation != null)
-                    {
-                        animation.Walk();
-                    }
-                    audio?.PlayWalkLoop();
                 }
                 
                 return ActionRunState.Continue;
@@ -147,28 +140,11 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.SetDestination(data.Target.Position);
                 data.HasStartedMoving = true;
                 
-                // Animation: Walking towards noise
-                if (animation != null)
-                {
-                    animation.Walk();
-                }
-                audio?.PlayWalkLoop();
-                
                 Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.Target.Position}");
             }
 
-            // Keep updating destination and maintain walking animation
+            // Keep updating destination
             agent.SetDestination(data.Target.Position);
-            
-            // Animation: Walking while moving
-            if (animation != null && agent.velocity.magnitude > 0.1f)
-            {
-                animation.Walk();
-            }
-            else if (agent != null && agent.velocity.magnitude <= 0.1f)
-            {
-                audio?.StopWalkLoop();
-            }
 
             float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
 
@@ -179,7 +155,7 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.isStopped = true;
                 data.InvestigationTime += Time.deltaTime;
                 
-                // Animation: Searching at noise location
+                // Animation: Search while investigating
                 if (animation != null)
                 {
                     animation.Search();
@@ -208,16 +184,22 @@ namespace Assets.Scripts.GOAP.Actions
             }
             else
             {
+                // Still moving to noise location - only play walk animation if velocity > 0
                 Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} moving to noise source... Distance: {dist:F1}m");
-            }
-            
-            if (agent != null && agent.velocity.magnitude > 0.1f)
-            {
-                audio?.PlayWalkLoop();
-            }
-            else
-            {
-                audio?.StopWalkLoop();
+                
+                if (animation != null)
+                {
+                    if (agent.velocity.magnitude > 0.1f)
+                    {
+                        animation.Walk();
+                        audio?.PlayWalkLoop();
+                    }
+                    else
+                    {
+                        animation.Search();
+                        audio?.StopWalkLoop();
+                    }
+                }
             }
 
             return ActionRunState.Continue;

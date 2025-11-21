@@ -121,10 +121,10 @@ namespace Assets.Scripts.GOAP
             }
             else
             {
-                // No angle points found, just stand still
+                // No angle points found, use searching animation (looking around)
                 if (animation != null)
                 {
-                    animation.Idle();
+                    animation.Search();
                 }
             }
             
