@@ -24,6 +24,9 @@ public class Tutorial : MonoBehaviour
     [SerializeField] float aimTime;
     float aimT;
 
+    [Header("Skip settings")]
+    [Tooltip("Key used to instantly skip the tutorial.")]
+    [SerializeField] private KeyCode skipKey = KeyCode.P;
 
     void Start()
     {
@@ -54,6 +57,42 @@ public class Tutorial : MonoBehaviour
         PlayerActions.pickedUpItem -= PlayerPickedUpItem;
         PlayerActions.isAiming -= PlayerAimed;
         PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
+    }
+
+    void Update()
+    {
+        if (objective != null && objective.isActive && Input.GetKeyDown(skipKey))
+        {
+            SkipTutorial();
+        }
+    }
+
+    private void SkipTutorial()
+    {
+        // Mark all remaining subobjectives as completed in order
+        for (int i = 0; i < objective.subObjectives.Count; i++)
+        {
+            var sub = objective.subObjectives[i];
+            if (!sub.isCompleted)
+            {
+                objective.CompleteSubObjective(i);
+            }
+        }
+
+        // Ensure the player has full interaction/throw capabilities as if they completed the tutorial
+        PlayerActions.OnCanInteract(true);
+        PlayerActions.OnCanThrow(true);
+
+        // Mark the whole tutorial objective as completed and advance to the next one
+        ObjectivesManager.OnCompleteObjective(objective);
+
+        // Immediately hide any tutorial timer visuals
+        fadeT = 0f;
+        timerImage.fillAmount = 0f;
+        timerImage.color = new Color(timerImage.color.r, timerImage.color.g, timerImage.color.b, 0f);
+
+        // Prevent further tutorial logic from running
+        enabled = false;
     }
 
     void PlayerMoved(bool isMoving)
