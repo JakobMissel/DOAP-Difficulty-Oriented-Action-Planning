@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sneak Sub-Objective
   m_EditorClassIdentifier: 
   isCompleted: 0
-  isActive: 1
+  isActive: 0
   descriptionText: 
-  goalText: To sneak hold [C], and move around.\n
+  goalText: To sneak hold [CTRL], while moving.\n
   completionText: When you are sneaking you produce less noise than running.

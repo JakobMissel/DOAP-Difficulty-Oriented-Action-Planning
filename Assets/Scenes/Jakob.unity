@@ -35254,6 +35254,10 @@ PrefabInstance:
       propertyPath: playerPaintingPosition
       value: 
       objectReference: {fileID: 1848066683}
+    - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
+      propertyPath: startFromFirstObjective
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
