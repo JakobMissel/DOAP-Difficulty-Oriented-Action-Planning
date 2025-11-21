@@ -41,22 +41,22 @@ MonoBehaviour:
     conditions:
     - worldKey:
         <Name>k__BackingField: DifficultyWK
-        <Id>k__BackingField: 
+        <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
       comparison: 3
       amount: 75
     - worldKey:
         <Name>k__BackingField: AtStandGuardPoint
-        <Id>k__BackingField: 
+        <Id>k__BackingField: AtStandGuardPoint-a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
       comparison: 1
       amount: 1
     - worldKey:
         <Name>k__BackingField: Energy
-        <Id>k__BackingField: 
+        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
       comparison: 2
       amount: 0
     - worldKey:
         <Name>k__BackingField: LastStoodGuard
-        <Id>k__BackingField: 
+        <Id>k__BackingField: LastStoodGuard-b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e
       comparison: 2
       amount: 15
     effects: []
