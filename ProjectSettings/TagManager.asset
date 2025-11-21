@@ -16,6 +16,7 @@ TagManager:
   - Stair
   - MainPanelElement
   - DifficultyElement
+  - CreditsPanelElement
   layers:
   - Default
   - TransparentFX

@@ -23,6 +23,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button easyButton;
     [SerializeField] private Button mediumButton;
     [SerializeField] private Button hardButton;
+    [SerializeField] private Button creditsBackButton;
+    [SerializeField] private Button difficultyBackButton;
     
     [Header("Pause Panel Buttons")]
     [SerializeField] private Button resumeButton;
@@ -52,6 +54,7 @@ public class MainMenu : MonoBehaviour
     // Cached text elements by tag
     private GameObject[] mainPanelTextElements;
     private GameObject[] difficultyPanelTextElements;
+    private GameObject[] creditsPanelTextElements;
 
     private GameObject player;
     private bool isGamePaused;
@@ -448,20 +451,20 @@ public class MainMenu : MonoBehaviour
     {
         if (mainPanel) mainPanel.SetActive(false);
         if (creditsPanel) creditsPanel.SetActive(true);
+        ShowCreditsPanelText();
     }
 
     public void OnBackFromCredits()
     {
         if (mainPanel) mainPanel.SetActive(true);
         if (creditsPanel) creditsPanel.SetActive(false);
+        ShowMainPanelText();
     }
 
     public void OnBackFromDifficulty()
     {
-        if (mainPanel) mainPanel.SetActive(true);
         if (difficultyPanel) difficultyPanel.SetActive(false);
-        
-        // Show main panel text elements
+        if (mainPanel) mainPanel.SetActive(true);
         ShowMainPanelText();
     }
 
@@ -654,6 +657,8 @@ public class MainMenu : MonoBehaviour
         if (playButton) playButton.onClick.RemoveListener(OnPlayClicked);
         if (creditsButton) creditsButton.onClick.RemoveListener(OnCreditsClicked);
         if (exitButton) exitButton.onClick.RemoveListener(OnExitClicked);
+        if (creditsBackButton) creditsBackButton.onClick.RemoveListener(OnBackFromCredits);
+        if (difficultyBackButton) difficultyBackButton.onClick.RemoveListener(OnBackFromDifficulty);
         if (ddaToggle) ddaToggle.onValueChanged.RemoveListener(OnDDAToggleChanged);
         if (easyButton) easyButton.onClick.RemoveListener(() => OnDifficultySelected(0));
         if (mediumButton) mediumButton.onClick.RemoveListener(() => OnDifficultySelected(50));
@@ -1010,6 +1015,26 @@ public class MainMenu : MonoBehaviour
             exitButton.onClick.AddListener(OnExitClicked);
         }
         
+        if (creditsBackButton)
+        {
+            creditsBackButton.onClick.RemoveAllListeners();
+            creditsBackButton.onClick.AddListener(OnBackFromCredits);
+        }
+        else
+        {
+            Debug.LogWarning("[MainMenu] Credits back button is NULL!");
+        }
+        
+        if (difficultyBackButton)
+        {
+            difficultyBackButton.onClick.RemoveAllListeners();
+            difficultyBackButton.onClick.AddListener(OnBackFromDifficulty);
+        }
+        else
+        {
+            Debug.LogWarning("[MainMenu] Difficulty back button is NULL!");
+        }
+        
         if (ddaToggle)
         {
             ddaToggle.onValueChanged.RemoveAllListeners();
@@ -1329,6 +1354,18 @@ public class MainMenu : MonoBehaviour
             Debug.LogWarning("[MainMenu] Tag 'DifficultyElement' not defined in Tags and Layers. Please add it in Project Settings > Tags and Layers");
             difficultyPanelTextElements = new GameObject[0];
         }
+
+        // Find all GameObjects with CreditsPanelElement tag
+        try
+        {
+            creditsPanelTextElements = GameObject.FindGameObjectsWithTag("CreditsPanelElement");
+            Debug.Log($"[MainMenu] Found {creditsPanelTextElements.Length} text elements with CreditsPanelElement tag");
+        }
+        catch (UnityException)
+        {
+            Debug.LogWarning("[MainMenu] Tag 'CreditsPanelElement' not defined in Tags and Layers. Please add it in Project Settings > Tags and Layers");
+            creditsPanelTextElements = new GameObject[0];
+        }
     }
 
     private void ShowMainPanelText()
@@ -1350,6 +1387,17 @@ public class MainMenu : MonoBehaviour
         if (difficultyPanelTextElements != null)
         {
             foreach (var textElement in difficultyPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+        
+        if (creditsPanelTextElements != null)
+        {
+            foreach (var textElement in creditsPanelTextElements)
             {
                 if (textElement != null)
                 {
@@ -1385,6 +1433,54 @@ public class MainMenu : MonoBehaviour
             }
             Debug.Log($"[MainMenu] Showed {difficultyPanelTextElements.Length} DifficultyPanel text elements");
         }
+        
+        if (creditsPanelTextElements != null)
+        {
+            foreach (var textElement in creditsPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+    }
+    
+    private void ShowCreditsPanelText()
+    {
+        if (mainPanelTextElements != null)
+        {
+            foreach (var textElement in mainPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+        
+        if (difficultyPanelTextElements != null)
+        {
+            foreach (var textElement in difficultyPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+        
+        if (creditsPanelTextElements != null)
+        {
+            foreach (var textElement in creditsPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(true);
+                }
+            }
+            Debug.Log($"[MainMenu] Showed {creditsPanelTextElements.Length} CreditsPanel text elements");
+        }
     }
 
     private void HideAllPanelText()
@@ -1404,6 +1500,17 @@ public class MainMenu : MonoBehaviour
         if (difficultyPanelTextElements != null)
         {
             foreach (var textElement in difficultyPanelTextElements)
+            {
+                if (textElement != null)
+                {
+                    textElement.SetActive(false);
+                }
+            }
+        }
+        
+        if (creditsPanelTextElements != null)
+        {
+            foreach (var textElement in creditsPanelTextElements)
             {
                 if (textElement != null)
                 {
