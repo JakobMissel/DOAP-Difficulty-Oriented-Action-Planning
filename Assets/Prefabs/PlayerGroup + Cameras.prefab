@@ -385,6 +385,7 @@ MonoBehaviour:
   throwForce: 7
   throwGravity: -9.81
   throwCooldown: 0.1
+  audioClip: {fileID: 0}
   isAiming: 0
 --- !u!114 &4603397739281048612
 MonoBehaviour:
@@ -398,9 +399,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5794cf6b7ec9456b919d2d096e2e008e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runNoiseRadius: 5.2
-  sneakNoiseRadius: 2.8
-  idleNoiseRadius: 0.1
+  runNoiseRadius: 15
+  sneakNoiseRadius: 5
+  idleNoiseRadius: 3
   pulseInterval: 0.15
   drawGizmos: 0
   gizmoFade: 0.3
