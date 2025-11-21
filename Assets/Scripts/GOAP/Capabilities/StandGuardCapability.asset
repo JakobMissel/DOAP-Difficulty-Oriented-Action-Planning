@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875fbfa2d1734285b353878b31467c98, type: 3}
+  m_Name: StandGuardCapability
+  m_EditorClassIdentifier: 
+  goals:
+  - goal:
+      <Name>k__BackingField: StandGuardGoal
+      <Id>k__BackingField: StandGuard-93d03afc-596a-4217-aeb8-e83412522118
+    baseCost: 0.5
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: LastStoodGuard
+        <Id>k__BackingField: LastStoodGuard-b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e
+      comparison: 3
+      amount: 10
+  actions:
+  - action:
+      <Name>k__BackingField: StandGuardAction
+      <Id>k__BackingField: StandGuard-3abae1a9-8686-4be1-a79b-bfc0a95a47e3
+    target:
+      <Name>k__BackingField: StandGuardTarget
+      <Id>k__BackingField: StandGuardTarget-d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a
+    properties:
+      rid: 3255850196213956801
+    baseCost: 1.5
+    stoppingDistance: 0
+    validateTarget: 1
+    requiresTarget: 1
+    validateConditions: 0
+    moveMode: 1
+    conditions:
+    - worldKey:
+        <Name>k__BackingField: DifficultyWK
+        <Id>k__BackingField: 
+      comparison: 3
+      amount: 75
+    - worldKey:
+        <Name>k__BackingField: AtStandGuardPoint
+        <Id>k__BackingField: 
+      comparison: 1
+      amount: 1
+    - worldKey:
+        <Name>k__BackingField: Energy
+        <Id>k__BackingField: 
+      comparison: 2
+      amount: 0
+    - worldKey:
+        <Name>k__BackingField: LastStoodGuard
+        <Id>k__BackingField: 
+      comparison: 2
+      amount: 15
+    effects: []
+  worldSensors:
+  - sensor:
+      <Name>k__BackingField: DifficultySensor
+      <Id>k__BackingField: DifficultySensor-260fd14a-d8e1-49eb-93c7-4281156582c2
+    worldKey:
+      <Name>k__BackingField: DifficultyWK
+      <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
+  - sensor:
+      <Name>k__BackingField: AtStandGuardPointSensor
+      <Id>k__BackingField: AtStandGuardPointSensor-f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c
+    worldKey:
+      <Name>k__BackingField: AtStandGuardPoint
+      <Id>k__BackingField: AtStandGuardPoint-a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
+  - sensor:
+      <Name>k__BackingField: LastStoodGuardSensor
+      <Id>k__BackingField: LastStoodGuardSensor-a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d
+    worldKey:
+      <Name>k__BackingField: LastStoodGuard
+      <Id>k__BackingField: LastStoodGuard-b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e
+  targetSensors:
+  - sensor:
+      <Name>k__BackingField: StandGuardTargetSensor
+      <Id>k__BackingField: StandGuardTargetSensor-b8c9d0e1-f2a3-4b4c-5d6e-7f8a9b0c1d2e
+    targetKey:
+      <Name>k__BackingField: StandGuardTarget
+      <Id>k__BackingField: StandGuardTarget-d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a
+  multiSensors: []
+  generatorScriptable: {fileID: 11400000, guid: 0422e7a0a8d2c3a43bf617285bc969b5, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3255850196213956801
+      type: {class: EmptyActionProperties, ns: CrashKonijn.Agent.Runtime, asm: CrashKonijn.Agent.Runtime}
+      data: 
