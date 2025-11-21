@@ -15,6 +15,5 @@ MonoBehaviour:
   isCompleted: 0
   isActive: 0
   descriptionText: 
-  goalText: To pick up items press [E].\n
-  completionText: You picked up some coins. Your total amount is in the bottom right
-    corner.
+  goalText: Press [E] to pick up coins.\n
+  completionText: The amount of coins is displayed in the bottom right corner.

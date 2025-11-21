@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: Sneak Sub-Objective
   m_EditorClassIdentifier: 
-  isCompleted: 0
+  isCompleted: 1
   isActive: 0
   descriptionText: 
-  goalText: To sneak hold [CTRL], while moving.\n
-  completionText: When you are sneaking you produce less noise than running.
+  goalText: Hold [CTRL] while moving to sneak.\n
+  completionText: Sneaking produces less noise than running.

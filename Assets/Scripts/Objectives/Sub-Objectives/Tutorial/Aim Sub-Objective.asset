@@ -15,5 +15,5 @@ MonoBehaviour:
   isCompleted: 0
   isActive: 0
   descriptionText: 
-  goalText: Hold [RIGHT CLICK] to aim.\n
-  completionText: This shows you where your item will land when thrown.
+  goalText: Hold [RIGHT-CLICK] to aim.\n
+  completionText: Aiming shows where the coin will land.

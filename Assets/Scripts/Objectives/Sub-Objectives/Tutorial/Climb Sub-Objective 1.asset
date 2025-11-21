@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: Climb Sub-Objective 1
   m_EditorClassIdentifier: 
-  isCompleted: 0
+  isCompleted: 1
   isActive: 0
   descriptionText: 
-  goalText: Hold [SPACE] near a <b>PIPE</b> to climb it. Use [W][A][S][D] to move.\n
-  completionText: You need stamina to climb, shown as the green bar.
+  goalText: Hold [SPACE] near a pipe to climb it and use [W][A][S][D] to move.\n
+  completionText: The green bar displays the stamina used to climb.

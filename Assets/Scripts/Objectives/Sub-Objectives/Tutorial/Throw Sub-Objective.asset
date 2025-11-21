@@ -15,5 +15,5 @@ MonoBehaviour:
   isCompleted: 0
   isActive: 0
   descriptionText: 
-  goalText: To throw, press [LEFT CLICK] while aiming to throw a coin.
-  completionText: Thrown coins produce sound and can be used to distract guards.
+  goalText: Press [LEFT-CLICK] while aiming to throw a coin.
+  completionText: Throwing coins produce sound and can be used to distract guards.
