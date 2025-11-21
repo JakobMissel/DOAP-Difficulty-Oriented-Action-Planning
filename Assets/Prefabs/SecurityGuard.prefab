@@ -173,7 +173,7 @@ MonoBehaviour:
   exclamationMark: {fileID: 5855667424010391125}
   hFieldOfView: 100
   vFieldOfView: 100
-  viewDistance: 10
+  viewDistance: 15
   sightRotationOffset: {x: 0, y: -0.55, z: 0}
   detectionDelay: 1
   spottedGracePeriod: 2

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.GOAP.Behaviours;
 
 public class GuardSight : MonoBehaviour
 {
@@ -99,6 +100,16 @@ public class GuardSight : MonoBehaviour
             
             if(detectionTime < detectionDelay)
             {
+                // Play HUH sound on first frame of detection (when detection just started)
+                if (detectionTime <= 0f)
+                {
+                    var audio = GetComponent<ActionAudioBehaviour>();
+                    if (audio != null)
+                    {
+                        audio.PlayGuardHuh();
+                    }
+                }
+                
                 // Charge up detection visual
                 detectionTime += Time.deltaTime;
                 detectionIcon.fillAmount = detectionTime / detectionDelay;

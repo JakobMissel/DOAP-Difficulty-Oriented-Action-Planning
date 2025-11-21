@@ -37,7 +37,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         [Tooltip("Seconds after a player noise during which the agent will turn to look toward it")] 
         public float lookAtPlayerNoiseDuration = 1.0f;
         [Tooltip("Degrees/second when turning to face player noise")]
-        public float lookTurnSpeed = 540f;
+        public float lookTurnSpeed = 256f;
 
         [Tooltip("Seconds after a noise pulse during which audio can trigger proximity logic (if used)")] 
         public float audiblePursuitMemory = 0.75f;
@@ -74,7 +74,7 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         [Header("Hearing Settings")]
         [Tooltip("If true, player noise can be heard through walls. If false, a line-of-sight check is used and walls block player noise.")]
-        public bool hearPlayerThroughWalls = true;
+        public bool hearPlayerThroughWalls = false;
         [Tooltip("Layers that block hearing when 'hearPlayerThroughWalls' is false. Set this to the same layers as your sight obstacle mask.")]
         public LayerMask hearingObstructionMask;
         [Tooltip("Ray height offset (meters) used when checking hearing occlusion")] public float hearingRayHeight = 1.5f;
@@ -130,6 +130,7 @@ namespace Assets.Scripts.GOAP.Behaviours
             bool shouldLookAtNoise = !canSeePlayer && Time.time - lastPlayerNoiseTime <= lookAtPlayerNoiseDuration;
             bool isDetecting = canSeePlayer && !sight.PlayerSpotted(); // Detecting but not fully spotted yet
             
+
             // Disable NavMeshAgent rotation when we're manually controlling it
             var navAgent = GetComponent<NavMeshAgent>();
             if (navAgent != null)
