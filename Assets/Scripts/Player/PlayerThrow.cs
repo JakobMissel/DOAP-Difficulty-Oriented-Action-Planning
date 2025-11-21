@@ -290,11 +290,11 @@ public class PlayerThrow : MonoBehaviour
         print(ammoCount);
         if (throwablePrefabsList.Count > 0)
         {
-            PlayerActions.OnSpriteUpdate(throwablePrefabsList[0].GetComponent<ThrownObject>().thrownObjectImage);
+            PlayerActions.OnImageUpdate(throwablePrefabsList[0].GetComponent<ThrownObject>().thrownObjectTexture);
         }
         else
         {
-            PlayerActions.OnSpriteUpdate(null);
+            PlayerActions.OnImageUpdate(null);
         }
         PlayerActions.OnAmmoUpdate(ammoCount);
         AdjustHitAreaSize();

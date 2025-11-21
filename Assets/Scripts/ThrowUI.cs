@@ -6,24 +6,26 @@ public class ThrowUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI throwAmmunition;
     [SerializeField] Image throwImage;
+    [SerializeField] RawImage throwRawImage;
     Sprite defaultSprite;
 
     void Awake()
     {
         throwAmmunition.text = "";
         defaultSprite = throwImage.sprite;
+        throwRawImage.texture = null;
     }
 
     void OnEnable()
     {
         PlayerActions.ammoUpdate += UpdateAmmo;
-        PlayerActions.spriteUpdate += UpdateSprite;
+        PlayerActions.spriteUpdate += UpdateImage;
     }
 
     void OnDisable()
     {
         PlayerActions.ammoUpdate -= UpdateAmmo;
-        PlayerActions.spriteUpdate -= UpdateSprite;
+        PlayerActions.spriteUpdate -= UpdateImage;
     }
 
     void UpdateAmmo(int ammo)
@@ -36,13 +38,27 @@ public class ThrowUI : MonoBehaviour
         throwAmmunition.text = ammo.ToString();
     }
 
-    void UpdateSprite(Sprite sprite)
+    void UpdateImage(object sprite)
     {
         if (sprite == null)
         {
+            throwRawImage.color = Color.clear;
+            throwImage.color = Color.white;
             throwImage.sprite = defaultSprite;
             return;
         }
-        throwImage.sprite = sprite;
+        if (sprite is Sprite)
+        {
+            throwRawImage.color = Color.clear;
+            throwImage.color = Color.white;
+            throwImage.sprite = sprite as Sprite;
+
+        }
+        else if (sprite is Texture)
+        {
+            throwImage.color = Color.clear;
+            throwRawImage.color = Color.white;
+            throwRawImage.texture = sprite as Texture;
+        }
     }
 }

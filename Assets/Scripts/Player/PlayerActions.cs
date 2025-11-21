@@ -70,8 +70,8 @@ public class PlayerActions : MonoBehaviour
     public static Action<int> ammoUpdate;
     public static void OnAmmoUpdate(int ammo) => ammoUpdate?.Invoke(ammo);
 
-    public static Action<Sprite> spriteUpdate;
-    public static void OnSpriteUpdate(Sprite sprite) => spriteUpdate?.Invoke(sprite);
+    public static Action<object> spriteUpdate;
+    public static void OnImageUpdate(object image) => spriteUpdate?.Invoke(image);
 
     // Caught by guard action
     public static Action playerCaught;

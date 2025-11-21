@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ThrownObject : MonoBehaviour
 {
     Rigidbody rb;
     [SerializeField] GameObject noiseAreaPrefab;
-    [SerializeField] public Sprite thrownObjectImage;
-    [SerializeField] bool destroyOnImpact = false;
+    [SerializeField] bool destroyOnImpact = false; 
+    [SerializeField] public Texture thrownObjectTexture;
     [SerializeField] float bounceMultiplier = 0.5f;
     [SerializeField] public float noiseRadius = 5f;
     [Header("Audio")]
