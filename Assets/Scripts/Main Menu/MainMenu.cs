@@ -9,27 +9,32 @@ using UnityEngine.InputSystem.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    [Header("UI References")]
+    [Header("UI Panels")]
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject difficultyPanel;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private GameObject howToPlayPanel;
+    
+    [Header("Main Panel Buttons")]
     [SerializeField] private Button playButton;
     [SerializeField] private Button creditsButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Toggle ddaToggle;
+    
+    [Header("Difficulty Panel Buttons")]
     [SerializeField] private Button easyButton;
     [SerializeField] private Button mediumButton;
     [SerializeField] private Button hardButton;
-    [SerializeField] private Button creditsBackButton;
     [SerializeField] private Button difficultyBackButton;
+    
+    [Header("Credits Panel Buttons")]
+    [SerializeField] private Button creditsBackButton;
     
     [Header("Pause Panel Buttons")]
     [SerializeField] private Button resumeButton;
     [SerializeField] private Button pauseExitButton;
-    [SerializeField] private Button howToPlayButton;
+    
     
     [Header("Game Over Panel Buttons")]
     [SerializeField] private Button retryButton;
@@ -190,7 +195,6 @@ public class MainMenu : MonoBehaviour
         if (difficultyPanel) difficultyPanel.SetActive(false);
         if (pausePanel) pausePanel.SetActive(false);
         if (gameOverPanel) gameOverPanel.SetActive(false);
-        if (howToPlayPanel) howToPlayPanel.SetActive(false);
     }
 
     private void Update()
@@ -222,7 +226,6 @@ public class MainMenu : MonoBehaviour
         if (difficultyPanel) difficultyPanel.SetActive(false);
         if (pausePanel) pausePanel.SetActive(false);
         if (gameOverPanel) gameOverPanel.SetActive(false);
-        if (howToPlayPanel) howToPlayPanel.SetActive(false);
 
         // Show MainPanel text elements
         ShowMainPanelText();
@@ -267,7 +270,6 @@ public class MainMenu : MonoBehaviour
             Debug.LogError("[MainMenu] PausePanel reference is NULL!");
         }
         if (gameOverPanel) gameOverPanel.SetActive(false);
-        if (howToPlayPanel) howToPlayPanel.SetActive(false);
 
         // Hide gameplay UI elements
         HideGameplayUI();
@@ -314,7 +316,6 @@ public class MainMenu : MonoBehaviour
         if (difficultyPanel) difficultyPanel.SetActive(false);
         if (pausePanel) pausePanel.SetActive(false);
         if (gameOverPanel) gameOverPanel.SetActive(true);
-        if (howToPlayPanel) howToPlayPanel.SetActive(false);
 
         // Hide gameplay UI elements
         HideGameplayUI();
@@ -366,7 +367,6 @@ public class MainMenu : MonoBehaviour
             gameOverPanel.SetActive(false);
             Debug.Log("[MainMenu] Deactivated GameOver panel");
         }
-        if (howToPlayPanel) howToPlayPanel.SetActive(false);
 
         // Hide all text elements
         HideAllPanelText();
@@ -667,7 +667,6 @@ public class MainMenu : MonoBehaviour
         // Pause panel
         if (resumeButton) resumeButton.onClick.RemoveListener(OnResumeClicked);
         if (pauseExitButton) pauseExitButton.onClick.RemoveListener(OnExitClicked);
-        if (howToPlayButton) howToPlayButton.onClick.RemoveListener(OnHowToPlayClicked);
         
         // Game over panel
         if (retryButton) retryButton.onClick.RemoveListener(OnRetryClicked);
@@ -678,20 +677,6 @@ public class MainMenu : MonoBehaviour
         {
             Instance = null;
         }
-    }
-
-    private void OnHowToPlayClicked()
-    {
-        Debug.Log("[MainMenu] Opening How to Play");
-        if (pausePanel) pausePanel.SetActive(false);
-        if (howToPlayPanel) howToPlayPanel.SetActive(true);
-    }
-
-    public void OnBackFromHowToPlay()
-    {
-        Debug.Log("[MainMenu] Returning from How to Play");
-        if (pausePanel) pausePanel.SetActive(true);
-        if (howToPlayPanel) howToPlayPanel.SetActive(false);
     }
 
     private void OnResumeClicked()
@@ -1075,12 +1060,6 @@ public class MainMenu : MonoBehaviour
             pauseExitButton.onClick.AddListener(OnExitClicked);
         }
         
-        if (howToPlayButton)
-        {
-            howToPlayButton.onClick.RemoveAllListeners();
-            howToPlayButton.onClick.AddListener(OnHowToPlayClicked);
-        }
-        
         // Setup game over panel button listeners
         if (retryButton)
         {
@@ -1220,11 +1199,6 @@ public class MainMenu : MonoBehaviour
                 pauseExitButton.gameObject.SetActive(true);
             }
             
-            if (howToPlayButton && !howToPlayButton.gameObject.activeSelf)
-            {
-                Debug.LogWarning($"[MainMenu] HowToPlay button GameObject was disabled! Enabling it now...");
-                howToPlayButton.gameObject.SetActive(true);
-            }
         }
         else if (pausePanel)
         {
