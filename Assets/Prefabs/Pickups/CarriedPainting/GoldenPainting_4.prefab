@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 576e68b1718a224429a4f34c5830b682, type: 2}
+  - {fileID: 2100000, guid: 67f6b49662ea3e24ea249149bcec8518, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -380,7 +380,7 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Painting 4
-  painterName: Painter 4
+  painterName: Georges Braque
   value: 100 DKK
 --- !u!65 &6819353408146826762
 BoxCollider:

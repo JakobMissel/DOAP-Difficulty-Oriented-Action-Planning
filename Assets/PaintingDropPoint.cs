@@ -4,8 +4,10 @@ public class PaintingDropPoint : Pickup
 {
     [Header("PaintingDropPoint")]
     [SerializeField] GameObject paintingDeliveryPosition;
+    [SerializeField] GameObject visualZone;
 
     GameObject paintingPrefab;
+    bool escaped = false;
 
     protected override void Awake()
     {
@@ -40,9 +42,11 @@ public class PaintingDropPoint : Pickup
 
     protected override void OnTriggerStay(Collider other)
     {
-        if (PlayerActions.Instance.canEscape)
+        if (PlayerActions.Instance.canEscape && !escaped)
         {
-            Debug.Log("Player escaped with the painting(s)!");
+            escaped = true;
+            Debug.LogWarning("Player escaped with the painting(s)!");
+            // escape logic here
             return;
         }
         if (!PlayerActions.Instance.carriesPainting) return;
@@ -83,5 +87,10 @@ public class PaintingDropPoint : Pickup
                 break;
             }
         }
+    }
+
+    void Update()
+    {
+        visualZone.SetActive(PlayerActions.Instance.carriesPainting);
     }
 }

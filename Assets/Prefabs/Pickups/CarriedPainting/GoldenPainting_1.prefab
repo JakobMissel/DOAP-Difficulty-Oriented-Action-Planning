@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c1d3de44f4d60647bbe0aaf0513dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: 
+  displayName: ' '
   verticalAnimation: 0
   verticalSpeed: 0
   verticalHeight: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Painting 1
-  painterName: Painter 1
+  painterName: Amedeo Modigliani
   value: 100 DKK
 --- !u!65 &3634387034464005103
 BoxCollider:

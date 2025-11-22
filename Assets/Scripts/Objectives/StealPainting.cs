@@ -63,13 +63,13 @@ public class StealPainting : MonoBehaviour
                     wallPainting = painting.gameObject;
                     currentPaintingName = painting.name;
 
-                    objective.subObjectives[i].completionText = $"You have stolen the painting \"{painting.paintingName}\". Now place it outside.";
-                    objective.subObjectives[i + 1].goalText = $"\"{painting.paintingName}\" by {painting.painterName} is valued at {painting.value}. Place it back at the entrance.";
-                    objective.subObjectives[i + 1].completionText = $"\"{painting.paintingName}\" has been placed at the entrance.";
+                    objective.subObjectives[i].completionText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has a litmed duration based on line 72.
+                    objective.subObjectives[i + 1].goalText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has unlitmed duration to be read.
+                    objective.subObjectives[i + 1].completionText = $"The painting by {painting.painterName} has been placed at the entrance.";
                     
                     wallPainting.gameObject.SetActive(false);
                     
-                    OnPaintingStolen(objective.currentSubObjectiveIndex, 0);
+                    OnPaintingStolen(objective.currentSubObjectiveIndex, 0); // zero means it skips the completion text of the sub-objective, going straight to the next ones goalText.
                     break;
                 }
             }
@@ -88,13 +88,18 @@ public class StealPainting : MonoBehaviour
         // Add to "stolen list" and destroy the carried painting accounting for its siblings.
         wallPainting = null;
         stolenPaintings.Add(currentPainting);
-        paintings.Remove(currentPainting);
         if (playerPaintingPosition.transform.childCount > 2)
         {
             Destroy(playerPaintingPosition.transform.GetChild(2).gameObject);
         }
+        if(stolenPaintings.Count == paintings.Count)
+        {
+            objective.CompleteSubObjective(objective.currentSubObjectiveIndex);
+            objective.DisplayNextSubObjective(0);   // no delay to end instantly
+            return;
+        }
         objective.CompleteSubObjective(objective.currentSubObjectiveIndex);
-        objective.DisplayNextSubObjective(0);
+        objective.DisplayNextSubObjective(5);   // delay to allow for completion text to be read
     }
 
     void AddPaintingToStolenList(string name)
@@ -125,12 +130,15 @@ public class StealPainting : MonoBehaviour
                 subObjective.goalText = "";
                 for (int i = 0; i < paintings.Count; i++)
                 {
-                    var paintingText = $"<voffset=.4em><size=200%><sprite={i}></size></voffset>{paintings[i].paintingName}";
-                    if (stolenPaintings.Contains(paintings[i]))
+                    var paintingSprite = $"<voffset=.4em><size=200%><sprite={i}></size></voffset>";
+                    var paintingText = $"{paintingSprite}{paintings[i].painterName}";
+                    
+                    if (stolenPaintings.Count > 0 && stolenPaintings.Contains(paintings[i]))
                     {
-                        subObjective.goalText += $"<color=#8FCDA1>{paintingText}</color>\n"; // change color of stolen paintings
+                        Debug.LogWarning($"ITS PAINTS {stolenPaintings[0]}");
+                        subObjective.goalText += $"{paintingSprite}<color=#8FCDA1>{paintings[i].painterName}</color>\n"; // change color of stolen paintings
                     }
-                    else
+                    else if (!stolenPaintings.Contains(paintings[i]))
                     {
                         subObjective.goalText += $"{paintingText}\n";
                     }

@@ -31,7 +31,7 @@ public class ObjectiveUI : MonoBehaviour
     {
         ObjectivesManager.displayObjective += UpdateObjectiveUI;
         ObjectivesManager.trackPaintings += TrackPaintings;
-        PlayerActions.paintingDelivered += DeactivateTextArea;
+        //PlayerActions.paintingDelivered += DeactivateTextArea;
     }
 
 
@@ -39,7 +39,7 @@ public class ObjectiveUI : MonoBehaviour
     {
         ObjectivesManager.displayObjective -= UpdateObjectiveUI;
         ObjectivesManager.trackPaintings -= TrackPaintings;
-        PlayerActions.paintingDelivered -= DeactivateTextArea;
+        //PlayerActions.paintingDelivered -= DeactivateTextArea;
     }
 
     void DeactivateTextArea()

@@ -75,6 +75,11 @@ public class ObjectivesManager : MonoBehaviour
                 PlayerActions.OnCanInteract(true);
                 setNewObjective?.Invoke(currentObjective, 0, 0, 0);
             }
+            if (completedTutorial)
+            {
+                objectives[0].isCompleted = true;
+                objectives[0].isActive = false;
+            }
         }
         else
         {

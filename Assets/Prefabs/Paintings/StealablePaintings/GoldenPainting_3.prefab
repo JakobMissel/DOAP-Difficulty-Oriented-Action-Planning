@@ -229,8 +229,8 @@ MonoBehaviour:
   rotateY: 1
   rotateZ: 0
   audioGameObject: {fileID: 2840963429894322711, guid: f33f6e2ec70e4c942b820c095de920ed, type: 3}
-  audioClip: {fileID: 8300000, guid: 48c1c4833b656964f8e650a4d2008e07, type: 3}
-  destroyOnPickup: 1
+  audioClip: {fileID: 8300000, guid: 6dd4e3fba701de64aa40bedb9e9f6516, type: 3}
+  destroyOnPickup: 0
   canBepickedUp: 1
   buttonRequired: 1
   holdRequired: 1

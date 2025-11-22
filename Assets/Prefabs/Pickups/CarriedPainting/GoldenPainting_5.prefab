@@ -122,7 +122,7 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Painting 5
-  painterName: Painter 5
+  painterName: Pablo Picasso
   value: 100 DKK
 --- !u!65 &6867491760666524126
 BoxCollider:
@@ -295,7 +295,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 576e68b1718a224429a4f34c5830b682, type: 2}
+  - {fileID: 2100000, guid: 57468af1e14d9394c909158794c47637, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

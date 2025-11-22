@@ -10,7 +10,7 @@ public class StealablePickup : Pickup
 
     protected override void Awake()
     {
-        displayName = $"Steal \"{paintingName}\" \n by \n{painterName}";
+        displayName = $"Steal painting \n by \n{painterName}";
         base.Awake();
     }
 
