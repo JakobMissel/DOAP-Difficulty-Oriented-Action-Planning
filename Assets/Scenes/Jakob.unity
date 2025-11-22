@@ -1215,8 +1215,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1251,7 +1251,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -7225,8 +7225,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -7261,7 +7261,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -15655,6 +15655,14 @@ PrefabInstance:
       propertyPath: spotlight
       value: 
       objectReference: {fileID: 1548382962}
+    - target: {fileID: 6805099562788388414, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: MaxDistance
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805099562788388414, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: MinDistance
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6872165123577439737, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: fontSize
       value: 16
@@ -18552,8 +18560,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -18588,7 +18596,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -25940,6 +25948,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3952467162627892989, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3963191423399086432, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -26023,6 +26035,14 @@ PrefabInstance:
     - target: {fileID: 6788515640697881603, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805099562788388414, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: MaxDistance
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6805099562788388414, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: MinDistance
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6842481438185164647, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Layer
@@ -26770,8 +26790,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -26806,7 +26826,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -30170,8 +30190,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -30206,7 +30226,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -37739,7 +37759,7 @@ PrefabInstance:
       objectReference: {fileID: 1848066683}
     - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
       propertyPath: completedTutorial
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
       propertyPath: startFromFirstObjective
@@ -40403,8 +40423,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -40439,7 +40459,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
