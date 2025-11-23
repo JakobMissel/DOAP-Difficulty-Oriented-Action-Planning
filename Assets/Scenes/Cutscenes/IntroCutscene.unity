@@ -1171,7 +1171,7 @@ Transform:
   m_GameObject: {fileID: 976233691}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -0.27, y: 1.22, z: -0.08}
+  m_LocalPosition: {x: -0.3, y: 1.22, z: -0.074999996}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2797,8 +2797,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270756103}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13817419, y: 0.04191583, z: 0.005853124, w: 0.98950326}
-  m_LocalPosition: {x: -0.15000433, y: 0.96, z: -0.52}
+  m_LocalRotation: {x: -0.13112886, y: 0.15086019, z: 0.020193847, w: 0.9796115}
+  m_LocalPosition: {x: -0.55, y: 0.96, z: -0.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3741,81 +3741,81 @@ MonoBehaviour:
   - m_EditModeType: 1
     m_Knots:
     - Position:
-        x: 0
+        x: -0.03
         y: 0
-        z: 0
+        z: 0.005
       TangentIn:
         x: 0
         y: 0
-        z: -0.033127673
+        z: -0.048382442
       TangentOut:
         x: 0
         y: 0
-        z: 0.033127673
+        z: 0.048382442
       Rotation:
         value:
           x: 0
-          y: 0.8994719
+          y: 0.8429681
           z: 0
-          w: 0.43697873
+          w: 0.5379636
     - Position:
         x: 0.17
         y: 0
-        z: -0.09
+        z: -0.05
       TangentIn:
         x: 0
         y: 0
-        z: -0.06632918
+        z: -0.079647854
       TangentOut:
         x: 0
         y: 0
-        z: 0.06632918
+        z: 0.079647854
       Rotation:
         value:
           x: 0
-          y: 0.74901485
+          y: 0.70313233
           z: 0
-          w: 0.66255325
+          w: 0.71105903
     - Position:
-        x: 0.29
+        x: 0.32
         y: 0
-        z: -0.01
+        z: 0.04
       TangentIn:
         x: 0
         y: 0
-        z: -0.06824308
+        z: -0.06596934
       TangentOut:
         x: 0
         y: 0
-        z: 0.06824308
+        z: 0.06596934
       Rotation:
         value:
           x: 0
-          y: -0.18966398
+          y: -0.22356276
           z: -0
-          w: 0.9818491
+          w: 0.97468954
     - Position:
         x: 0.16
         y: 0
-        z: 0.21
+        z: 0.24
       TangentIn:
         x: 0
         y: 0
-        z: -0.060549363
+        z: -0.05750028
       TangentOut:
         x: 0
         y: 0
-        z: 0.060549363
+        z: 0.05750028
       Rotation:
         value:
           x: 0
-          y: 0.21861216
+          y: 0.22637229
           z: 0
-          w: 0.9758118
+          w: 0.9740409
     - Position:
-        x: 0.55
+        x: 0.6
         y: 0
-        z: 0.28
+        z: 0.32
       TangentIn:
         x: 0
         y: 0
@@ -4106,8 +4106,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.01
+  far clip plane: 30
   field of view: 60.000004
   orthographic: 0
   orthographic size: 5
@@ -4134,8 +4134,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018501350}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.28074014, y: -0.117230535, z: 0.034853738, w: -0.95195967}
-  m_LocalPosition: {x: -0.69830203, y: 2.7304993, z: -2.8548245}
+  m_LocalRotation: {x: -0.13112889, y: 0.1508602, z: 0.020193854, w: 0.97961146}
+  m_LocalPosition: {x: -0.55, y: 0.96, z: -0.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
