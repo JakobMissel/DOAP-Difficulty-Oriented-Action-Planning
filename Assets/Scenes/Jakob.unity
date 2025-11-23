@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.025
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.14862938, g: 0.17265928, b: 0.18867922, a: 1}
   m_AmbientGroundColor: {r: 0.13363296, g: 0.16258502, b: 0.1981132, a: 1}
   m_AmbientIntensity: 1
@@ -414,6 +414,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 0.20730868, z: 0.10000002}
   m_Center: {x: 0, y: 0.024454307, z: -0.0000000074505815}
+--- !u!4 &26759906 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 795081575647565571, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+  m_PrefabInstance: {fileID: 1214024826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &26841569
 GameObject:
   m_ObjectHideFlags: 0
@@ -26469,6 +26474,71 @@ PrefabInstance:
     - target: {fileID: 4613549337071650112, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Visible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[1].m_Visible
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Transform
+      value: 
+      objectReference: {fileID: 26759906}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[1].m_Transform
+      value: 
+      objectReference: {fileID: 26759906}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Style.size
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[1].m_Style.size
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Style.shape
+      value: 
+      objectReference: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[1].m_Style.shape
+      value: 
+      objectReference: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Style.color.a
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[0].m_Style.color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[1].m_Style.color.a
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738357662978554533, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_Effectors.Array.data[1].m_Style.color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4762678072612841825, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+        'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
+        'mixamorig:LeftHand'\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+        'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tand more ..."
       objectReference: {fileID: 0}
     - target: {fileID: 4871425284895990835, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Layer
