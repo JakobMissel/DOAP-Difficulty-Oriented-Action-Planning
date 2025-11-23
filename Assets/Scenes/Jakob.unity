@@ -33405,7 +33405,7 @@ CapsuleCollider:
   m_Radius: 1.08
   m_Height: 3.37
   m_Direction: 0
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.18, z: -0.09}
 --- !u!1001 &1517631560
 PrefabInstance:
   m_ObjectHideFlags: 0
