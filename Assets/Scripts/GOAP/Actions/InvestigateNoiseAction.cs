@@ -70,7 +70,7 @@ namespace Assets.Scripts.GOAP.Actions
                 var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                 if (brain != null)
                 {
-                    brain.ClearDistractionNoise();
+                    brain.ClearNoise(); // Clear whatever noise was being investigated
                 }
                 return ActionRunState.Stop;
             }
@@ -170,13 +170,20 @@ namespace Assets.Scripts.GOAP.Actions
                 // After investigating for the duration, complete
                 if (data.InvestigationTime >= INVESTIGATION_DURATION)
                 {
-                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} investigation complete! Clearing noise and returning to patrol.");
-                    
-                    // Clear the distraction noise from the behaviour
                     var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
                     if (brain != null)
                     {
-                        brain.ClearDistractionNoise();
+                        // Clear noise based on what type it was
+                        if (brain.IsPlayerNoise)
+                        {
+                            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} finished investigating PLAYER noise. Nothing found!");
+                            brain.ClearPlayerNoise();
+                        }
+                        else
+                        {
+                            Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} finished investigating DISTRACTION noise. Nothing found!");
+                            brain.ClearDistractionNoise();
+                        }
                     }
                     
                     return ActionRunState.Completed;
@@ -211,6 +218,7 @@ namespace Assets.Scripts.GOAP.Actions
             var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
             var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
             
             // Reset speed controller state
             if (speedController != null)
@@ -218,10 +226,16 @@ namespace Assets.Scripts.GOAP.Actions
                 speedController.SetInvestigatingNoise(false);
             }
             
-            // Ensure noise is cleared
+            // Ensure noise is cleared (handles both player and distraction noise)
             if (brain != null)
             {
-                brain.ClearDistractionNoise();
+                brain.ClearNoise();
+            }
+            
+            // Reset animation to idle
+            if (animation != null)
+            {
+                animation.Idle();
             }
             
             // Resume normal movement state

@@ -14,10 +14,11 @@ namespace Assets.Scripts.GOAP.Sensors
         public override ITarget Sense(IActionReceiver agent, IComponentReference refs, ITarget existingTarget)
         {
             var brain = refs.GetCachedComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
-            if (brain == null || !brain.HasHeardDistractionNoise)
+            // Check for ANY noise (player or distraction)
+            if (brain == null || !brain.HasHeardNoise)
                 return null;
 
-            Vector3 noisePosition = brain.LastDistractionNoisePosition;
+            Vector3 noisePosition = brain.LastNoisePosition;
 
             // Ensure the position is on the NavMesh
             if (UnityEngine.AI.NavMesh.SamplePosition(noisePosition, out var hit, 5f, UnityEngine.AI.NavMesh.AllAreas))

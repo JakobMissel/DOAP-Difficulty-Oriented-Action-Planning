@@ -12,13 +12,10 @@ namespace Assets.Scripts.GOAP.Behaviours
         [SerializeField] private float drainRate = 2f;
         [SerializeField] private float rechargeRate = 8f;
         
-        [Header("Spotlight Control")]
-        [SerializeField] private GameObject spotlight;
-        [Tooltip("Set the spotlight game object: The child of the gurds Eyes")]
-        
         private float currentEnergy;
         private bool isRecharging;
         private GuardSight sight;
+        private GuardAnimation guardAnimation;
 
         public float CurrentEnergy => currentEnergy;
         public float MaxEnergy => maxEnergy;
@@ -28,23 +25,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         private void Awake()
         {
             currentEnergy = maxEnergy;
-            sight = GetComponent<GuardSight>();
-            
-            // Try to find spotlight if not assigned
-            if (spotlight == null && sight != null && sight.Eyes != null)
-            {
-                // Look for spotlight as child of Eyes
-                Transform spotlightTransform = sight.Eyes.Find("Spotlight");
-                if (spotlightTransform != null)
-                {
-                    spotlight = spotlightTransform.gameObject;
-                    Debug.Log($"[EnergyBehaviour] Found spotlight automatically: {spotlight.name}");
-                }
-                else
-                {
-                    Debug.LogWarning($"[EnergyBehaviour] Could not find spotlight as child of Eyes!");
-                }
-            }
+            guardAnimation = GetComponent<GuardAnimation>();
         }
 
         private void Update()
@@ -58,13 +39,6 @@ namespace Assets.Scripts.GOAP.Behaviours
                 {
                     currentEnergy = maxEnergy;
                     isRecharging = false;
-                    
-                    // Re-enable spotlight when fully charged
-                    if (spotlight != null)
-                    {
-                        spotlight.SetActive(true);
-                        Debug.Log($"[EnergyBehaviour] {gameObject.name} fully recharged, spotlight enabled");
-                    }
                 }
             }
             else
@@ -81,18 +55,18 @@ namespace Assets.Scripts.GOAP.Behaviours
             isRecharging = value;
             Debug.Log($"[EnergyBehaviour] {gameObject.name} recharging set to: {value}");
             
-            // Disable spotlight when recharging or out of energy
-            if (spotlight != null)
+            // Trigger appropriate animation based on recharging state
+            if (guardAnimation != null)
             {
-                if (value || currentEnergy <= 0f)
+                if (value)
                 {
-                    spotlight.SetActive(false);
-                    Debug.Log($"[EnergyBehaviour] {gameObject.name} spotlight disabled (recharging or no energy)");
+                    guardAnimation.Recharge();
+                    Debug.Log($"[EnergyBehaviour] {gameObject.name} triggering Recharge animation");
                 }
-                else if (currentEnergy >= maxEnergy)
+                else
                 {
-                    spotlight.SetActive(true);
-                    Debug.Log($"[EnergyBehaviour] {gameObject.name} spotlight enabled (full energy)");
+                    guardAnimation.Idle();
+                    Debug.Log($"[EnergyBehaviour] {gameObject.name} triggering Idle animation");
                 }
             }
         }

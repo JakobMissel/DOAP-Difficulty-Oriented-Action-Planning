@@ -9,8 +9,6 @@ using Assets.Scripts.GOAP.Behaviours;
      [GoapId("Recharge-760e34a2-b02a-4d32-9256-4193d18e9447")]
      public class RechargeAction : GoapActionBase<RechargeAction.Data>
      {
-         private ActionAudioBehaviour audio;
- 
          public class Data : IActionData
          {
              public ITarget Target { get; set; }
@@ -24,8 +22,7 @@ using Assets.Scripts.GOAP.Behaviours;
          {
              var navAgent = mono.Transform.GetComponent<NavMeshAgent>();
              var energy = mono.Transform.GetComponent<EnergyBehaviour>();
-             var animation = mono.Transform.GetComponent<GuardAnimation>();
-             audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
+             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
  
              // Stop the guard where they are
              if (navAgent != null)
@@ -34,13 +31,7 @@ using Assets.Scripts.GOAP.Behaviours;
                  navAgent.velocity = Vector3.zero;
              }
             
-             // Trigger Idle animation when recharging
-             if (animation != null)
-             {
-                 animation.Idle();
-             }
-            
-             // Start recharging immediately on the spot
+             // Start recharging (EnergyBehaviour will handle animation)
              if (energy != null)
              {
                  energy.SetRecharging(true);
@@ -56,6 +47,7 @@ using Assets.Scripts.GOAP.Behaviours;
          public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
          {
              var energy = mono.Transform.GetComponent<EnergyBehaviour>();
+             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
              if (energy == null)
              {
@@ -80,6 +72,7 @@ using Assets.Scripts.GOAP.Behaviours;
          {
              var navAgent = mono.Transform.GetComponent<NavMeshAgent>();
              var energy = mono.Transform.GetComponent<EnergyBehaviour>();
+             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
              // Resume movement
              if (navAgent != null)
@@ -87,7 +80,7 @@ using Assets.Scripts.GOAP.Behaviours;
                  navAgent.isStopped = false;
              }
             
-             // Make sure recharging is stopped when action ends
+             // Stop recharging (EnergyBehaviour will handle animation reset to Idle)
              if (energy != null)
              {
                  energy.SetRecharging(false);

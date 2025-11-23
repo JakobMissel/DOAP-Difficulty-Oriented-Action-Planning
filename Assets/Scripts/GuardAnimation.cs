@@ -10,7 +10,8 @@ public class GuardAnimation : MonoBehaviour
         Walking,
         Running,
         Idle,
-        Searching
+        Searching,
+        Recharging
     }
     
     private AnimationState currentState = AnimationState.None;
@@ -21,6 +22,7 @@ public class GuardAnimation : MonoBehaviour
         {
             animator.SetTrigger("Walking");
             currentState = AnimationState.Walking;
+            Debug.Log("[GuardAnimation] Walking");
         }
     }
 
@@ -30,6 +32,7 @@ public class GuardAnimation : MonoBehaviour
         {
             animator.SetTrigger("Running");
             currentState = AnimationState.Running;
+            Debug.Log("[GuardAnimation] Running");
         }
     }
 
@@ -39,6 +42,7 @@ public class GuardAnimation : MonoBehaviour
         {
             animator.SetTrigger("Idle");
             currentState = AnimationState.Idle;
+            Debug.Log("[GuardAnimation] Idle");
         }
     }
 
@@ -48,6 +52,17 @@ public class GuardAnimation : MonoBehaviour
         {
             animator.SetTrigger("Searching");
             currentState = AnimationState.Searching;
+            Debug.Log("[GuardAnimation] Searching");
+        }
+    }
+    
+    public void Recharge()
+    {
+        if (currentState != AnimationState.Recharging)
+        {
+            animator.SetTrigger("Recharging");
+            currentState = AnimationState.Recharging;
+            Debug.Log("[GuardAnimation] Recharging");
         }
     }
 }

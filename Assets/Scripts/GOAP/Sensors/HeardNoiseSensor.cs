@@ -15,7 +15,8 @@ namespace Assets.Scripts.GOAP.Sensors
         public override SenseValue Sense(IActionReceiver agent, IComponentReference refs)
         {
             var brain = refs.GetCachedComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
-            if (brain != null && brain.HasHeardDistractionNoise)
+            // Check for ANY noise (player or distraction)
+            if (brain != null && brain.HasHeardNoise)
             {
                 return new SenseValue(1); // true
             }

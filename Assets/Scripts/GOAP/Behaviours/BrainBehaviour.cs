@@ -23,24 +23,22 @@ namespace Assets.Scripts.GOAP.Behaviours
         // Track if player has been caught
         public bool IsPlayerCaught { get; private set; } = false;
 
-        // Track distraction noise (e.g., thrown objects)
-        public bool HasHeardDistractionNoise { get; private set; } = false;
-        public Vector3 LastDistractionNoisePosition { get; private set; }
-        private float lastDistractionNoiseTime = -999f;
-
-        // Track player noise (distinct from distraction)
-        public bool HasHeardPlayerNoise { get; private set; } = false;
-        public Vector3 LastPlayerNoisePosition { get; private set; }
-        public float LastHeardNoiseRadius { get; private set; } = 0f; // player noise radius for proximity logic
-        private float lastPlayerNoiseTime = -999f;
-
-        [Tooltip("Seconds after a player noise during which the agent will turn to look toward it")] 
-        public float lookAtPlayerNoiseDuration = 1.0f;
-        [Tooltip("Degrees/second when turning to face player noise")]
-        public float lookTurnSpeed = 256f;
+        // Track noise (both distraction and player-generated)
+        public bool HasHeardNoise { get; private set; } = false;
+        public Vector3 LastNoisePosition { get; private set; }
+        public float LastNoiseRadius { get; private set; } = 0f;
+        public bool IsPlayerNoise { get; private set; } = false; // Track if the noise was from player vs thrown object
+        private float lastNoiseTime = -999f;
 
         [Tooltip("Seconds after a noise pulse during which audio can trigger proximity logic (if used)")] 
         public float audiblePursuitMemory = 0.75f;
+        
+        // Backwards compatibility properties
+        public bool HasHeardDistractionNoise => HasHeardNoise;
+        public Vector3 LastDistractionNoisePosition => LastNoisePosition;
+        public bool HasHeardPlayerNoise => HasHeardNoise && IsPlayerNoise;
+        public Vector3 LastPlayerNoisePosition => LastNoisePosition;
+        public float LastHeardNoiseRadius => LastNoiseRadius;
         
         // Track last known player position
         public bool HasLastKnownPosition { get; private set; } = false;
@@ -138,18 +136,17 @@ namespace Assets.Scripts.GOAP.Behaviours
 
             bool canSeePlayer = sight.CanSeePlayer();
             
-            // Check if we should manually control rotation (hearing noise or detecting player)
-            bool shouldLookAtNoise = !canSeePlayer && Time.time - lastPlayerNoiseTime <= lookAtPlayerNoiseDuration;
-            bool isDetecting = canSeePlayer && !sight.PlayerSpotted(); // Detecting but not fully spotted yet
+            // Check if we should manually control rotation when detecting player (before fully spotted)
+            bool isDetecting = canSeePlayer && !sight.PlayerSpotted();
             
 
-            // Disable NavMeshAgent rotation when we're manually controlling it
+            // Disable NavMeshAgent rotation when manually controlling it during detection
             var navAgent = GetComponent<NavMeshAgent>();
             if (navAgent != null)
             {
-                if (shouldLookAtNoise || isDetecting)
+                if (isDetecting)
                 {
-                    navAgent.updateRotation = false; // We'll handle rotation manually
+                    navAgent.updateRotation = false; // We'll handle rotation manually during detection
                 }
                 else
                 {
@@ -236,20 +233,8 @@ namespace Assets.Scripts.GOAP.Behaviours
 
                 wasSeenLastFrame = false;
             }
-
-            // Head-turn toward recent player noise if not seeing the player
-            if (shouldLookAtNoise)
-            {
-                Vector3 dir = LastPlayerNoisePosition - transform.position;
-                dir.y = 0f;
-                if (dir.sqrMagnitude > 0.0001f)
-                {
-                    Quaternion targetRot = Quaternion.LookRotation(dir.normalized, Vector3.up);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, lookTurnSpeed * Time.deltaTime);
-                }
-            }
             
-            // Also manually rotate towards player when detecting (before fully spotted)
+            // Manually rotate towards player when detecting (before fully spotted)
             if (isDetecting && canSeePlayer)
             {
                 Vector3 dirToPlayer = playerTransform.position - transform.position;
@@ -257,7 +242,8 @@ namespace Assets.Scripts.GOAP.Behaviours
                 if (dirToPlayer.sqrMagnitude > 0.0001f)
                 {
                     Quaternion targetRot = Quaternion.LookRotation(dirToPlayer.normalized, Vector3.up);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, lookTurnSpeed * Time.deltaTime);
+                    float rotationSpeed = 256f; // Degrees per second
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
                 }
             }
         }
@@ -316,9 +302,11 @@ namespace Assets.Scripts.GOAP.Behaviours
         public void OnDistractionNoiseHeard(Vector3 noisePosition, float radius)
         {
             DdaPlayerActions.Instance.SuccesfulItemUsage();
-            HasHeardDistractionNoise = true;
-            LastDistractionNoisePosition = noisePosition;
-            lastDistractionNoiseTime = Time.time;
+            HasHeardNoise = true;
+            LastNoisePosition = noisePosition;
+            LastNoiseRadius = radius;
+            IsPlayerNoise = false; // This is a distraction (thrown object)
+            lastNoiseTime = Time.time;
             Debug.Log($"[BrainBehaviour] Distraction noise at {noisePosition} (r={radius:F1})");
         }
 
@@ -338,23 +326,35 @@ namespace Assets.Scripts.GOAP.Behaviours
                 }
             }
 
-            HasHeardPlayerNoise = true;
-            LastPlayerNoisePosition = noisePosition;
-            LastHeardNoiseRadius = radius;
-            lastPlayerNoiseTime = Time.time;
-            Debug.Log($"[BrainBehaviour] Player noise HEARD at {noisePosition} (r={radius:F1})");
+            // Set unified noise properties - this will trigger GOAP investigation
+            HasHeardNoise = true;
+            LastNoisePosition = noisePosition;
+            LastNoiseRadius = radius;
+            IsPlayerNoise = true; // This is player-generated noise
+            lastNoiseTime = Time.time;
+            Debug.Log($"[BrainBehaviour] Player noise HEARD at {noisePosition} (r={radius:F1}) - will investigate via GOAP");
         }
 
         public void ClearDistractionNoise()
         {
-            HasHeardDistractionNoise = false;
-            Debug.Log("[BrainBehaviour] Distraction noise cleared");
+            HasHeardNoise = false;
+            IsPlayerNoise = false;
+            Debug.Log("[BrainBehaviour] Noise cleared (was distraction)");
         }
 
         public void ClearPlayerNoise()
         {
-            HasHeardPlayerNoise = false;
-            Debug.Log("[BrainBehaviour] Player noise cleared");
+            HasHeardNoise = false;
+            IsPlayerNoise = false;
+            Debug.Log("[BrainBehaviour] Noise cleared (was player)");
+        }
+        
+        // Clear any noise (unified method)
+        public void ClearNoise()
+        {
+            HasHeardNoise = false;
+            IsPlayerNoise = false;
+            Debug.Log("[BrainBehaviour] Noise cleared");
         }
 
         // Helper for sensors (if you ever want to use audio proximity again)
@@ -362,11 +362,11 @@ namespace Assets.Scripts.GOAP.Behaviours
         {
             if (player == null)
                 return false;
-            if (Time.time - lastPlayerNoiseTime > audiblePursuitMemory)
+            if (!IsPlayerNoise || Time.time - lastNoiseTime > audiblePursuitMemory)
                 return false;
 
             float dist = Vector3.Distance(transform.position, player.position);
-            return dist <= Mathf.Max(0f, LastHeardNoiseRadius);
+            return dist <= Mathf.Max(0f, LastNoiseRadius);
         }
 
         private bool IsHearingOccluded(Vector3 origin, Vector3 target)
