@@ -40,6 +40,8 @@ public class LaserBeam : MonoBehaviour
     private AudioSource audioSource;
     private bool idleLoopPlaying;
     private Material runtimeMat;
+    private bool activateAudioPlaying;
+    private bool deactivateAudioPlaying;
 
     private readonly HashSet<Collider> _inside = new HashSet<Collider>();
     private bool _active = false;
@@ -271,9 +273,12 @@ public class LaserBeam : MonoBehaviour
         SetBeamColor(activeColor);
         onActivated?.Invoke();
 
-        if (playAudio && audioSource && activateClip)
+        if (playAudio && audioSource && activateClip && !activateAudioPlaying)
         {
             audioSource.PlayOneShot(activateClip);
+            activateAudioPlaying = true;
+            if (Application.isPlaying)
+                StartCoroutine(ResetActivateAudioFlag(activateClip.length));
         }
     }
 
@@ -283,9 +288,12 @@ public class LaserBeam : MonoBehaviour
         SetBeamColor(inactiveColor);
         onDeactivated?.Invoke();
 
-        if (playAudio && audioSource && deactivateClip)
+        if (playAudio && audioSource && deactivateClip && !deactivateAudioPlaying)
         {
             audioSource.PlayOneShot(deactivateClip);
+            deactivateAudioPlaying = true;
+            if (Application.isPlaying)
+                StartCoroutine(ResetDeactivateAudioFlag(deactivateClip.length));
         }
     }
 
@@ -333,5 +341,17 @@ public class LaserBeam : MonoBehaviour
         audioSource.Stop();
         audioSource.clip = null;
         idleLoopPlaying = false;
+    }
+
+    private System.Collections.IEnumerator ResetActivateAudioFlag(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        activateAudioPlaying = false;
+    }
+
+    private System.Collections.IEnumerator ResetDeactivateAudioFlag(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        deactivateAudioPlaying = false;
     }
 }

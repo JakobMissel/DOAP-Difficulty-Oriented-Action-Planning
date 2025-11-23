@@ -94,13 +94,22 @@ public class ObjectivesManager : MonoBehaviour
 
         currentObjective = newObjective;
 
-        // Tutorial completed flag
+        // Tutorial completed flag - will be triggered after UI displays completion text
         if (objectives[1] == currentObjective)
         {
             completedTutorial = true;
-            PlayerActions.OnTutorialCompletion();
+            // Delay tutorial completion until after the completion text is displayed and shown for a while
+            // Total delay = initial UI delay + enumerator delay + extra time for reading
+            float extraReadingTime = 2f; // Give player time to read the completion text
+            StartCoroutine(DelayedTutorialCompletion(delay + enumeratorDelay + extraReadingTime));
         }
         StartCoroutine(SetNewObjectiveEnumerator(newObjective, subObjectiveIndex, delay, enumeratorDelay));
+    }
+    
+    IEnumerator DelayedTutorialCompletion(float totalDelay)
+    {
+        yield return new WaitForSeconds(totalDelay);
+        PlayerActions.OnTutorialCompletion();
     }
 
     IEnumerator SetNewObjectiveEnumerator(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay)

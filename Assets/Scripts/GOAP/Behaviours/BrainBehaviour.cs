@@ -45,12 +45,18 @@ namespace Assets.Scripts.GOAP.Behaviours
         // Track last known player position
         public bool HasLastKnownPosition { get; private set; } = false;
         public Vector3 LastKnownPlayerPosition { get; private set; }
+        
+        // Track player re-entry to NavMesh after climbing
+        public bool PlayerReEnteredNavMesh { get; private set; } = false;
+        public Vector3 PlayerNavMeshReEntryPosition { get; private set; }
 
         // References
         private Transform playerTransform;
+        private Assets.Scripts.Player.PlayerNavMeshTracker playerNavMeshTracker;
         private GuardSight sight;
         private bool wasSeenLastFrame = false;
         private bool hasInvestigated = false; // Prevent re-capturing after investigation
+        private bool wasOffNavMeshDuringChase = false; // Track if player went off NavMesh during this chase
 
         [Header("NavMesh Settings")]
         [SerializeField] private float angularSpeed = 360f;
@@ -92,6 +98,12 @@ namespace Assets.Scripts.GOAP.Behaviours
             this.provider = this.GetComponent<GoapActionProvider>();
             this.sight = this.GetComponent<GuardSight>();
             this.playerTransform = GameObject.FindGameObjectWithTag("Player")?.transform;
+            
+            // Get player NavMesh tracker for re-entry detection
+            if (this.playerTransform != null)
+            {
+                this.playerNavMeshTracker = this.playerTransform.GetComponent<Assets.Scripts.Player.PlayerNavMeshTracker>();
+            }
             
             // Configure NavMeshAgent turning speed
             var navAgent = GetComponent<NavMeshAgent>();
@@ -191,7 +203,8 @@ namespace Assets.Scripts.GOAP.Behaviours
                         {
                             // Stop following immediately - player is unreachable
                             isLastKnownFollowActive = false;
-                            Debug.Log($"[BrainBehaviour] Player moved to different vertical level ({verticalDifference:F1}m difference). Ending follow window early.");
+                            wasOffNavMeshDuringChase = true;
+                            Debug.Log($"[BrainBehaviour] Player moved to different vertical level ({verticalDifference:F1}m difference). Ending follow window early. Will track re-entry.");
                         }
                         else
                         {
@@ -203,6 +216,21 @@ namespace Assets.Scripts.GOAP.Behaviours
                     {
                         isLastKnownFollowActive = false; // Freeze last-known here
                         Debug.Log($"[BrainBehaviour] Last-known follow window ended. Frozen at: {LastKnownPlayerPosition}");
+                    }
+                }
+                // Check for player re-entry to NavMesh after they went off during chase
+                else if (wasOffNavMeshDuringChase && HasLastKnownPosition && !hasInvestigated)
+                {
+                    if (playerNavMeshTracker != null && playerNavMeshTracker.HasReEnteredNavMesh)
+                    {
+                        // Update last known position to where player landed back on NavMesh
+                        LastKnownPlayerPosition = playerNavMeshTracker.LastNavMeshReEntryPosition;
+                        PlayerReEnteredNavMesh = true;
+                        PlayerNavMeshReEntryPosition = playerNavMeshTracker.LastNavMeshReEntryPosition;
+                        
+                        Debug.Log($"[BrainBehaviour] {name} detected player re-entry to NavMesh at {LastKnownPlayerPosition}. Updating target.");
+                        
+                        // Don't clear the tracker flag yet - let ClearLastKnownAction use it
                     }
                 }
 
@@ -260,6 +288,15 @@ namespace Assets.Scripts.GOAP.Behaviours
             isLastKnownFollowActive = false;
             lastKnownFollowTimer = 0f;
             lastKnownUpdateAccumulator = 0f;
+            wasOffNavMeshDuringChase = false;
+            PlayerReEnteredNavMesh = false;
+            
+            // Clear the player's re-entry flag so it can detect new re-entries
+            if (playerNavMeshTracker != null && playerNavMeshTracker.HasReEnteredNavMesh)
+            {
+                playerNavMeshTracker.ClearReEntryFlag();
+            }
+            
             Debug.Log("[BrainBehaviour] Cleared last known player position - marked as investigated");
         }
         

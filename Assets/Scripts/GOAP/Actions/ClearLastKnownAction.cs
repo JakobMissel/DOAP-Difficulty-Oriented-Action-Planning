@@ -26,6 +26,7 @@ namespace Assets.Scripts.GOAP.Actions
             float ScanAngle = 75f;
             float ScanSweepTime = 1.5f;
             float FallbackArriveDistance = 1.6f;
+            float MaxActionDuration = 15f; // Failsafe: auto-complete after this many seconds total
 
             // Read per-agent scan settings if available
             if (brain != null)
@@ -34,6 +35,8 @@ namespace Assets.Scripts.GOAP.Actions
                 if (brain.scanAngle > 0f) ScanAngle = brain.scanAngle;
                 if (brain.scanSweepTime > 0f) ScanSweepTime = brain.scanSweepTime;
                 if (brain.arriveDistance > 0f) FallbackArriveDistance = brain.arriveDistance;
+                // Allow customization of max action duration per guard if needed
+                // (BrainBehaviour would need a maxClearDuration field for this)
             }
 
             // Store settings in data so Perform can access them
@@ -41,13 +44,16 @@ namespace Assets.Scripts.GOAP.Actions
             data.ScanAngle = ScanAngle;
             data.ScanSweepTime = ScanSweepTime;
             data.FallbackArriveDistance = FallbackArriveDistance;
+            data.MaxActionDuration = MaxActionDuration;
             
             data.Timer = 0f;
             data.ArrivalTimer = 0f;
+            data.ActionStartTime = Time.time;
             data.ScanningInitialized = false;
             data.BaseYaw = 0f;
             data.LookTransform = null;
             data.BaseLocalEuler = Vector3.zero;
+            data.HasAcknowledgedReEntry = false;
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
@@ -85,6 +91,16 @@ namespace Assets.Scripts.GOAP.Actions
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
+            // Failsafe: if action has been running too long, force completion
+            float elapsedTime = Time.time - data.ActionStartTime;
+            if (elapsedTime >= data.MaxActionDuration)
+            {
+                Debug.LogWarning($"[ClearLastKnownAction] {mono.Transform.name} exceeded max duration ({data.MaxActionDuration}s), force-completing (likely unreachable target).");
+                if (brain != null)
+                    brain.ClearLastKnownPlayerPosition();
+                return ActionRunState.Completed;
+            }
+            
             if (sight != null && sight.PlayerSpotted())
             {
                 Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} player spotted again, aborting clear.");
@@ -106,6 +122,17 @@ namespace Assets.Scripts.GOAP.Actions
                 }
 
                 return ActionRunState.Stop;
+            }
+
+            // Check if player re-entered NavMesh - if so, update target to their landing position
+            if (brain != null && brain.PlayerReEnteredNavMesh && !data.HasAcknowledgedReEntry)
+            {
+                data.HasAcknowledgedReEntry = true;
+                Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} detected player re-entry at {brain.PlayerNavMeshReEntryPosition}. Updating destination.");
+                
+                // Reset scanning state since we have a new target
+                data.ScanningInitialized = false;
+                data.ArrivalTimer = 0f;
             }
 
             // Compute arrival using XZ distance and NavMeshAgent remainingDistance
@@ -149,7 +176,7 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.SetDestination(currentTargetPos);
                 
                 // Animation: Running when moving with velocity > 0
-                if (animation != null && agent.velocity.magnitude > 0.1f)
+                if (animation != null && agent.velocity.magnitude > 0f)
                 {
                     animation.Run();
                 }
@@ -219,11 +246,18 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
+            var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             
             // Re-enable NavMeshAgent rotation
             if (agent != null)
                 agent.updateRotation = true;
+            
+            // Reset animation to idle state
+            if (animation != null)
+            {
+                animation.Idle();
+            }
             
             // Reset the eyes to forward-facing (local rotation zero)
             if (data.LookTransform != null && sight != null && sight.Eyes != null)
@@ -266,6 +300,11 @@ namespace Assets.Scripts.GOAP.Actions
             public float ScanAngle { get; set; }
             public float ScanSweepTime { get; set; }
             public float FallbackArriveDistance { get; set; }
+            public float MaxActionDuration { get; set; }
+            public float ActionStartTime { get; set; }
+            
+            // Track if guard has acknowledged player re-entry to NavMesh
+            public bool HasAcknowledgedReEntry { get; set; }
         }
     }
 }
