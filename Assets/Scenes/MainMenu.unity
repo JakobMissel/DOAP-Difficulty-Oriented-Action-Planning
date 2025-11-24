@@ -49074,6 +49074,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     - target: {fileID: 2934124673675773306, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: pauseExitButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934124673675773306, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: creditsBackButton
       value: 
       objectReference: {fileID: 1249334642}
@@ -50556,6 +50560,10 @@ PrefabInstance:
     - target: {fileID: 7840525893346243691, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -55
+      objectReference: {fileID: 0}
+    - target: {fileID: 7960371575503683834, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8009872358314700670, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Color.a

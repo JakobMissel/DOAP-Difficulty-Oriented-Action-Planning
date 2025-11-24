@@ -211,7 +211,8 @@ public class MainMenu : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && isGamePaused)
         {
-            Debug.Log("[MainMenu] ESC pressed but game is already paused - ignoring");
+            Debug.Log("[MainMenu] ESC pressed while paused - resuming game");
+            OnResumeClicked();
         }
     }
 
