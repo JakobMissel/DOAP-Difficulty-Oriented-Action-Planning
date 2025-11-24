@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 7090155485034096286}
   - component: {fileID: 2276688899373846899}
   - component: {fileID: 1424682982389304688}
+  - component: {fileID: 5171017617173412900}
   m_Layer: 0
   m_Name: Stand
   m_TagString: Untagged
@@ -228,6 +229,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.09529165, y: 0.029693943, z: 0.07868764}
   m_Center: {x: 0.0013949049, y: -0.0045676706, z: 0.03675959}
+--- !u!208 &5171017617173412900
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2287990332352204525}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.030000001, y: 0.010000001, z: 0.009000001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0.007}
+  m_TimeToStationary: 0.5
 --- !u!1 &3395570580656415999
 GameObject:
   m_ObjectHideFlags: 0
