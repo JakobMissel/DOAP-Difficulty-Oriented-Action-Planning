@@ -16083,6 +16083,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5378461782985941175, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: debugMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5378461782985941175, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: normalSpeed
       value: 2.5
       objectReference: {fileID: 0}

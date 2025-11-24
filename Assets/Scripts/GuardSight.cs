@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts.GOAP.Behaviours;
+using Assets.Scripts.DDA;
 
 public class GuardSight : MonoBehaviour
 {
@@ -14,6 +15,17 @@ public class GuardSight : MonoBehaviour
     [SerializeField] [Tooltip("Gives the detection cone an angle.")] Vector3 sightRotationOffset = new(0,-0.55f,0);
     [SerializeField] float detectionDelay = 1f;
     [SerializeField] [Tooltip("How long PlayerSpotted() remains true after losing sight of player")] float spottedGracePeriod = 2f;
+    [SerializeField] [Tooltip("Base multiplier for how fast detection decays compared to charging (0.5 = half speed, 0.25 = quarter speed)")] 
+    [Range(0.1f, 1f)] float detectionDecayRate = 0.4f;
+    
+    [Header("Difficulty Scaling")]
+    [SerializeField] [Tooltip("Enable difficulty-based decay rate scaling")]
+    bool scaleDecayWithDifficulty = true;
+    [SerializeField] [Tooltip("Decay rate multiplier at 0% difficulty (easier = faster decay)")]
+    [Range(0.8f, 1.2f)] float minDecayMultiplier = 1.1f;
+    [SerializeField] [Tooltip("Decay rate multiplier at 100% difficulty (harder = slower decay)")]
+    [Range(0.8f, 1.2f)] float maxDecayMultiplier = 0.9f;
+    
     [SerializeField] Image detectionIcon;
     float detectionTime;
     float timeLastSawPlayer; // Track when we last had visual contact
@@ -138,8 +150,14 @@ public class GuardSight : MonoBehaviour
                 playerSpotted = false;
             }
             
-            // Charge down detection visual
-            detectionTime -= Time.deltaTime;
+            // Charge down detection visual - slower decay rate with difficulty scaling
+            float effectiveDecayRate = detectionDecayRate;
+            if (scaleDecayWithDifficulty)
+            {
+                float difficultyMultiplier = GetDecayDifficultyMultiplier();
+                effectiveDecayRate *= difficultyMultiplier;
+            }
+            detectionTime -= Time.deltaTime * effectiveDecayRate;
             detectionIcon.fillAmount = detectionTime / detectionDelay;
             if(detectionTime <= 0f)
             {
@@ -152,6 +170,18 @@ public class GuardSight : MonoBehaviour
     public bool PlayerSpotted()
     {
         return playerSpotted;
+    }
+    
+    /// <summary>
+    /// Calculate the difficulty multiplier for decay rate.
+    /// At low difficulty (0) = faster decay (minDecayMultiplier = 1.1)
+    /// At high difficulty (1) = slower decay (maxDecayMultiplier = 0.9)
+    /// This makes detection more forgiving when player is doing well, harsher when struggling.
+    /// </summary>
+    private float GetDecayDifficultyMultiplier()
+    {
+        float difficulty01 = DifficultyTracker.GetDifficultyF();
+        return Mathf.Lerp(minDecayMultiplier, maxDecayMultiplier, difficulty01);
     }
     
     /// <summary>

@@ -60,6 +60,14 @@ namespace Assets.Scripts.GOAP.Behaviours
         [SerializeField] private float angularSpeed = 360f;
         [SerializeField] private float acceleration = 12f;
         
+        [Header("Difficulty Scaling")]
+        [Tooltip("Enable difficulty-based angular speed scaling")]
+        [SerializeField] private bool scaleTurningSpeedWithDifficulty = true;
+        [Tooltip("Angular speed multiplier at 0% difficulty")]
+        [SerializeField] private float minAngularSpeedMultiplier = 0.9f;
+        [Tooltip("Angular speed multiplier at 100% difficulty")]
+        [SerializeField] private float maxAngularSpeedMultiplier = 1.1f;
+        
         [Header("Last-known Follow Settings")] 
         [Tooltip("How long after losing sight we keep updating the last-known position")] 
         [SerializeField] private float lastKnownChaseDuration = 4.0f; 
@@ -103,13 +111,24 @@ namespace Assets.Scripts.GOAP.Behaviours
                 this.playerNavMeshTracker = this.playerTransform.GetComponent<Assets.Scripts.Player.PlayerNavMeshTracker>();
             }
             
-            // Configure NavMeshAgent turning speed
+            // Configure NavMeshAgent turning speed with difficulty scaling
             var navAgent = GetComponent<NavMeshAgent>();
             if (navAgent != null)
             {
-                navAgent.angularSpeed = angularSpeed;
+                float appliedAngularSpeed = angularSpeed;
+                if (scaleTurningSpeedWithDifficulty)
+                {
+                    float difficultyMultiplier = GetAngularSpeedMultiplier();
+                    appliedAngularSpeed = angularSpeed * difficultyMultiplier;
+                    Debug.Log($"[BrainBehaviour] Set angular speed to {appliedAngularSpeed:F1} degrees/sec (base: {angularSpeed}, difficulty multiplier: {difficultyMultiplier:F2})");
+                }
+                else
+                {
+                    Debug.Log($"[BrainBehaviour] Set angular speed to {angularSpeed} degrees/sec");
+                }
+                
+                navAgent.angularSpeed = appliedAngularSpeed;
                 navAgent.acceleration = acceleration;
-                Debug.Log($"[BrainBehaviour] Set angular speed to {angularSpeed} degrees/sec");
             }
         }
 
@@ -144,6 +163,13 @@ namespace Assets.Scripts.GOAP.Behaviours
             var navAgent = GetComponent<NavMeshAgent>();
             if (navAgent != null)
             {
+                // Update angular speed with difficulty scaling periodically (once per second is enough)
+                if (scaleTurningSpeedWithDifficulty && Time.frameCount % 60 == 0)
+                {
+                    float difficultyMultiplier = GetAngularSpeedMultiplier();
+                    navAgent.angularSpeed = angularSpeed * difficultyMultiplier;
+                }
+                
                 if (isDetecting)
                 {
                     navAgent.updateRotation = false; // We'll handle rotation manually during detection
@@ -380,6 +406,16 @@ namespace Assets.Scripts.GOAP.Behaviours
             int mask = hearingObstructionMask.value == 0 ? Physics.DefaultRaycastLayers : hearingObstructionMask.value;
             // If a collider is hit in the obstruction mask, hearing is considered blocked
             return Physics.Raycast(origin, dir, dist, mask);
+        }
+        
+        /// <summary>
+        /// Calculate the current difficulty multiplier for angular speed based on game difficulty (0-1)
+        /// Returns a value between minAngularSpeedMultiplier and maxAngularSpeedMultiplier
+        /// </summary>
+        private float GetAngularSpeedMultiplier()
+        {
+            float difficulty01 = DifficultyTracker.GetDifficultyF();
+            return Mathf.Lerp(minAngularSpeedMultiplier, maxAngularSpeedMultiplier, difficulty01);
         }
     }
 }

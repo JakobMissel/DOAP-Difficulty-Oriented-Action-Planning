@@ -1,22 +1,33 @@
 using UnityEngine;
 using UnityEngine.AI;
+using Assets.Scripts.DDA;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
     /// <summary>
     /// Controls the guard's movement speed based on detection state.
     /// Slows down during detection charge-up, speeds up when fully spotted or detection resets.
+    /// Now includes difficulty-based multipliers for dynamic speed adjustment.
     /// </summary>
     [RequireComponent(typeof(GuardSight))]
     [RequireComponent(typeof(NavMeshAgent))]
     public class GuardDetectionSpeedController : MonoBehaviour
     {
-        [Header("Speed Settings")]
+        [Header("Base Speed Settings")]
+        [Tooltip("Base speeds - will be multiplied by difficulty multiplier")]
         [SerializeField] private float normalSpeed = 2.6f;
         [SerializeField] private float detectingSpeed = 1.0f;
         [SerializeField] private float spottedSpeed = 3.2f;
         [SerializeField] private float laserInvestigationSpeed = 3.5f;
         [SerializeField] private float noiseInvestigationSpeed = 2.8f;
+        
+        [Header("Difficulty Scaling")]
+        [Tooltip("Enable difficulty-based speed multiplier")]
+        [SerializeField] private bool useDifficultyMultiplier = true;
+        [Tooltip("Speed multiplier at 0% difficulty (easier = slower guards)")]
+        [SerializeField] private float minSpeedMultiplier = 0.85f;
+        [Tooltip("Speed multiplier at 100% difficulty (harder = faster guards)")]
+        [SerializeField] private float maxSpeedMultiplier = 1.15f;
         
         [Header("Transition Settings")]
         [SerializeField] private float speedTransitionSpeed = 5f;
@@ -139,15 +150,38 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         private void SetTargetSpeed(float newSpeed, string reason)
         {
-            if (Mathf.Abs(targetSpeed - newSpeed) > 0.01f)
+            // Apply difficulty multiplier to the base speed
+            float multipliedSpeed = newSpeed;
+            if (useDifficultyMultiplier)
             {
-                targetSpeed = newSpeed;
+                float difficultyMultiplier = GetDifficultyMultiplier();
+                multipliedSpeed = newSpeed * difficultyMultiplier;
                 
                 if (debugMode && !string.IsNullOrEmpty(reason))
                 {
-                    Debug.Log($"[GuardDetectionSpeedController] {name} speed changing to {newSpeed:F1} ({reason})");
+                    Debug.Log($"[GuardDetectionSpeedController] {name} base speed {newSpeed:F1} × multiplier {difficultyMultiplier:F2} = {multipliedSpeed:F1} ({reason})");
                 }
             }
+            
+            if (Mathf.Abs(targetSpeed - multipliedSpeed) > 0.01f)
+            {
+                targetSpeed = multipliedSpeed;
+                
+                if (debugMode && !string.IsNullOrEmpty(reason) && !useDifficultyMultiplier)
+                {
+                    Debug.Log($"[GuardDetectionSpeedController] {name} speed changing to {multipliedSpeed:F1} ({reason})");
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Calculate the current difficulty multiplier based on game difficulty (0-1)
+        /// Returns a value between minSpeedMultiplier and maxSpeedMultiplier
+        /// </summary>
+        private float GetDifficultyMultiplier()
+        {
+            float difficulty01 = DifficultyTracker.GetDifficultyF();
+            return Mathf.Lerp(minSpeedMultiplier, maxSpeedMultiplier, difficulty01);
         }
 
         /// <summary>
@@ -175,6 +209,14 @@ namespace Assets.Scripts.GOAP.Behaviours
         }
 
         /// <summary>
+        /// Get the current difficulty multiplier being applied
+        /// </summary>
+        public float GetCurrentDifficultyMultiplier()
+        {
+            return useDifficultyMultiplier ? GetDifficultyMultiplier() : 1f;
+        }
+        
+        /// <summary>
         /// Manually set the normal patrol speed
         /// </summary>
         public void SetNormalSpeed(float speed)
@@ -196,6 +238,18 @@ namespace Assets.Scripts.GOAP.Behaviours
         public void SetSpottedSpeed(float speed)
         {
             spottedSpeed = speed;
+        }
+        
+        /// <summary>
+        /// Enable or disable difficulty-based multiplier at runtime
+        /// </summary>
+        public void SetUseDifficultyMultiplier(bool useMultiplier)
+        {
+            useDifficultyMultiplier = useMultiplier;
+            if (debugMode)
+            {
+                Debug.Log($"[GuardDetectionSpeedController] {name} difficulty multiplier: {useMultiplier}");
+            }
         }
         
         /// <summary>
