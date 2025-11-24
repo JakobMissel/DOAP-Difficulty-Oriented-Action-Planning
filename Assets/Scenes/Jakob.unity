@@ -38891,10 +38891,10 @@ PrefabInstance:
       propertyPath: playerPaintingPosition
       value: 
       objectReference: {fileID: 1848066683}
-    - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
-      propertyPath: completedTutorial
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 2912193341384634044, guid: 07964add20aa716409350bc44b737c07, type: 3}
+      propertyPath: 'paintings.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7329053345898139052}
     - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
       propertyPath: startFromFirstObjective
       value: 0

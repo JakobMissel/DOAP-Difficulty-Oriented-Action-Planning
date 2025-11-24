@@ -11,8 +11,8 @@ public class StealPainting : MonoBehaviour
     [SerializeField] public Vector3 paintingRotationOffset;
     [SerializeField] Objective objective;
     [SerializeField] string currentPaintingName;
-    [SerializeField] List<StealablePickup> paintings = new();
-    [SerializeField] List<StealablePickup> stolenPaintings = new();
+    [SerializeField] public List<StealablePickup> paintings = new();
+    [SerializeField] public List<StealablePickup> stolenPaintings = new();
 
     StealablePickup currentPainting;
     GameObject wallPainting;
@@ -89,8 +89,8 @@ public class StealPainting : MonoBehaviour
 
     void PaintingStolen(int subObjectiveIndex, float delay)
     {
-        if (!objective.isActive) return;
         AddPaintingToStolenList(currentPaintingName);
+        if (!objective.isActive) return;
         objective.CompleteSubObjective(subObjectiveIndex);
         objective.DisplayNextSubObjective(delay);
     }
@@ -150,7 +150,7 @@ public class StealPainting : MonoBehaviour
                     if (stolenPaintings.Count > 0 && stolenPaintings.Contains(paintings[i]))
                     {
                         Debug.LogWarning($"ITS PAINTS {stolenPaintings[0]}");
-                        subObjective.goalText += $"{paintingSprite}<color=#8FCDA1>{paintings[i].painterName}</color>\n"; // change color of stolen paintings
+                        subObjective.goalText += $"{paintingSprite}<color=#D1A050>{paintings[i].painterName}</color>\n"; // change color of stolen paintings
                     }
                     else if (!stolenPaintings.Contains(paintings[i]))
                     {

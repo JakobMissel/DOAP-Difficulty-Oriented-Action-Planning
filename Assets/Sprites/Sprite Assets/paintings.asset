@@ -40,6 +40,11 @@ MonoBehaviour:
   m_SpriteCharacterTable:
   - m_ElementType: 2
     m_Unicode: 65534
+    m_GlyphIndex: 1
+    m_Scale: 1
+    m_Name: paintings_0
+  - m_ElementType: 2
+    m_Unicode: 65534
     m_GlyphIndex: 4
     m_Scale: 1
     m_Name: paintings_1
@@ -58,11 +63,6 @@ MonoBehaviour:
     m_GlyphIndex: 2
     m_Scale: 1
     m_Name: paintings_4
-  - m_ElementType: 2
-    m_Unicode: 65534
-    m_GlyphIndex: 1
-    m_Scale: 1
-    m_Name: paintings_0
   m_GlyphTable:
   - m_Index: 0
     m_Metrics:

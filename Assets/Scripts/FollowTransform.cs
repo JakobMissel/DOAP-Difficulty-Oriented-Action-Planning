@@ -4,8 +4,11 @@ using UnityEngine;
 public class FollowTransform : MonoBehaviour
 {
     [SerializeField] bool subscribeToCameraChange;
+    [Header("Position")]
     [SerializeField] bool transformPosition = true;
     [SerializeField] Transform positionTarget;
+    [SerializeField] Vector3 positionOffset;
+    [Header("Rotation")]
     [SerializeField] bool transformRotationX;
     [SerializeField] bool transformRotationY;
     [SerializeField] bool transformRotationZ;
@@ -27,7 +30,7 @@ public class FollowTransform : MonoBehaviour
     void Update()
     {
         if (transformPosition)
-            transform.position = positionTarget.position;
+            transform.position = positionTarget.position + positionOffset;
         if (transformRotationX || transformRotationY || transformRotationZ)
         {
             Vector3 newRotation = transform.eulerAngles;

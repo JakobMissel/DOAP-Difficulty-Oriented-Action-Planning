@@ -76,6 +76,7 @@ MonoBehaviour:
   objective: {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}
   currentPaintingName: 
   paintings:
+  - {fileID: 0}
   - {fileID: 4832853743333910102, guid: 2cc02fac5bcea3f40af2cbf65c44b15b, type: 3}
   - {fileID: 2434445546253681614, guid: 42190daf2daccbf4ba18c6c44bfdd8ab, type: 3}
   - {fileID: 8166953277060519698, guid: 78705d05e29b2d040847e5a24287670f, type: 3}

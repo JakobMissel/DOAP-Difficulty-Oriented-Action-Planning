@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PaintingDropPoint : Pickup
 {
@@ -9,6 +11,9 @@ public class PaintingDropPoint : Pickup
     GameObject paintingPrefab;
     bool escaped = false;
 
+    public static Action placePainting;
+    public static void OnPlacePainting() => placePainting?.Invoke();
+
     protected override void Awake()
     {
         canBepickedUp = false;
@@ -18,6 +23,7 @@ public class PaintingDropPoint : Pickup
     protected override void OnEnable()
     {
         StealPainting.sendPaintingPrefab += GetPainting;
+        placePainting += PlacePainting;
         CheckpointManager.loadCheckpoint += () => canBepickedUp = false;
         base.OnEnable();
     }
@@ -25,6 +31,7 @@ public class PaintingDropPoint : Pickup
     protected override void OnDisable()
     {
         StealPainting.sendPaintingPrefab -= GetPainting;
+        placePainting -= PlacePainting;
         CheckpointManager.loadCheckpoint -= () => canBepickedUp = false;
         base.OnDisable();
     }
@@ -46,7 +53,11 @@ public class PaintingDropPoint : Pickup
         {
             escaped = true;
             Debug.LogWarning("Player escaped with the painting(s)!");
+            
             // escape logic here
+            SceneManager.LoadScene(0);
+            // placeholder logic ends here
+
             return;
         }
         if (!PlayerActions.Instance.carriesPainting) return;

@@ -15,5 +15,5 @@ MonoBehaviour:
   isCompleted: 1
   isActive: 0
   descriptionText: 
-  goalText: Hold [SPACE] near a pipe to climb it and use [W][A][S][D] to move.\n
+  goalText: Hold [SPACE] near pipes to climb them and use [W][A][S][D] to move.
   completionText: The green bar displays the stamina used to climb.

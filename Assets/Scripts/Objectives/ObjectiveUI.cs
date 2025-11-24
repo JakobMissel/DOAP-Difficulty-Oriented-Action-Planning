@@ -51,6 +51,7 @@ public class ObjectiveUI : MonoBehaviour
     {
         GameObject newText = Instantiate(objectivesTextPrefab, middlePanel.transform);
         newText.GetComponent<TextMeshProUGUI>().text = text;
+        newText.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
     }
 
     void UpdateObjectiveUI(Objective objective, int subObjectiveIndex, float delay)

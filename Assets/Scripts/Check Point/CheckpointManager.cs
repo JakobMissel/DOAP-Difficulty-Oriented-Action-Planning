@@ -73,10 +73,10 @@ public class CheckpointManager : MonoBehaviour
     void Update()
     {
         // Press K to test loading checkpoint
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            BeginLoading();
-        }
+        //if (Input.GetKeyDown(KeyCode.K))
+        //{
+        //    BeginLoading();
+        //}
     }
 
     /// <summary>

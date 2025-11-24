@@ -81,9 +81,8 @@ public class ObjectivesManager : MonoBehaviour
             }
             if (currentObjective != null)
             {
-                PlayerActions.OnCanThrow(true);
-                PlayerActions.OnCanInteract(true);
                 setNewObjective?.Invoke(currentObjective, 0, 0, 0);
+                Tutorial.Instance.SkipTutorial();
             }
             if (completedTutorial)
             {

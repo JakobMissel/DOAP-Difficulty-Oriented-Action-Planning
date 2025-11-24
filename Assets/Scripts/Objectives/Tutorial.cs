@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
+    public static Tutorial Instance;
     [SerializeField] Objective objective;
 
     [SerializeField] Image timerImage;
@@ -31,6 +32,18 @@ public class Tutorial : MonoBehaviour
     [Header("Skip settings")]
     [Tooltip("Key used to instantly skip the tutorial.")]
     [SerializeField] private KeyCode skipKey = KeyCode.P;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -69,13 +82,13 @@ public class Tutorial : MonoBehaviour
 
     void Update()
     {
-        if (objective != null && objective.isActive && Input.GetKeyDown(skipKey))
-        {
-            SkipTutorial();
-        }
+        //if (objective != null && objective.isActive && Input.GetKeyDown(skipKey))
+        //{
+        //    SkipTutorial();
+        //}
     }
 
-    private void SkipTutorial()
+    public void SkipTutorial()
     {
         // Mark all remaining subobjectives as completed in order
         for (int i = 0; i < objective.subObjectives.Count; i++)
@@ -90,6 +103,8 @@ public class Tutorial : MonoBehaviour
         // Ensure the player has full interaction/throw capabilities as if they completed the tutorial
         PlayerActions.OnCanInteract(true);
         PlayerActions.OnCanThrow(true);
+
+        StealTutorialPainting();
 
         // Mark the whole tutorial objective as completed and advance to the next one
         ObjectivesManager.OnCompleteObjective(objective);
@@ -202,9 +217,9 @@ public class Tutorial : MonoBehaviour
         {
             paintingStolen = true;
 
-            objective.subObjectives[6].completionText = $"When you carry a painting you cannot perform actions such as throwing coins or climbing. Be mindful and plan ahead!"; // This text has a litmed duration based on line 72.
-            objective.subObjectives[7].goalText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has unlitmed duration to be read.
-            objective.subObjectives[7].completionText = $"The painting by {painting.painterName} has been placed at the entrance.";
+            objective.subObjectives[6].completionText = $"When you carry a painting you cannot perform actions such as throwing coins or climbing. Be mindful and plan ahead!";
+            objective.subObjectives[7].goalText = $"Return to the entrance and place the painting."; 
+            objective.subObjectives[7].completionText = $"Good job. Now go get the rest of the paintings.";
 
             painting.gameObject.SetActive(false);
 
@@ -231,6 +246,7 @@ public class Tutorial : MonoBehaviour
             {
                 Destroy(StealPainting.Instance.playerPaintingPosition.transform.GetChild(2).gameObject);
             }
+            StealPainting.Instance.stolenPaintings.Add(tutorialPainting);
             PlayerActions.paintingDelivered -= DeliverPainting;
             CompleteSubObjective(7, delayBetweenGoals);
         }
@@ -293,8 +309,20 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator EnableTutorialPaintingSteal()
     {
-        objective.subObjectives[6].goalText = $"Steal the painting framed in gold by {tutorialPainting.painterName}";
+        objective.subObjectives[6].goalText = $"Steal the painting framed in gold by {tutorialPainting.painterName}.";
         yield return new WaitForSeconds(delayBetweenGoals);
         tutorialPainting.tutorialPainting = true;
+    }
+
+    /// <summary>
+    /// Used to force steal the tutorial painting. Called when "skipping" the tutorial.
+    /// </summary>
+    void StealTutorialPainting()
+    {
+        tutorialPainting.tutorialPainting = true;
+        StealPainting.OnSendPaintingPrefab(tutorialPainting.paintingCarryPrefab);
+        StealPainting.Instance.stolenPaintings.Add(tutorialPainting);
+        tutorialPainting.gameObject.SetActive(false);
+        PaintingDropPoint.OnPlacePainting();
     }
 }
