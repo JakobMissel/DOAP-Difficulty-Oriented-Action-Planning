@@ -219,7 +219,7 @@ public class Tutorial : MonoBehaviour
 
             objective.subObjectives[6].completionText = $"When you carry a painting you cannot perform actions such as throwing coins or climbing. Be mindful and plan ahead!";
             objective.subObjectives[7].goalText = $"Return to the entrance and place the painting."; 
-            objective.subObjectives[7].completionText = $"Good job. Now go get the rest of the paintings.";
+            objective.subObjectives[7].completionText = $"Good job. Now go get the rest of the paintings framed in gold.";
 
             painting.gameObject.SetActive(false);
 

@@ -51,9 +51,9 @@ MonoBehaviour:
   timerFadeTime: 0.3
   tutorialThrowCount: 5
   delayBetweenGoals: 8
-  moveTime: 4
+  moveTime: 3
   sneakTime: 4
-  climbTime: 4
+  climbTime: 3
   aimTime: 4
   tutorialPainting: {fileID: 0}
   skipKey: 112

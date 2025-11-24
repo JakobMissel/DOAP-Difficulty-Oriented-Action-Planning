@@ -16068,12 +16068,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4762678072612841825, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
-        'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
-        'mixamorig:LeftHand'\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
-        'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tand more ..."
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4952139457798788515, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Radius
@@ -38903,10 +38898,6 @@ PrefabInstance:
       propertyPath: 'paintings.Array.data[0]'
       value: 
       objectReference: {fileID: 7329053345898139052}
-    - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
-      propertyPath: startFromFirstObjective
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
