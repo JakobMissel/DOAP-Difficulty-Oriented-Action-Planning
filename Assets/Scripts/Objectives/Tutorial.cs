@@ -309,7 +309,7 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator EnableTutorialPaintingSteal()
     {
-        objective.subObjectives[6].goalText = $"Steal the painting framed in gold by {tutorialPainting.painterName}.";
+        objective.subObjectives[6].goalText = $"Hold [E] to steal the painting framed in gold by {tutorialPainting.painterName}.";
         yield return new WaitForSeconds(delayBetweenGoals);
         tutorialPainting.tutorialPainting = true;
     }
