@@ -173,7 +173,7 @@ MonoBehaviour:
   exclamationMark: {fileID: 5855667424010391125}
   hFieldOfView: 100
   vFieldOfView: 100
-  viewDistance: 15
+  viewDistance: 10
   sightRotationOffset: {x: 0, y: -0.55, z: 0}
   detectionDelay: 1
   spottedGracePeriod: 2
@@ -225,8 +225,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b807ff6078f43c08a483d63dd5fe02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtPlayerNoiseDuration: 1
-  lookTurnSpeed: 540
   audiblePursuitMemory: 0.75
   angularSpeed: 360
   acceleration: 12
@@ -271,7 +269,6 @@ MonoBehaviour:
   maxEnergy: 100
   drainRate: 2
   rechargeRate: 8
-  spotlight: {fileID: 0}
 --- !u!114 &6872165123577439737
 MonoBehaviour:
   m_ObjectHideFlags: 0

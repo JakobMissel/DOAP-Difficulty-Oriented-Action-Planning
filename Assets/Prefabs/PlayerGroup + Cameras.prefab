@@ -400,7 +400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5794cf6b7ec9456b919d2d096e2e008e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runNoiseRadius: 15
+  runNoiseRadius: 10
   sneakNoiseRadius: 5
   idleNoiseRadius: 3
   pulseInterval: 0.15
@@ -931,6 +931,7 @@ MonoBehaviour:
   subscribeToCameraChange: 1
   transformPosition: 1
   positionTarget: {fileID: 6484944184392768071}
+  positionOffset: {x: 0, y: 0, z: 0}
   transformRotationX: 0
   transformRotationY: 1
   transformRotationZ: 0
