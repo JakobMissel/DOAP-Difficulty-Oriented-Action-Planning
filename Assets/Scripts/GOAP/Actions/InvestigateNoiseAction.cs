@@ -12,9 +12,27 @@ namespace Assets.Scripts.GOAP.Actions
     {
         private const float INVESTIGATION_DURATION = 2.0f; // How long to stay at noise location
         private const float CONFUSION_PAUSE_DURATION = 1.5f; // How long to pause in confusion before moving
+        private const float NAVMESH_SAMPLE_DISTANCE = 10f; // Max distance to search for valid NavMesh position
 
         public override void Created()
         {
+        }
+        
+        /// <summary>
+        /// Finds the closest valid position on the NavMesh to the target position.
+        /// Returns true if a valid position was found, false otherwise.
+        /// </summary>
+        private bool TryGetClosestNavMeshPosition(Vector3 targetPosition, out Vector3 closestPosition)
+        {
+            // Try to find a valid NavMesh position near the target
+            if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, NAVMESH_SAMPLE_DISTANCE, NavMesh.AllAreas))
+            {
+                closestPosition = hit.position;
+                return true;
+            }
+            
+            closestPosition = targetPosition;
+            return false;
         }
 
         public override void Start(IMonoAgent mono, Data data)
@@ -45,6 +63,29 @@ namespace Assets.Scripts.GOAP.Actions
             data.ConfusionPauseTime = 0f;
             data.IsInConfusionPhase = true;
             data.HasStartedMoving = false;
+            
+            // Find the closest valid NavMesh position to the noise
+            if (data.Target != null && data.Target.IsValid())
+            {
+                if (TryGetClosestNavMeshPosition(data.Target.Position, out Vector3 validPosition))
+                {
+                    data.ValidNavMeshPosition = validPosition;
+                    float distance = Vector3.Distance(data.Target.Position, validPosition);
+                    if (distance > 0.5f)
+                    {
+                        Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} noise at {data.Target.Position} is off NavMesh. Using closest valid position: {validPosition} (distance: {distance:F2}m)");
+                    }
+                    else
+                    {
+                        Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} noise at {data.Target.Position} is on NavMesh");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"[InvestigateNoiseAction] {mono.Transform.name} could not find valid NavMesh position near {data.Target.Position}!");
+                    data.ValidNavMeshPosition = mono.Transform.position; // Fallback to guard's current position
+                }
+            }
             
             // Trigger Search animation for the "huh?" confusion phase
             if (animation != null)
@@ -91,7 +132,7 @@ namespace Assets.Scripts.GOAP.Actions
             // Phase 1: Confusion phase - rotate towards noise and pause with "huh?" animation
             if (data.IsInConfusionPhase)
             {
-                // Calculate direction to noise
+                // Calculate direction to original noise position (for visual accuracy)
                 Vector3 directionToNoise = (data.Target.Position - mono.Transform.position).normalized;
                 directionToNoise.y = 0; // Keep rotation horizontal
                 
@@ -117,36 +158,36 @@ namespace Assets.Scripts.GOAP.Actions
                 
                 if (data.ConfusionPauseTime >= CONFUSION_PAUSE_DURATION)
                 {
-                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} finished confusion pause, now moving to investigate");
+                    Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} finished confusion pause, now moving to investigate at {data.ValidNavMeshPosition}");
                     data.IsInConfusionPhase = false;
                     
-                    // Start movement towards noise (animation will be handled by velocity check in Phase 2)
+                    // Start movement towards VALID NAVMESH position
                     agent.updateRotation = true;
                     agent.updatePosition = true;
                     agent.isStopped = false;
-                    agent.SetDestination(data.Target.Position);
+                    agent.SetDestination(data.ValidNavMeshPosition);
                     data.HasStartedMoving = true;
                 }
                 
                 return ActionRunState.Continue;
             }
 
-            // Phase 2: Move to the noise location
+            // Phase 2: Move to the noise location (using valid NavMesh position)
             if (!data.HasStartedMoving)
             {
                 agent.isStopped = false;
                 agent.updateRotation = true;
                 agent.updatePosition = true;
-                agent.SetDestination(data.Target.Position);
+                agent.SetDestination(data.ValidNavMeshPosition);
                 data.HasStartedMoving = true;
                 
-                Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.Target.Position}");
+                Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.ValidNavMeshPosition}");
             }
 
-            // Keep updating destination
-            agent.SetDestination(data.Target.Position);
+            // Keep updating destination to valid NavMesh position
+            agent.SetDestination(data.ValidNavMeshPosition);
 
-            float dist = Vector3.Distance(mono.Transform.position, data.Target.Position);
+            float dist = Vector3.Distance(mono.Transform.position, data.ValidNavMeshPosition);
 
             // Phase 3: Arrived at noise location - investigate
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.5f)
@@ -258,6 +299,7 @@ namespace Assets.Scripts.GOAP.Actions
             public float ConfusionPauseTime { get; set; }
             public bool IsInConfusionPhase { get; set; }
             public bool HasStartedMoving { get; set; }
+            public Vector3 ValidNavMeshPosition { get; set; }
          }
      }
  }
