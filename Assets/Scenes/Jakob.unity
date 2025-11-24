@@ -12991,6 +12991,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04de77d6cb2a5974497f1c5c04f3b2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &625471928
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625471897}
+  m_Enabled: 1
 --- !u!1 &627529964
 GameObject:
   m_ObjectHideFlags: 0
@@ -20122,6 +20130,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vase 6
       objectReference: {fileID: 0}
+    - target: {fileID: 984966967509872754, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2759017991659776423, guid: e68361b3d6bb82949a7bf0596a9af243, type: 3}
       propertyPath: m_CastShadows
       value: 1
@@ -21495,19 +21507,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e8a818ae150036348923a591fabe5d4f, type: 3}
---- !u!1 &1003588556 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919214985558286537, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-  m_PrefabInstance: {fileID: 7980162816909603947}
-  m_PrefabAsset: {fileID: 0}
---- !u!81 &1003588559
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003588556}
-  m_Enabled: 1
 --- !u!4 &1004807063 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7098973626279649951, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
@@ -34273,6 +34272,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4861484158860570964, guid: a8c2a0a0e1276f547a2c32e1a2dcc96b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1516858930}
+    - targetCorrespondingSourceObject: {fileID: 4861484158860570964, guid: a8c2a0a0e1276f547a2c32e1a2dcc96b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1516858931}
   m_SourcePrefab: {fileID: 100100000, guid: a8c2a0a0e1276f547a2c32e1a2dcc96b, type: 3}
 --- !u!4 &1516858926 stripped
 Transform:
@@ -34348,6 +34350,22 @@ CapsuleCollider:
   m_Height: 3.37
   m_Direction: 0
   m_Center: {x: 0, y: 0.18, z: -0.09}
+--- !u!208 &1516858931
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516858927}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 2, y: 1, z: 2}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: -1.01}
+  m_TimeToStationary: 0.5
 --- !u!1001 &1517631560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72721,15 +72739,15 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1687117114}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919214985558286537, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1003588559}
     - targetCorrespondingSourceObject: {fileID: 378007007463572359, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       insertIndex: 4
       addedObject: {fileID: 625471912}
     - targetCorrespondingSourceObject: {fileID: 378007007463572359, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       insertIndex: 5
       addedObject: {fileID: 625471913}
+    - targetCorrespondingSourceObject: {fileID: 378007007463572359, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 625471928}
   m_SourcePrefab: {fileID: 100100000, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
 --- !u!23 &7986915148951656388
 MeshRenderer:
