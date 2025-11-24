@@ -177,6 +177,10 @@ MonoBehaviour:
   sightRotationOffset: {x: 0, y: -0.55, z: 0}
   detectionDelay: 1
   spottedGracePeriod: 2
+  detectionDecayRate: 0.4
+  scaleDecayWithDifficulty: 1
+  minDecayMultiplier: 1.1
+  maxDecayMultiplier: 0.9
   detectionIcon: {fileID: 3145945163514180284}
   rayCount: 0
 --- !u!114 &7692494793637953351
@@ -228,6 +232,9 @@ MonoBehaviour:
   audiblePursuitMemory: 0.75
   angularSpeed: 360
   acceleration: 12
+  scaleTurningSpeedWithDifficulty: 1
+  minAngularSpeedMultiplier: 0.9
+  maxAngularSpeedMultiplier: 1.1
   lastKnownChaseDuration: 1.2
   lastKnownUpdateInterval: 0.05
   scanDuration: 1.5
@@ -354,6 +361,9 @@ MonoBehaviour:
   spottedSpeed: 3.8
   laserInvestigationSpeed: 5
   noiseInvestigationSpeed: 2
+  useDifficultyMultiplier: 1
+  minSpeedMultiplier: 0.85
+  maxSpeedMultiplier: 1.15
   speedTransitionSpeed: 5
   detectionSlowdownThreshold: 0.25
   debugMode: 0
@@ -632,7 +642,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.5, y: 1.17}
+  m_SizeDelta: {x: 1, y: 1.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5215252970160052900
 CanvasRenderer:
@@ -909,7 +919,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
