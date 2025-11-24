@@ -56,6 +56,22 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Graphic[] nonBlockingGraphics;
     [SerializeField] private CanvasGroup[] nonBlockingCanvasGroups;
     
+    [Header("Audio")]
+    [SerializeField] private AudioSource menuMusicSource;
+    [SerializeField] private AudioSource pauseMusicSource;
+    [SerializeField] private AudioSource gameOverMusicSource;
+    [SerializeField] private float retryAudioDelay = 1.5f;
+    [SerializeField] private float muteAudioDelay = 4f;
+    [SerializeField] private float musicFadeInDuration = 4f;
+    [SerializeField] private float musicFadeOutDuration = 1f;
+    [SerializeField] private float gameOverMusicDelay = 2f;
+    [Tooltip("Tag to find all gameplay audio sources")]
+    [SerializeField] private string gameplayAudioTag = "GameplayAudio";
+    
+    private bool gameplayAudioMuted = false;
+    private Coroutine pauseMusicFadeCoroutine = null;
+    private Coroutine gameOverMusicFadeCoroutine = null;
+    
     // Cached text elements by tag
     private GameObject[] mainPanelTextElements;
     private GameObject[] difficultyPanelTextElements;
@@ -236,6 +252,10 @@ public class MainMenu : MonoBehaviour
 
         // Pause the game
         Time.timeScale = 0f;
+        
+        // Mute gameplay audio and play menu music
+        MuteGameplayAudio();
+        PlayMenuMusic();
 
         // Disable player controls
         if (player)
@@ -288,6 +308,10 @@ public class MainMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         
+        // Mute gameplay audio and play pause music with fade-in
+        MuteGameplayAudio();
+        PlayPauseMusicWithFadeIn();
+        
         // Force enable button GameObjects if they're disabled
         ForceEnableButtons();
         
@@ -333,6 +357,10 @@ public class MainMenu : MonoBehaviour
         // Unlock and show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        
+        // Mute gameplay audio with fade and play game over music with fade-in
+        StartCoroutine(MuteGameplayAudioDelayed(muteAudioDelay));
+        PlayGameOverMusicWithFadeIn();
         
         // Force enable button GameObjects if they're disabled
         ForceEnableButtons();
@@ -390,6 +418,15 @@ public class MainMenu : MonoBehaviour
         // Lock and hide cursor for gameplay
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+        // Stop all menu music with fade out and unmute gameplay audio (unless retrying, which has its own delay)
+        StopMenuMusic();
+        StopPauseMusicWithFadeOut();
+        StopGameOverMusicWithFadeOut();
+        if (!isRetrying)
+        {
+            UnmuteGameplayAudio();
+        }
         
         SetGameplayInputActive(true);
     }
@@ -692,6 +729,10 @@ public class MainMenu : MonoBehaviour
         isRetrying = true;
         isGameOver = false;
         HideMenu();
+        
+        // Start delayed audio unmute (gameplay audio stays muted for 2 seconds)
+        StartCoroutine(UnmuteGameplayAudioDelayed(retryAudioDelay));
+        
         CheckpointManager.Instance?.BeginLoading();
     }
 
@@ -1568,4 +1609,318 @@ public class MainMenu : MonoBehaviour
             }
         }
     }
+    
+    #region Audio Management
+    
+    /// <summary>
+    /// Mutes all gameplay audio sources (lasers, footsteps, etc.)
+    /// </summary>
+    private void MuteGameplayAudio()
+    {
+        if (gameplayAudioMuted) return;
+        
+        Debug.Log("[MainMenu] Muting gameplay audio");
+        gameplayAudioMuted = true;
+        
+        // Find and mute all AudioSources in the gameplay scene
+        AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            // Skip the menu music source
+            if (audioSource == menuMusicSource) continue;
+            
+            // Mute gameplay audio sources
+            if (audioSource.gameObject.scene.name == gameplaySceneName || 
+                audioSource.CompareTag(gameplayAudioTag))
+            {
+                audioSource.mute = true;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Unmutes all gameplay audio sources and restores volumes to 1.0
+    /// </summary>
+    private void UnmuteGameplayAudio()
+    {
+        if (!gameplayAudioMuted) return;
+        
+        Debug.Log("[MainMenu] Unmuting gameplay audio");
+        gameplayAudioMuted = false;
+        
+        // Find and unmute all AudioSources in the gameplay scene
+        AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            // Skip the menu music source
+            if (audioSource == menuMusicSource) continue;
+            
+            // Unmute gameplay audio sources and restore volume
+            if (audioSource.gameObject.scene.name == gameplaySceneName || 
+                audioSource.CompareTag(gameplayAudioTag))
+            {
+                audioSource.mute = false;
+                // Restore volume to full (in case it was faded out)
+                if (audioSource.volume < 0.1f)
+                {
+                    audioSource.volume = 1f;
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Starts playing menu music if available
+    /// </summary>
+    private void PlayMenuMusic()
+    {
+        if (menuMusicSource != null && !menuMusicSource.isPlaying)
+        {
+            menuMusicSource.Play();
+            Debug.Log("[MainMenu] Started menu music");
+        }
+    }
+    
+    /// <summary>
+    /// Stops playing menu music
+    /// </summary>
+    private void StopMenuMusic()
+    {
+        if (menuMusicSource != null && menuMusicSource.isPlaying)
+        {
+            menuMusicSource.Stop();
+            Debug.Log("[MainMenu] Stopped menu music");
+        }
+    }
+    
+    /// <summary>
+    /// Fades in pause music over the specified duration
+    /// </summary>
+    private void PlayPauseMusicWithFadeIn()
+    {
+        if (pauseMusicSource == null) return;
+        
+        // Stop any current pause music fade
+        if (pauseMusicFadeCoroutine != null)
+        {
+            StopCoroutine(pauseMusicFadeCoroutine);
+            pauseMusicFadeCoroutine = null;
+        }
+        
+        pauseMusicFadeCoroutine = StartCoroutine(FadeInMusic(pauseMusicSource, musicFadeInDuration, isGameOverMusic: false));
+    }
+    
+    /// <summary>
+    /// Fades out pause music over the specified duration
+    /// </summary>
+    private void StopPauseMusicWithFadeOut()
+    {
+        if (pauseMusicSource == null) return;
+        
+        // Stop any current pause music fade
+        if (pauseMusicFadeCoroutine != null)
+        {
+            StopCoroutine(pauseMusicFadeCoroutine);
+            pauseMusicFadeCoroutine = null;
+        }
+        
+        pauseMusicFadeCoroutine = StartCoroutine(FadeOutMusic(pauseMusicSource, musicFadeOutDuration, isGameOverMusic: false));
+    }
+    
+    /// <summary>
+    /// Fades in game over music after a delay
+    /// </summary>
+    private void PlayGameOverMusicWithFadeIn()
+    {
+        if (gameOverMusicSource == null) return;
+        
+        // Stop any current game over music fade
+        if (gameOverMusicFadeCoroutine != null)
+        {
+            StopCoroutine(gameOverMusicFadeCoroutine);
+            gameOverMusicFadeCoroutine = null;
+        }
+        
+        gameOverMusicFadeCoroutine = StartCoroutine(PlayGameOverMusicWithDelayCoroutine());
+    }
+    
+    /// <summary>
+    /// Coroutine to delay then fade in game over music
+    /// </summary>
+    private System.Collections.IEnumerator PlayGameOverMusicWithDelayCoroutine()
+    {
+        Debug.Log($"[MainMenu] Waiting {gameOverMusicDelay} seconds before fading in game over music");
+        yield return new WaitForSecondsRealtime(gameOverMusicDelay);
+        
+        if (gameOverMusicSource != null)
+        {
+            Debug.Log("[MainMenu] Starting game over music fade-in");
+            yield return FadeInMusic(gameOverMusicSource, musicFadeInDuration, isGameOverMusic: true);
+        }
+        
+        gameOverMusicFadeCoroutine = null;
+    }
+    
+    /// <summary>
+    /// Fades out game over music over the specified duration
+    /// </summary>
+    private void StopGameOverMusicWithFadeOut()
+    {
+        if (gameOverMusicSource == null) return;
+        
+        // Stop any current game over music fade
+        if (gameOverMusicFadeCoroutine != null)
+        {
+            StopCoroutine(gameOverMusicFadeCoroutine);
+            gameOverMusicFadeCoroutine = null;
+        }
+        
+        gameOverMusicFadeCoroutine = StartCoroutine(FadeOutMusic(gameOverMusicSource, musicFadeOutDuration, isGameOverMusic: true));
+    }
+    
+    /// <summary>
+    /// Coroutine to fade in an audio source
+    /// </summary>
+    private System.Collections.IEnumerator FadeInMusic(AudioSource audioSource, float duration, bool isGameOverMusic)
+    {
+        if (audioSource == null) yield break;
+        
+        Debug.Log($"[MainMenu] Fading in {audioSource.name} over {duration} seconds");
+        
+        // Start playing if not already
+        if (!audioSource.isPlaying)
+        {
+            audioSource.volume = 0f;
+            audioSource.Play();
+        }
+        
+        float startVolume = audioSource.volume;
+        float targetVolume = 1f;
+        float elapsed = 0f;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float fadeProgress = elapsed / duration;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, fadeProgress);
+            yield return null;
+        }
+        
+        audioSource.volume = targetVolume;
+        Debug.Log($"[MainMenu] Fade in complete for {audioSource.name}");
+        
+        // Clear the tracking reference
+        if (isGameOverMusic)
+            gameOverMusicFadeCoroutine = null;
+        else
+            pauseMusicFadeCoroutine = null;
+    }
+    
+    /// <summary>
+    /// Coroutine to fade out an audio source
+    /// </summary>
+    private System.Collections.IEnumerator FadeOutMusic(AudioSource audioSource, float duration, bool isGameOverMusic)
+    {
+        if (audioSource == null) yield break;
+        
+        Debug.Log($"[MainMenu] Fading out {audioSource.name} over {duration} seconds - start volume: {audioSource.volume}");
+        
+        float startVolume = audioSource.volume;
+        float targetVolume = 0f;
+        float elapsed = 0f;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float fadeProgress = elapsed / duration;
+            audioSource.volume = Mathf.Lerp(startVolume, targetVolume, fadeProgress);
+            Debug.Log($"[MainMenu] Fade out progress: {fadeProgress:F2}, volume: {audioSource.volume:F2}");
+            yield return null;
+        }
+        
+        audioSource.volume = targetVolume;
+        audioSource.Stop();
+        Debug.Log($"[MainMenu] Fade out complete for {audioSource.name}");
+        
+        // Clear the tracking reference
+        if (isGameOverMusic)
+            gameOverMusicFadeCoroutine = null;
+        else
+            pauseMusicFadeCoroutine = null;
+    }
+    
+    /// <summary>
+    /// Unmute gameplay audio after a delay (for retry functionality)
+    /// </summary>
+    private System.Collections.IEnumerator UnmuteGameplayAudioDelayed(float delay)
+    {
+        Debug.Log($"[MainMenu] Delaying gameplay audio unmute by {delay} seconds");
+        yield return new WaitForSecondsRealtime(delay);
+        UnmuteGameplayAudio();
+    }
+    
+    /// <summary>
+    /// Mute gameplay audio after a delay with fade-out effect (for when player is caught)
+    /// </summary>
+    private System.Collections.IEnumerator MuteGameplayAudioDelayed(float delay)
+    {
+        Debug.Log($"[MainMenu] Fading out gameplay audio over {delay} seconds");
+        
+        // Find all gameplay audio sources
+        AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        
+        // Store original volumes and filter to gameplay sources only
+        System.Collections.Generic.List<AudioSource> gameplayAudioSources = new System.Collections.Generic.List<AudioSource>();
+        System.Collections.Generic.Dictionary<AudioSource, float> originalVolumes = new System.Collections.Generic.Dictionary<AudioSource, float>();
+        
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            // Skip the menu music source
+            if (audioSource == menuMusicSource) continue;
+            
+            // Only include gameplay audio sources
+            if (audioSource.gameObject.scene.name == gameplaySceneName || 
+                audioSource.CompareTag(gameplayAudioTag))
+            {
+                gameplayAudioSources.Add(audioSource);
+                originalVolumes[audioSource] = audioSource.volume;
+            }
+        }
+        
+        // Fade out over the delay duration
+        float elapsed = 0f;
+        while (elapsed < delay)
+        {
+            elapsed += Time.unscaledDeltaTime; // Use unscaledDeltaTime in case game is paused
+            float fadeProgress = elapsed / delay; // 0 to 1
+            float volumeMultiplier = 1f - fadeProgress; // 1 to 0
+            
+            // Apply fade to all gameplay audio sources
+            foreach (AudioSource audioSource in gameplayAudioSources)
+            {
+                if (audioSource != null && originalVolumes.ContainsKey(audioSource))
+                {
+                    audioSource.volume = originalVolumes[audioSource] * volumeMultiplier;
+                }
+            }
+            
+            yield return null; // Wait one frame
+        }
+        
+        // Ensure all volumes are at 0 and mute them
+        foreach (AudioSource audioSource in gameplayAudioSources)
+        {
+            if (audioSource != null)
+            {
+                audioSource.volume = 0f;
+            }
+        }
+        
+        // Finally, mute all gameplay audio
+        MuteGameplayAudio();
+        
+        Debug.Log("[MainMenu] Gameplay audio fade-out complete");
+    }
+    
+    #endregion
 }
