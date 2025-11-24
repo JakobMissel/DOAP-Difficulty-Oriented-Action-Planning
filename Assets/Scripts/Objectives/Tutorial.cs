@@ -202,7 +202,7 @@ public class Tutorial : MonoBehaviour
         {
             paintingStolen = true;
 
-            objective.subObjectives[6].completionText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has a litmed duration based on line 72.
+            objective.subObjectives[6].completionText = $"When you carry a painting you cannot perform actions such as throwing coins or climbing. Be mindful and plan ahead!"; // This text has a litmed duration based on line 72.
             objective.subObjectives[7].goalText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has unlitmed duration to be read.
             objective.subObjectives[7].completionText = $"The painting by {painting.painterName} has been placed at the entrance.";
 
@@ -293,6 +293,7 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator EnableTutorialPaintingSteal()
     {
+        objective.subObjectives[6].goalText = $"Steal the painting framed in gold by {tutorialPainting.painterName}";
         yield return new WaitForSeconds(delayBetweenGoals);
         tutorialPainting.tutorialPainting = true;
     }

@@ -12,15 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: GoldenPainting_2
   m_EditorClassIdentifier: 
-  isCompleted: 1
+  isCompleted: 0
   isActive: 0
-  descriptionText: 
-  goalText: '<voffset=.4em><size=200%><sprite=0></size></voffset>Painting 3
-
-    <voffset=.4em><size=200%><sprite=1></size></voffset>Painting
-    4
-
-    <voffset=.4em><size=200%><sprite=2></size></voffset>Painting 5
-
-'
+  descriptionText: This text is set in code in StealPainting.cs
+  goalText: "<voffset=.4em><size=200%><sprite=0></size></voffset>Henri Matisse\n<voffset=.4em><size=200%><sprite=1></size></voffset>Fernand
+    L\xE9ger\n<voffset=.4em><size=200%><sprite=2></size></voffset>Georges Braque\n<voffset=.4em><size=200%><sprite=3></size></voffset>Pablo
+    Picasso\n"
   completionText: You have stolen the painting "Painting 1". Now place it outside.

@@ -14,18 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCompleted: 0
   isActive: 0
-  descriptionText: 
-  goalText: 'Woman Cooling Down
-
-    Painting 2
-
-    Painting 3
-
-    Painting 4
-
-    Painting
-    5
-
-'
+  descriptionText: This text is set in code in StealPainting.cs
+  goalText: "<voffset=.4em><size=200%><sprite=0></size></voffset>Henri Matisse\n<voffset=.4em><size=200%><sprite=1></size></voffset>Fernand
+    L\xE9ger\n<voffset=.4em><size=200%><sprite=2></size></voffset>Georges Braque\n<voffset=.4em><size=200%><sprite=3></size></voffset>Pablo
+    Picasso\n"
   completionText: "You have stolen the painting \"Hall\xF8j i skoven\". Now place
     it outside."

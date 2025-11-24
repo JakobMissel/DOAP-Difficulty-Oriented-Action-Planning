@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Deliver Painting
   m_EditorClassIdentifier: 
   isCompleted: 0
-  isActive: 0
-  descriptionText: 
-  goalText: Steal Painting.
-  completionText: 
+  isActive: 1
+  descriptionText: This text is set in code in Tutorial.cs
+  goalText: 'A priceless painting by Amedeo Modigliani.
+
+    Place it back at the
+    entrance!'
+  completionText: The painting by Amedeo Modigliani has been placed at the entrance.

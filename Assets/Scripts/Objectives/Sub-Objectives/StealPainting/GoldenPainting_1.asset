@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCompleted: 1
   isActive: 1
-  descriptionText: 
+  descriptionText: (Leftover from before painting 1 is stolen in the tutorial) This
+    text is set in code in StealPainting.cs
   goalText: 
   completionText: You have stolen the painting "Painting 1". Now place it outside.

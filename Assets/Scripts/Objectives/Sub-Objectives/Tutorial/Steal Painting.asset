@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: Steal Painting
   m_EditorClassIdentifier: 
-  isCompleted: 0
+  isCompleted: 1
   isActive: 0
-  descriptionText: 
+  descriptionText: This text is set in code in Tutorial.cs
   goalText: Steal Painting.
-  completionText: 
+  completionText: 'A priceless painting by Amedeo Modigliani.
+
+    Place it back
+    at the entrance!'
