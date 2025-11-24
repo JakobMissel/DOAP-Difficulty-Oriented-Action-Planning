@@ -240,6 +240,8 @@ MonoBehaviour:
   paintingName: Painting 3
   painterName: "Fernand L\xE9ger"
   value: 100 DKK
+  tutorialPainting: 0
+  paintingCarryPrefab: {fileID: 6655915915483577842, guid: 42190daf2daccbf4ba18c6c44bfdd8ab, type: 3}
 --- !u!65 &6090733777565063556
 BoxCollider:
   m_ObjectHideFlags: 0

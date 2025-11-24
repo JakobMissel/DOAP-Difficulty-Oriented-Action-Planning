@@ -5,15 +5,14 @@ using UnityEngine.UI;
 public class ThrowUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI throwAmmunition;
-    [SerializeField] Image throwImage;
+    [SerializeField] Material[] coinMaps;
+    [SerializeField] MeshRenderer renderCoin;
     [SerializeField] RawImage throwRawImage;
-    Sprite defaultSprite;
 
     void Awake()
     {
         throwAmmunition.text = "";
-        defaultSprite = throwImage.sprite;
-        throwRawImage.texture = null;
+        UpdateImage(null);
     }
 
     void OnEnable()
@@ -30,35 +29,21 @@ public class ThrowUI : MonoBehaviour
 
     void UpdateAmmo(int ammo)
     {
-        if (ammo == 0)
-        {
-            throwAmmunition.text = "";
-            return;
-        }
         throwAmmunition.text = ammo.ToString();
     }
 
     void UpdateImage(object sprite)
     {
-        if (sprite == null)
+        if (sprite is not Texture)
         {
-            throwRawImage.color = Color.clear;
-            throwImage.color = Color.white;
-            throwImage.sprite = defaultSprite;
+            throwRawImage.color = new Color(1, 1, 1, 0.4f);
+            renderCoin.material = coinMaps[0];
             return;
-        }
-        if (sprite is Sprite)
-        {
-            throwRawImage.color = Color.clear;
-            throwImage.color = Color.white;
-            throwImage.sprite = sprite as Sprite;
-
         }
         else if (sprite is Texture)
         {
-            throwImage.color = Color.clear;
-            throwRawImage.color = Color.white;
-            throwRawImage.texture = sprite as Texture;
+            throwRawImage.color = new Color(1, 1, 1, 1);
+            renderCoin.material = coinMaps[1];
         }
     }
 }

@@ -412,6 +412,8 @@ MonoBehaviour:
   paintingName: Painting 2
   painterName: Henri Matisse
   value: 100 DKK
+  tutorialPainting: 0
+  paintingCarryPrefab: {fileID: 8664790796403646270, guid: 2cc02fac5bcea3f40af2cbf65c44b15b, type: 3}
 --- !u!65 &2869264533864775997
 BoxCollider:
   m_ObjectHideFlags: 0

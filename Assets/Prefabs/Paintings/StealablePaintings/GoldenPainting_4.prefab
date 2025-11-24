@@ -412,6 +412,8 @@ MonoBehaviour:
   paintingName: Painting 4
   painterName: Georges Braque
   value: 100 DKK
+  tutorialPainting: 0
+  paintingCarryPrefab: {fileID: 8502565187402675515, guid: 78705d05e29b2d040847e5a24287670f, type: 3}
 --- !u!65 &5831351562210348401
 BoxCollider:
   m_ObjectHideFlags: 0

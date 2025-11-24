@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class ObjectivesManager : MonoBehaviour
@@ -10,6 +9,7 @@ public class ObjectivesManager : MonoBehaviour
 
     [SerializeField] bool startFromFirstObjective = true;
     [SerializeField] public bool completedTutorial;
+    bool objectivesBegun = false;
 
     [SerializeField] public Objective[] objectives;
     public static ObjectivesManager Instance;
@@ -60,6 +60,16 @@ public class ObjectivesManager : MonoBehaviour
 
     void Start()
     {
+        StartObjective();
+    }
+
+    /// <summary>
+    /// Call this method to start the objectives sequence. Remember to not call this method in start if you want to control when objectives start.
+    /// </summary>
+    public void StartObjective()
+    {
+        if (objectivesBegun) return;
+        objectivesBegun = true;
         if (objectives.Length > 0)
         {
             if (startFromFirstObjective)
@@ -69,7 +79,7 @@ public class ObjectivesManager : MonoBehaviour
                 setNewObjective?.Invoke(objectives[0], 0, 0, 0);
                 return;
             }
-            if(currentObjective != null)
+            if (currentObjective != null)
             {
                 PlayerActions.OnCanThrow(true);
                 PlayerActions.OnCanInteract(true);

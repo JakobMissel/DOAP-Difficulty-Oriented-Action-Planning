@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class StealPainting : MonoBehaviour
 {
+    public static StealPainting Instance;
     [SerializeField] string stealablePaintingName;
-    [SerializeField] GameObject playerPaintingPosition;
-    [SerializeField] Vector3 paintingPositionOffset;
-    [SerializeField] Vector3 paintingRotationOffset;
+    [SerializeField] public GameObject playerPaintingPosition;
+    [SerializeField] public Vector3 paintingPositionOffset;
+    [SerializeField] public Vector3 paintingRotationOffset;
     [SerializeField] Objective objective;
     [SerializeField] string currentPaintingName;
     [SerializeField] List<StealablePickup> paintings = new();
@@ -21,6 +22,18 @@ public class StealPainting : MonoBehaviour
 
     public static Action<GameObject> sendPaintingPrefab;
     public static void OnSendPaintingPrefab(GameObject painting) => sendPaintingPrefab?.Invoke(painting);
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -54,30 +67,29 @@ public class StealPainting : MonoBehaviour
 
     void ItemStolen(StealablePickup painting)
     {
-        if (objective.isActive)
+        if (!objective.isActive) return;
+        for (int i = 0; i < objective.subObjectives.Count; i++)
         {
-            for (int i = 0; i < objective.subObjectives.Count; i++)
+            if (objective.subObjectives[i].name.StartsWith(stealablePaintingName) && !objective.subObjectives[i].isCompleted)
             {
-                if (objective.subObjectives[i].name.StartsWith(stealablePaintingName) && !objective.subObjectives[i].isCompleted)
-                {
-                    wallPainting = painting.gameObject;
-                    currentPaintingName = painting.name;
+                wallPainting = painting.gameObject;
+                currentPaintingName = painting.name;
 
-                    objective.subObjectives[i].completionText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has a litmed duration based on line 72.
-                    objective.subObjectives[i + 1].goalText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has unlitmed duration to be read.
-                    objective.subObjectives[i + 1].completionText = $"The painting by {painting.painterName} has been placed at the entrance.";
-                    
-                    wallPainting.gameObject.SetActive(false);
-                    
-                    OnPaintingStolen(objective.currentSubObjectiveIndex, 0); // zero means it skips the completion text of the sub-objective, going straight to the next ones goalText.
-                    break;
-                }
+                objective.subObjectives[i].completionText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has a litmed duration based on line 72.
+                objective.subObjectives[i + 1].goalText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has unlitmed duration to be read.
+                objective.subObjectives[i + 1].completionText = $"The painting by {painting.painterName} has been placed at the entrance.";
+                
+                wallPainting.gameObject.SetActive(false);
+                
+                OnPaintingStolen(objective.currentSubObjectiveIndex, 0); // zero means it skips the completion text of the sub-objective, going straight to the next ones goalText.
+                break;
             }
         }
     }
 
     void PaintingStolen(int subObjectiveIndex, float delay)
     {
+        if (!objective.isActive) return;
         AddPaintingToStolenList(currentPaintingName);
         objective.CompleteSubObjective(subObjectiveIndex);
         objective.DisplayNextSubObjective(delay);
@@ -85,6 +97,7 @@ public class StealPainting : MonoBehaviour
 
     void PaintingDelivered()
     {
+        if (!objective.isActive) return;
         // Add to "stolen list" and destroy the carried painting accounting for its siblings.
         wallPainting = null;
         stolenPaintings.Add(currentPainting);
@@ -104,6 +117,7 @@ public class StealPainting : MonoBehaviour
 
     void AddPaintingToStolenList(string name)
     {
+        if (!objective.isActive) return;
         for (int i = 0; i < paintings.Count; i++)
         {
             if (paintings[i].name == name)

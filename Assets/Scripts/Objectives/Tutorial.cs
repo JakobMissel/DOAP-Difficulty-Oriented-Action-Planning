@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +21,12 @@ public class Tutorial : MonoBehaviour
     float climbT;
     [SerializeField] float aimTime;
     float aimT;
+
+    [Header("Painting")]
+    [SerializeField] StealablePickup tutorialPainting;
+
+    bool paintingStolen = false;
+    GameObject paintingCarry;
 
     [Header("Skip settings")]
     [Tooltip("Key used to instantly skip the tutorial.")]
@@ -47,6 +51,8 @@ public class Tutorial : MonoBehaviour
         PlayerActions.pickedUpItem += PlayerPickedUpItem;
         PlayerActions.isAiming += PlayerAimed;
         PlayerActions.ammoUpdate += PlayerAmmoUpdated;
+        PlayerActions.stealItem += PaintingSteal;
+        PlayerActions.paintingDelivered += DeliverPainting;
     }
 
     void OnDisable()
@@ -57,6 +63,8 @@ public class Tutorial : MonoBehaviour
         PlayerActions.pickedUpItem -= PlayerPickedUpItem;
         PlayerActions.isAiming -= PlayerAimed;
         PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
+        PlayerActions.stealItem -= PaintingSteal;
+        PlayerActions.paintingDelivered -= DeliverPainting;
     }
 
     void Update()
@@ -182,7 +190,49 @@ public class Tutorial : MonoBehaviour
             // Unsubscribe after completing the goal
             PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
             PlayerActions.OnLoseThrowables();
+            StartCoroutine(EnableTutorialPaintingSteal());
             CompleteSubObjective(5, delayBetweenGoals);
+        }
+    }
+
+    void PaintingSteal(StealablePickup painting)
+    {
+        if (!objective.isActive) return;
+        if (IsPreviousGoalCompleted(6) && IsSubObjectiveActive(6))
+        {
+            paintingStolen = true;
+
+            objective.subObjectives[6].completionText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has a litmed duration based on line 72.
+            objective.subObjectives[7].goalText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has unlitmed duration to be read.
+            objective.subObjectives[7].completionText = $"The painting by {painting.painterName} has been placed at the entrance.";
+
+            painting.gameObject.SetActive(false);
+
+            // Carry painting visually
+            paintingCarry = painting.gameObject.GetComponent<StealablePickup>().paintingCarryPrefab;
+            GameObject newPainting = Instantiate(paintingCarry);
+            StealPainting.OnSendPaintingPrefab(paintingCarry);
+            newPainting.transform.SetParent(StealPainting.Instance.playerPaintingPosition.transform);
+            newPainting.transform.localPosition = StealPainting.Instance.paintingPositionOffset;
+            newPainting.transform.localRotation = Quaternion.Euler(StealPainting.Instance.paintingRotationOffset);
+
+            PlayerActions.stealItem -= PaintingSteal;
+            CompleteSubObjective(6, delayBetweenGoals);
+        }
+    }
+
+    void DeliverPainting()
+    {
+        if (!objective.isActive) return;
+        if (IsPreviousGoalCompleted(7) && IsSubObjectiveActive(7))
+        {
+            if (!paintingStolen) return;
+            if (StealPainting.Instance.playerPaintingPosition.transform.childCount > 2)
+            {
+                Destroy(StealPainting.Instance.playerPaintingPosition.transform.GetChild(2).gameObject);
+            }
+            PlayerActions.paintingDelivered -= DeliverPainting;
+            CompleteSubObjective(7, delayBetweenGoals);
         }
     }
 
@@ -239,5 +289,11 @@ public class Tutorial : MonoBehaviour
     {
         yield return new WaitForSeconds(delayBetweenGoals);
         PlayerActions.OnCanThrow(true);
+    }
+
+    IEnumerator EnableTutorialPaintingSteal()
+    {
+        yield return new WaitForSeconds(delayBetweenGoals);
+        tutorialPainting.tutorialPainting = true;
     }
 }

@@ -55,6 +55,8 @@ MonoBehaviour:
   sneakTime: 4
   climbTime: 4
   aimTime: 4
+  tutorialPainting: {fileID: 0}
+  skipKey: 112
 --- !u!114 &2912193341384634044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,7 +76,6 @@ MonoBehaviour:
   objective: {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}
   currentPaintingName: 
   paintings:
-  - {fileID: 4850288735026430459, guid: 6caad8b116bb5934282f36553a4c3a1f, type: 3}
   - {fileID: 4832853743333910102, guid: 2cc02fac5bcea3f40af2cbf65c44b15b, type: 3}
   - {fileID: 2434445546253681614, guid: 42190daf2daccbf4ba18c6c44bfdd8ab, type: 3}
   - {fileID: 8166953277060519698, guid: 78705d05e29b2d040847e5a24287670f, type: 3}
@@ -93,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentObjective: {fileID: 11400000, guid: f1e38d81cdd2e88419689c64b9b40b8f, type: 2}
-  startFromFirstObjective: 0
+  startFromFirstObjective: 1
   completedTutorial: 0
   objectives:
   - {fileID: 11400000, guid: 2da7a914a78e19a46a477bfa63bcc5a1, type: 2}
