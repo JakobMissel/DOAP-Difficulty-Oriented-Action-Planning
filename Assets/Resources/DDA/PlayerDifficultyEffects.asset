@@ -129,66 +129,118 @@ MonoBehaviour:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.5
-        value: 0.35
-        inSlope: -0.01040496
-        outSlope: -0.01040496
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 1
-      - serializedVersion: 3
-        time: 2
-        value: 0.25
-        inSlope: -0.050237022
-        outSlope: -0.050237022
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.3686162
-      - serializedVersion: 3
-        time: 5
-        value: 0.14914551
-        inSlope: -0.013319011
-        outSlope: -0.013319011
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 1
-      - serializedVersion: 3
-        time: 10
-        value: 0.1
-        inSlope: -0.0077443398
-        outSlope: -0.0077443398
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 1
-      - serializedVersion: 3
-        time: 20
-        value: 0.05
-        inSlope: -0.0041174977
-        outSlope: -0.0041174977
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.38925737
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 45
+        time: 0
         value: 0
         inSlope: 0
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.85188293
+        value: 0.06
+        inSlope: -Infinity
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 2
+        value: 0.09
+        inSlope: 0.000013356747
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 1
+        outWeight: 0
+      - serializedVersion: 3
+        time: 3
+        value: 0.12
+        inSlope: 0.0000132005935
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 1
+        outWeight: 0
+      - serializedVersion: 3
+        time: 4
+        value: 0.18
+        inSlope: 0.00011480536
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 1
+        outWeight: 0
+      - serializedVersion: 3
+        time: 5
+        value: 0.21
+        inSlope: -Infinity
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      - serializedVersion: 3
+        time: 6
+        value: 0.22
+        inSlope: -Infinity
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      - serializedVersion: 3
+        time: 7
+        value: 0.23
+        inSlope: -Infinity
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 8
+        value: 0.24
+        inSlope: -Infinity
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 9
+        value: 0.25
+        inSlope: 0
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 10
+        value: 0.26
+        inSlope: 0
         outSlope: 0
-        tangentMode: 136
+        tangentMode: 1
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-    _actionsRemembered: 5
-    _useOnlyMostRecentDifficulty: 0
-    _startDifficulty: 0.1
-    developerNote: 'Time:       0.5s    2s    5s     10s   20s    45s+
+    _actionsRemembered: 1
+    _useOnlyMostRecentDifficulty: 1
+    _startDifficulty: 0
+    developerNote: '- 1 evasion: +0.06 difficulty
 
-      Difficulty:
-      0.35  0.25  0.15  0.10  0.05   0.0'
+      - 2-5 evasions: +0.03 per
+      evasion (cumulative)
+
+      - 6-10 evasions: +0.01 per evasion (cumulative)
+
+      -
+      11+ evasions: No more increases (cap at 0.26)
+
+'
