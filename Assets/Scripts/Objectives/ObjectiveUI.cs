@@ -59,11 +59,13 @@ public class ObjectiveUI : MonoBehaviour
 
     void NewSubObjectiveSound()
     {
+        if (audioClip.Length == 0) return;
         audioSource.PlayOneShot(audioClip[0]);
     }
 
     void CompletedSubObjectiveSound()
     {
+        if (audioClip.Length < 2) return;
         audioSource.PlayOneShot(audioClip[1]);
     }
 
