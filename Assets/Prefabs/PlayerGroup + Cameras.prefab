@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 1556531864547972901}
   - component: {fileID: 4603397739281048612}
   - component: {fileID: 8244487627281337890}
-  - component: {fileID: 3182448081409788317}
+  - component: {fileID: 5251757229155170662}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -567,7 +567,7 @@ MonoBehaviour:
   navMeshCheckDistance: 3
   checkInterval: 0.2
   minOffNavMeshTime: 0.5
---- !u!81 &3182448081409788317
+--- !u!81 &5251757229155170662
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -654,8 +654,6 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
-  checkRadius: 0.2
-  maxCheckDistance: 0.5
 --- !u!65 &2884532672086471679
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -675,7 +673,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  m_Size: {x: 0.3, y: 0.3, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &535821266594528566
 GameObject:
@@ -2483,8 +2481,6 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
-  checkRadius: 0.2
-  maxCheckDistance: 0.5
 --- !u!65 &6120732761900803783
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2504,7 +2500,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  m_Size: {x: 0.3, y: 0.3, z: 0.3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8895009779016944621
 GameObject:
@@ -4539,7 +4535,7 @@ MonoBehaviour:
   rightThrowTarget: {fileID: 55496887346940645}
   leftAimTarget: {fileID: 1812545272462007170}
   leftThrowTarget: {fileID: 3068897609889509381}
-  throwTravelTime: 0.2
+  throwTravelTime: 0.1
   throwWaitTime: 0.1
   wristFlickMultiplier: 5
   leftArmConstraints: {fileID: 2843656329883555099}
