@@ -370,7 +370,7 @@ MonoBehaviour:
   orientation: {fileID: 1895043897693395786}
   freeLookCamera: {fileID: 6930326203637836040}
   aimCamera: {fileID: 608654547908472919}
-  aimOffset: {x: 0, y: 1.5, z: 0}
+  aimOffset: {x: 0, y: 0.2, z: 0}
   throwableLayer:
     serializedVersion: 2
     m_Bits: 2240
@@ -383,7 +383,7 @@ MonoBehaviour:
   hitAreaPrefab: {fileID: 6162094839392932173, guid: 8f4172c8814d0ee4aaa06753b448ff91, type: 3}
   hitRadius: 0.1
   hitDistance: 0.2
-  throwForce: 7
+  throwForce: 10
   throwGravity: -9.81
   throwCooldown: 0.1
   audioClip: {fileID: 0}
