@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using CrashKonijn.Goap.Runtime;
 using CrashKonijn.Agent.Core;
 using Assets.Scripts.GOAP.Behaviours;
+using Assets.Scripts.DDA;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -27,6 +28,10 @@ namespace Assets.Scripts.GOAP.Actions
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
+
+            // Start tracking evasion time for this guard
+            int guardId = mono.Transform.GetInstanceID();
+            EvasionTracker.StartPursuit(guardId);
         }
         
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)

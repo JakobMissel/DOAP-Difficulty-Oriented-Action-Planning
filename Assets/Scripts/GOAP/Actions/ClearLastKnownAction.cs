@@ -4,6 +4,7 @@ using UnityEngine.AI;
 using CrashKonijn.Goap.Runtime;
 using CrashKonijn.Agent.Core;
 using Assets.Scripts.GOAP.Behaviours;
+using Assets.Scripts.DDA;
 
 namespace Assets.Scripts.GOAP.Actions
 {
@@ -230,6 +231,10 @@ namespace Assets.Scripts.GOAP.Actions
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
 
+            // Track successful evasion - player escaped from this guard
+            int guardId = mono.Transform.GetInstanceID();
+            EvasionTracker.EvasionSuccessful(guardId);
+
             // Re-enable NavMeshAgent rotation
             if (agent != null)
                 agent.updateRotation = true;
@@ -251,7 +256,6 @@ namespace Assets.Scripts.GOAP.Actions
             
             // Mark that this guard should reset to closest waypoint when returning to patrol
             var patrolAction = typeof(PatrolAction);
-            var guardId = mono.Transform.GetInstanceID();
             
             // Access the static dictionary via reflection to set the reset flag
             var fieldInfo = patrolAction.GetField("GuardNeedsReset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);

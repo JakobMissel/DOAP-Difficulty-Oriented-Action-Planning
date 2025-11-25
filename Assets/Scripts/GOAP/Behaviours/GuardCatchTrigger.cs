@@ -1,4 +1,5 @@
 using UnityEngine;
+using Assets.Scripts.DDA;
 
 namespace Assets.Scripts.GOAP.Behaviours
 {
@@ -69,6 +70,10 @@ namespace Assets.Scripts.GOAP.Behaviours
                 {
                     Debug.LogError($"[GuardCatchTrigger] Brain is null on {name}!");
                 }
+
+                // Reset evasion tracking - player was caught, not evaded
+                int guardId = gameObject.GetInstanceID();
+                EvasionTracker.ResetPursuit(guardId);
             }
         }
 

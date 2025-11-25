@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 806023562566497589}
   - component: {fileID: 6036405993589455293}
+  - component: {fileID: 7027287577083503255}
   m_Layer: 0
   m_Name: Difficulty Tracking System
   m_TagString: Untagged
@@ -46,3 +47,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isTestingDdaPlayerActions: 0
   uiVisualisationPrefab: {fileID: 2334407340150867064, guid: b1bb0b806af7c614a85045a9b36f9d23, type: 3}
+--- !u!114 &7027287577083503255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585616370249366940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d83bd712b8d928c4ba629382e09d3766, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showDebugLogs: 1
+  showTestingUI: 0
+  debugTextField: {fileID: 0}

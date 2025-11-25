@@ -1277,7 +1277,7 @@ MonoBehaviour:
   resumeButton: {fileID: 883122741992530391}
   pauseExitButton: {fileID: 0}
   retryButton: {fileID: 5581497664605335674}
-  gameOverExitButton: {fileID: 7114693219220740789}
+  gameOverExitButton: {fileID: 0}
   gameplayCanvas: {fileID: 0}
   showOnStart: 1
   playerTag: Player
@@ -1314,7 +1314,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &821896602097451637
 RectTransform:
   m_ObjectHideFlags: 0
