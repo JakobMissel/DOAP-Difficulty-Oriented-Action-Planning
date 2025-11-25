@@ -4,8 +4,6 @@ public class ThrowStartPoint : MonoBehaviour
 {
     bool available = true;
     [SerializeField] LayerMask wallLayer;
-    [SerializeField] float checkRadius = 0.2f;
-    [SerializeField] float maxCheckDistance = 0.5f;
 
     public bool IsAvailable()
     {
@@ -36,11 +34,5 @@ public class ThrowStartPoint : MonoBehaviour
         {
             available = true;
         }
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = available ? Color.green : Color.red;
-        Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
 }
