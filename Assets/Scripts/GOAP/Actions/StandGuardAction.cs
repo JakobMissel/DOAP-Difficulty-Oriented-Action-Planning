@@ -24,9 +24,16 @@ namespace Assets.Scripts.GOAP
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
+            var timerBehaviour = mono.Transform.GetComponent<StandGuardTimerBehaviour>();
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
+
+            // Mark that we're actively performing StandGuardAction
+            if (timerBehaviour != null)
+            {
+                timerBehaviour.BeginStandGuardAction();
+            }
 
             // Initialize state
             data.HasArrived = false;
@@ -35,6 +42,7 @@ namespace Assets.Scripts.GOAP
             data.RightAnglePoint = null;
             data.RotatingToRight = true;
             data.InitialRotationDone = false;
+            data.WasInterrupted = false;
 
             // Start moving towards the guard point
             agent.isStopped = false;
@@ -62,6 +70,7 @@ namespace Assets.Scripts.GOAP
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             var timerBehaviour = mono.Transform.GetComponent<StandGuardTimerBehaviour>();
+            var brain = mono.Transform.GetComponent<BrainBehaviour>();
 
             if (timerBehaviour == null)
             {
@@ -72,6 +81,23 @@ namespace Assets.Scripts.GOAP
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
             {
                 Debug.LogWarning($"[StandGuardAction] {mono.Transform.name} validation failed - Agent: {agent != null}, Enabled: {agent?.enabled}, OnNavMesh: {agent?.isOnNavMesh}, Target: {data.Target != null}, TargetValid: {data.Target?.IsValid()}");
+                return ActionRunState.Stop;
+            }
+
+            // INTERRUPT: Check for player spotting - should immediately pursue if player is spotted
+            var sight = mono.Transform.GetComponent<GuardSight>();
+            if (sight != null && sight.PlayerSpotted())
+            {
+                Debug.Log($"[StandGuardAction] {mono.Transform.name} spotted player while guarding - INTERRUPTING to pursue!");
+                data.WasInterrupted = true;
+                return ActionRunState.Stop;
+            }
+
+            // INTERRUPT: Check for noise - both player noise and distraction noise should interrupt guarding
+            if (brain != null && brain.HasHeardNoise)
+            {
+                Debug.Log($"[StandGuardAction] {mono.Transform.name} heard noise while guarding - INTERRUPTING to investigate!");
+                data.WasInterrupted = true;
                 return ActionRunState.Stop;
             }
 
@@ -163,10 +189,17 @@ namespace Assets.Scripts.GOAP
         public override void End(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
-            
+            var timerBehaviour = mono.Transform.GetComponent<StandGuardTimerBehaviour>();
+
+            // Mark that StandGuardAction has ended
+            if (timerBehaviour != null)
+            {
+                timerBehaviour.EndStandGuardAction(data.WasInterrupted);
+            }
+
             // Hide the stand guard icon
             ShowStandGuardIcon(mono.Transform, false);
-            
+
             // Resume normal movement
             if (agent != null)
             {
@@ -277,18 +310,21 @@ namespace Assets.Scripts.GOAP
         public class Data : IActionData
         {
             public ITarget Target { get; set; }
-            
+
             // Movement tracking
             public bool HasArrived { get; set; }
-            
+
             // Guard timing
             public float GuardTime { get; set; }
-            
+
             // Rotation tracking
             public Transform LeftAnglePoint { get; set; }
             public Transform RightAnglePoint { get; set; }
             public bool RotatingToRight { get; set; }
             public bool InitialRotationDone { get; set; }
+
+            // Interruption tracking
+            public bool WasInterrupted { get; set; }
         }
     }
 }

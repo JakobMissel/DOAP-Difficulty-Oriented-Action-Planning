@@ -147,6 +147,11 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/AtStandGuardPointSensor.cs
       <Id>k__BackingField: AtStandGuardPointSensor-f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c
+    - <Name>k__BackingField: ConfusedSensor
+      fullName: Assets.Scripts.GOAP.Sensors.ConfusedSensor, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/Sensors/ConfusedSensor.cs
+      <Id>k__BackingField: ConfusedSensor-b9e4d8a3-5f2c-4b8e-ad3f-6e7b9c2d4a5e
     - <Name>k__BackingField: DifficultySensor
       fullName: Assets.Scripts.GOAP.Sensors.DDA.DifficultySensor, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -248,6 +253,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/IsAlert.cs
       <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+    - <Name>k__BackingField: IsConfused
+      fullName: Assets.Scripts.GOAP.WorldKeys.IsConfused, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      <Path>k__BackingField: Assets/Scripts/GOAP/WorldKeys/IsConfused.cs
+      <Id>k__BackingField: IsConfused-a8f3c9d2-4e1b-4a7f-9c2e-5d6a8b9c1e3f
     - <Name>k__BackingField: IsGuarding
       fullName: Assets.Scripts.GOAP.WorldKeys.IsGuarding, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null

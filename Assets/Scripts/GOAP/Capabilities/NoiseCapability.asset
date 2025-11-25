@@ -44,12 +44,23 @@ MonoBehaviour:
         <Id>k__BackingField: HeardNoise-e69d5a68-2f67-4e40-85e9-688231b0ccbc
       comparison: 3
       amount: 1
+    - worldKey:
+        <Name>k__BackingField: IsConfused
+        <Id>k__BackingField: IsConfused-a8f3c9d2-4e1b-4a7f-9c2e-5d6a8b9c1e3f
+      comparison: 3
+      amount: 1
     effects:
     - worldKey:
         <Name>k__BackingField: AtNoiseSource
         <Id>k__BackingField: AtNoiseSource-9744e2af-f251-4510-acd1-c8606e059010
       effect: 1
   worldSensors:
+  - sensor:
+      <Name>k__BackingField: ConfusedSensor
+      <Id>k__BackingField: 
+    worldKey:
+      <Name>k__BackingField: IsConfused
+      <Id>k__BackingField: 
   - sensor:
       <Name>k__BackingField: HeardNoiseSensor
       <Id>k__BackingField: HeardNoiseSensor-40920bcf-96e7-4bab-b863-1d2b153581a4

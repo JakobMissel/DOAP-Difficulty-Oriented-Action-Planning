@@ -34,34 +34,44 @@ MonoBehaviour:
       rid: 3255850196213956801
     baseCost: 1.5
     stoppingDistance: 0
-    validateTarget: 1
+    validateTarget: 0
     requiresTarget: 1
-    validateConditions: 1
+    validateConditions: 0
     moveMode: 1
     conditions:
     - worldKey:
         <Name>k__BackingField: DifficultyWK
-        <Id>k__BackingField: 
+        <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
       comparison: 3
       amount: 75
     - worldKey:
         <Name>k__BackingField: AtStandGuardPoint
-        <Id>k__BackingField: 
+        <Id>k__BackingField: AtStandGuardPoint-a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
       comparison: 3
       amount: 1
     - worldKey:
         <Name>k__BackingField: Energy
-        <Id>k__BackingField: 
+        <Id>k__BackingField: Energy-2493cde6-3e8f-427c-a925-19f3a741d299
       comparison: 2
-      amount: 0
-    - worldKey:
-        <Name>k__BackingField: IsGuarding
-        <Id>k__BackingField: 
-      comparison: 1
       amount: 0
     - worldKey:
         <Name>k__BackingField: IsAlert
         <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
+      comparison: 1
+      amount: 0
+    - worldKey:
+        <Name>k__BackingField: LastStoodGuard
+        <Id>k__BackingField: LastStoodGuard-b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e
+      comparison: 3
+      amount: 10
+    - worldKey:
+        <Name>k__BackingField: IsConfused
+        <Id>k__BackingField: IsConfused-a8f3c9d2-4e1b-4a7f-9c2e-5d6a8b9c1e3f
+      comparison: 1
+      amount: 0
+    - worldKey:
+        <Name>k__BackingField: StandingGuard
+        <Id>k__BackingField: StandingGuard-c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f
       comparison: 1
       amount: 0
     effects:
@@ -88,6 +98,24 @@ MonoBehaviour:
     worldKey:
       <Name>k__BackingField: IsGuarding
       <Id>k__BackingField: IsGuarding-f1a2b3c4-d5e6-7f8a-9b0c-1d2e3f4a5b6c
+  - sensor:
+      <Name>k__BackingField: LastStoodGuardSensor
+      <Id>k__BackingField: LastStoodGuardSensor-a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d
+    worldKey:
+      <Name>k__BackingField: LastStoodGuard
+      <Id>k__BackingField: LastStoodGuard-b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e
+  - sensor:
+      <Name>k__BackingField: ConfusedSensor
+      <Id>k__BackingField: ConfusedSensor-b9e4d8a3-5f2c-4b8e-ad3f-6e7b9c2d4a5e
+    worldKey:
+      <Name>k__BackingField: IsConfused
+      <Id>k__BackingField: IsConfused-a8f3c9d2-4e1b-4a7f-9c2e-5d6a8b9c1e3f
+  - sensor:
+      <Name>k__BackingField: StandingGuardSensor
+      <Id>k__BackingField: StandingGuardSensor-d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9a
+    worldKey:
+      <Name>k__BackingField: StandingGuard
+      <Id>k__BackingField: StandingGuard-c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f
   targetSensors:
   - sensor:
       <Name>k__BackingField: StandGuardTargetSensor
