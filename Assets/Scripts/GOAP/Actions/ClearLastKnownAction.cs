@@ -241,6 +241,9 @@ namespace Assets.Scripts.GOAP.Actions
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
 
+            // Get guard ID for patrol reset (needed later in this method)
+            int guardId = mono.Transform.GetInstanceID();
+
             // Re-enable NavMeshAgent rotation
             if (agent != null)
                 agent.updateRotation = true;
