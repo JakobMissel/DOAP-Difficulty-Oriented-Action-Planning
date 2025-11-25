@@ -95,7 +95,11 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 7ca27145d7cc99945a56cd17088ec03b
+    name: CutsceneVolume
+  - guid: bc1a54b73ed7fda44bcf3decffd83c00
+    name: GameplayVolume
   m_AudioMixerGroupViews:
   - guids:
     - 055671ecf77d3c34ca48e03f35e08a96
@@ -156,6 +160,28 @@ AudioMixerSnapshotController:
   m_FloatValues:
     b1e19f6c0016eb743bcc5bab781e9809: 3
   m_TransitionOverrides: {}
+--- !u!244 &1224166957797393548
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: bc928c186f9bfbc46ba10aacbd24e9b3
+  m_EffectName: Pitch Shifter
+  m_MixLevel: 2d5ef87278d66a140b9ad77885b3a854
+  m_Parameters:
+  - m_ParameterName: Pitch
+    m_GUID: aff5f84e924c54447be8a744fb0afbd6
+  - m_ParameterName: FFT size
+    m_GUID: 4d218bff74289874790f2d0a2ae96018
+  - m_ParameterName: Overlap
+    m_GUID: 7f9a6877f18ae1e4bb57947d16f5bdf6
+  - m_ParameterName: Max channels
+    m_GUID: 64bbd8c1e0984a04ca07aac71fb06a38
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &1774616025712007165
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
