@@ -26,6 +26,11 @@ namespace Assets.Scripts.Cutscene
 
         private void Awake()
         {
+        }
+
+#if UNITY_EDITOR
+        private void Start()
+        {
             director = GetComponent<PlayableDirector>();
 
             switch (whichCutscene)
@@ -33,8 +38,12 @@ namespace Assets.Scripts.Cutscene
                 case CutsceneSelect.Intro:
 #if UNITY_EDITOR
                     if (!skipCutscene)
+                    {
 #endif
-                    IntroCutsceneSetup();
+                        IntroCutsceneSetup();
+#if UNITY_EDITOR
+                    }
+#endif
                     break;
                 case CutsceneSelect.Outro:
                     break;
@@ -46,19 +55,13 @@ namespace Assets.Scripts.Cutscene
             // If cutscene should be skipped, just say that the cutscene is done playing
             if (skipCutscene)
             {
+                ObjectivesManager.Instance.StartObjective();
                 return;
             }
 #endif
 
             // Start playing cutscene
             director.Play();
-        }
-
-#if UNITY_EDITOR
-        private void Start()
-        {
-            if (skipCutscene)
-                ObjectivesManager.Instance.StartObjective();
         }
 #endif
 
@@ -112,7 +115,7 @@ namespace Assets.Scripts.Cutscene
             baseShadowColor = RenderSettings.subtractiveShadowColor;
             DisableEnvironmentLighting();
 
-            playerInput.enabled = false;
+            playerInput.currentActionMap?.Disable();
 
             for (int i = 0; i < disableDuringCutscene.Length; i++)
             {
@@ -137,7 +140,7 @@ namespace Assets.Scripts.Cutscene
             // Start tutorial
             ObjectivesManager.Instance.StartObjective();
 
-            playerInput.enabled = true;
+            playerInput.currentActionMap?.Enable();
         }
     }
 
