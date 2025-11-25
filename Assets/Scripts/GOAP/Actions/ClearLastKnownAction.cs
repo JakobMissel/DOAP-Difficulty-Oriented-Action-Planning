@@ -224,16 +224,22 @@ namespace Assets.Scripts.GOAP.Actions
             return ActionRunState.Continue;
         }
 
+        public override void Complete(IMonoAgent mono, Data data)
+        {
+            // Track successful evasion - player escaped from this guard
+            // This is only called when the action completes successfully (not when interrupted)
+            int guardId = mono.Transform.GetInstanceID();
+            EvasionTracker.EvasionSuccessful(guardId);
+
+            Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} - Guard has given up pursuit! Player successfully evaded.");
+        }
+
         public override void End(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
-
-            // Track successful evasion - player escaped from this guard
-            int guardId = mono.Transform.GetInstanceID();
-            EvasionTracker.EvasionSuccessful(guardId);
 
             // Re-enable NavMeshAgent rotation
             if (agent != null)

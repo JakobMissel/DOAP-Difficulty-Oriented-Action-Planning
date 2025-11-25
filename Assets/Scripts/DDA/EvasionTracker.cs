@@ -4,16 +4,19 @@ using UnityEngine;
 namespace Assets.Scripts.DDA
 {
     /// <summary>
-    /// Tracks player evasion times from guards.
+    /// Tracks player evasion count from guards.
     /// Monitors pursuit start (PursuitAction) to successful evasion (ClearLastKnownAction).
-    /// Each guard is tracked independently - faster evasions increase difficulty more.
+    /// Each guard is tracked independently - each successful evasion increases difficulty.
     /// </summary>
     public class EvasionTracker : MonoBehaviour
     {
         public static EvasionTracker Instance { get; private set; }
 
-        // Track pursuit start time per guard (key = guard GameObject instance ID)
-        private Dictionary<int, float> pursuitStartTimes = new Dictionary<int, float>();
+        // Track which guards are currently pursuing (key = guard GameObject instance ID)
+        private HashSet<int> activePursuits = new HashSet<int>();
+
+        // Total evasion count (across all guards)
+        private int totalEvasions = 0;
 
         [Header("Debug")]
         [SerializeField] private bool showDebugLogs = true;
@@ -23,8 +26,7 @@ namespace Assets.Scripts.DDA
         [SerializeField] private bool showTestingUI = false;
         [Tooltip("Assign a TextMeshProUGUI component to show live evasion stats during play")]
         [SerializeField] private TMPro.TextMeshProUGUI debugTextField;
-        private string baseTestMessage = "Evasion Speed is at difficulty: <u><b>{0}</b></u>\nLast evasion time: <u><b>{1}s</b></u>\nActive pursuits: <u><b>{2}</b></u>";
-        private float lastEvasionTime = 0f;
+        private string baseTestMessage = "Evasion Count is at difficulty: <u><b>{0}</b></u>\nTotal evasions: <u><b>{1}</b></u>\nActive pursuits: <u><b>{2}</b></u>";
 #endif
 
         private void Awake()
@@ -52,8 +54,8 @@ namespace Assets.Scripts.DDA
                 debugTextField.text = string.Format(
                     baseTestMessage,
                     DifficultyTracker.GetDifficultyF(PlayerDAAs.PlayerEvasionSpeed).ToString("N2"),
-                    lastEvasionTime.ToString("N2"),
-                    pursuitStartTimes.Count
+                    totalEvasions,
+                    activePursuits.Count
                 );
             }
         }
@@ -71,16 +73,16 @@ namespace Assets.Scripts.DDA
                 return;
             }
 
-            // Record the time this guard started pursuit
-            Instance.pursuitStartTimes[guardId] = Time.time;
+            // Mark this guard as actively pursuing
+            Instance.activePursuits.Add(guardId);
 
             if (Instance.showDebugLogs)
-                Debug.Log($"[EvasionTracker] Guard {guardId} started pursuit at {Time.time:F2}s");
+                Debug.Log($"[EvasionTracker] Guard {guardId} started pursuit (total active pursuits: {Instance.activePursuits.Count})");
         }
 
         /// <summary>
         /// Call when a guard successfully completes clearing last known position (from ClearLastKnownAction.End())
-        /// Calculates evasion time and adjusts difficulty accordingly
+        /// Increments evasion count and adjusts difficulty accordingly
         /// </summary>
         /// <param name="guardId">Guard's GameObject instance ID</param>
         public static void EvasionSuccessful(int guardId)
@@ -91,25 +93,18 @@ namespace Assets.Scripts.DDA
                 return;
             }
 
-            // Check if this guard was tracking a pursuit
-            if (Instance.pursuitStartTimes.TryGetValue(guardId, out float startTime))
+            // Check if this guard was actively pursuing
+            if (Instance.activePursuits.Remove(guardId))
             {
-                // Calculate how long the player took to evade this guard
-                float evasionTime = Time.time - startTime;
+                // Increment total evasion count
+                Instance.totalEvasions++;
 
                 // Tell the difficulty tracker about this evasion
-                // Faster evasion (lower time) should increase difficulty more
-                DifficultyTracker.AlterDifficulty(PlayerDAAs.PlayerEvasionSpeed, evasionTime);
-
-                // Remove this guard from tracking
-                Instance.pursuitStartTimes.Remove(guardId);
-
-#if UNITY_EDITOR
-                Instance.lastEvasionTime = evasionTime;
-#endif
+                // Pass the total evasion COUNT (not time)
+                DifficultyTracker.AlterDifficulty(PlayerDAAs.PlayerEvasionSpeed, Instance.totalEvasions);
 
                 if (Instance.showDebugLogs)
-                    Debug.Log($"[EvasionTracker] Guard {guardId} evasion successful! Time: {evasionTime:F2}s → Difficulty adjusted");
+                    Debug.Log($"[EvasionTracker] Guard {guardId} evasion successful! Total evasions: {Instance.totalEvasions} → Difficulty adjusted");
             }
             else
             {
@@ -131,7 +126,7 @@ namespace Assets.Scripts.DDA
                 return;
             }
 
-            if (Instance.pursuitStartTimes.Remove(guardId))
+            if (Instance.activePursuits.Remove(guardId))
             {
                 if (Instance.showDebugLogs)
                     Debug.Log($"[EvasionTracker] Guard {guardId} pursuit reset (likely player captured)");
@@ -146,10 +141,24 @@ namespace Assets.Scripts.DDA
             if (Instance == null)
                 return;
 
-            Instance.pursuitStartTimes.Clear();
+            Instance.activePursuits.Clear();
 
             if (Instance.showDebugLogs)
                 Debug.Log("[EvasionTracker] All pursuits reset");
+        }
+
+        /// <summary>
+        /// Reset the total evasion count (useful for level resets)
+        /// </summary>
+        public static void ResetEvasionCount()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.totalEvasions = 0;
+
+            if (Instance.showDebugLogs)
+                Debug.Log("[EvasionTracker] Evasion count reset to 0");
         }
 
         /// <summary>
@@ -160,18 +169,18 @@ namespace Assets.Scripts.DDA
             if (Instance == null)
                 return false;
 
-            return Instance.pursuitStartTimes.ContainsKey(guardId);
+            return Instance.activePursuits.Contains(guardId);
         }
 
         /// <summary>
-        /// Get the current evasion time for a guard (if being tracked)
+        /// Get the current total evasion count
         /// </summary>
-        public static float GetCurrentEvasionTime(int guardId)
+        public static int GetTotalEvasions()
         {
-            if (Instance == null || !Instance.pursuitStartTimes.TryGetValue(guardId, out float startTime))
-                return -1f;
+            if (Instance == null)
+                return 0;
 
-            return Time.time - startTime;
+            return Instance.totalEvasions;
         }
 
 #if UNITY_EDITOR
