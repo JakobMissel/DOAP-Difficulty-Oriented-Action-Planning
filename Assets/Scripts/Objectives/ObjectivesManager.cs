@@ -60,7 +60,7 @@ public class ObjectivesManager : MonoBehaviour
 
     void Start()
     {
-        StartObjective();
+        //StartObjective();
     }
 
     /// <summary>
