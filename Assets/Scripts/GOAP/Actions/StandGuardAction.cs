@@ -102,6 +102,9 @@ namespace Assets.Scripts.GOAP
                     }
                     audio?.StopWalkLoop();
 
+                    // Show the stand guard icon
+                    ShowStandGuardIcon(mono.Transform, true);
+
                     // Find the two nearest angle points
                     FindNearestAnglePoints(mono.Transform.position, data);
 
@@ -161,12 +164,33 @@ namespace Assets.Scripts.GOAP
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             
+            // Hide the stand guard icon
+            ShowStandGuardIcon(mono.Transform, false);
+            
             // Resume normal movement
             if (agent != null)
             {
                 agent.isStopped = false;
                 agent.updateRotation = true;
                 agent.updatePosition = true;
+            }
+        }
+        
+        /// <summary>
+        /// Shows or hides the StandGuardIcon UI element
+        /// </summary>
+        private void ShowStandGuardIcon(Transform guardTransform, bool show)
+        {
+            // Find the StandGuardIcon in the guard's hierarchy
+            Transform iconTransform = guardTransform.Find("Canvas/StandGuardIcon");
+            if (iconTransform != null)
+            {
+                iconTransform.gameObject.SetActive(show);
+                Debug.Log($"[StandGuardAction] {guardTransform.name} StandGuardIcon set to: {show}");
+            }
+            else
+            {
+                Debug.LogWarning($"[StandGuardAction] {guardTransform.name} could not find Canvas/StandGuardIcon");
             }
         }
 
