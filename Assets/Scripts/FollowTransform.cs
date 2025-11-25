@@ -29,7 +29,7 @@ public class FollowTransform : MonoBehaviour
 
     void Update()
     {
-        if (transformPosition)
+        if (transformPosition && positionTarget != null)
             transform.position = positionTarget.position + positionOffset;
         if (transformRotationX || transformRotationY || transformRotationZ)
         {

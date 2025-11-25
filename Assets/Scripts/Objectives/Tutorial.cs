@@ -27,6 +27,8 @@ public class Tutorial : MonoBehaviour
     [SerializeField] StealablePickup tutorialPainting;
 
     bool paintingStolen = false;
+    bool canDropPaintingOff = false;
+
     GameObject paintingCarry;
 
     [Header("Skip settings")]
@@ -205,7 +207,9 @@ public class Tutorial : MonoBehaviour
             // Unsubscribe after completing the goal
             PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
             PlayerActions.OnLoseThrowables();
+
             StartCoroutine(EnableTutorialPaintingSteal());
+            
             CompleteSubObjective(5, delayBetweenGoals);
         }
     }
@@ -230,6 +234,8 @@ public class Tutorial : MonoBehaviour
             newPainting.transform.SetParent(StealPainting.Instance.playerPaintingPosition.transform);
             newPainting.transform.localPosition = StealPainting.Instance.paintingPositionOffset;
             newPainting.transform.localRotation = Quaternion.Euler(StealPainting.Instance.paintingRotationOffset);
+            
+            StartCoroutine(EnableDropOff());
 
             PlayerActions.stealItem -= PaintingSteal;
             CompleteSubObjective(6, delayBetweenGoals);
@@ -312,6 +318,12 @@ public class Tutorial : MonoBehaviour
         objective.subObjectives[6].goalText = $"Hold [E] to steal the painting framed in gold by {tutorialPainting.painterName}.";
         yield return new WaitForSeconds(delayBetweenGoals);
         tutorialPainting.tutorialPainting = true;
+    }
+
+    IEnumerator EnableDropOff()
+    {
+        yield return new WaitForSeconds(delayBetweenGoals);
+        PaintingDropPoint.OnCanDropOffPainting();
     }
 
     /// <summary>

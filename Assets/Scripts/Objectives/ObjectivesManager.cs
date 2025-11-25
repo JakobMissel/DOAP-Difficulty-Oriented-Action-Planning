@@ -74,20 +74,19 @@ public class ObjectivesManager : MonoBehaviour
         {
             if (startFromFirstObjective)
             {
+                completedTutorial = false;
                 PlayerActions.OnCanThrow(false);
                 PlayerActions.OnCanInteract(false);
-                setNewObjective?.Invoke(objectives[0], 0, 0, 0);
+                OnSetNewObjective(objectives[0], 0, 0, 0);
                 return;
             }
-            if (currentObjective != null)
+            if (currentObjective != null && !startFromFirstObjective)
             {
-                setNewObjective?.Invoke(currentObjective, 0, 0, 0);
+                OnSetNewObjective(currentObjective, 0, 0, 0);
                 Tutorial.Instance.SkipTutorial();
-            }
-            if (completedTutorial)
-            {
                 objectives[0].isCompleted = true;
                 objectives[0].isActive = false;
+                completedTutorial = true;
             }
         }
         else

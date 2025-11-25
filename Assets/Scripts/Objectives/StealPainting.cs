@@ -149,7 +149,6 @@ public class StealPainting : MonoBehaviour
                     
                     if (stolenPaintings.Count > 0 && stolenPaintings.Contains(paintings[i]))
                     {
-                        Debug.LogWarning($"ITS PAINTS {stolenPaintings[0]}");
                         subObjective.goalText += $"{paintingSprite}<color=#D1A050>{paintings[i].painterName}</color>\n"; // change color of stolen paintings
                     }
                     else if (!stolenPaintings.Contains(paintings[i]))

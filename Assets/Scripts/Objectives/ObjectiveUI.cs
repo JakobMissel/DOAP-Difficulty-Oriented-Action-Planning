@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ObjectiveUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] AudioClip[] audioClip;
+    AudioSource audioSource;
     [Header("Middle")]
     [SerializeField] GameObject objectivesTextPrefab;
     [SerializeField] GameObject middlePanel;
@@ -25,6 +27,7 @@ public class ObjectiveUI : MonoBehaviour
         objectiveMiddlePanel.SetActive(false);
         objectiveSidePanel.SetActive(false);
         delayBar.fillAmount = 0;
+        audioSource = GetComponent<AudioSource>();
     }
 
     void OnEnable()
@@ -54,10 +57,26 @@ public class ObjectiveUI : MonoBehaviour
         newText.GetComponent<TextMeshProUGUI>().alignment = TextAlignmentOptions.Center;
     }
 
+    void NewSubObjectiveSound()
+    {
+        audioSource.PlayOneShot(audioClip[0]);
+    }
+
+    void CompletedSubObjectiveSound()
+    {
+        audioSource.PlayOneShot(audioClip[1]);
+    }
+
     void UpdateObjectiveUI(Objective objective, int subObjectiveIndex, float delay)
     {
         ClearTextArea(middlePanel);
         objectiveMiddlePanel.SetActive(true);
+
+        // Play completed sound except for the first sub-objective of the first objective
+        if (objective == ObjectivesManager.Instance.objectives[0] && subObjectiveIndex >= 1 || objective != ObjectivesManager.Instance.objectives[0])
+        {
+            CompletedSubObjectiveSound();
+        }
 
         // Update current objective and sub-goal index
         currentObjective = objective;
@@ -110,6 +129,7 @@ public class ObjectiveUI : MonoBehaviour
         // Activate the current sub-objective
         if(currentObjective && currentObjective.subObjectives.Count > currentSubObjectiveIndex)
         {
+            NewSubObjectiveSound();
             ObjectivesManager.OnActivateSubObjective(currentObjective?.subObjectives[currentSubObjectiveIndex]);
             CreateObjectiveText(currentObjective?.subObjectives[currentSubObjectiveIndex].goalText);
         }

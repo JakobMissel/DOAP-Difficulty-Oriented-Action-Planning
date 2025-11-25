@@ -67,6 +67,9 @@ public class PlayerActions : MonoBehaviour
     public static Action<GameObject> sethitArea;
     public static void OnSetHitArea(GameObject hitArea) => sethitArea?.Invoke(hitArea);
 
+    public static Action playerThrow;
+    public static void OnPlayerThrow() => playerThrow?.Invoke();
+
     public static Action<int> ammoUpdate;
     public static void OnAmmoUpdate(int ammo) => ammoUpdate?.Invoke(ammo);
 

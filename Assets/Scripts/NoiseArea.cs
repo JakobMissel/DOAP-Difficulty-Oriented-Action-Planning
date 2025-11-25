@@ -17,6 +17,8 @@ public class NoiseArea : MonoBehaviour
     private bool hasTriggered = false;
     private float spawnTime;
 
+    bool hasSendNoise = false;
+
     void Awake()
     {
         maxScale = noiseVisual.transform.localScale.x;
@@ -118,7 +120,9 @@ public class NoiseArea : MonoBehaviour
     {
         if (other.CompareTag("Agent"))
         {
+            if(hasSendNoise) return;
             SendNoise(other);
+            hasSendNoise = true;
         }
     }
 

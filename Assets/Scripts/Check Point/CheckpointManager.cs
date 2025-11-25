@@ -88,7 +88,8 @@ public class CheckpointManager : MonoBehaviour
         if(isLoading) return;
         if(checkpointLoadingScreen == null)
         {
-            Debug.LogWarning("Checkpoint loading screen not found, cannot begin loading sequence.");
+            Debug.LogWarning("Checkpoint loading screen not found, attempting find again.");
+            checkpointLoadingScreen = GameObject.Find("CheckpointLoadingScreen").GetComponent<Image>();
             return;
         }
         StartCoroutine(LoadingSequence());
@@ -100,15 +101,15 @@ public class CheckpointManager : MonoBehaviour
         ChangePlayerMovement();
 
         // Fade to black
-        while (time < fadeTime)
-        {
-            time += Time.deltaTime;
-            // Fade to black
-            checkpointLoadingScreen.color = new Color(0, 0, 0, time / fadeTime);
-            yield return null;
-        }
-        time = 0;
-        
+        //while (time < fadeTime)
+        //{
+        //    time += Time.deltaTime;
+        //    // Fade to black
+        //    checkpointLoadingScreen.color = new Color(0, 0, 0, time / fadeTime);
+        //    yield return null;
+        //}
+        //time = 0;
+        checkpointLoadingScreen.color = new Color(0, 0, 0, 0);
         // While black, load checkpoint
         OnLoadCheckpoint();
         

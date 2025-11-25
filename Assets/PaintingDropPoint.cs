@@ -14,6 +14,9 @@ public class PaintingDropPoint : Pickup
     public static Action placePainting;
     public static void OnPlacePainting() => placePainting?.Invoke();
 
+    public static Action canDropOffPainting;
+    public static void OnCanDropOffPainting() => canDropOffPainting?.Invoke();
+
     protected override void Awake()
     {
         canBepickedUp = false;
@@ -25,6 +28,7 @@ public class PaintingDropPoint : Pickup
         StealPainting.sendPaintingPrefab += GetPainting;
         placePainting += PlacePainting;
         CheckpointManager.loadCheckpoint += () => canBepickedUp = false;
+        canDropOffPainting += () => canBepickedUp = true;
         base.OnEnable();
     }
 
@@ -33,12 +37,13 @@ public class PaintingDropPoint : Pickup
         StealPainting.sendPaintingPrefab -= GetPainting;
         placePainting -= PlacePainting;
         CheckpointManager.loadCheckpoint -= () => canBepickedUp = false;
+        canDropOffPainting -= () => canBepickedUp = true;
         base.OnDisable();
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (PlayerActions.Instance.carriesPainting)
+        if (PlayerActions.Instance.carriesPainting && ObjectivesManager.Instance.completedTutorial || !ObjectivesManager.Instance.completedTutorial && canBepickedUp)
         {
             canBepickedUp = true;
             base.OnTriggerEnter(other);
