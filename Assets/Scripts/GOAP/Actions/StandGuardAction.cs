@@ -54,11 +54,7 @@ namespace Assets.Scripts.GOAP
                 agent.SetDestination(data.Target.Position);
             }
 
-            // Trigger walking animation
-            if (animation != null)
-            {
-                animation.Walk();
-            }
+            // Animation handled by GuardAnimationController based on velocity
             audio?.PlayWalkLoop();
 
             Debug.Log($"[StandGuardAction] {mono.Transform.name} starting - moving to guard point at {data.Target?.Position}");
@@ -104,16 +100,27 @@ namespace Assets.Scripts.GOAP
             // Phase 1: Moving to the guard point
             if (!data.HasArrived)
             {
+                // Ensure destination is set (can be interrupted by other systems)
+                if (!agent.pathPending && agent.destination != data.Target.Position)
+                {
+                    agent.SetDestination(data.Target.Position);
+                }
+
                 float distanceToTarget = Vector3.Distance(mono.Transform.position, data.Target.Position);
                 float arrivalThreshold = timerBehaviour.ArrivalThreshold;
-                
+
                 // Log every 2 seconds while moving
                 if (Time.frameCount % 120 == 0)
                 {
-                    Debug.Log($"[StandGuardAction] {mono.Transform.name} moving to guard point - Distance: {distanceToTarget:F2}m, Threshold: {arrivalThreshold:F2}m");
+                    Debug.Log($"[StandGuardAction] {mono.Transform.name} moving to guard point - Distance: {distanceToTarget:F2}m, Threshold: {arrivalThreshold:F2}m, PathPending: {agent.pathPending}, RemainingDistance: {agent.remainingDistance:F2}m");
                 }
-                
-                if (distanceToTarget <= arrivalThreshold)
+
+                // Check arrival using multiple conditions to ensure guard gets close
+                bool arrivedByDistance = distanceToTarget <= arrivalThreshold;
+                bool arrivedByPath = !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.2f;
+                bool isVeryClose = distanceToTarget <= 0.5f; // Definitely close enough
+
+                if ((arrivedByDistance && arrivedByPath) || isVeryClose)
                 {
                     // Arrived at guard point
                     data.HasArrived = true;
@@ -121,11 +128,7 @@ namespace Assets.Scripts.GOAP
                     agent.velocity = Vector3.zero;
                     agent.updateRotation = false; // We'll manually control rotation
 
-                    // Switch to idle animation
-                    if (animation != null)
-                    {
-                        animation.Idle();
-                    }
+                    // Animation handled by GuardAnimationController - velocity = 0 triggers Idle
                     audio?.StopWalkLoop();
 
                     // Show the stand guard icon
@@ -134,9 +137,9 @@ namespace Assets.Scripts.GOAP
                     // Find the two nearest angle points
                     FindNearestAnglePoints(mono.Transform.position, data);
 
-                    Debug.Log($"[StandGuardAction] {mono.Transform.name} ARRIVED at guard point, starting {timerBehaviour.GuardDuration}s guard duty");
+                    Debug.Log($"[StandGuardAction] {mono.Transform.name} ARRIVED at guard point (distance: {distanceToTarget:F2}m), starting {timerBehaviour.GuardDuration}s guard duty");
                 }
-                
+
                 return ActionRunState.Continue;
             }
 
@@ -148,14 +151,7 @@ namespace Assets.Scripts.GOAP
             {
                 RotateBetweenPoints(mono.Transform, data, timerBehaviour.RotationSpeed);
             }
-            else
-            {
-                // No angle points found, use searching animation (looking around)
-                if (animation != null)
-                {
-                    animation.Search();
-                }
-            }
+            // Animation handled by GuardAnimationController based on velocity (stationary = idle)
             
             // Log every 2 seconds during guard duty
             if (Mathf.RoundToInt(data.GuardTime) % 2 == 0 && Time.frameCount % 60 == 0)

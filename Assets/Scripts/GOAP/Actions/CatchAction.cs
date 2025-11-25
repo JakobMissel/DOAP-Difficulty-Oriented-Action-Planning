@@ -16,18 +16,14 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void Start(IMonoAgent agent, Data data)
         {
-            var animation = agent.Transform.GetComponent<GuardAnimation>();
             audio = agent.Transform.GetComponent<ActionAudioBehaviour>();
             audio?.StopWalkLoop();
-            
-            // Trigger Running animation when attempting to catch (chasing player)
-            if (animation != null)
-            {
-                animation.Run();
-            }
-            
+
+            // Animation handled by GuardAnimationController based on velocity
+            // When agent stops (velocity = 0), controller will automatically transition to idle
+
             Debug.Log($"[CatchAction] {agent.Transform.name} starting catch sequence - waiting for physical contact!");
-            
+
             // Stop the agent from moving during catch attempt
             var navAgent = agent.Transform.GetComponent<UnityEngine.AI.NavMeshAgent>();
             if (navAgent != null)

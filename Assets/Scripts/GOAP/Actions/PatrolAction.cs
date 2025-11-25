@@ -34,15 +34,11 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
-            
+
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
-            // Trigger Walking animation for patrol
-            if (animation != null)
-            {
-                animation.Walk();
-            }
+            // Animation handled by GuardAnimationController based on velocity
             audio?.PlayWalkLoop();
 
             agent.isStopped = false;

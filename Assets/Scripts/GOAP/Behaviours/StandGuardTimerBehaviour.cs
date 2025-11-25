@@ -19,8 +19,8 @@ namespace Assets.Scripts.GOAP.Behaviours
         private float interruptionCooldownDuration = 8f;
 
         [Header("Movement Configuration")]
-        [SerializeField] [Tooltip("How close the guard needs to be to the guard point to stop")]
-        private float arrivalThreshold = 1.5f;
+        [SerializeField] [Tooltip("How close the guard needs to be to the guard point to stop (combined with NavMeshAgent path completion check)")]
+        private float arrivalThreshold = 0.8f;
 
         [SerializeField] [Tooltip("Speed of rotation between angle points")]
         private float rotationSpeed = 2f;

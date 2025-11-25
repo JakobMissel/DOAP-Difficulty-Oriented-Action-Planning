@@ -41,7 +41,12 @@ MonoBehaviour:
     conditions:
     - worldKey:
         <Name>k__BackingField: AtPlayerTarget
-        <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+        <Id>k__BackingField: 
+      comparison: 3
+      amount: 1
+    - worldKey:
+        <Name>k__BackingField: IsAlert
+        <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
       comparison: 3
       amount: 1
     effects:
@@ -58,10 +63,16 @@ MonoBehaviour:
       <Id>k__BackingField: 
   - sensor:
       <Name>k__BackingField: AtPlayerTargetSensor
-      <Id>k__BackingField: AtPlayerTargetSensor-5f28b6b3-6c7c-4c51-9d86-3a12a6fd2f2c
+      <Id>k__BackingField: 
     worldKey:
       <Name>k__BackingField: AtPlayerTarget
-      <Id>k__BackingField: AtPlayer-9ba1c3c3-1da2-4701-9b10-7929f934dea1
+      <Id>k__BackingField: 
+  - sensor:
+      <Name>k__BackingField: AlertSensor
+      <Id>k__BackingField: AlertSensor-21c25467-410e-4d08-a28e-8df3f7202e15
+    worldKey:
+      <Name>k__BackingField: IsAlert
+      <Id>k__BackingField: IsAlert-67d84432-3399-467d-baeb-1180b1f2ec61
   targetSensors:
   - sensor:
       <Name>k__BackingField: PlayerTargetSensor

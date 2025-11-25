@@ -54,21 +54,10 @@ namespace Assets.Scripts.GOAP.Behaviours
         {
             isRecharging = value;
             Debug.Log($"[EnergyBehaviour] {gameObject.name} recharging set to: {value}");
-            
-            // Trigger appropriate animation based on recharging state
-            if (guardAnimation != null)
-            {
-                if (value)
-                {
-                    guardAnimation.Recharge();
-                    Debug.Log($"[EnergyBehaviour] {gameObject.name} triggering Recharge animation");
-                }
-                else
-                {
-                    guardAnimation.Idle();
-                    Debug.Log($"[EnergyBehaviour] {gameObject.name} triggering Idle animation");
-                }
-            }
+
+            // Animation is now handled by GuardAnimationController based on velocity
+            // RechargeAction uses GuardAnimationController.ForceRecharge() for special state
+            // When recharging stops, velocity-based system automatically handles transition
         }
     }
 }

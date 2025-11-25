@@ -17,17 +17,11 @@ namespace Assets.Scripts.GOAP.Actions
         public override void Start(IMonoAgent mono, Data data)
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
-            var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
-            
+
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
-            // Trigger Running animation for pursuit
-            if (animation != null)
-            {
-                animation.Run();
-            }
             audio?.PlayWalkLoop();
 
             agent.isStopped = false;
@@ -39,10 +33,10 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
-            
+
             if (cachedPlayer == null)
                 cachedPlayer = GameObject.FindGameObjectWithTag("Player")?.transform;
-            
+
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
                 return ActionRunState.Stop;
 
@@ -67,6 +61,7 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             audio?.StopWalkLoop();
+
             // Mark that this guard should reset to closest waypoint when returning to patrol
             var patrolAction = typeof(PatrolAction);
             var guardId = mono.Transform.GetInstanceID();

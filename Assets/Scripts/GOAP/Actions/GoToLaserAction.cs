@@ -57,11 +57,7 @@ namespace Assets.Scripts.GOAP.Actions
                 return;
             }
 
-            // Trigger Running animation when going to investigate laser
-            if (animation != null)
-            {
-                animation.Run();
-            }
+            // Animation handled by GuardAnimationController based on velocity
             audio?.PlayWalkLoop();
 
             agent.isStopped = false;
@@ -129,9 +125,14 @@ namespace Assets.Scripts.GOAP.Actions
                     data.HasArrived = true;
                     data.SearchTime = 0f;
                     data.LaserSearchPosition = data.Target.Position; // Store the laser position for radius check
-                    
-                    // Trigger search animation
-                    if (animation != null)
+
+                    // Force search animation during investigation
+                    var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+                    if (animController != null)
+                    {
+                        animController.ForceSearch();
+                    }
+                    else if (animation != null)
                     {
                         animation.Search();
                     }
@@ -181,12 +182,8 @@ namespace Assets.Scripts.GOAP.Actions
                     // Start moving to captured location
                     agent.isStopped = false;
                     agent.SetDestination(data.CapturedPlayerLocation);
-                    
-                    // Switch to walking/running animation
-                    if (animation != null)
-                    {
-                        animation.Run();
-                    }
+
+                    // Animation handled by GuardAnimationController based on velocity
                     audio?.PlayWalkLoop();
                 }
                 else
@@ -253,13 +250,20 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
-            
+            var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+
             // Reset speed controller state
             if (speedController != null)
             {
                 speedController.SetInvestigatingLaser(false);
             }
-            
+
+            // Clear forced animation state to resume velocity-based animations
+            if (animController != null)
+            {
+                animController.ClearForcedState();
+            }
+
             // Ensure alert is cleared when action ends
             LaserAlertSystem.ClearWorldKey();
             audio?.StopWalkLoop();

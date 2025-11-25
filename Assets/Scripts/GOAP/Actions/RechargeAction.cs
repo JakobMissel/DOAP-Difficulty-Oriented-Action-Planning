@@ -23,6 +23,7 @@ using Assets.Scripts.GOAP.Behaviours;
             var navAgent = mono.Transform.GetComponent<NavMeshAgent>();
             var energy = mono.Transform.GetComponent<EnergyBehaviour>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
+            var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
 
             // Stop the guard where they are
             if (navAgent != null)
@@ -30,11 +31,11 @@ using Assets.Scripts.GOAP.Behaviours;
                 navAgent.isStopped = true;
                 navAgent.velocity = Vector3.zero;
             }
-            
+
             // Show the recharging icon
             ShowRechargingIcon(mono.Transform, true);
-            
-            // Start recharging (EnergyBehaviour will handle animation)
+
+            // Start recharging
             if (energy != null)
             {
                 energy.SetRecharging(true);
@@ -44,6 +45,17 @@ using Assets.Scripts.GOAP.Behaviours;
             else
             {
                 Debug.LogError($"[RechargeAction] {mono.Transform.name} has no EnergyBehaviour!");
+            }
+
+            // Force Recharge animation (will be locked until action ends)
+            if (animController != null)
+            {
+                animController.ForceRecharge();
+                Debug.Log($"[RechargeAction] {mono.Transform.name} forcing Recharge animation");
+            }
+            else
+            {
+                Debug.LogWarning($"[RechargeAction] {mono.Transform.name} has no GuardAnimationController!");
             }
         }
  
@@ -76,22 +88,30 @@ using Assets.Scripts.GOAP.Behaviours;
             var navAgent = mono.Transform.GetComponent<NavMeshAgent>();
             var energy = mono.Transform.GetComponent<EnergyBehaviour>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
-            
+            var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+
             // Hide the recharging icon
             ShowRechargingIcon(mono.Transform, false);
-            
+
             // Resume movement
             if (navAgent != null)
             {
                 navAgent.isStopped = false;
             }
-            
-            // Stop recharging (EnergyBehaviour will handle animation reset to Idle)
+
+            // Stop recharging
             if (energy != null)
             {
                 energy.SetRecharging(false);
                 audio?.StopRechargeLoop();
                 Debug.Log($"[RechargeAction] {mono.Transform.name} ending recharge action");
+            }
+
+            // Clear forced animation state to resume velocity-based animations
+            if (animController != null)
+            {
+                animController.ClearForcedState();
+                Debug.Log($"[RechargeAction] {mono.Transform.name} cleared forced animation state");
             }
         }
         

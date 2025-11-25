@@ -58,13 +58,6 @@ namespace Assets.Scripts.GOAP.Actions
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
                 return;
 
-            // Trigger Searching animation when investigating last known position
-            if (animation != null)
-            {
-                animation.Search();
-            }
-            audio?.StopWalkLoop();
-
             if (data.Target != null && data.Target.IsValid())
             {
                 agent.SetDestination(data.Target.Position);
@@ -90,7 +83,7 @@ namespace Assets.Scripts.GOAP.Actions
             var brain = mono.Transform.GetComponent<BrainBehaviour>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
-            
+
             // Failsafe: if action has been running too long, force completion
             float elapsedTime = Time.time - data.ActionStartTime;
             if (elapsedTime >= data.MaxActionDuration)
@@ -156,12 +149,6 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.updateRotation = true;
                 agent.isStopped = false;
                 agent.SetDestination(currentTargetPos);
-                
-                // Animation: Running when actively following
-                if (animation != null && agent.velocity.magnitude > 0.1f)
-                {
-                    animation.Run();
-                }
                 audio?.PlayWalkLoop();
 
                 data.ScanningInitialized = false;
@@ -174,36 +161,30 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.updateRotation = true;
                 agent.isStopped = false;
                 agent.SetDestination(currentTargetPos);
-                
-                // Animation: Running when moving with velocity > 0
-                if (animation != null && agent.velocity.magnitude > 0f)
-                {
-                    animation.Run();
-                }
-                if (agent.velocity.magnitude > 0.1f)
-                {
-                    audio?.PlayWalkLoop();
-                }
-                else
-                {
-                    audio?.StopWalkLoop();
-                }
-                 
+                audio?.PlayWalkLoop();
+
                 return ActionRunState.Continue;
             }
 
             // Arrived: stop and run scan pattern
             agent.isStopped = true;
             audio?.StopWalkLoop();
- 
-            // Animation: Searching when stopped and scanning
-            if (animation != null)
-            {
-                animation.Search();
-            }
 
             if (!data.ScanningInitialized)
             {
+                // Force Search animation ONCE when first arriving
+                var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+                if (animController != null)
+                {
+                    animController.ForceSearch();
+                    Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} arrived, forcing Search animation for scanning");
+                }
+                else if (animation != null)
+                {
+                    // Fallback if controller not present
+                    animation.Search();
+                }
+
                 data.BaseYaw = (data.LookTransform != null ? data.LookTransform.eulerAngles.y : mono.Transform.eulerAngles.y);
                 data.ScanningInitialized = true;
                 agent.updateRotation = false;
@@ -246,19 +227,13 @@ namespace Assets.Scripts.GOAP.Actions
         {
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
-            var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
-            
+            var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+
             // Re-enable NavMeshAgent rotation
             if (agent != null)
                 agent.updateRotation = true;
-            
-            // Reset animation to idle state
-            if (animation != null)
-            {
-                animation.Idle();
-            }
-            
+
             // Reset the eyes to forward-facing (local rotation zero)
             if (data.LookTransform != null && sight != null && sight.Eyes != null)
             {
@@ -267,6 +242,12 @@ namespace Assets.Scripts.GOAP.Actions
                 Debug.Log($"[ClearLastKnownAction] {mono.Transform.name} scan ended, resetting eyes to forward.");
             }
             audio?.StopWalkLoop();
+
+            // Clear forced animation state to resume velocity-based animations
+            if (animController != null)
+            {
+                animController.ClearForcedState();
+            }
             
             // Mark that this guard should reset to closest waypoint when returning to patrol
             var patrolAction = typeof(PatrolAction);

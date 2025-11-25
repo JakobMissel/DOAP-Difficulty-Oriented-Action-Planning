@@ -87,8 +87,13 @@ namespace Assets.Scripts.GOAP.Actions
                 }
             }
             
-            // Trigger Search animation for the "huh?" confusion phase
-            if (animation != null)
+            // Force Search animation for the "huh?" confusion phase
+            var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+            if (animController != null)
+            {
+                animController.ForceSearch();
+            }
+            else if (animation != null)
             {
                 animation.Search();
             }
@@ -103,7 +108,8 @@ namespace Assets.Scripts.GOAP.Actions
             var sight = mono.Transform.GetComponent<GuardSight>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
-            
+            var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+
             // If guard fully spots the player during investigation, abort noise investigation and pursue
             if (sight != null && sight.PlayerSpotted())
             {
@@ -147,8 +153,12 @@ namespace Assets.Scripts.GOAP.Actions
                     );
                 }
                 
-                // Animation: Searching during "huh?" pause
-                if (animation != null)
+                // Animation: Force Search during "huh?" pause
+                if (animController != null)
+                {
+                    animController.ForceSearch();
+                }
+                else if (animation != null)
                 {
                     animation.Search();
                 }
@@ -160,7 +170,14 @@ namespace Assets.Scripts.GOAP.Actions
                 {
                     Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} finished confusion pause, now moving to investigate at {data.ValidNavMeshPosition}");
                     data.IsInConfusionPhase = false;
-                    
+
+                    // Clear forced state to allow velocity-based Walk animation during movement
+                    if (animController != null)
+                    {
+                        animController.ClearForcedState();
+                        Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} cleared forced state, resuming velocity-based Walk");
+                    }
+
                     // Start movement towards VALID NAVMESH position
                     agent.updateRotation = true;
                     agent.updatePosition = true;
@@ -194,13 +211,22 @@ namespace Assets.Scripts.GOAP.Actions
             {
                 // Stop at the location and investigate
                 agent.isStopped = true;
-                data.InvestigationTime += Time.deltaTime;
-                
-                // Animation: Search while investigating
-                if (animation != null)
+
+                // Force Search animation when first arriving (only once)
+                if (data.InvestigationTime == 0f)
                 {
-                    animation.Search();
+                    if (animController != null)
+                    {
+                        animController.ForceSearch();
+                        Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} arrived at noise, forcing Search animation for investigation");
+                    }
+                    else if (animation != null)
+                    {
+                        animation.Search();
+                    }
                 }
+
+                data.InvestigationTime += Time.deltaTime;
                 audio?.StopWalkLoop();
 
                 if (data.InvestigationTime < INVESTIGATION_DURATION)
@@ -232,21 +258,16 @@ namespace Assets.Scripts.GOAP.Actions
             }
             else
             {
-                // Still moving to noise location - only play walk animation if velocity > 0
+                // Still moving to noise location - animation handled by GuardAnimationController based on velocity
                 Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} moving to noise source... Distance: {dist:F1}m");
-                
-                if (animation != null)
+
+                if (agent.velocity.magnitude > 0.1f)
                 {
-                    if (agent.velocity.magnitude > 0.1f)
-                    {
-                        animation.Walk();
-                        audio?.PlayWalkLoop();
-                    }
-                    else
-                    {
-                        animation.Search();
-                        audio?.StopWalkLoop();
-                    }
+                    audio?.PlayWalkLoop();
+                }
+                else
+                {
+                    audio?.StopWalkLoop();
                 }
             }
 
@@ -259,26 +280,26 @@ namespace Assets.Scripts.GOAP.Actions
             var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
             var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
-            var animation = mono.Transform.GetComponent<GuardAnimation>();
-            
+            var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+
             // Reset speed controller state
             if (speedController != null)
             {
                 speedController.SetInvestigatingNoise(false);
             }
-            
+
             // Ensure noise is cleared (handles both player and distraction noise)
             if (brain != null)
             {
                 brain.ClearNoise();
             }
-            
-            // Reset animation to idle
-            if (animation != null)
+
+            // Clear forced animation state to resume velocity-based animations
+            if (animController != null)
             {
-                animation.Idle();
+                animController.ClearForcedState();
             }
-            
+
             // Resume normal movement state
             if (agent != null)
             {
@@ -287,7 +308,7 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.updatePosition = true;
             }
             audio?.StopWalkLoop();
- 
+
             Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} ending investigation - ready to resume patrol.");
         }
 

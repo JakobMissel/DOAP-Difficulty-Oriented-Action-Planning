@@ -8,7 +8,7 @@ public class ThrownObject : MonoBehaviour
     [SerializeField] bool destroyOnImpact = false; 
     [SerializeField] public Texture thrownObjectTexture;
     [SerializeField] float bounceMultiplier = 0.5f;
-    [SerializeField] public float noiseRadius = 5f;
+    [SerializeField] public float noiseRadius = 15f;
     [Header("Audio")]
     AudioSource audioSource;
     bool hasCollided = false;
