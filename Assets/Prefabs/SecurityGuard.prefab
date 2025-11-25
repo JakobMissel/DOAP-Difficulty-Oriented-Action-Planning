@@ -360,13 +360,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalSpeed: 2.5
-  detectingSpeed: 1.2
-  spottedSpeed: 3.8
+  detectingSpeed: 1.5
+  spottedSpeed: 3
   laserInvestigationSpeed: 5
   noiseInvestigationSpeed: 2
   useDifficultyMultiplier: 1
-  minSpeedMultiplier: 0.85
-  maxSpeedMultiplier: 1.15
+  minSpeedMultiplier: 0.8
+  maxSpeedMultiplier: 1.2
   speedTransitionSpeed: 5
   detectionSlowdownThreshold: 0.25
   debugMode: 0
