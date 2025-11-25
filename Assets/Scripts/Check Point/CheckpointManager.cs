@@ -52,10 +52,6 @@ public class CheckpointManager : MonoBehaviour
         cameraCheckpointVertical = freeLookCamera.VerticalAxis.Value;
     }
 
-    void Start()
-    {
-    }
-
     void OnEnable()
     {
         StealPainting.paintingStolen += (int a, float b) => SaveCheckpoint();
@@ -110,7 +106,7 @@ public class CheckpointManager : MonoBehaviour
         //}
         //time = 0;
 
-        checkpointLoadingScreen.color = new Color(0, 0, 0, 0);
+        checkpointLoadingScreen.color = new Color(0, 0, 0, 1);
         // While black, load checkpoint
         OnLoadCheckpoint();
         
