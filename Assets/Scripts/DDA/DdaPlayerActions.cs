@@ -82,6 +82,7 @@ namespace Assets.Scripts.DDA
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured).ToString("N2"),
                                                        "times captured",
                                                        timesCaptured.ToString());
+                WriteFullDifficulty();
             }
         }
 #endif
@@ -126,6 +127,7 @@ namespace Assets.Scripts.DDA
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
                                                        "latest stealing time",
                                                        paintingStealingLength.ToString("N2"));
+                WriteFullDifficulty();
             }
 #endif
         }
@@ -159,6 +161,7 @@ namespace Assets.Scripts.DDA
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
                                                        "succesful item ratio",
                                                        ((float)successes.Sum() / (float)successes.Count).ToString("N2"));
+                WriteFullDifficulty();
             }
 #endif
         }
@@ -194,6 +197,7 @@ namespace Assets.Scripts.DDA
                                                            DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
                                                            "succesful item ratio",
                                                            ((float)successes.Sum() / (float)successes.Count).ToString("N2"));
+                    WriteFullDifficulty();
                 }
 #endif
             }
@@ -201,5 +205,12 @@ namespace Assets.Scripts.DDA
             // Update the tracked ammo
             currentAmmo = newAmmo;
         }
+
+#if UNITY_EDITOR
+        private void WriteFullDifficulty()
+        {
+            testTextFields[3].text = $"Full difficulty at <b><u>{DifficultyTracker.GetDifficultyF().ToString("N2")}</u></b>";
+        }
+#endif
     }
 }
