@@ -13,6 +13,7 @@ namespace Assets.Scripts.Cutscene
         [SerializeField] private CutsceneSelect whichCutscene = CutsceneSelect.None;
         [SerializeField] private GameObject[] disableDuringCutscene;
         [SerializeField] private AudioMixer audioMixer;
+        [SerializeField] private UnityEngine.InputSystem.PlayerInput playerInput;
 
         private PlayableDirector director;
 
@@ -111,6 +112,8 @@ namespace Assets.Scripts.Cutscene
             baseShadowColor = RenderSettings.subtractiveShadowColor;
             DisableEnvironmentLighting();
 
+            playerInput.enabled = false;
+
             for (int i = 0; i < disableDuringCutscene.Length; i++)
             {
                 disableDuringCutscene[i].SetActive(false);
@@ -133,6 +136,8 @@ namespace Assets.Scripts.Cutscene
 
             // Start tutorial
             ObjectivesManager.Instance.StartObjective();
+
+            playerInput.enabled = true;
         }
     }
 
