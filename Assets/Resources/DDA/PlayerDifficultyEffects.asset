@@ -64,31 +64,22 @@ MonoBehaviour:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 20
+        time: 30
         value: 0.5
-        inSlope: -0.011259676
-        outSlope: -0.011259676
+        inSlope: -0.0006279222
+        outSlope: -0.0006279222
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.2821177
+        outWeight: 0.26241475
       - serializedVersion: 3
-        time: 50
-        value: 0.25
-        inSlope: -0.0009993723
-        outSlope: -0.0009993723
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.3586591
-        outWeight: 0.49680197
-      - serializedVersion: 3
-        time: 60
+        time: 120
         value: 0
-        inSlope: -0.014874916
-        outSlope: -0.014874916
+        inSlope: -0.0002799783
+        outSlope: -0.0002799783
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.5127152
+        inWeight: 0.21909408
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -105,30 +96,21 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0.2
         value: 0
-        inSlope: 1.0180622
-        outSlope: 1.0180622
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.26923078
-      - serializedVersion: 3
-        time: 0.85
-        value: 0.5
         inSlope: 0
         outSlope: 0
-        tangentMode: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.49999982
+        outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1.2
-        value: 1
-        inSlope: 3.6015363
-        outSlope: 3.6015363
-        tangentMode: 0
+        time: 1
+        value: 0.25
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
-        inWeight: 0.2142855
-        outWeight: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
