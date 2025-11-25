@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -5,6 +6,24 @@ public class IKArmControl : MonoBehaviour
 {
     Rig rig;
     [SerializeField] float differenceThreshold = 0.4f;
+  
+    [Header("Aim/Throw")]
+    [SerializeField] ThrowStartPoint[] throwStartPoints;
+    [SerializeField] Transform rightAimTarget;
+    [SerializeField] GameObject rightThrowTarget;
+    [SerializeField] Transform leftAimTarget;
+    [SerializeField] GameObject leftThrowTarget;
+    [SerializeField] float throwTravelTime = 0.2f;
+    [SerializeField] float throwWaitTime = 0.1f;
+    [SerializeField] float wristFlickMultiplier = 5;
+    ThrowStartPoint currentThrowStartPoint;
+    float throwElapsedTime;
+    Vector3 rightAimPosition;
+    Vector3 rightAimRotation;
+    Vector3 leftPos;
+    Vector3 rightPos;
+
+
     [Header("Left")]
     [SerializeField] GameObject leftArmConstraints;
     [SerializeField] GameObject leftTarget;
@@ -35,7 +54,6 @@ public class IKArmControl : MonoBehaviour
     void Awake()
     {
         rig = GetComponent<Rig>();
-        rig.weight = 1;
         
         leftArmIK = leftArmConstraints.GetComponent<TwoBoneIKConstraint>();
         leftHandRotation = leftArmConstraints.GetComponent<MultiRotationConstraint>();
@@ -48,42 +66,101 @@ public class IKArmControl : MonoBehaviour
         rightArmIK.weight = 0;
         rightHandRotation.weight = 0;
         rightTargetStartPosition = rightTarget.transform.position;
+
+        rightAimPosition = rightAimTarget.localPosition;
+        rightAimRotation = rightAimTarget.localEulerAngles;
     }
 
     void OnEnable()
     {
         PlayerActions.aimStatus += AimStatus;
+        PlayerActions.playerThrow += IKStartThrow;
     }
 
     void OnDisable()
     {
         PlayerActions.aimStatus -= AimStatus;
+        PlayerActions.playerThrow -= IKStartThrow;
     }
 
     void AimStatus(bool aimStatus)
     {
         isAiming = aimStatus;
+        IKAim(isAiming);
     }
 
     void FixedUpdate() // To match with physics updates
     {
         if (isAiming)
         {
-            rig.weight = 0;
-            leftTarget.transform.position = leftTargetStartPosition;
-            rightTarget.transform.position = rightTargetStartPosition;
+            IKAim(isAiming);
             return;
         }
         if (PlayerActions.Instance.carriesPainting)
         {
-            rig.weight = 1;
             SetTargetsToPainting();
             return;
         }
-        if (atWall)
+        if (atWall && !isAiming)
         {
             SetTargetsToWall();
         }
+    }
+
+    void IKAim(bool isAiming)
+    {
+        if(PlayerThrow.Instance.currentThrowStartPoint == null) return;
+        if (PlayerThrow.Instance.currentThrowStartPoint.name.Contains("Left"))
+        {
+            leftArmIK.weight = isAiming ? 1 : 0;
+            leftHandRotation.weight = isAiming ? 1 : 0;
+            leftTarget.transform.position = isAiming ? leftAimTarget.position : leftTargetStartPosition;
+            rightArmIK.weight = 0;
+            rightHandRotation.weight = 0;
+            return;
+        }
+        rightArmIK.weight = isAiming ? 1 : 0;
+        rightHandRotation.weight = isAiming ? 1 : 0;
+        rightTarget.transform.position = isAiming ? rightAimTarget.position : rightTargetStartPosition;
+        leftArmIK.weight = 0;
+        leftHandRotation.weight = 0;
+    }
+
+    void IKStartThrow()
+    {
+        StopCoroutine(IKThrow());
+        StartCoroutine(IKThrow(PlayerThrow.Instance.currentThrowStartPoint == throwStartPoints[0]));
+    }
+
+    IEnumerator IKThrow(bool right = true)
+    {
+        if (!isAiming) yield break;
+        throwElapsedTime = 0;
+        if(right)
+        {
+            while (throwElapsedTime < throwTravelTime)
+            {
+                throwElapsedTime += Time.deltaTime;
+                rightAimTarget.localPosition = Vector3.Lerp(rightAimPosition, rightThrowTarget.transform.localPosition, throwElapsedTime / throwTravelTime);
+                rightAimTarget.localEulerAngles = Vector3.Lerp(rightAimRotation, rightThrowTarget.transform.localEulerAngles, wristFlickMultiplier * throwElapsedTime / throwTravelTime);
+                yield return null;
+            }
+            yield return new WaitForSeconds(throwWaitTime);
+            rightAimTarget.localPosition = rightAimPosition;
+            rightAimTarget.localEulerAngles = rightAimRotation;
+            yield break;
+        }
+        while (throwElapsedTime < throwTravelTime)
+        {
+            throwElapsedTime += Time.deltaTime;
+            leftAimTarget.localPosition = Vector3.Lerp(rightAimPosition, leftThrowTarget.transform.localPosition, throwElapsedTime / throwTravelTime);
+            leftAimTarget.localEulerAngles = Vector3.Lerp(rightAimRotation, leftThrowTarget.transform.localEulerAngles, wristFlickMultiplier * throwElapsedTime / throwTravelTime);
+            yield return null;
+        }
+        yield return new WaitForSeconds(throwWaitTime);
+        leftAimTarget.localPosition = rightAimPosition;
+        leftAimTarget.localEulerAngles = rightAimRotation;
+        yield break;
     }
 
     void SetTargetsToWall()
@@ -154,13 +231,13 @@ public class IKArmControl : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Climbable") && !PlayerActions.Instance.carriesPainting)
+        if (other.CompareTag("Climbable") && !PlayerActions.Instance.carriesPainting && !isAiming)
         {
             atWall = true;
             leftClosestPoint = other.ClosestPoint(leftShoulder.position);
             rightClosestPoint = other.ClosestPoint(rightShoulder.position);
         }
-        if (!other.CompareTag("Climbable") && !PlayerActions.Instance.carriesPainting)
+        if (!other.CompareTag("Climbable") && !PlayerActions.Instance.carriesPainting && !isAiming)
         {
             atWall = false;
             leftArmIK.weight = 0;

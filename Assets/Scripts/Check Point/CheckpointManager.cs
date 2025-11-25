@@ -109,6 +109,7 @@ public class CheckpointManager : MonoBehaviour
         //    yield return null;
         //}
         //time = 0;
+
         checkpointLoadingScreen.color = new Color(0, 0, 0, 0);
         // While black, load checkpoint
         OnLoadCheckpoint();

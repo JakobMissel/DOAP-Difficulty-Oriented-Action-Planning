@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class PlayerThrow : MonoBehaviour
 {
+    public static PlayerThrow Instance;
     PlayerInput playerInput;
     [Header("Aiming")]
     [SerializeField] FollowTransform orientation;
@@ -13,7 +14,8 @@ public class PlayerThrow : MonoBehaviour
     [SerializeField] Vector3 aimOffset = new(0,1.5f,0);
     [SerializeField] LayerMask throwableLayer;
     [Header("Thrown Object")]
-    [SerializeField] Transform throwStartPoint;
+    [SerializeField] ThrowStartPoint[] throwStartPoints;
+    [HideInInspector] public ThrowStartPoint currentThrowStartPoint;
     [SerializeField] public List<GameObject> throwablePrefabsList = new();
     [SerializeField] public int ammoCount;
     [Header("Throw Visualization")]
@@ -44,6 +46,10 @@ public class PlayerThrow : MonoBehaviour
 
     void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
         playerInput = GetComponent<PlayerInput>();
         hitArea = Instantiate(hitAreaPrefab);
         hitArea.SetActive(false);
@@ -109,6 +115,7 @@ public class PlayerThrow : MonoBehaviour
         canThrow = false;
         SpawnThrownObject();
         PlayerAudio.Instance.PlayAudio(audioClip);
+        PlayerActions.OnPlayerThrow();
         ammoCount = throwablePrefabsList.Count;
         UpdateAmmoFeedback();
     }
@@ -134,6 +141,20 @@ public class PlayerThrow : MonoBehaviour
         }
     }
 
+    void CheckThrowStartPoints()
+    {
+        foreach (var point in throwStartPoints)
+        {
+            if (point.IsAvailable())
+            {
+                if(currentThrowStartPoint == point) return;
+                currentThrowStartPoint = point;
+                return;
+            }
+        }
+        currentThrowStartPoint = throwStartPoints[0];
+    }
+
     void AdjustHitAreaSize()
     {
         if(throwablePrefabsList.Count <= 0) return;
@@ -143,8 +164,9 @@ public class PlayerThrow : MonoBehaviour
 
     void SpawnThrownObject()
     {
+        if(throwablePrefabsList.Count <= 0) return;
         var thrownObjectFromList = throwablePrefabsList[0].gameObject;
-        var thrownObject = Instantiate(thrownObjectFromList, throwStartPoint.position, Quaternion.identity);
+        var thrownObject = Instantiate(thrownObjectFromList, currentThrowStartPoint.transform.position, Quaternion.identity);
         throwablePrefabsList.Remove(thrownObjectFromList);
         thrownObject.GetComponent<Rigidbody>().linearVelocity = throwDirection * throwForce;
     }
@@ -154,6 +176,9 @@ public class PlayerThrow : MonoBehaviour
         PlayerActions.OnIsAiming(isAiming);
         if (isAiming && !PlayerActions.Instance.carriesPainting)
         {
+            // Set a throw start point that is not in a wall
+            CheckThrowStartPoints();
+
             // Set the camera to aim
             resetCamera = false;
             aimCamera.Priority = 1;
@@ -168,7 +193,12 @@ public class PlayerThrow : MonoBehaviour
             throwDirection = freeLookCamera.transform.forward + aimOffset;
 
             // Calculate the throw trajectory
-            Vector3 currentPosition = throwStartPoint.position;
+            if (currentThrowStartPoint == null)
+            {
+                Debug.LogWarning("No available throw start point found.");
+                return;
+            }
+            Vector3 currentPosition = currentThrowStartPoint.transform.position;
             Vector3 currentVelocity = throwDirection * throwForce;
 
             // Iterate through each segment to calculate positions
@@ -208,7 +238,7 @@ public class PlayerThrow : MonoBehaviour
                 aimCamera.Priority = 0;
                 freeLookCamera.Priority = 1;
                 PlayerActions.OnChangedCamera(freeLookCamera);
-                freeLookCamera.GetComponent<CinemachineOrbitalFollow>().VerticalAxis.Value = 27;
+                //freeLookCamera.GetComponent<CinemachineOrbitalFollow>().VerticalAxis.Value = 10;
             }
             if(!isAiming)
             {
