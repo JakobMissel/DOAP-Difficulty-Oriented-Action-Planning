@@ -24,6 +24,7 @@ using Assets.Scripts.GOAP.Behaviours;
             var energy = mono.Transform.GetComponent<EnergyBehaviour>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
 
             // Stop the guard where they are
             if (navAgent != null)
@@ -53,9 +54,10 @@ using Assets.Scripts.GOAP.Behaviours;
                 animController.ForceRecharge();
                 Debug.Log($"[RechargeAction] {mono.Transform.name} forcing Recharge animation");
             }
-            else
+            if (sight != null)
             {
-                Debug.LogWarning($"[RechargeAction] {mono.Transform.name} has no GuardAnimationController!");
+                sight.SetDetectionPaused(true);
+                Debug.Log($"[RechargeAction] {mono.Transform.name} disabled sight while recharging");
             }
         }
  
@@ -63,6 +65,7 @@ using Assets.Scripts.GOAP.Behaviours;
          {
              var energy = mono.Transform.GetComponent<EnergyBehaviour>();
              var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
             
              if (energy == null)
              {
@@ -76,6 +79,7 @@ using Assets.Scripts.GOAP.Behaviours;
                  Debug.Log($"[RechargeAction] {mono.Transform.name} fully recharged!");
                  energy.SetRecharging(false);
                  audio?.StopRechargeLoop();
+                 sight?.SetDetectionPaused(false);
                  return ActionRunState.Completed;
              }
  
@@ -89,6 +93,7 @@ using Assets.Scripts.GOAP.Behaviours;
             var energy = mono.Transform.GetComponent<EnergyBehaviour>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
             var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+            var sight = mono.Transform.GetComponent<GuardSight>();
 
             // Hide the recharging icon
             ShowRechargingIcon(mono.Transform, false);
@@ -112,6 +117,11 @@ using Assets.Scripts.GOAP.Behaviours;
             {
                 animController.ClearForcedState();
                 Debug.Log($"[RechargeAction] {mono.Transform.name} cleared forced animation state");
+            }
+            if (sight != null)
+            {
+                sight.SetDetectionPaused(false);
+                Debug.Log($"[RechargeAction] {mono.Transform.name} re-enabled sight after recharging");
             }
         }
         

@@ -33,6 +33,7 @@ public class GuardSight : MonoBehaviour
     GameObject player;
     bool playerHit;
     bool playerSpotted;
+    bool detectionPaused;
 
     // Allow other systems to read/rotate the eyes explicitly
     public Transform Eyes => eyes;
@@ -50,8 +51,16 @@ public class GuardSight : MonoBehaviour
 
     public bool CanSeePlayer()
     {
-        exclamationMark.SetActive(playerSpotted);
-        Quaternion sightRotation = Quaternion.Euler(sightRotationOffset);
+        if (detectionPaused || player == null)
+        {
+            playerHit = false;
+            playerSpotted = false;
+            if (exclamationMark != null)
+                exclamationMark.SetActive(false);
+            return false;
+        }
+         exclamationMark.SetActive(playerSpotted);
+         Quaternion sightRotation = Quaternion.Euler(sightRotationOffset);
         var direction = (player.transform.position + playerOffset - eyes.position).normalized;
         var distance = Vector3.Distance(player.transform.position, eyes.position);
 
@@ -97,12 +106,22 @@ public class GuardSight : MonoBehaviour
 
     void Update()
     {
-        // Update playerHit by checking if we can see the player
-        CanSeePlayer();
-        
-        // Then handle detection charge/discharge based on playerHit
-        DetectPlayer();
-    }
+        if (detectionPaused)
+        {
+            playerHit = false;
+            playerSpotted = false;
+            if (detectionIcon != null)
+                detectionIcon.fillAmount = 0f;
+            if (exclamationMark != null)
+                exclamationMark.SetActive(false);
+            return;
+        }
+         // Update playerHit by checking if we can see the player
+         CanSeePlayer();
+         
+         // Then handle detection charge/discharge based on playerHit
+         DetectPlayer();
+     }
 
     void DetectPlayer()
     {
@@ -169,7 +188,26 @@ public class GuardSight : MonoBehaviour
 
     public bool PlayerSpotted()
     {
-        return playerSpotted;
+        return !detectionPaused && playerSpotted;
+    }
+    
+    public void SetDetectionPaused(bool paused)
+    {
+        if (detectionPaused == paused)
+            return;
+
+        detectionPaused = paused;
+        if (paused)
+        {
+            detectionTime = 0f;
+            timeLastSawPlayer = -999f;
+            playerHit = false;
+            playerSpotted = false;
+            if (detectionIcon != null)
+                detectionIcon.fillAmount = 0f;
+            if (exclamationMark != null)
+                exclamationMark.SetActive(false);
+        }
     }
     
     /// <summary>
