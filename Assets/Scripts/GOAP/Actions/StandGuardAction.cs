@@ -3,6 +3,7 @@ using CrashKonijn.Goap.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 using Assets.Scripts.GOAP.Behaviours;
+using Assets.Scripts.GOAP.Systems;
 
 namespace Assets.Scripts.GOAP
 {
@@ -93,6 +94,13 @@ namespace Assets.Scripts.GOAP
             if (brain != null && brain.HasHeardNoise)
             {
                 Debug.Log($"[StandGuardAction] {mono.Transform.name} heard noise while guarding - INTERRUPTING to investigate!");
+                data.WasInterrupted = true;
+                return ActionRunState.Stop;
+            }
+
+            if (LaserAlertSystem.WorldKeyActive)
+            {
+                Debug.Log($"[StandGuardAction] {mono.Transform.name} detected laser alert - interrupting guard duty to respond!");
                 data.WasInterrupted = true;
                 return ActionRunState.Stop;
             }
