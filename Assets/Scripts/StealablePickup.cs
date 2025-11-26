@@ -16,7 +16,7 @@ public class StealablePickup : Pickup
     }
 
     protected override void OnTriggerEnter(Collider other)
-    {
+    { 
         if (PlayerActions.Instance.carriesPainting || !ObjectivesManager.Instance.completedTutorial && !tutorialPainting) return;
         base.OnTriggerEnter(other);
     }

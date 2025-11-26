@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ObjectivesManager : MonoBehaviour
 {
+    public static ObjectivesManager Instance;
     [SerializeField] Objective currentObjective;
     public Objective CurrentObjective => currentObjective;
 
@@ -12,7 +13,6 @@ public class ObjectivesManager : MonoBehaviour
     bool objectivesBegun = false;
 
     [SerializeField] public Objective[] objectives;
-    public static ObjectivesManager Instance;
 
     public static Action<Objective, int, float, float> setNewObjective;
     public static void OnSetNewObjective(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay) => setNewObjective?.Invoke(newObjective, subObjectiveIndex, delay, enumeratorDelay);

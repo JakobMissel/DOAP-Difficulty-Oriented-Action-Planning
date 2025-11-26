@@ -91,7 +91,7 @@ namespace GOAP.Behaviours
                 if (r.Agent != null)
                     r.Agent.enabled = false;
 
-                if (r.NavAgent != null)
+                if (r.NavAgent != null && r.NavAgent.isOnNavMesh)
                 {
                     r.NavAgent.isStopped = true;
                     r.NavAgent.velocity = Vector3.zero;

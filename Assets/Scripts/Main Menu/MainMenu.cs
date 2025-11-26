@@ -121,11 +121,13 @@ public class MainMenu : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        CheckpointManager.loadCheckpoint += UnmuteGameplayAudio; // Dirty fix for audio staying muted after checkpoint load
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        CheckpointManager.loadCheckpoint -= UnmuteGameplayAudio; // Dirty fix for audio staying muted after checkpoint load
     }
 
     private void Start()
@@ -581,7 +583,10 @@ public class MainMenu : MonoBehaviour
         {
             // Re-trigger the interact permission based on current objective state
             // This ensures the component gets the correct canInteract state after being re-enabled
-            PlayerActions.OnCanInteract(true);
+            if(ObjectivesManager.Instance != null && ObjectivesManager.Instance.completedTutorial)
+            {
+                PlayerActions.OnCanInteract(true);
+            }
         }
     }
 

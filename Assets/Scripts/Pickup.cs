@@ -68,7 +68,8 @@ public class Pickup : MonoBehaviour
     {
         if (other.CompareTag("Player") && buttonRequired)
         {
-            if(buttonPressed)
+            OnTriggerEnter(other);
+            if (buttonPressed)
                 ActivatePickup(other);
             if (holdRequired)
                 HoldButton(other);

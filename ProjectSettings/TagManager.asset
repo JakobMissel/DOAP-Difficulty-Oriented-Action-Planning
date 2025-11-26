@@ -20,6 +20,7 @@ TagManager:
   - StandGuardPoint
   - StandGuardWatchAnglePoint
   - WallPosition
+  - GameplayAudio
   layers:
   - Default
   - TransparentFX

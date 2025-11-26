@@ -42,8 +42,8 @@ public class PaintingDropPoint : Pickup
     }
 
     protected override void OnTriggerEnter(Collider other)
-    {                                                                                                   // Allow drop-off during tutorial
-        if (PlayerActions.Instance.carriesPainting && ObjectivesManager.Instance.completedTutorial || !ObjectivesManager.Instance.completedTutorial && canBepickedUp)
+    { 
+        if (PlayerActions.Instance.carriesPainting && ObjectivesManager.Instance.completedTutorial)
         {
             canBepickedUp = true;
             base.OnTriggerEnter(other);

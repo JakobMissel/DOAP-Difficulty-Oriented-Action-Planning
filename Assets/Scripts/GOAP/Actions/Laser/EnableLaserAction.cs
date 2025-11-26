@@ -14,7 +14,7 @@ namespace Assets.Scripts.GOAP.Actions.Laser
             if (laser != null)
             {
                 var beam = agent.Transform.GetComponent<LaserBeam>();
-                if (beam != null)
+                if (beam != null && ObjectivesManager.Instance.completedTutorial)
                 {
                     beam.SetEnabled(true);
                     audio?.PlayLaserActivate();

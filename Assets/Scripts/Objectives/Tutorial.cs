@@ -53,6 +53,8 @@ public class Tutorial : MonoBehaviour
     void Start()
     {
         ToggleLights(false);
+        PlayerActions.OnCanInteract(false);
+        PlayerActions.OnCanThrow(false);
         timerImage.fillAmount = 0;
         throwCount = 0;
         moveT = moveTime;
