@@ -1795,7 +1795,7 @@ public class MainMenu : MonoBehaviour
         }
         
         float startVolume = audioSource.volume;
-        float targetVolume = 0.3f; // was 1f, but it was too loud
+        float targetVolume = 0.4f; // was 1f, but it was too loud
         float elapsed = 0f;
         
         while (elapsed < duration)
