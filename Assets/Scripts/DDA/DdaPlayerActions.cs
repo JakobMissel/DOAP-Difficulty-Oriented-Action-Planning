@@ -148,6 +148,13 @@ namespace Assets.Scripts.DDA
         /// </summary>
         public void SuccesfulItemUsage()
         {
+            // Safety check: ensure there's at least one throw recorded before incrementing
+            if (successes.Count == 0)
+            {
+                Debug.LogWarning("[DdaPlayerActions] SuccesfulItemUsage called but no throws recorded yet. Adding initial entry.");
+                successes.Add(0);
+            }
+
             successes[successes.Count - 1]++;
             // Tell the DifficultyTracker the current percentage of succesful item usages
             DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)successes.Sum() / (float)successes.Count);
