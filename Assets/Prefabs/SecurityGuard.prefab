@@ -184,7 +184,7 @@ MonoBehaviour:
   minDecayMultiplier: 1.1
   maxDecayMultiplier: 0.9
   detectionIcon: {fileID: 3145945163514180284}
-  rayCount: 0
+  rayCount: 20
 --- !u!114 &7692494793637953351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e59c897a694ec0aaca150b4e2cce75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guardDuration: 15
-  cooldownDuration: 20
+  guardDuration: 12
+  cooldownDuration: 10
   interruptionCooldownDuration: 8
   arrivalThreshold: 2.5
   rotationSpeed: 1
@@ -649,6 +649,9 @@ MonoBehaviour:
   normalizedIdleThreshold: 0.05
   normalizedWalkThreshold: 0.95
   normalizedRunThreshold: 1
+  baseNormalSpeed: 2.5
+  baseSpottedSpeed: 3
+  runSpeedMargin: 0.4
   animationSwitchCooldown: 0.2
   showDebugLogs: 1
 --- !u!1 &4178085492515687170

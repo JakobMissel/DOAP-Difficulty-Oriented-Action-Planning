@@ -19,6 +19,7 @@ TagManager:
   - CreditsPanelElement
   - StandGuardPoint
   - StandGuardWatchAnglePoint
+  - WallPosition
   layers:
   - Default
   - TransparentFX
