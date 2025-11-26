@@ -46,14 +46,14 @@ MonoBehaviour:
     conditions:
     - worldKey:
         <Name>k__BackingField: LaserOn
-        <Id>k__BackingField: 
+        <Id>k__BackingField: LaserOn-6a2f1c1d-1fe4-4a3a-9d6c-1b0bace87c72
       comparison: 3
       amount: 1
     - worldKey:
         <Name>k__BackingField: DifficultyWK
         <Id>k__BackingField: DifficultyWK-296d0209-5bd2-4654-9694-8fb6f08237d6
       comparison: 0
-      amount: 75
+      amount: 70
     effects:
     - worldKey:
         <Name>k__BackingField: LaserOn
