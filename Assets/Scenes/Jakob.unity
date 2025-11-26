@@ -54679,7 +54679,7 @@ GameObject:
   - component: {fileID: 6964462608631944424}
   m_Layer: 7
   m_Name: Cube.072
-  m_TagString: Untagged
+  m_TagString: WallPosition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -62193,7 +62193,7 @@ GameObject:
   - component: {fileID: 8391255555361913515}
   m_Layer: 7
   m_Name: Cube.066
-  m_TagString: Untagged
+  m_TagString: WallPosition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -67743,7 +67743,7 @@ GameObject:
   - component: {fileID: 1339517590}
   m_Layer: 7
   m_Name: Cube.086
-  m_TagString: Untagged
+  m_TagString: WallPosition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -69416,7 +69416,7 @@ GameObject:
   - component: {fileID: 6934936816944310184}
   m_Layer: 7
   m_Name: Cube.042
-  m_TagString: Untagged
+  m_TagString: WallPosition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -70505,7 +70505,7 @@ PrefabInstance:
       objectReference: {fileID: 7980162816909603950}
     - target: {fileID: 2389459065116434730, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: skipCutscene
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2389459065116434730, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: 'disableDuringCutscene.Array.data[0]'
@@ -70533,15 +70533,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3852528558189894451, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000000009506338
+      value: -0.0000000063554535
       objectReference: {fileID: 0}
     - target: {fileID: 3852528558189894451, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.87869316
+      value: 0.8786932
       objectReference: {fileID: 0}
     - target: {fileID: 3852528558189894451, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000001749766
+      value: -0.000000011698044
       objectReference: {fileID: 0}
     - target: {fileID: 4299221849265508516, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: m_Name

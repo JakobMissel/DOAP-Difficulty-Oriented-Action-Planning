@@ -25,6 +25,14 @@ public class PlayerNoiseEmitter : MonoBehaviour
     [Range(0.05f, 1f)]
     public float pulseInterval = 0.25f;
 
+    [Header("Ground Detection")]
+    [Tooltip("Distance to check below the player for ground detection")]
+    [Range(0.1f, 2f)]
+    public float groundCheckDistance = 0.5f;
+    [Tooltip("Radius for ground detection")]
+    [Range(0.1f, 2f)]
+    public float groundCheckRadius = 0.3f;
+
     [Header("Debug Visualization")] 
     public bool drawGizmos = true;
     [Tooltip("How long to show the noise pulse gizmo (in seconds)")]
@@ -33,6 +41,7 @@ public class PlayerNoiseEmitter : MonoBehaviour
 
     private bool isMoving;
     private bool isSneaking;
+    private bool isOnWallPosition;
 
     private float nextPulseTime;
     private float lastPulseRadius;
@@ -83,13 +92,16 @@ public class PlayerNoiseEmitter : MonoBehaviour
 
     void Update()
     {
+        // Check if player is standing on WallPosition
+        CheckGroundType();
+
         float currentRadius = GetCurrentNoiseRadius();
         if (currentRadius <= 0f)
         {
             // Only log once when stopping noise emission
             if (Time.frameCount % 60 == 0) // Log every 60 frames to avoid spam
             {
-                Debug.Log($"[PlayerNoiseEmitter] Not emitting noise - currentRadius={currentRadius:F2}, isMoving={isMoving}, isSneaking={isSneaking}, velocity={(rb != null ? rb.linearVelocity.magnitude : 0):F2}");
+                Debug.Log($"[PlayerNoiseEmitter] Not emitting noise - currentRadius={currentRadius:F2}, isMoving={isMoving}, isSneaking={isSneaking}, isOnWallPosition={isOnWallPosition}, velocity={(rb != null ? rb.linearVelocity.magnitude : 0):F2}");
             }
             return;
         }
@@ -101,8 +113,47 @@ public class PlayerNoiseEmitter : MonoBehaviour
         }
     }
 
+    void CheckGroundType()
+    {
+        // Raycast downward to detect what the player is standing on
+        RaycastHit hit;
+        Vector3 rayOrigin = transform.position;
+        
+        if (Physics.SphereCast(rayOrigin, groundCheckRadius, Vector3.down, out hit, groundCheckDistance))
+        {
+            bool wasOnWallPosition = isOnWallPosition;
+            isOnWallPosition = hit.collider.CompareTag("WallPosition");
+            
+            // Log when status changes
+            if (wasOnWallPosition != isOnWallPosition)
+            {
+                Debug.Log($"[PlayerNoiseEmitter] Ground type changed: {(isOnWallPosition ? "Now on WallPosition" : "Left WallPosition")} - Hit: {hit.collider.gameObject.name}");
+            }
+        }
+        else
+        {
+            // Not standing on anything (airborne)
+            if (isOnWallPosition)
+            {
+                Debug.Log($"[PlayerNoiseEmitter] Left WallPosition - airborne");
+            }
+            isOnWallPosition = false;
+        }
+    }
+
     float GetCurrentNoiseRadius()
     {
+        // If standing on WallPosition, emit no noise regardless of state
+        if (isOnWallPosition)
+        {
+            // Only log occasionally to avoid spam
+            if (Time.frameCount % 120 == 0)
+            {
+                Debug.Log($"[PlayerNoiseEmitter] Standing on WallPosition - no noise emitted");
+            }
+            return 0f;
+        }
+
         if (isMoving)
         {
             if (rb != null && rb.linearVelocity.sqrMagnitude < 0.01f)
