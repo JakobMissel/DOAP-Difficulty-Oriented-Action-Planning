@@ -120,6 +120,7 @@ namespace Assets.Scripts.DDA
                                                    DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured).ToString("N2"),
                                                    "times captured",
                                                    timesCaptured.ToString());
+                                                   WriteFullDifficulty();
             }
 #endif
         }
