@@ -49,7 +49,6 @@ public class PaintingDropPoint : Pickup
             base.OnTriggerEnter(other);
             return;
         }
-        canBepickedUp = false;
     }
 
     protected override void OnTriggerStay(Collider other)

@@ -23,5 +23,6 @@ public class ThrowablePickup : Pickup
     {
         other.GetComponent<PlayerThrow>().AddThrowable(thrownObjectPrefab, ammoCount);
         base.ActivatePickup(other);
+        gameObject.SetActive(false);
     }
 }

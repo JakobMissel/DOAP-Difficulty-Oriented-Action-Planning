@@ -91,6 +91,8 @@ public class Pickup : MonoBehaviour
     /// </summary>
     protected virtual void ActivatePickup(Collider other)
     {
+        holdTime = 0;
+        buttonHeld = false;
         if (audioClip)
         {
             audioGameObject.GetComponent<AudioSource>().clip = audioClip;

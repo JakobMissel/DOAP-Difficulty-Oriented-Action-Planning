@@ -369,8 +369,8 @@ MonoBehaviour:
   laserInvestigationSpeed: 5
   noiseInvestigationSpeed: 2
   useDifficultyMultiplier: 1
-  minSpeedMultiplier: 0.8
-  maxSpeedMultiplier: 1.2
+  minSpeedMultiplier: 0.75
+  maxSpeedMultiplier: 1.25
   speedTransitionSpeed: 5
   detectionSlowdownThreshold: 0.25
   debugMode: 0
