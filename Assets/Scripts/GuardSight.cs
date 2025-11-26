@@ -18,6 +18,12 @@ public class GuardSight : MonoBehaviour
     [SerializeField] [Tooltip("Base multiplier for how fast detection decays compared to charging (0.5 = half speed, 0.25 = quarter speed)")] 
     [Range(0.1f, 1f)] float detectionDecayRate = 0.4f;
     
+    [Header("WallPosition Detection")]
+    [SerializeField] [Tooltip("Distance to check below the player for ground detection")]
+    [Range(0.1f, 2f)] float playerGroundCheckDistance = 0.5f;
+    [SerializeField] [Tooltip("Radius for player ground detection")]
+    [Range(0.1f, 2f)] float playerGroundCheckRadius = 0.3f;
+    
     [Header("Difficulty Scaling")]
     [SerializeField] [Tooltip("Enable difficulty-based decay rate scaling")]
     bool scaleDecayWithDifficulty = true;
@@ -49,6 +55,23 @@ public class GuardSight : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
+    bool IsPlayerOnWallPosition()
+    {
+        if (player == null)
+            return false;
+
+        // Raycast downward from player position to detect what they're standing on
+        RaycastHit hit;
+        Vector3 rayOrigin = player.transform.position;
+        
+        if (Physics.SphereCast(rayOrigin, playerGroundCheckRadius, Vector3.down, out hit, playerGroundCheckDistance))
+        {
+            return hit.collider.CompareTag("WallPosition");
+        }
+        
+        return false;
+    }
+
     public bool CanSeePlayer()
     {
         if (detectionPaused || player == null)
@@ -59,6 +82,14 @@ public class GuardSight : MonoBehaviour
                 exclamationMark.SetActive(false);
             return false;
         }
+        
+        // Check if player is standing on WallPosition - if so, they cannot be seen
+        if (IsPlayerOnWallPosition())
+        {
+            playerHit = false;
+            return false;
+        }
+        
          exclamationMark.SetActive(playerSpotted);
          Quaternion sightRotation = Quaternion.Euler(sightRotationOffset);
         var direction = (player.transform.position + playerOffset - eyes.position).normalized;

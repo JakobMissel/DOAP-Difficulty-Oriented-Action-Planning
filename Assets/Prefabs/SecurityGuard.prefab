@@ -180,6 +180,8 @@ MonoBehaviour:
   detectionDelay: 1
   spottedGracePeriod: 2
   detectionDecayRate: 0.4
+  playerGroundCheckDistance: 0.5
+  playerGroundCheckRadius: 0.3
   scaleDecayWithDifficulty: 1
   minDecayMultiplier: 1.1
   maxDecayMultiplier: 0.9
@@ -647,8 +649,8 @@ MonoBehaviour:
   walkThreshold: 3.3
   useNormalizedVelocity: 1
   normalizedIdleThreshold: 0.05
-  normalizedWalkThreshold: 0.95
-  normalizedRunThreshold: 1
+  normalizedWalkThreshold: 1
+  normalizedRunThreshold: 1.3
   baseNormalSpeed: 2.5
   baseSpottedSpeed: 3
   runSpeedMargin: 0.4

@@ -13,6 +13,8 @@ namespace Assets.Scripts.GOAP.Actions
         private const float INVESTIGATION_DURATION = 2.0f; // How long to stay at noise location
         private const float CONFUSION_PAUSE_DURATION = 1.5f; // How long to pause in confusion before moving
         private const float NAVMESH_SAMPLE_DISTANCE = 10f; // Max distance to search for valid NavMesh position
+        private const float STUCK_FAILSAFE_DURATION = 4.0f; // Abandon action if unable to move for this long
+        private const float STUCK_VELOCITY_THRESHOLD = 0.1f; // Velocity below this is considered "stuck"
 
         public override void Created()
         {
@@ -63,6 +65,8 @@ namespace Assets.Scripts.GOAP.Actions
             data.ConfusionPauseTime = 0f;
             data.IsInConfusionPhase = true;
             data.HasStartedMoving = false;
+            data.StuckTimer = 0f;
+            data.LastPosition = mono.Transform.position;
             
             // Find the closest valid NavMesh position to the noise
             if (data.Target != null && data.Target.IsValid())
@@ -197,12 +201,43 @@ namespace Assets.Scripts.GOAP.Actions
                 agent.updatePosition = true;
                 agent.SetDestination(data.ValidNavMeshPosition);
                 data.HasStartedMoving = true;
+                data.LastPosition = mono.Transform.position;
+                data.StuckTimer = 0f;
                 
                 Debug.Log($"[InvestigateNoiseAction] {mono.Transform.name} now moving to noise at {data.ValidNavMeshPosition}");
             }
 
             // Keep updating destination to valid NavMesh position
             agent.SetDestination(data.ValidNavMeshPosition);
+            
+            // Failsafe: Check if guard is stuck and unable to move
+            if (data.HasStartedMoving && !data.IsInConfusionPhase)
+            {
+                float distanceMoved = Vector3.Distance(mono.Transform.position, data.LastPosition);
+                bool isStuck = agent.velocity.magnitude < STUCK_VELOCITY_THRESHOLD && distanceMoved < 0.1f;
+                
+                if (isStuck)
+                {
+                    data.StuckTimer += Time.deltaTime;
+                    
+                    if (data.StuckTimer >= STUCK_FAILSAFE_DURATION)
+                    {
+                        Debug.LogWarning($"[InvestigateNoiseAction] {mono.Transform.name} FAILSAFE TRIGGERED - stuck for {data.StuckTimer:F1}s, abandoning investigation!");
+                        var brain = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.BrainBehaviour>();
+                        if (brain != null)
+                        {
+                            brain.ClearNoise();
+                        }
+                        return ActionRunState.Stop;
+                    }
+                }
+                else
+                {
+                    // Reset timer if guard is moving
+                    data.StuckTimer = 0f;
+                    data.LastPosition = mono.Transform.position;
+                }
+            }
 
             float dist = Vector3.Distance(mono.Transform.position, data.ValidNavMeshPosition);
 
@@ -321,6 +356,8 @@ namespace Assets.Scripts.GOAP.Actions
             public bool IsInConfusionPhase { get; set; }
             public bool HasStartedMoving { get; set; }
             public Vector3 ValidNavMeshPosition { get; set; }
+            public float StuckTimer { get; set; }
+            public Vector3 LastPosition { get; set; }
          }
      }
  }
