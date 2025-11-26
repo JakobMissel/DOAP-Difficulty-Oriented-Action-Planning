@@ -16516,11 +16516,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7014569, y: 0.6624632, z: 3.452275}
   m_Center: {x: -0.00000010430813, y: -0.11002825, z: 0.00000011920929}
---- !u!82 &582045334 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 2392434719862312388, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
-  m_PrefabInstance: {fileID: 1563348267}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &585974400
 GameObject:
   m_ObjectHideFlags: 0
@@ -47914,10 +47909,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenu Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3820615089815523254, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
-      propertyPath: m_Volume
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 6779242357583961838, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -47998,10 +47989,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8412174781084963923, guid: a1a2af927c2a41f4fb83b73285cea20c, type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 582045334}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
