@@ -150,17 +150,12 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-    _actionsRemembered: 1
-    _useOnlyMostRecentDifficulty: 1
+    _actionsRemembered: 10
+    _useOnlyMostRecentDifficulty: 0
     _startDifficulty: 0.1
-    developerNote: '- 1 evasion: +0.06 difficulty
+    developerNote: '- 1 - 5 evasions: +0.05 difficulty
 
-      - 2-5 evasions: +0.03 per
-      evasion (cumulative)
-
-      - 6-10 evasions: +0.01 per evasion (cumulative)
-
-      -
-      11+ evasions: No more increases (cap at 0.26)
+      - 6+ evasions: No more
+      increase (cap at 0.25)
 
 '

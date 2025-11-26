@@ -36,8 +36,16 @@ namespace Assets.Scripts.DDA
             pde = Resources.Load<PlayerDifficultyEffects>("DDA/PlayerDifficultyEffects");
             ede = Resources.Load<EnemyDifficultyEffects>("DDA/EnemyDifficultyEffects");
 
-            // Create an array of unweighted player action difficulties
-            unweightedPlayerActionDifficulties = new List<float>[pde.playerActions.Count];
+            // Create an array sized to accommodate all enum values (not just configured ones)
+            // Find the maximum enum value to determine array size
+            int maxEnumValue = 0;
+            foreach (var action in System.Enum.GetValues(typeof(PlayerDAAs)))
+            {
+                int enumValue = (int)action;
+                if (enumValue > maxEnumValue)
+                    maxEnumValue = enumValue;
+            }
+            unweightedPlayerActionDifficulties = new List<float>[maxEnumValue + 1];
 
             // Assign pde values to base values
             for (int i = 0; i < pde.playerActions.Count; i++)
@@ -58,6 +66,19 @@ namespace Assets.Scripts.DDA
             // Remember this action difficulty or whatever
             int specificAction = (int)action;
 
+            // Safety check: ensure the action index is within array bounds
+            if (specificAction < 0 || specificAction >= unweightedPlayerActionDifficulties.Length)
+            {
+                Debug.LogError($"[DifficultyTracker] PlayerDAAs.{action} (index {specificAction}) is not configured in PlayerDifficultyEffects.asset! Cannot track difficulty. Please add it to the asset.");
+                return;
+            }
+
+            // Safety check: ensure the list was initialized for this action
+            if (unweightedPlayerActionDifficulties[specificAction] == null)
+            {
+                Debug.LogWarning($"[DifficultyTracker] PlayerDAAs.{action} list was null, initializing with default value.");
+                unweightedPlayerActionDifficulties[specificAction] = new List<float>() { 0.5f }; // Default to 0.5 difficulty
+            }
 
             for (int i = 0; i < pde.playerActions.Count; i++)
             {
@@ -66,7 +87,15 @@ namespace Assets.Scripts.DDA
 
                 if (pde.playerActions[i].useOnlyMostRecentDifficulty)
                 {
-                    unweightedPlayerActionDifficulties[specificAction][0] = unweightedDifficulty;
+                    // Safety check: ensure the list has at least one element
+                    if (unweightedPlayerActionDifficulties[specificAction].Count == 0)
+                    {
+                        unweightedPlayerActionDifficulties[specificAction].Add(unweightedDifficulty);
+                    }
+                    else
+                    {
+                        unweightedPlayerActionDifficulties[specificAction][0] = unweightedDifficulty;
+                    }
                 }
                 else
                 {
@@ -91,6 +120,16 @@ namespace Assets.Scripts.DDA
             CalledNow();
 
             float difficultyTranslation = 0f;
+
+            // Safety check: ensure the action index is valid
+            int actionIndex = (int)actionToTranslate;
+            if (actionIndex < 0 || actionIndex >= unweightedPlayerActionDifficulties.Length ||
+                unweightedPlayerActionDifficulties[actionIndex] == null)
+            {
+                Debug.LogWarning($"[DifficultyTracker] Cannot translate difficulty for {actionToTranslate} - not properly initialized. Returning 0.");
+                return 0f;
+            }
+
             for (int i = 0; i < pde.playerActions.Count; i++)
             {
                 if (pde.playerActions[i].action != actionToTranslate) continue;
@@ -98,14 +137,23 @@ namespace Assets.Scripts.DDA
 
                 if (pde.playerActions[i].useOnlyMostRecentDifficulty)
                 {
-                    difficultyTranslation = unweightedPlayerActionDifficulties[(int)actionToTranslate][0];
+                    // Safety check: ensure list has at least one element
+                    if (unweightedPlayerActionDifficulties[actionIndex].Count == 0)
+                    {
+                        Debug.LogWarning($"[DifficultyTracker] {actionToTranslate} list is empty. Returning 0.");
+                        difficultyTranslation = 0f;
+                    }
+                    else
+                    {
+                        difficultyTranslation = unweightedPlayerActionDifficulties[actionIndex][0];
+                    }
                 }
                 else
                 {
                     float totalActionValue = 0f;
 
                     int maxActionsRemembered = pde.playerActions[i].actionsRemembered;
-                    int actualActionsRemembered = unweightedPlayerActionDifficulties[(int)actionToTranslate].Count;
+                    int actualActionsRemembered = unweightedPlayerActionDifficulties[actionIndex].Count;
 
                     Debug.Log($"Did {actionToTranslate} action. This actions is remembered {maxActionsRemembered} times and has been performed {actualActionsRemembered} times.");
 
@@ -115,9 +163,9 @@ namespace Assets.Scripts.DDA
                         float thisWeight = Mathf.Log(j + 1, maxActionsRemembered + 1) - Mathf.Log(j, maxActionsRemembered + 1);
 
                         // Get this difficulty with applied weight. More recent actions weighted heavier
-                        totalActionValue += unweightedPlayerActionDifficulties[(int)actionToTranslate][actualActionsRemembered - j] * thisWeight;
+                        totalActionValue += unweightedPlayerActionDifficulties[actionIndex][actualActionsRemembered - j] * thisWeight;
 
-                        Debug.Log($"Weight {j} is {thisWeight}, and the difficulty multiplied by that weight {unweightedPlayerActionDifficulties[(int)actionToTranslate][actualActionsRemembered - j]}, resulting in {unweightedPlayerActionDifficulties[(int)actionToTranslate][actualActionsRemembered - j] * thisWeight}, totalling {totalActionValue}");
+                        Debug.Log($"Weight {j} is {thisWeight}, and the difficulty multiplied by that weight {unweightedPlayerActionDifficulties[actionIndex][actualActionsRemembered - j]}, resulting in {unweightedPlayerActionDifficulties[actionIndex][actualActionsRemembered - j] * thisWeight}, totalling {totalActionValue}");
                     }
 
                     difficultyTranslation = totalActionValue;

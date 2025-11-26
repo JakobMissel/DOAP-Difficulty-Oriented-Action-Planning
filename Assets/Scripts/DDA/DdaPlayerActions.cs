@@ -73,7 +73,7 @@ namespace Assets.Scripts.DDA
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
                                                        "latest stealing time",
                                                        "N/A");
-                testTextFields[1].text = $"Player evasion difficulty set at {DifficultyTracker.GetDifficultyF(PlayerDAAs.PlayerEvasionSpeed).ToString("N2")}";
+                testTextFields[1].text = $"Times evaded difficulty set at {DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesEvaded).ToString("N2")}";
                 testTextFields[2].text = string.Format(baseTestMessage,
                                                        "Captures",
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured).ToString("N2"),

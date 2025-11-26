@@ -53,7 +53,7 @@ namespace Assets.Scripts.DDA
             {
                 debugTextField.text = string.Format(
                     baseTestMessage,
-                    DifficultyTracker.GetDifficultyF(PlayerDAAs.PlayerEvasionSpeed).ToString("N2"),
+                    DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesEvaded).ToString("N2"),
                     totalEvasions,
                     activePursuits.Count
                 );
@@ -101,7 +101,7 @@ namespace Assets.Scripts.DDA
 
                 // Tell the difficulty tracker about this evasion
                 // Pass the total evasion COUNT (not time)
-                DifficultyTracker.AlterDifficulty(PlayerDAAs.PlayerEvasionSpeed, Instance.totalEvasions);
+                DifficultyTracker.AlterDifficulty(PlayerDAAs.TimesEvaded, Instance.totalEvasions);
 
                 if (Instance.showDebugLogs)
                     Debug.Log($"[EvasionTracker] Guard {guardId} evasion successful! Total evasions: {Instance.totalEvasions} → Difficulty adjusted");

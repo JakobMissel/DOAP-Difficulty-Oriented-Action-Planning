@@ -13,7 +13,7 @@ namespace Assets.Scripts.DDA
         TimesCaptured,
         TimeBetweenPaintings,
         SuccesfulItemUsage,
-        PlayerEvasionSpeed,
+        TimesEvaded,
 
     }
 
