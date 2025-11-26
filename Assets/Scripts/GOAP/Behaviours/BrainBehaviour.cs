@@ -90,6 +90,12 @@ namespace Assets.Scripts.GOAP.Behaviours
         [Tooltip("Layers that block hearing when 'hearPlayerThroughWalls' is false. Set this to the same layers as your sight obstacle mask.")]
         public LayerMask hearingObstructionMask;
         [Tooltip("Ray height offset (meters) used when checking hearing occlusion")] public float hearingRayHeight = 1.5f;
+        
+        [Header("WallPosition Detection")]
+        [Tooltip("Distance to check below the player for ground detection")]
+        [Range(0.1f, 2f)] public float playerGroundCheckDistance = 0.5f;
+        [Tooltip("Radius for player ground detection")]
+        [Range(0.1f, 2f)] public float playerGroundCheckRadius = 0.3f;
 
         // Follow-window state
         private bool isLastKnownFollowActive; 
@@ -336,10 +342,40 @@ namespace Assets.Scripts.GOAP.Behaviours
             Debug.Log($"[BrainBehaviour] Distraction noise at {noisePosition} (r={radius:F1})");
         }
 
+        // Helper method to check if player is standing on WallPosition
+        private bool IsPlayerOnWallPosition()
+        {
+            if (playerTransform == null)
+                return false;
+
+            // Raycast downward from player position to detect what they're standing on
+            RaycastHit hit;
+            Vector3 rayOrigin = playerTransform.position;
+            
+            if (Physics.SphereCast(rayOrigin, playerGroundCheckRadius, Vector3.down, out hit, playerGroundCheckDistance))
+            {
+                bool onWallPosition = hit.collider.CompareTag("WallPosition");
+                if (onWallPosition)
+                {
+                    Debug.Log($"[BrainBehaviour] {name} detected player is on WallPosition - ignoring noise");
+                }
+                return onWallPosition;
+            }
+            
+            return false;
+        }
+
         // Explicit API for player-generated noise
         public void OnPlayerNoiseHeard(Vector3 noisePosition, float radius)
         {
-            // If hearing through walls is disabled, check for occlusion
+            // FIRST: Check if player is on WallPosition - they are silent there
+            if (IsPlayerOnWallPosition())
+            {
+                Debug.Log($"[BrainBehaviour] {name} - Player is on WallPosition, ignoring noise emission");
+                return;
+            }
+
+            // SECOND: If hearing through walls is disabled, check for occlusion
             if (!hearPlayerThroughWalls)
             {
                 var from = transform.position + Vector3.up * Mathf.Max(0f, hearingRayHeight);
@@ -347,7 +383,7 @@ namespace Assets.Scripts.GOAP.Behaviours
                 if (IsHearingOccluded(from, to))
                 {
                     // Ignore occluded player noise
-                    Debug.Log($"[BrainBehaviour] Player noise at {noisePosition} was OCCLUDED by wall - not hearing it");
+                    Debug.Log($"[BrainBehaviour] {name} - Player noise at {noisePosition} was OCCLUDED by wall - not hearing it");
                     return;
                 }
             }
@@ -358,7 +394,7 @@ namespace Assets.Scripts.GOAP.Behaviours
             LastNoiseRadius = radius;
             IsPlayerNoise = true; // This is player-generated noise
             lastNoiseTime = Time.time;
-            Debug.Log($"[BrainBehaviour] Player noise HEARD at {noisePosition} (r={radius:F1}) - will investigate via GOAP");
+            Debug.Log($"[BrainBehaviour] {name} - Player noise HEARD at {noisePosition} (r={radius:F1}) - will investigate via GOAP");
         }
 
         public void ClearDistractionNoise()

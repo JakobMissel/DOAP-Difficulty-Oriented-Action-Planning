@@ -17,33 +17,29 @@ namespace Assets.Scripts.GOAP.Behaviours
         private NavMeshAgent navAgent;
         private GuardAnimation guardAnimation; // Your existing animation wrapper
 
-        [Header("Velocity Thresholds (m/s)")]
+        [Header("Animation System")]
+        [Tooltip("Use speed-based detection (recommended for synchronized guard speeds)")]
+        [SerializeField] private bool useSpeedBasedDetection = true;
+
+        [Header("Velocity Thresholds (m/s) - Legacy")]
         [Tooltip("Velocity below this = Idle animation")]
         [SerializeField] private float idleThreshold = 0.1f;
-
-        [Tooltip("Velocity below this = Walk animation (above idle threshold) \n Velocity above walk threshold = Run animation")]
+        [Tooltip("Velocity below this = Walk animation (above idle threshold)")]
         [SerializeField] private float walkThreshold = 2.5f;
-        // Run threshold is implicit (anything above walkThreshold)
 
-        [Header("Alternative: Normalized Velocity (0-1)")]
-        [Tooltip("Use normalized velocity (0-1) instead of raw m/s. Better for variable speeds.")]
-        [SerializeField] private bool useNormalizedVelocity = true;
-
-        [Tooltip("Normalized velocity thresholds when using normalized mode")]
-        [SerializeField] private float normalizedIdleThreshold = 0.05f;
-        [SerializeField] private float normalizedWalkThreshold = 0.5f;  // Lowered from 0.6 to reduce flickering
-        [SerializeField] private float normalizedRunThreshold = 0.7f;   // Hysteresis: need higher velocity to switch TO run
-
-        [Header("Difficulty-Aware Speed Detection")]
-        [Tooltip("Base speed thresholds (will be adjusted by difficulty multiplier)")]
-        [SerializeField] private float baseNormalSpeed = 2.5f;  // Patrol speed
-        [SerializeField] private float baseSpottedSpeed = 3f;  // Pursuit speed
-        [Tooltip("Speed must be at least this much above normal speed to trigger Run animation")]
-        [SerializeField] private float runSpeedMargin = 0.4f;  // If speed > (normalSpeed + margin), use Run
+        [Header("Speed-Based Animation (Recommended)")]
+        [Tooltip("Match NavMeshAgent speed to animation state. More reliable than velocity.")]
+        [SerializeField] private float normalPatrolSpeed = 2.6f;     // Should match GuardDetectionSpeedController.normalSpeed
+        [SerializeField] private float detectionSpeed = 1.0f;         // Should match GuardDetectionSpeedController.detectingSpeed
+        [SerializeField] private float spottedSpeed = 3.2f;           // Should match GuardDetectionSpeedController.spottedSpeed
+        [SerializeField] private float investigationSpeed = 2.8f;     // Should match GuardDetectionSpeedController.noiseInvestigationSpeed
+        
+        [Tooltip("Speed tolerance for animation switching (prevents micro-adjustments from triggering changes)")]
+        [SerializeField] private float speedTolerance = 0.3f;
 
         [Header("Hysteresis (Prevents Flickering)")]
         [Tooltip("Time in seconds an animation must be active before switching to another")]
-        [SerializeField] private float animationSwitchCooldown = 0.2f;
+        [SerializeField] private float animationSwitchCooldown = 0.15f;  // Reduced from 0.2 for snappier response
 
         [Header("Debug")]
         [SerializeField] private bool showDebugLogs = false;
@@ -57,7 +53,6 @@ namespace Assets.Scripts.GOAP.Behaviours
         private bool isInForcedState = false;
 
         private GuardSight sight;
-        private BrainBehaviour brain;
         private GuardDetectionSpeedController speedController;
 
         private void Awake()
@@ -75,7 +70,6 @@ namespace Assets.Scripts.GOAP.Behaviours
 
             navAgent = GetComponent<NavMeshAgent>();
             sight = GetComponent<GuardSight>();
-            brain = GetComponent<BrainBehaviour>();
             speedController = GetComponent<GuardDetectionSpeedController>();
 
             // Find GuardAnimation - check this GameObject first, then children
@@ -113,7 +107,7 @@ namespace Assets.Scripts.GOAP.Behaviours
                 Debug.LogWarning($"[GuardAnimationController] {name} missing GuardDetectionSpeedController - difficulty-aware animations disabled!");
             }
 
-            Debug.Log($"[GuardAnimationController] {name} initialized - Normalized mode: {useNormalizedVelocity}, Animator: {(animator != null ? "✓" : "✗")}, NavAgent: {(navAgent != null ? "✓" : "✗")}, GuardAnimation: {(guardAnimation != null ? "✓" : "✗")}, SpeedController: {(speedController != null ? "✓" : "✗")}");
+            Debug.Log($"[GuardAnimationController] {name} initialized - Speed-based mode: {useSpeedBasedDetection}, Animator: {(animator != null ? "✓" : "✗")}, NavAgent: {(navAgent != null ? "✓" : "✗")}, GuardAnimation: {(guardAnimation != null ? "✓" : "✗")}, SpeedController: {(speedController != null ? "✓" : "✗")}");
         }
 
         private void Update()
@@ -125,16 +119,15 @@ namespace Assets.Scripts.GOAP.Behaviours
             if (isInForcedState)
                 return;
 
-            // Get current velocity magnitude
-            float currentVelocity = navAgent.velocity.magnitude;
-
-            // Determine animation state based on velocity
-            if (useNormalizedVelocity)
+            // Use speed-based detection (matches NavMeshAgent.speed to animation)
+            if (useSpeedBasedDetection)
             {
-                UpdateAnimationNormalized(currentVelocity);
+                UpdateAnimationSpeedBased();
             }
             else
             {
+                // Legacy velocity-based detection
+                float currentVelocity = navAgent.velocity.magnitude;
                 UpdateAnimationAbsolute(currentVelocity);
             }
         }
@@ -176,98 +169,104 @@ namespace Assets.Scripts.GOAP.Behaviours
         }
 
         /// <summary>
-        /// Update animation using normalized velocity (0-1 scale)
-        /// Better for guards with variable speeds due to difficulty
-        /// Uses hysteresis to prevent rapid animation switching
-        /// Difficulty-aware: adjusts thresholds based on difficulty multiplier
+        /// Update animation based on NavMeshAgent.speed (more reliable than velocity)
+        /// Since all guards use GuardDetectionSpeedController with synchronized speeds,
+        /// we can map speed directly to animation state.
+        /// This works perfectly with normalized animations because the speed values are consistent.
         /// </summary>
-        private void UpdateAnimationNormalized(float velocity)
+        private void UpdateAnimationSpeedBased()
         {
-            // Normalize velocity: 0 = stopped, 1 = max speed
-            float maxSpeed = navAgent.speed; // Current max speed (can change with difficulty)
-            float normalizedVelocity = maxSpeed > 0 ? velocity / maxSpeed : 0f;
+            float currentSpeed = navAgent.speed;
+            float currentVelocity = navAgent.velocity.magnitude;
+            
+            // Get difficulty multiplier to adjust thresholds
+            float difficultyMultiplier = speedController != null ? speedController.GetCurrentDifficultyMultiplier() : 1f;
+            
+            // Apply difficulty to speed thresholds
+            float adjustedNormalSpeed = normalPatrolSpeed * difficultyMultiplier;
+            float adjustedDetectionSpeed = detectionSpeed * difficultyMultiplier;
+            float adjustedSpottedSpeed = spottedSpeed * difficultyMultiplier;
+            float adjustedInvestigationSpeed = investigationSpeed * difficultyMultiplier;
 
             AnimState desiredState = currentState;
 
-            // Determine if guard should RUN based on pursuit-related states or high speed
-            // Run if: actively pursuing, following last known position, or moving at high speed
-            bool isPursuing = sight != null && (sight.PlayerSpotted() || sight.CanSeePlayer());
-            bool isFollowingLastKnown = brain != null && brain.HasLastKnownPosition;
-
-            // Calculate difficulty-adjusted speed thresholds
-            float difficultyMultiplier = speedController != null ? speedController.GetCurrentDifficultyMultiplier() : 1f;
-            float adjustedNormalSpeed = baseNormalSpeed * difficultyMultiplier;
-            float adjustedHighSpeedThreshold = adjustedNormalSpeed + runSpeedMargin;
-
-            // Guard should run if speed is significantly above patrol speed (accounting for difficulty)
-            bool isHighSpeed = maxSpeed >= adjustedHighSpeedThreshold;
-
-            bool shouldRun = isPursuing || isFollowingLastKnown || isHighSpeed;
-
-            // Determine desired state based on velocity with hysteresis
-            if (normalizedVelocity < normalizedIdleThreshold)
+            // Determine animation based on current speed setting and actual velocity
+            // If guard is barely moving (stopped/turning), always idle
+            if (currentVelocity < idleThreshold)
             {
                 desiredState = AnimState.Idle;
             }
-            else if (shouldRun && normalizedVelocity >= normalizedWalkThreshold)
+            // If speed is set to spotted/pursuit speed AND moving, RUN
+            else if (Mathf.Abs(currentSpeed - adjustedSpottedSpeed) < speedTolerance)
             {
-                // High-speed action (pursuit/investigation) and moving - RUN
                 desiredState = AnimState.Run;
             }
-            else if (normalizedVelocity >= normalizedWalkThreshold)
+            // If speed is set to investigation speed AND moving, could be Walk or Run depending on context
+            else if (Mathf.Abs(currentSpeed - adjustedInvestigationSpeed) < speedTolerance)
             {
-                // Normal speed action (patrol) and moving - WALK
+                // Investigation is typically walking pace, but check if we're pursuing
+                bool isPursuing = sight != null && sight.PlayerSpotted();
+                desiredState = isPursuing ? AnimState.Run : AnimState.Walk;
+            }
+            // If speed is set to detection speed (slowed down), WALK slowly
+            else if (Mathf.Abs(currentSpeed - adjustedDetectionSpeed) < speedTolerance)
+            {
                 desiredState = AnimState.Walk;
             }
-            else if (normalizedVelocity < normalizedWalkThreshold)
+            // If speed is set to normal patrol speed AND moving, WALK
+            else if (Mathf.Abs(currentSpeed - adjustedNormalSpeed) < speedTolerance)
             {
-                // Moving slowly - WALK
                 desiredState = AnimState.Walk;
             }
-            else
+            // Fallback: if moving at any speed, walk
+            else if (currentVelocity >= idleThreshold)
             {
-                // Fallback to walk
-                desiredState = AnimState.Walk;
+                // Use speed relative to normal patrol to decide Walk vs Run
+                if (currentSpeed > adjustedNormalSpeed + speedTolerance)
+                {
+                    desiredState = AnimState.Run;
+                }
+                else
+                {
+                    desiredState = AnimState.Walk;
+                }
             }
 
-            // Only switch animation if enough time has passed (cooldown prevents flickering)
+            // Apply animation with cooldown to prevent flickering
             float timeSinceLastSwitch = Time.time - lastStateChangeTime;
             if (desiredState != currentState && timeSinceLastSwitch >= animationSwitchCooldown)
             {
-                currentState = desiredState;
-                lastStateChangeTime = Time.time;
+                ApplyAnimationState(desiredState, currentSpeed, currentVelocity, difficultyMultiplier);
+            }
+        }
 
-                // Apply the animation
-                switch (currentState)
-                {
-                    case AnimState.Idle:
-                        if (showDebugLogs)
-                        {
-                            float multiplier = speedController != null ? speedController.GetCurrentDifficultyMultiplier() : 1f;
-                            Debug.Log($"[GuardAnimationController] {name} normalized velocity {normalizedVelocity:F2} ({velocity:F2} m/s, max {maxSpeed:F2}, diff mult {multiplier:F2}) → IDLE");
-                        }
-                        guardAnimation.Idle();
-                        break;
+        /// <summary>
+        /// Apply the animation state and update tracking variables
+        /// </summary>
+        private void ApplyAnimationState(AnimState newState, float speed, float velocity, float difficultyMult)
+        {
+            currentState = newState;
+            lastStateChangeTime = Time.time;
 
-                    case AnimState.Walk:
-                        if (showDebugLogs)
-                        {
-                            float multiplier = speedController != null ? speedController.GetCurrentDifficultyMultiplier() : 1f;
-                            Debug.Log($"[GuardAnimationController] {name} normalized velocity {normalizedVelocity:F2} ({velocity:F2} m/s, max {maxSpeed:F2}, diff mult {multiplier:F2}) → WALK");
-                        }
-                        guardAnimation.Walk();
-                        break;
+            switch (currentState)
+            {
+                case AnimState.Idle:
+                    guardAnimation.Idle();
+                    if (showDebugLogs)
+                        Debug.Log($"[GuardAnimationController] {name} speed={speed:F2} (×{difficultyMult:F2}), velocity={velocity:F2} → IDLE");
+                    break;
 
-                    case AnimState.Run:
-                        if (showDebugLogs)
-                        {
-                            float multiplier = speedController != null ? speedController.GetCurrentDifficultyMultiplier() : 1f;
-                            float threshold = (baseNormalSpeed * multiplier) + runSpeedMargin;
-                            Debug.Log($"[GuardAnimationController] {name} normalized velocity {normalizedVelocity:F2} ({velocity:F2} m/s, max {maxSpeed:F2}, threshold {threshold:F2}, diff mult {multiplier:F2}) → RUN");
-                        }
-                        guardAnimation.Run();
-                        break;
-                }
+                case AnimState.Walk:
+                    guardAnimation.Walk();
+                    if (showDebugLogs)
+                        Debug.Log($"[GuardAnimationController] {name} speed={speed:F2} (×{difficultyMult:F2}), velocity={velocity:F2} → WALK");
+                    break;
+
+                case AnimState.Run:
+                    guardAnimation.Run();
+                    if (showDebugLogs)
+                        Debug.Log($"[GuardAnimationController] {name} speed={speed:F2} (×{difficultyMult:F2}), velocity={velocity:F2} → RUN");
+                    break;
             }
         }
 
