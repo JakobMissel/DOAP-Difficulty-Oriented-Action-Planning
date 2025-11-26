@@ -38,13 +38,13 @@ MonoBehaviour:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 15
-        value: -0.25
-        inSlope: Infinity
-        outSlope: -0.05
-        tangentMode: 7
+        time: 14.798462
+        value: -0.2512207
+        inSlope: -Infinity
+        outSlope: 0
+        tangentMode: 1
         weightedMode: 0
-        inWeight: 0.33333334
+        inWeight: 0
         outWeight: 0.33333334
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -86,7 +86,7 @@ MonoBehaviour:
       m_RotationOrder: 0
     _actionsRemembered: 3
     _useOnlyMostRecentDifficulty: 0
-    _startDifficulty: 0.1
+    _startDifficulty: 0.15
     developerNote: At 20 seconds per painting, add 1 to the difficulty, then add
       less to the dfficulty up to 60 seconds per painting, which adds nothing
   - action: 3
@@ -103,8 +103,8 @@ MonoBehaviour:
         inWeight: 0.33333334
         outWeight: 0
       - serializedVersion: 3
-        time: 0.85188293
-        value: 0.06
+        time: 1
+        value: 0.05
         inSlope: -Infinity
         outSlope: Infinity
         tangentMode: 1
@@ -113,7 +113,7 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 2
-        value: 0.09
+        value: 0.1
         inSlope: 0.000013356747
         outSlope: Infinity
         tangentMode: 1
@@ -122,7 +122,7 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 3
-        value: 0.12
+        value: 0.15
         inSlope: 0.0000132005935
         outSlope: Infinity
         tangentMode: 1
@@ -131,73 +131,28 @@ MonoBehaviour:
         outWeight: 0
       - serializedVersion: 3
         time: 4
-        value: 0.18
-        inSlope: 0.00011480536
+        value: 0.2
+        inSlope: Infinity
         outSlope: Infinity
         tangentMode: 1
         weightedMode: 0
-        inWeight: 1
-        outWeight: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
       - serializedVersion: 3
         time: 5
-        value: 0.21
-        inSlope: -Infinity
-        outSlope: Infinity
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0
-      - serializedVersion: 3
-        time: 6
-        value: 0.22
-        inSlope: -Infinity
-        outSlope: Infinity
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0
-      - serializedVersion: 3
-        time: 7
-        value: 0.23
-        inSlope: -Infinity
-        outSlope: Infinity
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 8
-        value: 0.24
-        inSlope: -Infinity
-        outSlope: Infinity
-        tangentMode: 1
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 9
         value: 0.25
-        inSlope: 0
+        inSlope: -Infinity
         outSlope: Infinity
         tangentMode: 1
         weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 10
-        value: 0.26
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 1
-        weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.33333334
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
     _actionsRemembered: 1
     _useOnlyMostRecentDifficulty: 1
-    _startDifficulty: 0
+    _startDifficulty: 0.1
     developerNote: '- 1 evasion: +0.06 difficulty
 
       - 2-5 evasions: +0.03 per
