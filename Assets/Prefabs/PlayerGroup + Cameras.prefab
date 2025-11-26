@@ -55,7 +55,6 @@ GameObject:
   - component: {fileID: 1556531864547972901}
   - component: {fileID: 4603397739281048612}
   - component: {fileID: 8244487627281337890}
-  - component: {fileID: 5251757229155170662}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -256,7 +255,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -550,6 +549,8 @@ MonoBehaviour:
   sneakNoiseRadius: 5
   idleNoiseRadius: 3
   pulseInterval: 0.15
+  groundCheckDistance: 0.5
+  groundCheckRadius: 0.3
   drawGizmos: 0
   gizmoFade: 0.3
 --- !u!114 &8244487627281337890
@@ -567,14 +568,6 @@ MonoBehaviour:
   navMeshCheckDistance: 3
   checkInterval: 0.2
   minOffNavMeshTime: 0.5
---- !u!81 &5251757229155170662
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378007007463572359}
-  m_Enabled: 1
 --- !u!1 &410561352586511272
 GameObject:
   m_ObjectHideFlags: 0
@@ -1105,6 +1098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3031174256242528971}
   - component: {fileID: 1895043897693395786}
+  - component: {fileID: 1922642589443536502}
   m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
@@ -1151,6 +1145,14 @@ MonoBehaviour:
   transformRotationZ: 0
   rotationTarget: {fileID: 8582726492726603851}
   rotationOffset: {x: 0, y: 0, z: 0}
+--- !u!81 &1922642589443536502
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919214985558286537}
+  m_Enabled: 1
 --- !u!1 &1000010831554866022
 GameObject:
   m_ObjectHideFlags: 0

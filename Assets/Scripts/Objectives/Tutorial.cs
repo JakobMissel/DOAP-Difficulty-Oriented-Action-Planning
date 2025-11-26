@@ -26,6 +26,9 @@ public class Tutorial : MonoBehaviour
     [Header("Painting")]
     [SerializeField] StealablePickup tutorialPainting;
 
+    [Header("Lights")]
+    [SerializeField] GameObject[] lightsToEnable;
+
     bool paintingStolen = false;
     bool canDropPaintingOff = false;
 
@@ -49,6 +52,7 @@ public class Tutorial : MonoBehaviour
 
     void Start()
     {
+        ToggleLights(false);
         timerImage.fillAmount = 0;
         throwCount = 0;
         moveT = moveTime;
@@ -106,6 +110,8 @@ public class Tutorial : MonoBehaviour
         PlayerActions.OnCanInteract(true);
         PlayerActions.OnCanThrow(true);
 
+        ToggleLights(true);
+
         StealTutorialPainting();
 
         // Mark the whole tutorial objective as completed and advance to the next one
@@ -149,6 +155,8 @@ public class Tutorial : MonoBehaviour
             // Unsubscribe after completing the goal
             PlayerActions.isSneaking -= PlayerSneaked;
             
+            StartCoroutine(EnableLight(0));
+
             CompleteSubObjective(1, delayBetweenGoals);
         }
     }
@@ -164,7 +172,10 @@ public class Tutorial : MonoBehaviour
             if (climbT > 0) return;
             // Unsubscribe after completing the goal
             PlayerActions.climbStatus -= PlayerClimbed;
+
+            StartCoroutine(EnableLight(1));
             StartCoroutine(EnableInteraction());
+            
             CompleteSubObjective(2, delayBetweenGoals);
         }
     }
@@ -208,6 +219,7 @@ public class Tutorial : MonoBehaviour
             PlayerActions.ammoUpdate -= PlayerAmmoUpdated;
             PlayerActions.OnLoseThrowables();
 
+            StartCoroutine(EnableLight(2));
             StartCoroutine(EnableTutorialPaintingSteal());
             
             CompleteSubObjective(5, delayBetweenGoals);
@@ -324,6 +336,20 @@ public class Tutorial : MonoBehaviour
     {
         yield return new WaitForSeconds(delayBetweenGoals);
         PaintingDropPoint.OnCanDropOffPainting();
+    }
+
+    void ToggleLights(bool state)
+    {
+        for (int i = 0; i < lightsToEnable.Length; i++)
+        {
+            lightsToEnable[i].SetActive(state);
+        }
+    }
+
+    IEnumerator EnableLight(int index)
+    {
+        yield return new WaitForSeconds(delayBetweenGoals);
+        lightsToEnable[index].SetActive(true);
     }
 
     /// <summary>

@@ -56,6 +56,10 @@ MonoBehaviour:
   climbTime: 3
   aimTime: 4
   tutorialPainting: {fileID: 0}
+  lightsToEnable:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   skipKey: 112
 --- !u!114 &2912193341384634044
 MonoBehaviour:

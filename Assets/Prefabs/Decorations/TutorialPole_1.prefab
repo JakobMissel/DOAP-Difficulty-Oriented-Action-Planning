@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6386787603080641618}
   m_Layer: 7
-  m_Name: RedParent
+  m_Name: RibbonParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 8803084952028569555}
   - component: {fileID: 1616577737912326650}
   m_Layer: 7
-  m_Name: SecurityPole_Red_3
+  m_Name: SecurityPole_Ribbon_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +188,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 61b1431d00c69434fa880f91e06faac7, type: 2}
+  - {fileID: 2100000, guid: ef03bb4d37c57c24ba80f0633a543b59, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

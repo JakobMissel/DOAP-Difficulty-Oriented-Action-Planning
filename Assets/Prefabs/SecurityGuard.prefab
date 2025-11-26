@@ -1409,7 +1409,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5255912125324956002, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5255912125324956002, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 1978172398993148386, guid: 5e458547f42a7164d97587a16b5aa0ac, type: 2}
+    - target: {fileID: 5255912125324956002, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
+      propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value
+      value: 0.593
       objectReference: {fileID: 0}
     - target: {fileID: 7699564137531448525, guid: d269a6fd2f5d91a4d95d36a1aa06f587, type: 3}
       propertyPath: m_Name

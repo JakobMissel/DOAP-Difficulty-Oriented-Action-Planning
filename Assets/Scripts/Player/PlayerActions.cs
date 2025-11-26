@@ -83,6 +83,10 @@ public class PlayerActions : MonoBehaviour
     public static Action<bool> gameOverState;
     public static void OnGameOverState(bool isBlocked) => gameOverState?.Invoke(isBlocked);
 
+    // Win game action
+    public static Action playerEscaped;
+    public static void OnPlayerEscaped() => playerEscaped?.Invoke();
+
     //========================================================================//
 
     public static PlayerActions Instance;

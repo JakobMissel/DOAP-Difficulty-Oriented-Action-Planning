@@ -42,7 +42,7 @@ public class PaintingDropPoint : Pickup
     }
 
     protected override void OnTriggerEnter(Collider other)
-    {
+    {                                                                                                   // Allow drop-off during tutorial
         if (PlayerActions.Instance.carriesPainting && ObjectivesManager.Instance.completedTutorial || !ObjectivesManager.Instance.completedTutorial && canBepickedUp)
         {
             canBepickedUp = true;
@@ -54,14 +54,23 @@ public class PaintingDropPoint : Pickup
 
     protected override void OnTriggerStay(Collider other)
     {
+        // Allow drop-off during tutorial
+        if (!ObjectivesManager.Instance.completedTutorial && canBepickedUp)
+        {
+            canBepickedUp = true;
+            base.OnTriggerEnter(other);
+            base.OnTriggerStay(other);
+            return;
+        }
+
         if (PlayerActions.Instance.canEscape && !escaped)
         {
             escaped = true;
             Debug.LogWarning("Player escaped with the painting(s)!");
             
             // escape logic here
-            SceneManager.LoadScene(0);
-            // placeholder logic ends here
+            PlayerActions.OnPlayerEscaped();
+            SceneManager.LoadScene(0); // remove this if we go to a different scene
 
             return;
         }

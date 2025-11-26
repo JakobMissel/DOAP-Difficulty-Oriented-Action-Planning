@@ -49,33 +49,33 @@ namespace Assets.Scripts.GOAP.Behaviours
 
         private void PlayLoop(AudioClip clip)
         {
-            if (clip == null)
-                return;
+            //if (clip == null)
+            //    return;
 
-            var source = EnsureLoopSource();
-            if (source == null)
-                return;
+            //var source = EnsureLoopSource();
+            //if (source == null)
+            //    return;
 
-            if (currentLoopClip == clip && source.isPlaying)
-                return;
+            //if (currentLoopClip == clip && source.isPlaying)
+            //    return;
 
-            currentLoopClip = clip;
-            source.clip = clip;
-            source.loop = true;
-            source.Play();
+            //currentLoopClip = clip;
+            //source.clip = clip;
+            //source.loop = true;
+            //source.Play();
         }
 
         private void StopLoop(AudioClip clip)
         {
-            if (loopSource == null)
-                return;
+            //if (loopSource == null)
+            //    return;
 
-            if (clip != null && currentLoopClip != clip)
-                return;
+            //if (clip != null && currentLoopClip != clip)
+            //    return;
 
-            loopSource.Stop();
-            loopSource.clip = null;
-            currentLoopClip = null;
+            //loopSource.Stop();
+            //loopSource.clip = null;
+            //currentLoopClip = null;
         }
 
         private AudioSource EnsureOneShotSource()

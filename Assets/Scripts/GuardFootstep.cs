@@ -14,7 +14,7 @@ public class GuardFootstep : MonoBehaviour
         if (audioSource != null)
         {
             audioSource.pitch = 1 + Random.Range(-pitchVariance, pitchVariance);
-            audioSource.Play();
+            audioSource.PlayOneShot(audioSource.clip);
             return;
         }
         Debug.LogWarning($"GuardFootstep ({name}) has no AudioSource component to play audio.");
