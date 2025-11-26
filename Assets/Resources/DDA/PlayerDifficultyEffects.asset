@@ -89,41 +89,6 @@ MonoBehaviour:
     _startDifficulty: 0.1
     developerNote: At 20 seconds per painting, add 1 to the difficulty, then add
       less to the dfficulty up to 60 seconds per painting, which adds nothing
-  - action: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0.2
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 0.25
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 0
-    _actionsRemembered: 10
-    _useOnlyMostRecentDifficulty: 0
-    _startDifficulty: 0.15
-    developerNote: 'At 20% or less correct usage, don''t add anything to the difficulty
-
-      At
-      85% correct usage, add 0.5 to the difficulty
-
-      at 120% usage, add 1 to
-      difficulty'
   - action: 3
     curve:
       serializedVersion: 2
