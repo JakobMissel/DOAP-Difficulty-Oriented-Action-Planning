@@ -8,6 +8,7 @@ namespace Assets.Scripts.DDA
     {
         // TODO: Make startmonent be updated to whatever time the tutorial ended
         private float startMoment = 0f;
+        private bool tutorialEnded = false;
 
         // Item usage / Throwables
         private int currentAmmo = 0;
@@ -72,11 +73,7 @@ namespace Assets.Scripts.DDA
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
                                                        "latest stealing time",
                                                        "N/A");
-                testTextFields[1].text = string.Format(baseTestMessage,
-                                                       "Succesful item usage",
-                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
-                                                       "succesful item ratio",
-                                                       successes.Count > 0 ? ((float)successes.Sum() / (float)successes.Count).ToString("N2"): "0");
+                testTextFields[1].text = $"Player evasion difficulty set at {DifficultyTracker.GetDifficultyF(PlayerDAAs.PlayerEvasionSpeed).ToString("N2")}";
                 testTextFields[2].text = string.Format(baseTestMessage,
                                                        "Captures",
                                                        DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured).ToString("N2"),
@@ -89,18 +86,42 @@ namespace Assets.Scripts.DDA
 
         private void OnEnable()
         {
+            PlayerActions.tutorialCompletion += TutorialDone;
             PlayerActions.stealItem += (pickup) => PaintingPickedUp();
             PlayerActions.paintingDelivered += PaintingDelivered;
-            PlayerActions.tutorialCompletion += PaintingDelivered;
-            PlayerActions.ammoUpdate += UsedItem;
+            PlayerActions.playerCaught += PlayerGotCaught;
+            //PlayerActions.ammoUpdate += UsedItem;
         }
 
         private void OnDisable()
         {
+            PlayerActions.tutorialCompletion -= TutorialDone;
             PlayerActions.stealItem -= (pickup) => PaintingPickedUp();
             PlayerActions.paintingDelivered -= PaintingDelivered;
-            PlayerActions.tutorialCompletion -= PaintingDelivered;
-            PlayerActions.ammoUpdate -= UsedItem;
+            PlayerActions.playerCaught -= PlayerGotCaught;
+            //PlayerActions.ammoUpdate -= UsedItem;
+        }
+
+        private void TutorialDone()
+        {
+            tutorialEnded = true;
+            PaintingDelivered();
+        }
+
+        private void PlayerGotCaught()
+        {
+            timesCaptured++;
+            DifficultyTracker.AlterDifficulty(PlayerDAAs.TimesCaptured, timesCaptured);
+#if UNITY_EDITOR
+            if (isTestingDdaPlayerActions)
+            {
+                testTextFields[2].text = string.Format(baseTestMessage,
+                                                   "Captures",
+                                                   DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured).ToString("N2"),
+                                                   "times captured",
+                                                   timesCaptured.ToString());
+            }
+#endif
         }
 
         /// <summary>
@@ -109,6 +130,10 @@ namespace Assets.Scripts.DDA
         /// </summary>
         private void PaintingPickedUp()
         {
+            // If tutorial isn't done, don't alter difficulty
+            if (!tutorialEnded)
+                return;
+
             // Remember the time it took to find this painting
             float paintingStealingLength = Time.time - startMoment;
 
@@ -138,6 +163,10 @@ namespace Assets.Scripts.DDA
         /// </summary>
         private void PaintingDelivered()
         {
+            // If tutorial isn't done, don't alter difficulty
+            if (!tutorialEnded)
+                return;
+
             // Note the time as to keep track of the average painting stealing time
             startMoment = Time.time;
         }
@@ -148,6 +177,10 @@ namespace Assets.Scripts.DDA
         /// </summary>
         public void SuccesfulItemUsage()
         {
+            // If tutorial isn't done, don't alter difficulty
+            if (!tutorialEnded)
+                return;
+
             // Safety check: ensure there's at least one throw recorded before incrementing
             if (successes.Count == 0)
             {
@@ -180,6 +213,10 @@ namespace Assets.Scripts.DDA
         /// <param name="newAmmo">The current amount of ammo the player has. Used to figure out whether an item was used or picked up</param>
         private void UsedItem(int newAmmo)
         {
+            // If tutorial isn't done, don't alter difficulty
+            if (!tutorialEnded)
+                return;
+
             // If the new ammo amount is less than the old one, that means that an item was used
             if (currentAmmo > newAmmo)
             {
