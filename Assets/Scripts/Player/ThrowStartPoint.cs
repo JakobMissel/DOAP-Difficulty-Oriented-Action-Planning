@@ -14,7 +14,7 @@ public class ThrowStartPoint : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & wallLayer) != 0)
         {
-            Debug.LogWarning($"Throw point blocked by wall. {other.name}");
+            //Debug.LogWarning($"Throw point blocked by wall. {other.name}");
             available = false;
         }
     }
@@ -23,7 +23,7 @@ public class ThrowStartPoint : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & wallLayer) != 0)
         {
-            Debug.LogWarning($"Throw point blocked by wall. {other.name}");
+            //Debug.LogWarning($"Throw point blocked by wall. {other.name}");
             available = false;
         }
     }
