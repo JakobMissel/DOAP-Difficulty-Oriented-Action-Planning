@@ -121,7 +121,7 @@ namespace Assets.Scripts.Logging
             // Write out the data
             for (int i = 0; i < ddaLogData.Count; i++)
             {
-                writer.WriteLine($"{ddaLogData[i].time};{ddaLogData[i].difficulty}");
+                writer.WriteLine($"{ddaLogData[i].time:N2};{ddaLogData[i].difficulty:N2}");
             }
 
             // Close the writer
