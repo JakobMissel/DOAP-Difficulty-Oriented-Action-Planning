@@ -171,8 +171,6 @@ public class PlayerActions : MonoBehaviour
     {
         stopwatch.Stop();
         Debug.LogWarning($"[{Time.time}] Tutorial completed in {stopwatch.Elapsed}");
-        
-        SceneManager.LoadScene(2);
     }
 
     void DebugMove(bool obj)

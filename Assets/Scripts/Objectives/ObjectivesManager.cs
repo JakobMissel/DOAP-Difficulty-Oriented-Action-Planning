@@ -133,11 +133,12 @@ public class ObjectivesManager : MonoBehaviour
         {
             currentObjective.isActive = true;
         }
-        OnDisplayObjective(currentObjective, subObjectiveIndex, delay);
         if (currentObjective == objectives[objectives.Length - 1])
         {
             PlayerActions.Instance.canEscape = true;
+            yield break;
         }
+        OnDisplayObjective(currentObjective, subObjectiveIndex, delay);
     }
 
     void ActivateSubObjective(SubObjective subObjective)

@@ -42801,11 +42801,11 @@ PrefabInstance:
       objectReference: {fileID: 7329053345898139052}
     - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
       propertyPath: completedTutorial
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
       propertyPath: startFromFirstObjective
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -70683,7 +70683,7 @@ PrefabInstance:
       objectReference: {fileID: 7980162816909603950}
     - target: {fileID: 2389459065116434730, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: skipCutscene
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2389459065116434730, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: 'disableDuringCutscene.Array.data[0]'

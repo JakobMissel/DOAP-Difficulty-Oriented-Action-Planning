@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using System;
 
 public class MainMenu : MonoBehaviour
 {
@@ -89,6 +90,10 @@ public class MainMenu : MonoBehaviour
     public static MainMenu Instance { get; private set; }
 
     private bool IsGameplaySceneLoaded => SceneManager.GetSceneByName(gameplaySceneName).isLoaded;
+
+    public static Action fadeToGameplayScene;
+    public static void OnFadeToGameplayScene() => fadeToGameplayScene?.Invoke();
+
 
     private void Awake()
     {
@@ -182,9 +187,11 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.DeleteKey("RetryDDAEnabled");
             PlayerPrefs.DeleteKey("RetryDifficulty");
             PlayerPrefs.Save();
-            
+
             // Start game immediately without showing menu
-            StartGameplayScene();
+            // StartGameplayScene();
+            // Fade to gameplay scene
+            OnFadeToGameplayScene();
         }
         else
         {
@@ -250,7 +257,7 @@ public class MainMenu : MonoBehaviour
         HideGameplayUI();
 
         // Pause the game
-        Time.timeScale = 0f;
+        // Time.timeScale = 0f;
         
         // Mute gameplay audio and play menu music
         MuteGameplayAudio();
@@ -450,7 +457,9 @@ public class MainMenu : MonoBehaviour
             // DDA is enabled - start game immediately with dynamic difficulty
             DifficultyTracker.EnableTestingMode(false);
             Debug.Log("Dynamic Difficulty Adjustment: ENABLED - Starting game");
-            StartGameplayScene();
+            //StartGameplayScene();
+            // Fade to gameplay scene
+            OnFadeToGameplayScene();
         }
         else
         {
@@ -479,9 +488,11 @@ public class MainMenu : MonoBehaviour
         };
         
         Debug.Log($"Static Difficulty Set: {difficultyName} ({difficultyPercent}%) - Starting game");
-        
+
         // Start the game
-        StartGameplayScene();
+        //StartGameplayScene();
+        // Fade to gameplay scene
+        OnFadeToGameplayScene();
     }
 
     private void OnCreditsClicked()
@@ -596,7 +607,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void StartGameplayScene()
+    public void StartGameplayScene()
     {
         if (IsGameplaySceneLoaded)
         {
