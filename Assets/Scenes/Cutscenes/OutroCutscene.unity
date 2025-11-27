@@ -639,6 +639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 71773772}
   - component: {fileID: 71773773}
+  - component: {fileID: 71773774}
   m_Layer: 0
   m_Name: ThatRobberyCam
   m_TagString: Untagged
@@ -704,6 +705,23 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &71773774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71773771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NoiseProfile: {fileID: 11400000, guid: a3dacaec0287d7444b4bd276816e1666, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0.5
+  FrequencyGain: 0.6
+  m_NoiseOffsets: {x: 759.6161, y: 821.6731, z: -381.3175}
 --- !u!1 &78807789
 GameObject:
   m_ObjectHideFlags: 0
@@ -2288,10 +2306,10 @@ MonoBehaviour:
         z: 0.11950129
       Rotation:
         value:
-          x: 0.5324148
-          y: -0.20542353
-          z: -0.21849158
-          w: 0.7915789
+          x: 0.53241473
+          y: -0.20542347
+          z: -0.21849157
+          w: 0.79157895
     - Position:
         x: -0.4
         y: -0.54
@@ -4504,7 +4522,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644687431}
   serializedVersion: 2
-  m_LocalRotation: {x: -5.874542e-10, y: 1, z: -0.00002815816, w: -0.000020862662}
+  m_LocalRotation: {x: -0.0000000049572013, y: 1, z: -0.00008182133, w: -0.0000605857}
   m_LocalPosition: {x: 1.231, y: 1.7249999, z: -1.9259999}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7095,8 +7113,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000600555}
   serializedVersion: 2
-  m_LocalRotation: {x: -5.874542e-10, y: 1, z: -0.00002815816, w: -0.000020862662}
-  m_LocalPosition: {x: 1.231, y: 1.7249999, z: -1.9259999}
+  m_LocalRotation: {x: -0.059511263, y: 0.84615004, z: 0.0967058, w: 0.52070767}
+  m_LocalPosition: {x: -0.8139229, y: 0.8541417, z: 0.46608448}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8143,6 +8161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1025714802}
   - component: {fileID: 1025714803}
+  - component: {fileID: 1025714804}
   m_Layer: 0
   m_Name: SecondInterrogationCam
   m_TagString: Untagged
@@ -8208,6 +8227,23 @@ MonoBehaviour:
       BarrelClipping: 0.25
       Anamorphism: 0
   BlendHint: 0
+--- !u!114 &1025714804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025714801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NoiseProfile: {fileID: 11400000, guid: a3dacaec0287d7444b4bd276816e1666, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0.45
+  FrequencyGain: 0.5
+  m_NoiseOffsets: {x: 943.254, y: -576.1926, z: -680.49475}
 --- !u!1001 &1043459935
 PrefabInstance:
   m_ObjectHideFlags: 0
