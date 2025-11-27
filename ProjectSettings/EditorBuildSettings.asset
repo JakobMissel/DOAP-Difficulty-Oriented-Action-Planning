@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Jakob.unity
     guid: 1a623330e8bd831429aac3728ca3e51a
+  - enabled: 1
+    path: Assets/Scenes/Cutscenes/OutroCutscene.unity
+    guid: a70a895e86a05c74abf40b917e343ae7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

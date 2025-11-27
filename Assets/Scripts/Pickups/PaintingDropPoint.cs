@@ -69,7 +69,7 @@ public class PaintingDropPoint : Pickup
             
             // escape logic here
             PlayerActions.OnPlayerEscaped();
-            SceneManager.LoadScene(0); // remove this if we go to a different scene
+            SceneManager.LoadScene(2); 
 
             return;
         }
