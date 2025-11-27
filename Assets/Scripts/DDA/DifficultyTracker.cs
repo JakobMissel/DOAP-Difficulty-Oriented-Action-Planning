@@ -42,17 +42,35 @@ namespace Assets.Scripts.DDA
             foreach (var action in System.Enum.GetValues(typeof(PlayerDAAs)))
             {
                 int enumValue = (int)action;
+                Debug.Log($"[DifficultyTracker] Enum {action} = {enumValue}");
                 if (enumValue > maxEnumValue)
                     maxEnumValue = enumValue;
             }
+            
+            Debug.Log($"[DifficultyTracker] Max enum value: {maxEnumValue}, creating array of size {maxEnumValue + 1}");
             unweightedPlayerActionDifficulties = new List<float>[maxEnumValue + 1];
 
             // Assign pde values to base values
+            Debug.Log($"[DifficultyTracker] PlayerDifficultyEffects has {pde.playerActions.Count} actions configured");
+            
             for (int i = 0; i < pde.playerActions.Count; i++)
             {
-                actualDifficulties.Add(pde.playerActions[i].startDifficulty);
+                PlayerDAAs action = pde.playerActions[i].action;
+                int actionIndex = (int)action;
+                float startDiff = pde.playerActions[i].startDifficulty;
+                
+                Debug.Log($"[DifficultyTracker] Configuring action {i}: {action} (enum value {actionIndex}), startDifficulty: {startDiff}");
+                
+                // Safety check
+                if (actionIndex < 0 || actionIndex >= unweightedPlayerActionDifficulties.Length)
+                {
+                    Debug.LogError($"[DifficultyTracker] ERROR: Action {action} has enum value {actionIndex} which is outside array bounds [0-{unweightedPlayerActionDifficulties.Length - 1}]! Skipping this action.");
+                    continue;
+                }
+                
+                actualDifficulties.Add(startDiff);
                 // Add this actions base difficulty
-                unweightedPlayerActionDifficulties[(int)pde.playerActions[i].action] = new List<float>() { pde.playerActions[i].startDifficulty };
+                unweightedPlayerActionDifficulties[actionIndex] = new List<float>() { startDiff };
             }
 
             // Effective difficulties should be equal to the starting difficulties
@@ -263,7 +281,18 @@ namespace Assets.Scripts.DDA
         {
             CalledNow();
 
-            return actualDifficulties[(int)playerDifficultyAction];
+            // Find the index in actualDifficulties by matching the action
+            for (int i = 0; i < pde.playerActions.Count; i++)
+            {
+                if (pde.playerActions[i].action == playerDifficultyAction)
+                {
+                    return actualDifficulties[i];
+                }
+            }
+
+            // If not found, return 0 and log warning
+            Debug.LogWarning($"[DifficultyTracker] GetDifficultyF called for {playerDifficultyAction} but it's not configured in PlayerDifficultyEffects! Returning 0.");
+            return 0f;
         }
 #endif
 
