@@ -318,8 +318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e59c897a694ec0aaca150b4e2cce75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guardDuration: 12
-  cooldownDuration: 10
+  guardDuration: 8
+  cooldownDuration: 8
   interruptionCooldownDuration: 8
   arrivalThreshold: 2.5
   rotationSpeed: 1
