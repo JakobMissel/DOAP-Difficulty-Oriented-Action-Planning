@@ -1,9 +1,10 @@
 using System;
-using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -57,6 +58,7 @@ public class CheckpointManager : MonoBehaviour
         StealPainting.paintingStolen += (int a, float b) => SaveCheckpoint();
         PlayerActions.paintingDelivered += () => SaveCheckpoint();
         loadCheckpoint += LoadCheckpoint;
+        PlayerActions.playerEscaped += BeginFadeOutToOutro;
     }
 
     void OnDisable()
@@ -64,6 +66,7 @@ public class CheckpointManager : MonoBehaviour
         StealPainting.paintingStolen -= (int a, float b) => SaveCheckpoint();
         PlayerActions.paintingDelivered -= () => SaveCheckpoint();
         loadCheckpoint -= LoadCheckpoint;
+        PlayerActions.playerEscaped -= BeginFadeOutToOutro;
     }
 
     void Update()
@@ -89,6 +92,40 @@ public class CheckpointManager : MonoBehaviour
             return;
         }
         StartCoroutine(LoadingSequence());
+    }
+
+    void BeginFadeOutToOutro()
+    {
+        // If a loading sequence is already running, do not start another
+        if (isLoading) return;
+        if (checkpointLoadingScreen == null)
+        {
+            Debug.LogWarning("Checkpoint loading screen not found, attempting find again.");
+            checkpointLoadingScreen = GameObject.Find("CheckpointLoadingScreen").GetComponent<Image>();
+            return;
+        }
+        print("Beginning fade out to outro.");
+        StartCoroutine(FadeOutToOutro());
+    }
+
+    /// <summary>
+    /// Fade out to outro scene
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FadeOutToOutro()
+    {
+        isLoading = true;
+        ChangePlayerMovement();
+
+        // Fade to black
+        while (time < fadeTime)
+        {
+            time += Time.deltaTime;
+            checkpointLoadingScreen.color = new Color(0, 0, 0, time / fadeTime);
+            yield return null;
+        }
+        time = 0;
+        SceneManager.LoadScene(2);
     }
 
     IEnumerator LoadingSequence()
