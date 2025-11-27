@@ -12,13 +12,12 @@ namespace Assets.Scripts.DDA
     {
         TimesCaptured,
         TimeBetweenPaintings,
-        SuccesfulItemUsage,
         TimesEvaded,
-
+        // SuccessfulItemUsage removed - now using EvasionTracker (TimesEvaded) instead
     }
 
     /// <summary>
-    /// Enemy Actions adjusted by Difficulty
+    /// Enemy Actions adjusted by the Difficulty
     /// </summary>
     public enum EnemyActions
     {

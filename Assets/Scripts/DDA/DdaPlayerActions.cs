@@ -10,11 +10,14 @@ namespace Assets.Scripts.DDA
         private float startMoment = 0f;
         private bool tutorialEnded = false;
 
-        // Item usage / Throwables
-        private int currentAmmo = 0;
-        private List<int> successes = new List<int>();
-        private int maxRememberedThrows = 10;
+        // Item usage / Throwables - DEPRECATED: Now using EvasionTracker for difficulty tracking
+        // private int currentAmmo = 0;
+        // private List<int> successes = new List<int>();
+        // private int maxRememberedThrows = 10;
         private int timesCaptured = 0;
+        
+        // Track latest painting stealing time for UI display
+        private float lastPaintingStealingTime = -1f;
 
         public static DdaPlayerActions Instance;
 
@@ -22,7 +25,7 @@ namespace Assets.Scripts.DDA
         [Header("Testing")]
         [SerializeField] private bool isTestingDdaPlayerActions = false;
         [SerializeField] private GameObject uiVisualisationPrefab;
-        [Tooltip("0 = Painting stealing time\n1 = Succesful item usage\n2 = Times captured")] private TMPro.TextMeshProUGUI[] testTextFields;
+        [Tooltip("0 = Painting stealing time\n1 = Times Evaded\n2 = Times captured")] private TMPro.TextMeshProUGUI[] testTextFields;
         private string baseTestMessage = "{0} is at difficulty: <u><b>{1}</b></u>, with {2} at <u><b>{3}</b></u>";
         private GameObject currentSpawnedPrefab = null;
 #endif
@@ -40,11 +43,21 @@ namespace Assets.Scripts.DDA
 
         private void Start()
         {
-            maxRememberedThrows = DifficultyTracker.GetMaxRemembered(PlayerDAAs.SuccesfulItemUsage);
-            Debug.LogWarning($"I am remembering up to {maxRememberedThrows} throws");
+            // DEPRECATED: Now using EvasionTracker instead of SuccessfulItemUsage
+            // maxRememberedThrows = DifficultyTracker.GetMaxRemembered(PlayerDAAs.SuccesfulItemUsage);
+            // Debug.LogWarning($"I am remembering up to {maxRememberedThrows} throws");
         }
 
 #if UNITY_EDITOR
+        private void Update()
+        {
+            // Continuously update the DDA test UI if it's active
+            if (isTestingDdaPlayerActions && testTextFields != null && testTextFields.Length >= 4)
+            {
+                UpdateDdaTestUI();
+            }
+        }
+
         private void OnValidate()
         {
             if (!Application.isPlaying) return;
@@ -61,25 +74,84 @@ namespace Assets.Scripts.DDA
             }
         }
 
+        private void UpdateDdaTestUI()
+        {
+            try
+            {
+                // Update painting stealing time
+                float paintingDiff = DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings);
+                string paintingTimeDisplay = lastPaintingStealingTime < 0 ? "N/A" : lastPaintingStealingTime.ToString("N2");
+                testTextFields[0].text = string.Format(baseTestMessage,
+                                                       "Painting stealing time",
+                                                       float.IsNaN(paintingDiff) ? "NaN" : paintingDiff.ToString("N2"),
+                                                       "latest stealing time",
+                                                       paintingTimeDisplay);
+                
+                // Update times evaded
+                float evadedDiff = DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesEvaded);
+                int totalEvasions = EvasionTracker.GetTotalEvasions();
+                
+                // Debug log every 60 frames to track if difficulty is updating
+                if (Time.frameCount % 60 == 0 && totalEvasions > 0)
+                {
+                    Debug.Log($"[DdaPlayerActions] Times Evaded: {totalEvasions} evasions, difficulty: {evadedDiff:F2}");
+                }
+                
+                testTextFields[1].text = string.Format(baseTestMessage,
+                                                       "Times Evaded",
+                                                       float.IsNaN(evadedDiff) ? "NaN" : evadedDiff.ToString("N2"),
+                                                       "total evasions",
+                                                       totalEvasions.ToString());
+                
+                // Update captures
+                float capturesDiff = DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured);
+                testTextFields[2].text = string.Format(baseTestMessage,
+                                                       "Captures",
+                                                       float.IsNaN(capturesDiff) ? "NaN" : capturesDiff.ToString("N2"),
+                                                       "times captured",
+                                                       timesCaptured.ToString());
+                
+                // Update full difficulty
+                WriteFullDifficulty();
+                
+                // Debug log if any values are NaN
+                if (float.IsNaN(paintingDiff))
+                    Debug.LogError("[DdaPlayerActions] TimeBetweenPaintings difficulty is NaN!");
+                if (float.IsNaN(evadedDiff))
+                    Debug.LogError("[DdaPlayerActions] TimesEvaded difficulty is NaN!");
+                if (float.IsNaN(capturesDiff))
+                    Debug.LogError("[DdaPlayerActions] TimesCaptured difficulty is NaN!");
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"[DdaPlayerActions] Error updating DDA UI: {ex.Message}\n{ex.StackTrace}");
+            }
+        }
+
         private void DoDdaTest()
         {
             if (isTestingDdaPlayerActions)
             {
                 currentSpawnedPrefab = Instantiate(uiVisualisationPrefab, transform);
-                Debug.Log($"Spawned with {currentSpawnedPrefab.transform.childCount} children\nThey have {currentSpawnedPrefab.GetComponentsInChildren<TMPro.TextMeshProUGUI>().Length} TMProUGUI components");
                 testTextFields = currentSpawnedPrefab.GetComponentsInChildren<TMPro.TextMeshProUGUI>();
-                testTextFields[0].text = string.Format(baseTestMessage,
-                                                       "Painting stealing time",
-                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.TimeBetweenPaintings).ToString("N2"),
-                                                       "latest stealing time",
-                                                       "N/A");
-                testTextFields[1].text = $"Player evasion difficulty set at {DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesEvaded).ToString("N2")}";
-                testTextFields[2].text = string.Format(baseTestMessage,
-                                                       "Captures",
-                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.TimesCaptured).ToString("N2"),
-                                                       "times captured",
-                                                       timesCaptured.ToString());
-                WriteFullDifficulty();
+                
+                Debug.Log($"[DdaPlayerActions] Spawned UI with {testTextFields.Length} TextMeshProUGUI components");
+                
+                // Log each text field for debugging
+                for (int i = 0; i < testTextFields.Length; i++)
+                {
+                    Debug.Log($"[DdaPlayerActions] TextField[{i}]: '{testTextFields[i].text}' on {testTextFields[i].gameObject.name}");
+                }
+                
+                // Ensure we have at least 4 text fields
+                if (testTextFields.Length < 4)
+                {
+                    Debug.LogError($"[DdaPlayerActions] UI prefab only has {testTextFields.Length} text fields, but we need 4! Add more TextMeshProUGUI components to the prefab.");
+                    return;
+                }
+                
+                // Clear any hardcoded text and set initial values
+                UpdateDdaTestUI();
             }
         }
 #endif
@@ -142,6 +214,9 @@ namespace Assets.Scripts.DDA
 
             // Remember the time it took to find this painting
             float paintingStealingLength = Time.time - startMoment;
+            
+            // Store for UI display
+            lastPaintingStealingTime = paintingStealingLength;
 
             // Remember this time so that next painting stealing length can be the length of time it between this one and that one
             startMoment = Time.time;
@@ -178,88 +253,44 @@ namespace Assets.Scripts.DDA
         }
 
         /// <summary>
-        /// To be called whenever an enemy gets succesfully distracted by an item.
-        /// Calculates the succesful item usage ratio and tells the Difficulty Tracker.
+        /// DEPRECATED: This method is no longer used for difficulty tracking.
+        /// Difficulty is now tracked via EvasionTracker (TimesEvaded) instead of item usage.
+        /// Kept for backward compatibility but does nothing.
         /// </summary>
+        [System.Obsolete("Use EvasionTracker for difficulty tracking instead")]
         public void SuccesfulItemUsage()
         {
-            // If tutorial isn't done, don't alter difficulty
-            if (!tutorialEnded)
-                return;
-
-            // Safety check: ensure there's at least one throw recorded before incrementing
-            if (successes.Count == 0)
-            {
-                Debug.LogWarning("[DdaPlayerActions] SuccesfulItemUsage called but no throws recorded yet. Adding initial entry.");
-                successes.Add(0);
-            }
-
-            successes[successes.Count - 1]++;
-            // Tell the DifficultyTracker the current percentage of succesful item usages
-            DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)successes.Sum() / (float)successes.Count);
-
-#if UNITY_EDITOR
-            if (isTestingDdaPlayerActions)
-            {
-                // Update middle difficulty text
-                testTextFields[1].text = string.Format(baseTestMessage,
-                                                       "Succesful item usage",
-                                                       DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
-                                                       "succesful item ratio",
-                                                       ((float)successes.Sum() / (float)successes.Count).ToString("N2"));
-                WriteFullDifficulty();
-            }
-#endif
+            // DEPRECATED: Now using EvasionTracker (TimesEvaded) instead
+            // This method is kept for backward compatibility but no longer tracks difficulty
+            Debug.LogWarning("[DdaPlayerActions] SuccessfulItemUsage is deprecated. Use EvasionTracker instead.");
         }
 
         /// <summary>
-        /// To be called whenever an item is used.
-        /// Calculates the succesful item usage ratio and tells the Difficulty Tracker.
+        /// DEPRECATED: This method is no longer used for difficulty tracking.
+        /// Difficulty is now tracked via EvasionTracker (TimesEvaded) instead of item usage.
         /// </summary>
-        /// <param name="newAmmo">The current amount of ammo the player has. Used to figure out whether an item was used or picked up</param>
+        [System.Obsolete("Use EvasionTracker for difficulty tracking instead")]
         private void UsedItem(int newAmmo)
         {
-            // If tutorial isn't done, don't alter difficulty
-            if (!tutorialEnded)
-                return;
-
-            // If the new ammo amount is less than the old one, that means that an item was used
-            if (currentAmmo > newAmmo)
-            {
-                // Count up the total items used
-                successes.Add(0);
-
-                // Forget oldest if there are more than the max throws
-                if (successes.Count > maxRememberedThrows)
-                {
-                    successes.RemoveAt(0);
-                }
-
-                // Tell the DifficultyTracker the current percentage of succesful item usages
-                DifficultyTracker.AlterDifficulty(PlayerDAAs.SuccesfulItemUsage, (float)successes.Sum() / (float)successes.Count);
-
-#if UNITY_EDITOR
-                if (isTestingDdaPlayerActions)
-                {
-                    // Update middle difficulty text
-                    testTextFields[1].text = string.Format(baseTestMessage,
-                                                           "Succesful item usage",
-                                                           DifficultyTracker.GetDifficultyF(PlayerDAAs.SuccesfulItemUsage).ToString("N2"),
-                                                           "succesful item ratio",
-                                                           ((float)successes.Sum() / (float)successes.Count).ToString("N2"));
-                    WriteFullDifficulty();
-                }
-#endif
-            }
-
-            // Update the tracked ammo
-            currentAmmo = newAmmo;
+            // DEPRECATED: Now using EvasionTracker (TimesEvaded) instead
+            // This method is kept for backward compatibility but no longer tracks difficulty
         }
 
 #if UNITY_EDITOR
         private void WriteFullDifficulty()
         {
-            testTextFields[3].text = $"Full difficulty at <b><u>{DifficultyTracker.GetDifficultyF().ToString("N2")}</u></b>";
+            float difficulty = DifficultyTracker.GetDifficultyF();
+            
+            // Handle NaN or invalid difficulty values
+            if (float.IsNaN(difficulty) || float.IsInfinity(difficulty))
+            {
+                testTextFields[3].text = $"Full difficulty at <b><u>ERROR (NaN)</u></b>";
+                Debug.LogError("[DdaPlayerActions] Full difficulty is NaN! Check PlayerDifficultyEffects configuration - you may need to remove SuccessfulItemUsage from the asset.");
+            }
+            else
+            {
+                testTextFields[3].text = $"Full difficulty at <b><u>{difficulty.ToString("N2")}</u></b>";
+            }
         }
 #endif
     }
