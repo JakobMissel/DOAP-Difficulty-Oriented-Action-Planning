@@ -15674,7 +15674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6036405993589455293, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
       propertyPath: isTestingDdaPlayerActions
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17016,7 +17016,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4762678072612841825, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_WarningMessage
-      value: 
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+        'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
+        'mixamorig:LeftHand'\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+        'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tand more ..."
       objectReference: {fileID: 0}
     - target: {fileID: 4952139457798788515, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Radius
@@ -29948,7 +29953,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4762678072612841825, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_WarningMessage
-      value: 
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+        'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tTransform 'mixamorig:RightForeArm'\n\tTransform
+        'mixamorig:LeftHand'\n\tTransform 'mixamorig:RightArm'\n\tTransform 'mixamorig:LeftArm'\n\tTransform
+        'mixamorig:RightHand'\n\tTransform 'mixamorig:LeftForeArm'\n\tand more ..."
       objectReference: {fileID: 0}
     - target: {fileID: 4871425284895990835, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Layer
@@ -43494,6 +43504,14 @@ PrefabInstance:
       propertyPath: 'paintings.Array.data[0]'
       value: 
       objectReference: {fileID: 7329053345898139052}
+    - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
+      propertyPath: completedTutorial
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
+      propertyPath: startFromFirstObjective
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -71208,7 +71226,7 @@ PrefabInstance:
       objectReference: {fileID: 7980162816909603950}
     - target: {fileID: 2389459065116434730, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: skipCutscene
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2389459065116434730, guid: 3ca63babac0e385479ca2dd9bbb19e60, type: 3}
       propertyPath: 'disableDuringCutscene.Array.data[0]'
