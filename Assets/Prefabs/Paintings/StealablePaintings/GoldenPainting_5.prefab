@@ -238,10 +238,11 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Painting 5
-  painterName: Pablo Picasso
+  painterName: <u>Pablo Picasso</u>
   value: 100 DKK
   tutorialPainting: 0
   paintingCarryPrefab: {fileID: 2916502899299865950, guid: 594a9e564fdff334f9f904a3889c3eb5, type: 3}
+  glitter: {fileID: 0}
 --- !u!65 &4495456046387160270
 BoxCollider:
   m_ObjectHideFlags: 0
