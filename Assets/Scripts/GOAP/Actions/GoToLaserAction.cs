@@ -57,7 +57,8 @@ namespace Assets.Scripts.GOAP.Actions
                 return;
             }
 
-            // Animation handled by GuardAnimationController based on velocity
+            // Start with Run animation for moving to laser
+            animation?.Run();
             audio?.PlayWalkLoop();
 
             agent.isStopped = false;
@@ -146,7 +147,7 @@ namespace Assets.Scripts.GOAP.Actions
             if (!data.SearchComplete)
             {
                 data.SearchTime += Time.deltaTime;
-                
+
                 // Only scan during the search duration
                 if (data.SearchTime < SEARCH_DURATION)
                 {
@@ -155,17 +156,35 @@ namespace Assets.Scripts.GOAP.Actions
                     if (player != null)
                     {
                         float distanceToLaser = Vector3.Distance(data.LaserSearchPosition, player.transform.position);
-                        
+
                         if (distanceToLaser <= SEARCH_RADIUS)
                         {
                             // Player detected within search radius! Capture their location
                             data.CapturedPlayerLocation = player.transform.position;
                             data.PlayerLocationCaptured = true;
-                            
+
                             Debug.Log($"[GoToLaserAction] {mono.Transform.name} detected player within {SEARCH_RADIUS}m radius at distance {distanceToLaser:F1}m! Captured location: {data.CapturedPlayerLocation}");
+
+                            // Immediately stop searching and start running toward player
+                            data.SearchComplete = true;
+
+                            // Clear forced search animation and switch to Run
+                            var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+                            if (animController != null)
+                            {
+                                animController.ClearForcedState();
+                            }
+                            animation?.Run();
+
+                            // Start moving to captured location
+                            agent.isStopped = false;
+                            agent.SetDestination(data.CapturedPlayerLocation);
+                            audio?.PlayWalkLoop();
+
+                            return ActionRunState.Continue;
                         }
                     }
-                    
+
                     return ActionRunState.Continue;
                 }
                 
@@ -175,15 +194,21 @@ namespace Assets.Scripts.GOAP.Actions
                 if (data.PlayerLocationCaptured)
                 {
                     Debug.Log($"[GoToLaserAction] {mono.Transform.name} search complete - moving to captured player location: {data.CapturedPlayerLocation}");
-                    
+
                     // DON'T clear the laser alert yet - keep it active so the goal remains valid
                     // We'll clear it when we arrive at the captured location
-                    
+
                     // Start moving to captured location
                     agent.isStopped = false;
                     agent.SetDestination(data.CapturedPlayerLocation);
 
-                    // Animation handled by GuardAnimationController based on velocity
+                    // Clear forced search animation and switch to Run
+                    var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
+                    if (animController != null)
+                    {
+                        animController.ClearForcedState();
+                    }
+                    animation?.Run();
                     audio?.PlayWalkLoop();
                 }
                 else
