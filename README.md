@@ -74,8 +74,12 @@ FreeSound.
 - soldering station noise by Yuval -- https://freesound.org/s/210989/ -- License: Creative Commons 0
 - Footsteps_Stiletto_Stone_Walk01.wav by marb7e -- https://freesound.org/s/620343/ -- License: Attribution 4.0
 - Personal Alarm.wav by Benboncan -- https://freesound.org/s/93639/ -- License: Attribution 4.0
+- Belt Buckle by IndigoRay -- https://freesound.org/s/331719/ -- License: Creative Commons 0
+- Zipper04.wav by sound_ims -- https://freesound.org/s/131525/ -- License: Attribution 3.0
+- Notification (Retro Vibes) 2 by SilverIllusionist -- https://freesound.org/s/671113/ -- License: Attribution 4.0
+- Click Tick.wav by malle99 -- https://freesound.org/s/384187/ -- License: Creative Commons 0
+
 Pixabay. 
 - Carefully Does It by geoffharvey (https://pixabay.com/music/main-title-carefully-does-it-176848/)
 - Road to Peace by Grand Project (https://pixabay.com/music/crime-scene-road-to-peace-391119/)
-- Notification (Retro Vibes) 2 by SilverIllusionist -- https://freesound.org/s/671113/ -- License: Attribution 4.0
-- Click Tick.wav by malle99 -- https://freesound.org/s/384187/ -- License: Creative Commons 0
+- Sneaky Fight by CardiJey (https://pixabay.com/music/sneaky-sneaky-fight-142704/)
