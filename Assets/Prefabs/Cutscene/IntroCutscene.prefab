@@ -1823,7 +1823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88eda7e052d48f409fb0ffdd0c13e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skipCutscene: 0
+  skipCutscene: 1
   whichCutscene: 1
   disableDuringCutscene:
   - {fileID: 0}
@@ -13657,8 +13657,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9145035882088173796}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000056200946, y: -0.60155314, z: -0.0000000042321577, w: 0.7988328}
-  m_LocalPosition: {x: 43.63641, y: 2.62, z: -110.07621}
+  m_LocalRotation: {x: 0.000000014227235, y: -0.87869316, z: 0.000000026187088, w: 0.47738695}
+  m_LocalPosition: {x: 47.696377, y: 2.62, z: -106.8862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
