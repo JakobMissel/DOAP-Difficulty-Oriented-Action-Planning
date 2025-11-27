@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics;
 using Unity.Cinemachine;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
+using Debug = UnityEngine.Debug;
 public class PlayerActions : MonoBehaviour
 {
     // Tutorial
@@ -98,7 +100,7 @@ public class PlayerActions : MonoBehaviour
     public bool canEscape;
     public bool isOnWall;
 
-
+    Stopwatch stopwatch = new();
 
     void Awake()
     {
@@ -113,13 +115,13 @@ public class PlayerActions : MonoBehaviour
         canEscape = false;
         carriesPainting = false;
         isOnWall = false;
+        stopwatch = new();
     }
 
     void OnEnable()
     {
         if (debugEvents)
         {
-            tutorialCompletion += DebugTutorialCompleted;
             moveStatus += DebugMove;
             climbStatus += DebugClimb;
             sneakStatus += DebugSneak;
@@ -129,14 +131,15 @@ public class PlayerActions : MonoBehaviour
             aimStatus += DebugAim;
             ammoUpdate += DebugAmmoUpdate;
         }
+        tutorialCompletion += DebugTutorialCompleted;
         CheckpointManager.loadCheckpoint += CheckpointLoaded;
+        playerEscaped += PlayerEscaped;
     }
 
     void OnDisable()
     {
         if (debugEvents)
         {
-            tutorialCompletion -= DebugTutorialCompleted;
             moveStatus -= DebugMove;
             climbStatus -= DebugClimb;
             sneakStatus -= DebugSneak;
@@ -146,7 +149,9 @@ public class PlayerActions : MonoBehaviour
             aimStatus -= DebugAim;
             ammoUpdate -= DebugAmmoUpdate;
         }
+        tutorialCompletion -= DebugTutorialCompleted;
         CheckpointManager.loadCheckpoint -= CheckpointLoaded;
+        playerEscaped -= PlayerEscaped;
     }
 
     void CheckpointLoaded()
@@ -158,7 +163,16 @@ public class PlayerActions : MonoBehaviour
 
     void DebugTutorialCompleted()
     {
-        print($"[{Time.time}] Tutorial completed");
+        stopwatch.Start();
+        Debug.LogWarning($"[{Time.time}] Tutorial completed");
+    }
+
+    void PlayerEscaped()
+    {
+        stopwatch.Stop();
+        Debug.LogWarning($"[{Time.time}] Tutorial completed in {stopwatch.Elapsed}");
+        
+        SceneManager.LoadScene(2);
     }
 
     void DebugMove(bool obj)
@@ -211,5 +225,5 @@ public class PlayerActions : MonoBehaviour
     void DebugAmmoUpdate(int ammo)
     {
         print($"[{Time.time}] Ammo updated: {ammo}");
-    }
+    } 
 }

@@ -64,12 +64,8 @@ public class PaintingDropPoint : Pickup
 
         if (PlayerActions.Instance.canEscape && !escaped)
         {
-            escaped = true;
-            Debug.LogWarning("Player escaped with the painting(s)!");
-            
-            // escape logic here
+            escaped = true;            
             PlayerActions.OnPlayerEscaped();
-            SceneManager.LoadScene(2); 
 
             return;
         }
