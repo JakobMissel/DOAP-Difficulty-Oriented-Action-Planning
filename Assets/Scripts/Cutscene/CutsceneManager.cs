@@ -29,7 +29,6 @@ namespace Assets.Scripts.Cutscene
         {
         }
 
-#if UNITY_EDITOR
         private void Start()
         {
             director = GetComponent<PlayableDirector>();
@@ -64,7 +63,6 @@ namespace Assets.Scripts.Cutscene
             // Start playing cutscene
             director.Play();
         }
-#endif
 
         public void CutsceneDone()
         {
