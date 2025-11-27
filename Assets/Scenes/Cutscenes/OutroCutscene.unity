@@ -4361,8 +4361,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644687431}
   serializedVersion: 2
-  m_LocalRotation: {x: -2.5314498e-10, y: 1, z: -0.000018483275, w: -0.000013695884}
-  m_LocalPosition: {x: 1.231, y: 1.7249999, z: -1.9259999}
+  m_LocalRotation: {x: -7.43351e-10, y: 1, z: -0.00003167538, w: -0.000023467772}
+  m_LocalPosition: {x: 0.83101976, y: 1.1850266, z: -1.6759825}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8607,10 +8607,11 @@ MonoBehaviour:
     Anchor - Felix Bengtvig Krog\nDanish News Anchor - Nikolaj Bach M\xF8ller Jensen\nKorean
     News Anchor - Minji Kim\nGerman News Anchor - Mutter Lone\n\n\n\n<size=72>Cutscene
     Director</size>\n\nFelix Bengtvig Krog\n\n\n\n<size=72>Cutscene Animator</size>\n\nFelix
-    Bengtvig Krog\n\n\n\n<size=72>Sound Effects</size>\n\nChristoffer Beck Oudrup\n<b>List
-    of SFX sources</b>\n\n\n\n<size=72>Music</size>\n\n<size=50>Pixabay</size>\nCarefully
-    Does It - Geoff Harvey\nRoad to Peace - Grand Project\nNight Detective - Aleksey
-    Voronin\nwww.pixabay.com\n\n\n\n<size=72>Tools</size>\n\n<size=50>Audacity</size>\nwww.audacityteam.org\n\n<size=50>Blender</size>\nwww.blender.org\n\n<size=50>Figma</size>\nwww.figma.com\n\n<size=50>GIMP</size>\nwww.gimp.org\n\n<size=50>Substance
+    Bengtvig Krog\n\n\n\n<size=72>Sound Effects</size>\n\nChristoffer Beck Oudrup\n\n<size=50>Freesound</size>\nswoosh22
+    - kwahmah_02\nFootsteps_Stiletto_Stone_Walk01 - marb7e\nPersonal Alarm - Benboncan\nZipper04
+    - sound_ims\nwww.freesound.org\n\n\n\n<size=72>Music</size>\n\n<size=50>Pixabay</size>\nCarefully
+    Does It - Geoff Harvey\nRoad to Peace - Grand Project\nSneaky Fight - CardiJey\nNight
+    Detective - Aleksey Voronin\nwww.pixabay.com\n\n\n\n<size=72>Tools</size>\n\n<size=50>Audacity</size>\nwww.audacityteam.org\n\n<size=50>Blender</size>\nwww.blender.org\n\n<size=50>Figma</size>\nwww.figma.com\n\n<size=50>GIMP</size>\nwww.gimp.org\n\n<size=50>Substance
     Painter</size>\nwww.adobe.com\n\n<size=50>Unity</size>\nwww.unity.com\n\n\n\n<size=72>Special
     thanks to</size>\n\nAndreas Beck Oudrup\nThomas Bj\xF8rner\n\n\n\n<size=50>and</size>\n\n<size=200>YOU</size>"
   m_isRightToLeft: 0
