@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Cutscene
 {
@@ -75,6 +76,8 @@ namespace Assets.Scripts.Cutscene
                     IntroCutsceneDone();
                     break;
                 case CutsceneSelect.Outro:
+                    // Load main menu
+                    SceneManager.LoadScene(0);
                     break;
                 default:
                     break;
