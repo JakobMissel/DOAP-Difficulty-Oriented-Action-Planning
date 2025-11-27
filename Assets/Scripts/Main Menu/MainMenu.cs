@@ -229,6 +229,14 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
+        // Don't allow ESC key to trigger pause menu if any main menu panels are showing
+        if ((mainPanel != null && mainPanel.activeSelf) ||
+            (creditsPanel != null && creditsPanel.activeSelf) ||
+            (difficultyPanel != null && difficultyPanel.activeSelf))
+        {
+            return; // Ignore ESC key when on main menu screens
+        }
+
         // Allow ESC key to show pause menu during gameplay (not game over, not already paused)
         if (Input.GetKeyDown(KeyCode.Escape) && !isGamePaused && !isGameOver)
         {
