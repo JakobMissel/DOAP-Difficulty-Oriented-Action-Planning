@@ -65,7 +65,7 @@ public class StealPainting : MonoBehaviour
         UpdatePaintingNames();
     }
 
-    void ItemStolen(StealablePickup painting)
+    void ItemStolen(StealablePickup painting, bool isNew)
     {
         if (!objective.isActive) return;
         for (int i = 0; i < objective.subObjectives.Count; i++)

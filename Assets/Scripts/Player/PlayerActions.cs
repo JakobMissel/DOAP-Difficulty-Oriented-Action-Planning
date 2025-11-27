@@ -48,8 +48,8 @@ public class PlayerActions : MonoBehaviour
     public static Action<Pickup> pickedUpItem;
     public static void OnPickedUpItem(Pickup item) => pickedUpItem?.Invoke(item);
 
-    public static Action<StealablePickup> stealItem;
-    public static void OnStealItem(StealablePickup item) => stealItem?.Invoke(item);
+    public static Action<StealablePickup, bool> stealItem;
+    public static void OnStealItem(StealablePickup item, bool isNew) => stealItem?.Invoke(item, isNew);
 
     public static Action paintingDelivered;
     public static void OnPaintingDelivered() => paintingDelivered?.Invoke();
@@ -193,7 +193,7 @@ public class PlayerActions : MonoBehaviour
         print($"[{Time.time}] Picked up item: {pickup.name}");
     }
 
-    void DebugStole(Pickup pickup)
+    void DebugStole(Pickup pickup, bool isNew)
     {
         print($"[{Time.time}] Stole item: {pickup.name}");
     }

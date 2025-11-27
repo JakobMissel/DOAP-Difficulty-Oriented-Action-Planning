@@ -228,7 +228,7 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    void PaintingSteal(StealablePickup painting)
+    void PaintingSteal(StealablePickup painting, bool isNew)
     {
         if (!objective.isActive) return;
         if (IsPreviousGoalCompleted(6) && IsSubObjectiveActive(6))

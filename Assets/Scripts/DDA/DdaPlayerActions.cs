@@ -87,7 +87,7 @@ namespace Assets.Scripts.DDA
         private void OnEnable()
         {
             PlayerActions.tutorialCompletion += TutorialDone;
-            PlayerActions.stealItem += (pickup) => PaintingPickedUp();
+            PlayerActions.stealItem += PaintingPickedUp;
             PlayerActions.paintingDelivered += PaintingDelivered;
             PlayerActions.playerCaught += PlayerGotCaught;
             //PlayerActions.ammoUpdate += UsedItem;
@@ -96,7 +96,7 @@ namespace Assets.Scripts.DDA
         private void OnDisable()
         {
             PlayerActions.tutorialCompletion -= TutorialDone;
-            PlayerActions.stealItem -= (pickup) => PaintingPickedUp();
+            PlayerActions.stealItem -= PaintingPickedUp;
             PlayerActions.paintingDelivered -= PaintingDelivered;
             PlayerActions.playerCaught -= PlayerGotCaught;
             //PlayerActions.ammoUpdate -= UsedItem;
@@ -129,8 +129,13 @@ namespace Assets.Scripts.DDA
         /// To be called whenever the player picks up a painting.
         /// Calculates teh average time it takes to steal a painting and tells the Difficulty Tracker.
         /// </summary>
-        private void PaintingPickedUp()
+        private void PaintingPickedUp(StealablePickup painting, bool isNew)
         {
+            if (!isNew)
+            {
+                Debug.Log("[DdaPlayerActions] PaintingPickedUp called but painting is not new, ignoring difficulty adjustment.");
+                return;
+            }
             // If tutorial isn't done, don't alter difficulty
             if (!tutorialEnded)
                 return;

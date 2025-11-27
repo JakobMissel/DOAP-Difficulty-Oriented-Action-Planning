@@ -8,6 +8,7 @@ public class StealablePickup : Pickup
     public string value;
     public bool tutorialPainting = false;
     public GameObject paintingCarryPrefab;
+    bool isPaintingNew = true;
 
     [Header("Glitter")]
     [SerializeField] [Tooltip("**IMPORTANT** This should ONLY be assigned on the painting in the tutorial area!")] GameObject glitter;
@@ -48,7 +49,8 @@ public class StealablePickup : Pickup
     {
         if (PlayerActions.Instance.carriesPainting || !ObjectivesManager.Instance.completedTutorial && !tutorialPainting) return;
         PlayerActions.Instance.carriesPainting = true;
-        PlayerActions.OnStealItem(this);
+        PlayerActions.OnStealItem(this, isPaintingNew);
+        isPaintingNew = false;
         base.ActivatePickup(other);
     }
 }
