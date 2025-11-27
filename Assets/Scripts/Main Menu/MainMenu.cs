@@ -733,7 +733,7 @@ public class MainMenu : MonoBehaviour
         HideMenu();
         
         // Start delayed audio unmute (gameplay audio stays muted for 2 seconds)
-        // StartCoroutine(UnmuteGameplayAudioDelayed(retryAudioDelay));
+        StartCoroutine(UnmuteGameplayAudioDelayed(retryAudioDelay));
         
         CheckpointManager.Instance?.BeginLoading();
     }
@@ -741,8 +741,6 @@ public class MainMenu : MonoBehaviour
     private void OnCheckpointLoaded()
     {
         if (!isRetrying) return;
-
-        UnmuteGameplayAudio(); // Ensure gameplay audio is unmuted after checkpoint load
 
         isRetrying = false;
         Debug.Log("[MainMenu] Checkpoint loaded, retry complete");

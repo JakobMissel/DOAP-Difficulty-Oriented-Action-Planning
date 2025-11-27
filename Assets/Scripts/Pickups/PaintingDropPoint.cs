@@ -111,6 +111,7 @@ public class PaintingDropPoint : Pickup
                 break;
             }
         }
+        canBepickedUp = false;
     }
 
     void Update()
