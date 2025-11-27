@@ -1812,10 +1812,10 @@ MonoBehaviour:
         z: 0.11950129
       Rotation:
         value:
-          x: 0.53241473
-          y: -0.20542347
-          z: -0.21849157
-          w: 0.79157895
+          x: 0.5324148
+          y: -0.20542353
+          z: -0.21849158
+          w: 0.7915789
     - Position:
         x: -0.4
         y: -0.54
@@ -3906,8 +3906,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 644687431}
   serializedVersion: 2
-  m_LocalRotation: {x: -3.681273e-11, y: 1, z: 0.00000001116511, w: 0.0000000062313217}
-  m_LocalPosition: {x: 0.831, y: 1.185, z: -1.6759999}
+  m_LocalRotation: {x: -0.00029723224, y: 0.99968934, z: -0.020022225, w: -0.014840516}
+  m_LocalPosition: {x: 1.0399958, y: 1.4671443, z: -1.51082}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8060,10 +8060,10 @@ MonoBehaviour:
     Ask Reitzel\nFelix Bengtvig Krog\n\n<size=50>UI</size>\nAnders Ask Reitzel\nFelix
     Bengtvig Krog\nNikolaj Bach M\xF8ller Jensen\n\n<size=50>Additional Programming</size>\nAnders
     Ask Reitzel\nFelix Bengtvig Krog\nNikolaj Bach M\xF8ller Jensen\n\n\n\n<size=72>Voice
-    Actors</size>\n\nJean-Michel Corvez - <b>Vincent SOMETHING</b>\nVjeran Tomic
-    - Nikolaj Bach M\xF8ller Jensen\nSecurity Guards - Christoffer Beck Oudrup\nEnglish
-    News Anchor - Felix Bengtvig Krog\nDanish News Anchor - Nikolaj Bach M\xF8ller
-    Jensen\nKorean News Anchor - Minji Kim\nGerman News Anchor - Mutter Lone\n\n\n\n<size=72>Cutscene
+    Actors</size>\n\nJean-Michel Corvez - Vincent Dauget\nVjeran Tomic - Nikolaj
+    Bach M\xF8ller Jensen\nSecurity Guards - Christoffer Beck Oudrup\nEnglish News
+    Anchor - Felix Bengtvig Krog\nDanish News Anchor - Nikolaj Bach M\xF8ller Jensen\nKorean
+    News Anchor - Minji Kim\nGerman News Anchor - Mutter Lone\n\n\n\n<size=72>Cutscene
     Director</size>\n\nFelix Bengtvig Krog\n\n\n\n<size=72>Cutscene Animator</size>\n\nFelix
     Bengtvig Krog\n\n\n\n<size=72>Sound Effects</size>\n\nChristoffer Beck Oudrup\n<b>List
     of SFX sources</b>\n\n\n\n<size=72>Music</size>\n\n<size=50>Pixabay</size>\nCarefully
