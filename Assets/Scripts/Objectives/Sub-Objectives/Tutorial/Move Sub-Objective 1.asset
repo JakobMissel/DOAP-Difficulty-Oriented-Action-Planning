@@ -15,5 +15,5 @@ MonoBehaviour:
   isCompleted: 1
   isActive: 0
   descriptionText: 
-  goalText: Use [W][A][S][D] to run.\n
+  goalText: Use <color=#D1A050>[W][A][S][D]</color> to run.
   completionText: Running produces noise.\nBe careful not to be heard!

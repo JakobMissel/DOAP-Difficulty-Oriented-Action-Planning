@@ -15,5 +15,5 @@ MonoBehaviour:
   isCompleted: 0
   isActive: 0
   descriptionText: 
-  goalText: Press [E] to pick up coins.\n
+  goalText: Press <color=#D1A050>[E]</color> to pick up coins.
   completionText: The amount of coins is displayed in the bottom right corner.

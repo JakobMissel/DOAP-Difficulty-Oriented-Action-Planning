@@ -53,7 +53,7 @@ public class Objective : ScriptableObject
                 isCompleted = true;
                 currentSubObjectiveIndex = i;
                 ObjectivesManager.OnDisplayObjective(this, i, delay);
-                ObjectivesManager.OnCompleteObjective(this);
+                ObjectivesManager.OnCompleteObjective(this, delay);
                 break;
             }
         }

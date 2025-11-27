@@ -908,7 +908,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e7c3cb9378953cf4ea164ca78135f67c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2ae9cc184294e494db39d64a2a7ccb7a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1844,7 +1844,6 @@ MonoBehaviour:
   nameText: {fileID: 8732297876459992791}
   audioClip:
   - {fileID: 8300000, guid: 106204bd82fb32a4594d88451105b880, type: 3}
-  - {fileID: 8300000, guid: ca1b291617db6b74ab0322574755d729, type: 3}
   objectivesTextPrefab: {fileID: 1103051531657910020, guid: 5dcb1908eef1d6f4896bec3db882d048, type: 3}
   middlePanel: {fileID: 2360145711616557074}
   objectiveMiddlePanel: {fileID: 5781864046106359348}
@@ -1860,11 +1859,11 @@ AudioSource:
   m_GameObject: {fileID: 7879206531212378276}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1978172398993148386, guid: 5e458547f42a7164d97587a16b5aa0ac, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0

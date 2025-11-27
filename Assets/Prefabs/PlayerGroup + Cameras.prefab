@@ -77,7 +77,6 @@ Transform:
   m_Children:
   - {fileID: 4988376524829654966}
   - {fileID: 4986826231433909652}
-  - {fileID: 8461260092164384941}
   - {fileID: 8311780276773700448}
   - {fileID: 2881520690684633672}
   - {fileID: 7303633096436543293}
@@ -252,7 +251,7 @@ AudioSource:
   m_GameObject: {fileID: 378007007463572359}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1978172398993148386, guid: 5e458547f42a7164d97587a16b5aa0ac, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -1122,6 +1121,7 @@ Transform:
   - {fileID: 1369694953636636780}
   - {fileID: 5702917859781524438}
   - {fileID: 6179161154518774510}
+  - {fileID: 8461260092164384941}
   m_Father: {fileID: 180950564769169283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1895043897693395786
@@ -1649,14 +1649,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19607843, g: 0.4509804, b: 0.1950347, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 51e52b50cf87f994eada719cbd38d827, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1cb3601a9fb399947ba08496e623d9bc, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2359,17 +2359,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8440090710898492510}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalRotation: {x: -0, y: -0.656059, z: -0, w: 0.75470966}
+  m_LocalPosition: {x: 0, y: 0, z: -0.084}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5752733280764957599}
-  m_Father: {fileID: 6484944184392768071}
+  m_Father: {fileID: 3031174256242528971}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.797}
+  m_AnchoredPosition: {x: 0.598, y: 1.508}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2140953821388479220

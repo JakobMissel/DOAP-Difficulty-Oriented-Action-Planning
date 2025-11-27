@@ -34,9 +34,9 @@ public class Tutorial : MonoBehaviour
 
     GameObject paintingCarry;
 
-    [Header("Skip settings")]
-    [Tooltip("Key used to instantly skip the tutorial.")]
-    [SerializeField] private KeyCode skipKey = KeyCode.P;
+    //[Header("Skip settings")]
+    //[Tooltip("Key used to instantly skip the tutorial.")]
+    //[SerializeField] private KeyCode skipKey = KeyCode.P;
 
     void Awake()
     {
@@ -223,7 +223,7 @@ public class Tutorial : MonoBehaviour
 
             StartCoroutine(EnableLight(2));
             StartCoroutine(EnableTutorialPaintingSteal());
-            
+
             CompleteSubObjective(5, delayBetweenGoals);
         }
     }
@@ -235,8 +235,8 @@ public class Tutorial : MonoBehaviour
         {
             paintingStolen = true;
 
-            objective.subObjectives[6].completionText = $"When you carry a painting you cannot perform actions such as throwing coins or climbing. Be mindful and plan ahead!";
-            objective.subObjectives[7].goalText = $"Return to the entrance and place the painting."; 
+            objective.subObjectives[6].completionText = $"You <u>cannot</u> climb or throw coins while carrying a painting. Be mindful and plan ahead!";
+            objective.subObjectives[7].goalText = $"Return to the entrance and hold <color=#D1A050>[E]</color> to place the painting."; 
             objective.subObjectives[7].completionText = $"Good job. Now go get the rest of the paintings framed in gold.";
 
             painting.gameObject.SetActive(false);
@@ -329,9 +329,10 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator EnableTutorialPaintingSteal()
     {
-        objective.subObjectives[6].goalText = $"Hold [E] to steal the painting framed in gold by {tutorialPainting.painterName}.";
+        objective.subObjectives[6].goalText = $"Hold <color=#D1A050>[E]</color> to steal the painting framed in gold by {tutorialPainting.painterName}.";
         yield return new WaitForSeconds(delayBetweenGoals);
         tutorialPainting.tutorialPainting = true;
+        tutorialPainting.ShowGlitter();
     }
 
     IEnumerator EnableDropOff()

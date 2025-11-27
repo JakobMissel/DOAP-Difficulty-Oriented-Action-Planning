@@ -93,6 +93,7 @@ public class Pickup : MonoBehaviour
     {
         holdTime = 0;
         buttonHeld = false;
+        buttonPressed = false;
         if (audioClip)
         {
             audioGameObject.GetComponent<AudioSource>().clip = audioClip;

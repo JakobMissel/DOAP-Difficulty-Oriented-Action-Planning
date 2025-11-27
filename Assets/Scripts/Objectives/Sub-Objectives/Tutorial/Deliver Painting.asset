@@ -13,10 +13,8 @@ MonoBehaviour:
   m_Name: Deliver Painting
   m_EditorClassIdentifier: 
   isCompleted: 0
-  isActive: 1
-  descriptionText: This text is set in code in Tutorial.cs
-  goalText: 'A priceless painting by Amedeo Modigliani.
-
-    Place it back at the
-    entrance!'
-  completionText: The painting by Amedeo Modigliani has been placed at the entrance.
+  isActive: 0
+  descriptionText: 
+  goalText: Return to the entrance and hold <color=#D1A050>[E]</color> place the
+    painting.
+  completionText: Good job. Now go get the rest of the paintings framed in gold.

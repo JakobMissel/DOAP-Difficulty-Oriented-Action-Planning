@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fb1bb706fe6f14691f2e99ff1e12c3, type: 3}
   m_Name: Steal Painting
   m_EditorClassIdentifier: 
-  isCompleted: 1
+  isCompleted: 0
   isActive: 0
-  descriptionText: This text is set in code in Tutorial.cs
-  goalText: Steal Painting.
-  completionText: 'A priceless painting by Amedeo Modigliani.
-
-    Place it back
-    at the entrance!'
+  descriptionText: 
+  goalText: Hold <color=D1A050>[E]</color> to steal the painting framed in gold by
+    Amedeo Modigliani.
+  completionText: When you carry a painting you cannot perform actions such as throwing
+    coins or climbing. Be mindful and plan ahead!

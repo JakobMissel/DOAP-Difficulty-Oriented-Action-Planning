@@ -20,8 +20,8 @@ public class ObjectivesManager : MonoBehaviour
     public static Action<SubObjective> activateSubObjective;
     public static void OnActivateSubObjective(SubObjective subObjective) => activateSubObjective?.Invoke(subObjective);
 
-    public static Action<Objective> completeObjective;
-    public static void OnCompleteObjective(Objective completedObjective) => completeObjective?.Invoke(completedObjective);
+    public static Action<Objective, float> completeObjective;
+    public static void OnCompleteObjective(Objective completedObjective, float delay = 0) => completeObjective?.Invoke(completedObjective, delay = 0);
 
     public static Action<Objective, int, float> displayObjective;
     public static void OnDisplayObjective(Objective objective, int subGoalIndex, float delay) => displayObjective?.Invoke(objective, subGoalIndex, delay);
@@ -105,7 +105,6 @@ public class ObjectivesManager : MonoBehaviour
         // Tutorial completed flag - will be triggered after UI displays completion text
         if (objectives[1] == currentObjective && !completedTutorial)
         {
-            completedTutorial = true;
             // Delay tutorial completion until after the completion text is displayed and shown for a while
             // Total delay = initial UI delay + enumerator delay + extra time for reading
             float extraReadingTime = 1f; // Give player time to read the completion text
@@ -119,6 +118,8 @@ public class ObjectivesManager : MonoBehaviour
     {
         yield return new WaitForSeconds(totalDelay);
         PlayerActions.OnTutorialCompletion();
+        yield return new WaitForSeconds(1.3f); // Small delay to avoid tutorial pole animation and laser overlapping
+        completedTutorial = true;
     }
 
     IEnumerator SetNewObjectiveEnumerator(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay)
@@ -144,7 +145,7 @@ public class ObjectivesManager : MonoBehaviour
         subObjective.isActive = true;
     }
 
-    void FlagCompletedObjective(Objective objective)
+    void FlagCompletedObjective(Objective objective, float delay)
     {
         // If there is a next objective, set it and show after X seconds
         if(objective.nextObjective != null)

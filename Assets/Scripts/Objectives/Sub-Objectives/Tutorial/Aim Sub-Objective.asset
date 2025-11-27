@@ -15,5 +15,5 @@ MonoBehaviour:
   isCompleted: 0
   isActive: 0
   descriptionText: 
-  goalText: Hold [RIGHT-CLICK] to aim.\n
+  goalText: Hold <color=#D1A050>[RIGHT-CLICK]</color> to aim.
   completionText: Aiming shows where the coin will land.

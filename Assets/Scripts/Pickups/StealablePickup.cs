@@ -9,10 +9,21 @@ public class StealablePickup : Pickup
     public bool tutorialPainting = false;
     public GameObject paintingCarryPrefab;
 
+    [Header("Glitter")]
+    [SerializeField] [Tooltip("**IMPORTANT** This should ONLY be assigned on the painting in the tutorial area!")] GameObject glitter;
     protected override void Awake()
     {
         displayName = $"Steal painting \n by \n{painterName}";
         base.Awake();
+
+        if(glitter == null) return;
+        glitter.SetActive(false);
+    }
+
+    public void ShowGlitter()
+    {
+        if(glitter == null) return;
+        glitter.SetActive(true);
     }
 
     protected override void OnTriggerEnter(Collider other)

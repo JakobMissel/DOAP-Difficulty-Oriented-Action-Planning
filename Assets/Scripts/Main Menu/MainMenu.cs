@@ -121,13 +121,13 @@ public class MainMenu : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        CheckpointManager.loadCheckpoint += UnmuteGameplayAudio; // Dirty fix for audio staying muted after checkpoint load
+        // Subscribe to checkpoint load completion
+        CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        CheckpointManager.loadCheckpoint -= UnmuteGameplayAudio; // Dirty fix for audio staying muted after checkpoint load
     }
 
     private void Start()
@@ -144,9 +144,6 @@ public class MainMenu : MonoBehaviour
 
         // Cache text elements by tags
         CacheTextElements();
-
-        // Subscribe to checkpoint load completion
-        CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
 
         // Setup button listeners
         SetupButtonListeners();
@@ -736,7 +733,7 @@ public class MainMenu : MonoBehaviour
         HideMenu();
         
         // Start delayed audio unmute (gameplay audio stays muted for 2 seconds)
-        StartCoroutine(UnmuteGameplayAudioDelayed(retryAudioDelay));
+        // StartCoroutine(UnmuteGameplayAudioDelayed(retryAudioDelay));
         
         CheckpointManager.Instance?.BeginLoading();
     }
@@ -744,6 +741,8 @@ public class MainMenu : MonoBehaviour
     private void OnCheckpointLoaded()
     {
         if (!isRetrying) return;
+
+        UnmuteGameplayAudio(); // Ensure gameplay audio is unmuted after checkpoint load
 
         isRetrying = false;
         Debug.Log("[MainMenu] Checkpoint loaded, retry complete");
@@ -1908,7 +1907,10 @@ public class MainMenu : MonoBehaviour
                     audioSource.volume = originalVolumes[audioSource] * volumeMultiplier;
                 }
             }
-            
+            if (!isRetrying)
+            {
+                yield break; // Exit early if player is retrying
+            }
             yield return null; // Wait one frame
         }
         
