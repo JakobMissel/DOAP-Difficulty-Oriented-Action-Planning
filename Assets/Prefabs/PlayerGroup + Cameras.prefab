@@ -954,7 +954,7 @@ Transform:
   m_GameObject: {fileID: 759634666257860209}
   serializedVersion: 2
   m_LocalRotation: {x: 0.20973156, y: -0.6302174, z: 0.18231688, w: 0.72498226}
-  m_LocalPosition: {x: 1.2020454, y: 2.1220937, z: 0.33597755}
+  m_LocalPosition: {x: 2.036146, y: 2.6539445, z: 0.2187522}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1389,8 +1389,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac82298362f4ea4d834c747d97e860f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   normalClip: {fileID: 8300000, guid: 92bda6be400122b4aaf5df451402fdc2, type: 3}
   squeekClip: {fileID: 8300000, guid: 1bf9adb5645db8b4d8baf9c88a98811d, type: 3}
+  requiredVelocity: 0.5
   sneakVolume: 0.3
   squeekChance: 0.01
   pitchVariation: 0.1
@@ -1752,7 +1754,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5498059178547709633}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26381582, y: -0.6146713, z: 0.2293318, w: 0.7070978}
+  m_LocalRotation: {x: 0.2870795, y: -0.6067422, z: 0.24955444, w: 0.69797695}
   m_LocalPosition: {x: 1.0598564, y: 2.4, z: 0.3559618}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2570,8 +2572,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac82298362f4ea4d834c747d97e860f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   normalClip: {fileID: 8300000, guid: 92bda6be400122b4aaf5df451402fdc2, type: 3}
   squeekClip: {fileID: 8300000, guid: 1bf9adb5645db8b4d8baf9c88a98811d, type: 3}
+  requiredVelocity: 0.5
   sneakVolume: 0.3
   squeekChance: 0.01
   pitchVariation: 0.1

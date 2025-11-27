@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class PlayerFootstep : MonoBehaviour
 {
+    [SerializeField] Rigidbody rb;
     [Header("Clips")]
     [SerializeField] AudioClip normalClip;
     [SerializeField] AudioClip squeekClip;
     [Header("Values")]
+    [SerializeField] float requiredVelocity = 0.3f;
     [SerializeField] float sneakVolume = 0.3f;
     [SerializeField] [Range(0f,1f)] float squeekChance = 0.1f;
     [SerializeField] [Range(0f,0.5f)] float pitchVariation = 0.05f;
 
     bool isSneaking = false;
+
+    void Awake()
+    {
+        if(rb == null)
+        {
+            rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+        }
+    }
+
     void OnEnable()
     {
         PlayerActions.sneakStatus += OnSneakStatus;
@@ -38,8 +49,19 @@ public class PlayerFootstep : MonoBehaviour
         PlayerAudio.Instance.PlayAudio(clipToPlay, volume, pitch);
     }
 
+    void Update()
+    {
+        Debug.LogWarning("RB VELOCITY MAG: " + rb.linearVelocity.magnitude);
+    }
+
     void OnTriggerEnter(Collider other)
     {
+        if (rb == null) 
+        {
+            print("Player's rigidbody not found.");
+            return; 
+        }
+        if (rb.linearVelocity.magnitude < requiredVelocity) return;
         Footstep();
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using System;
+using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
@@ -59,6 +60,7 @@ public class MainMenu : MonoBehaviour
     
     [Header("Audio")]
     [SerializeField] private AudioSource menuMusicSource;
+    [SerializeField] private AudioSource gameplayMusicSource;
     [SerializeField] private AudioSource pauseMusicSource;
     [SerializeField] private AudioSource gameOverMusicSource;
     [SerializeField] private float retryAudioDelay = 1.5f;
@@ -72,7 +74,8 @@ public class MainMenu : MonoBehaviour
     private bool gameplayAudioMuted = false;
     private Coroutine pauseMusicFadeCoroutine = null;
     private Coroutine gameOverMusicFadeCoroutine = null;
-    
+    private Coroutine gameplayAudioFadeCoroutine = null;
+
     // Cached text elements by tag
     private GameObject[] mainPanelTextElements;
     private GameObject[] difficultyPanelTextElements;
@@ -90,6 +93,8 @@ public class MainMenu : MonoBehaviour
     public static MainMenu Instance { get; private set; }
 
     private bool IsGameplaySceneLoaded => SceneManager.GetSceneByName(gameplaySceneName).isLoaded;
+
+    bool gameStarted = false;
 
     public static Action fadeToGameplayScene;
     public static void OnFadeToGameplayScene() => fadeToGameplayScene?.Invoke();
@@ -128,11 +133,13 @@ public class MainMenu : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
         // Subscribe to checkpoint load completion
         CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
+        ObjectivesManager.objectiveStarted += BeginGameMusic;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        ObjectivesManager.objectiveStarted -= BeginGameMusic;
     }
 
     private void Start()
@@ -317,6 +324,7 @@ public class MainMenu : MonoBehaviour
         
         // Mute gameplay audio and play pause music with fade-in
         MuteGameplayAudio();
+        ToggleGameMusicWithFade(false);
         PlayPauseMusicWithFadeIn();
         
         // Force enable button GameObjects if they're disabled
@@ -430,7 +438,7 @@ public class MainMenu : MonoBehaviour
         StopMenuMusic();
         StopPauseMusicWithFadeOut();
         StopGameOverMusicWithFadeOut();
-        if (!isRetrying)
+        if (!isRetrying && gameStarted)
         {
             UnmuteGameplayAudio();
         }
@@ -1635,7 +1643,7 @@ public class MainMenu : MonoBehaviour
     {
         if (gameplayAudioMuted) return;
         
-        Debug.Log("[MainMenu] Muting gameplay audio");
+        Debug.LogWarning("[MainMenu] Muting gameplay audio");
         gameplayAudioMuted = true;
         
         // Find and mute all AudioSources in the gameplay scene
@@ -1652,8 +1660,9 @@ public class MainMenu : MonoBehaviour
                 audioSource.mute = true;
             }
         }
+        ToggleGameMusicWithFade(false);
     }
-    
+
     /// <summary>
     /// Unmutes all gameplay audio sources and restores volumes to 1.0
     /// </summary>
@@ -1661,7 +1670,7 @@ public class MainMenu : MonoBehaviour
     {
         if (!gameplayAudioMuted) return;
         
-        Debug.Log("[MainMenu] Unmuting gameplay audio");
+        Debug.LogWarning("[MainMenu] Unmuting gameplay audio");
         gameplayAudioMuted = false;
         
         // Find and unmute all AudioSources in the gameplay scene
@@ -1683,8 +1692,43 @@ public class MainMenu : MonoBehaviour
                 }
             }
         }
+        ToggleGameMusicWithFade(true);
     }
     
+    /// <summary>
+    /// Toggles the gameplay music on or off with a fade effect.
+    /// </summary>
+    void ToggleGameMusicWithFade(bool state)
+    {
+        if (gameplayMusicSource == null) 
+        { 
+            Debug.LogWarning("[MainMenu] Gameplay music source is NULL, cannot toggle music");
+            return;
+        }
+
+        if (gameplayAudioFadeCoroutine != null)
+        {
+            StopCoroutine(gameplayAudioFadeCoroutine);
+            gameplayAudioFadeCoroutine = null;
+        }
+        
+        Debug.LogWarning("[MainMenu] Toggling gameplay music with fade-in");
+        if (state)
+        {
+            gameplayAudioFadeCoroutine = StartCoroutine(FadeInMusic(gameplayMusicSource, musicFadeInDuration, isGameOverMusic: false));
+        }
+        else
+        {
+            gameplayAudioFadeCoroutine = StartCoroutine(FadeOutMusic(gameplayMusicSource, musicFadeOutDuration, isGameOverMusic: false));
+        }
+    }
+
+    void BeginGameMusic()
+    {
+        gameStarted = true;
+        ToggleGameMusicWithFade(true);
+    }
+
     /// <summary>
     /// Starts playing menu music if available
     /// </summary>
@@ -1715,7 +1759,7 @@ public class MainMenu : MonoBehaviour
     private void PlayPauseMusicWithFadeIn()
     {
         if (pauseMusicSource == null) return;
-        
+
         // Stop any current pause music fade
         if (pauseMusicFadeCoroutine != null)
         {
@@ -1732,7 +1776,7 @@ public class MainMenu : MonoBehaviour
     private void StopPauseMusicWithFadeOut()
     {
         if (pauseMusicSource == null) return;
-        
+
         // Stop any current pause music fade
         if (pauseMusicFadeCoroutine != null)
         {
@@ -1749,7 +1793,7 @@ public class MainMenu : MonoBehaviour
     private void PlayGameOverMusicWithFadeIn()
     {
         if (gameOverMusicSource == null) return;
-        
+
         // Stop any current game over music fade
         if (gameOverMusicFadeCoroutine != null)
         {
@@ -1767,7 +1811,6 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log($"[MainMenu] Waiting {gameOverMusicDelay} seconds before fading in game over music");
         yield return new WaitForSecondsRealtime(gameOverMusicDelay);
-        
         if (gameOverMusicSource != null)
         {
             Debug.Log("[MainMenu] Starting game over music fade-in");
@@ -1783,7 +1826,7 @@ public class MainMenu : MonoBehaviour
     private void StopGameOverMusicWithFadeOut()
     {
         if (gameOverMusicSource == null) return;
-        
+
         // Stop any current game over music fade
         if (gameOverMusicFadeCoroutine != null)
         {

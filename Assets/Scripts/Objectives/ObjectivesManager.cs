@@ -14,6 +14,9 @@ public class ObjectivesManager : MonoBehaviour
 
     [SerializeField] public Objective[] objectives;
 
+    public static Action objectiveStarted;
+    public static void OnObjectiveStarted() => objectiveStarted?.Invoke();
+
     public static Action<Objective, int, float, float> setNewObjective;
     public static void OnSetNewObjective(Objective newObjective, int subObjectiveIndex, float delay, float enumeratorDelay) => setNewObjective?.Invoke(newObjective, subObjectiveIndex, delay, enumeratorDelay);
 
@@ -70,6 +73,7 @@ public class ObjectivesManager : MonoBehaviour
     {
         if (objectivesBegun) return;
         objectivesBegun = true;
+        OnObjectiveStarted();
         if (objectives.Length > 0)
         {
             if (startFromFirstObjective)
