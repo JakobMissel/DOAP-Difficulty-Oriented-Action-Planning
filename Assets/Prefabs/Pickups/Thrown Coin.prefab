@@ -156,7 +156,8 @@ MonoBehaviour:
   destroyOnImpact: 0
   thrownObjectTexture: {fileID: 8400000, guid: 10137ad539937114e98261559bc090ad, type: 2}
   bounceMultiplier: 0.3
-  noiseRadius: 15
+  noiseRadius: 5
+  requiredVelocityForAudio: 0.4
 --- !u!114 &-6946774023319014515
 MonoBehaviour:
   m_ObjectHideFlags: 0

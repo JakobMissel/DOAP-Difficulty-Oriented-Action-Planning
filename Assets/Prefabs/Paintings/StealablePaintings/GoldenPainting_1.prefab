@@ -210,7 +210,7 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Painting 1
-  painterName: <u>Amedeo Modigliani</u>
+  painterName: Amedeo Modigliani
   value: 100 DKK
   tutorialPainting: 0
   paintingCarryPrefab: {fileID: 8374694883643649507, guid: 6caad8b116bb5934282f36553a4c3a1f, type: 3}

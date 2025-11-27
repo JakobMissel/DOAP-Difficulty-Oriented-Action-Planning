@@ -410,7 +410,7 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Painting 2
-  painterName: <u>Henri Matisse</u>
+  painterName: Henri Matisse
   value: 100 DKK
   tutorialPainting: 0
   paintingCarryPrefab: {fileID: 8664790796403646270, guid: 2cc02fac5bcea3f40af2cbf65c44b15b, type: 3}

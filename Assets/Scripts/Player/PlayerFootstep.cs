@@ -49,11 +49,6 @@ public class PlayerFootstep : MonoBehaviour
         PlayerAudio.Instance.PlayAudio(clipToPlay, volume, pitch);
     }
 
-    void Update()
-    {
-        Debug.LogWarning("RB VELOCITY MAG: " + rb.linearVelocity.magnitude);
-    }
-
     void OnTriggerEnter(Collider other)
     {
         if (rb == null) 

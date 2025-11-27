@@ -1719,7 +1719,7 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            gameplayAudioFadeCoroutine = StartCoroutine(FadeOutMusic(gameplayMusicSource, musicFadeOutDuration, isGameOverMusic: false));
+            gameplayAudioFadeCoroutine = StartCoroutine(FadeOutMusic(gameplayMusicSource, musicFadeOutDuration, isGameOverMusic: false, false));
         }
     }
 
@@ -1878,7 +1878,7 @@ public class MainMenu : MonoBehaviour
     /// <summary>
     /// Coroutine to fade out an audio source
     /// </summary>
-    private System.Collections.IEnumerator FadeOutMusic(AudioSource audioSource, float duration, bool isGameOverMusic)
+    private System.Collections.IEnumerator FadeOutMusic(AudioSource audioSource, float duration, bool isGameOverMusic, bool stopMusic = true)
     {
         if (audioSource == null) yield break;
         
@@ -1898,7 +1898,11 @@ public class MainMenu : MonoBehaviour
         }
         
         audioSource.volume = targetVolume;
-        audioSource.Stop();
+        if(stopMusic)
+        {
+            audioSource.Stop();
+        }
+
         Debug.Log($"[MainMenu] Fade out complete for {audioSource.name}");
         
         // Clear the tracking reference

@@ -9,6 +9,7 @@ public class ThrownObject : MonoBehaviour
     [SerializeField] float bounceMultiplier = 0.5f;
     [SerializeField] public float noiseRadius = 15f;
     [Header("Audio")]
+    [SerializeField] float requiredVelocityForAudio;
     AudioSource audioSource;
     bool hasCollided = false;
 
@@ -22,6 +23,11 @@ public class ThrownObject : MonoBehaviour
     {
         if(hasCollided)
         {
+
+            
+            
+            Debug.LogWarning("RB VELOCITY MAG: " + rb.linearVelocity.magnitude);
+            
             // Slow down linear and rotation velocity after collision
             rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.deltaTime * 2f);
             rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.deltaTime * 2f);
@@ -44,7 +50,10 @@ public class ThrownObject : MonoBehaviour
     {
         Vector3 bounceDirection = Vector3.Reflect(-collision.relativeVelocity, collision.GetContact(0).normal);
         rb.linearVelocity = bounceDirection * bounceMultiplier;
-        PlayAudio();
+        if(rb.linearVelocity.magnitude > requiredVelocityForAudio) 
+        {
+            PlayAudio();
+        }
         if (hasCollided) return;
         hasCollided = true;
         GameObject noiseArea = null;

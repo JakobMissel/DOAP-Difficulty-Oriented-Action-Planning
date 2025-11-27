@@ -75,9 +75,9 @@ public class StealPainting : MonoBehaviour
                 wallPainting = painting.gameObject;
                 currentPaintingName = painting.name;
 
-                objective.subObjectives[i].completionText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has a litmed duration based on line 72.
-                objective.subObjectives[i + 1].goalText = $"A priceless painting by {painting.painterName}.\nPlace it back at the entrance!"; // This text has unlitmed duration to be read.
-                objective.subObjectives[i + 1].completionText = $"The painting by {painting.painterName} has been placed at the entrance.";
+                objective.subObjectives[i].completionText = $"A priceless painting by <u>{painting.painterName}</u>.\nPlace it back at the entrance!"; // This text has a litmed duration based on line 72.
+                objective.subObjectives[i + 1].goalText = $"A priceless painting by <u>{painting.painterName}</u>.\nPlace it back at the entrance!"; // This text has unlitmed duration to be read.
+                objective.subObjectives[i + 1].completionText = $"The painting by <u>{painting.painterName}</u> has been placed at the entrance.";
                 
                 wallPainting.gameObject.SetActive(false);
                 

@@ -7,6 +7,7 @@ public class FadeBetweenScenes : MonoBehaviour
 {
     [SerializeField] Image fadeScreen;
     [SerializeField] float fadeDuration = 1f;
+    [SerializeField] float outroFadeDuration = 4f;
 
     bool isFading = false;
     float time = 0f;
@@ -75,6 +76,11 @@ public class FadeBetweenScenes : MonoBehaviour
 
         // Ensure time scale is normal for fade out
         Time.timeScale = 1f;
+
+        if(outro)
+        {
+            fadeDuration = outroFadeDuration;
+        }
 
         // Fade to black
         while (time < fadeDuration)

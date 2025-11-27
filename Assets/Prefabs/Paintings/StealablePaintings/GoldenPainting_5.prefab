@@ -238,7 +238,7 @@ MonoBehaviour:
   buttonPressed: 0
   buttonHeld: 0
   paintingName: Painting 5
-  painterName: <u>Pablo Picasso</u>
+  painterName: Pablo Picasso
   value: 100 DKK
   tutorialPainting: 0
   paintingCarryPrefab: {fileID: 2916502899299865950, guid: 594a9e564fdff334f9f904a3889c3eb5, type: 3}
