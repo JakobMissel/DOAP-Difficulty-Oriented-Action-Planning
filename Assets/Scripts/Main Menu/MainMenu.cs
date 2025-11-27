@@ -190,8 +190,9 @@ public class MainMenu : MonoBehaviour
 
             // Start game immediately without showing menu
             // StartGameplayScene();
-            // Fade to gameplay scene
+            // Fade to gameplay scene + audio fade
             OnFadeToGameplayScene();
+            StartCoroutine(FadeOutMusic(menuMusicSource, 1f, false)); // 1f matches default fade out duration
         }
         else
         {
@@ -458,8 +459,9 @@ public class MainMenu : MonoBehaviour
             DifficultyTracker.EnableTestingMode(false);
             Debug.Log("Dynamic Difficulty Adjustment: ENABLED - Starting game");
             //StartGameplayScene();
-            // Fade to gameplay scene
+            // Fade to gameplay scene + audio fade
             OnFadeToGameplayScene();
+            StartCoroutine(FadeOutMusic(menuMusicSource, 1f, false)); // 1f matches default fade out duration
         }
         else
         {
@@ -491,8 +493,9 @@ public class MainMenu : MonoBehaviour
 
         // Start the game
         //StartGameplayScene();
-        // Fade to gameplay scene
+        // Fade to gameplay scene + audio fade
         OnFadeToGameplayScene();
+        StartCoroutine(FadeOutMusic(menuMusicSource, 1f, false)); // 1f matches default fade out duration
     }
 
     private void OnCreditsClicked()
