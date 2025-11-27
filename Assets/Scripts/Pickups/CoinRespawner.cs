@@ -50,7 +50,6 @@ public class CoinRespawner : MonoBehaviour
             if (!coin.activeSelf)
             {
                 coin.SetActive(true);
-                Debug.LogWarning($"Respawned coin: {coin.name}");
             }
         }
     }
