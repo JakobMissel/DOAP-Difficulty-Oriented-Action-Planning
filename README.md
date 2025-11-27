@@ -11,7 +11,7 @@ Special Thanks To:
 - https://rigmodels.com/model.php?view=a_woman_in_a_tight_suit_as_a_vampire-3d-model__7eb3b4ac0674457786fcb499e1a2bddf&searchkeyword=woman&manualsearch=1
 
 Particle Sprite Effects.
-https://www.kenney.nl/assets/particle-pack
+- https://www.kenney.nl/assets/particle-pack
 
 Freestylized - Royalty Free License: Free to use for all Commercial and Non-Commercial purposes.
 - https://freestylized.com/material/wood_planks_09/
