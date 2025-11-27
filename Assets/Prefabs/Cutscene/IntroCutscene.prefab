@@ -1008,8 +1008,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152662360180077572}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.14908536, y: 0.029836893, z: 0.004500612, w: 0.98836386}
-  m_LocalPosition: {x: -0.15, y: 0.96, z: -0.51999664}
+  m_LocalRotation: {x: -0.14328644, y: 0.13036565, z: 0.01904389, w: 0.98087263}
+  m_LocalPosition: {x: -0.55, y: 0.96, z: -0.51999664}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3560,11 +3560,11 @@ MonoBehaviour:
   - "Fernand L\xE9ger"
   - Pablo Picasso
   - Georges Braque
-  - "I\u2019ve already marked\\nthem out on your map,"
+  - "I\u2019ve already marked\\nthem on your map,"
   - so you should be able to steal them and get out in no time
   - Sure thing Corvez,
   - what does the payment look like?
-  - "\u20AC40.000 per painting"
+  - "\u20AC50.000 per painting"
   - I will get it done
 --- !u!222 &1392717635196026107
 CanvasRenderer:
@@ -13657,7 +13657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9145035882088173796}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000057351823, y: 0.8786932, z: -0.00000010556355, w: -0.47738692}
+  m_LocalRotation: {x: -0.0000000063554535, y: 0.8786932, z: -0.000000011698044, w: -0.47738695}
   m_LocalPosition: {x: 47.696377, y: 2.62, z: -106.8862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
