@@ -5,6 +5,10 @@ Special Thanks To:
 
 3D Models.
 - https://rigmodels.com/model.php?view=LowPoly_Man_Body_Boss_Jacket_Suit-3d-model__19cd10742c6b48cb82d60fcb8183a68c&searchkeyword=security%20guard&manualsearch=1
+- https://rigmodels.com/model.php?view=CHARACTER-Peter-Parker-3d-model__ZA23PPKFOZI9EA2VSK8BEUNIW&searchkeyword=man&manualsearch=1
+- https://rigmodels.com/model.php?view=Agent_Man_Black_Suit-3d-model__d6be486a111a4e1d958a51adef28be42&searchkeyword=man&manualsearch=1
+- https://rigmodels.com/model.php?view=woman_in_a_strict_gray_suit_and_blouse-3d-model__5e741ba406df43daaecf28e3442537cb&searchkeyword=woman&manualsearch=1
+- https://rigmodels.com/model.php?view=a_woman_in_a_tight_suit_as_a_vampire-3d-model__7eb3b4ac0674457786fcb499e1a2bddf&searchkeyword=woman&manualsearch=1
 
 Particle Sprite Effects.
 https://www.kenney.nl/assets/particle-pack
