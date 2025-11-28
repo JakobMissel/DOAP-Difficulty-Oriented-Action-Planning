@@ -43083,7 +43083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8961841333341212865, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
       propertyPath: m_HorizontalAlignment
-      value: 16
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
