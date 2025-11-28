@@ -14173,7 +14173,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6036405993589455293, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
       propertyPath: isTestingDdaPlayerActions
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7027287577083503255, guid: 72f8be1328161d84b828d18bbc2ee8b2, type: 3}
+      propertyPath: showDebugLogs
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
