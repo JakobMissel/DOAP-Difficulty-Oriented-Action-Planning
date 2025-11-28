@@ -121,7 +121,7 @@ MonoBehaviour:
   buttonHeld: 0
   thrownObjectPrefab: {fileID: 7497630765312554297, guid: ce1798a13c0226b42904c21168489eaf, type: 3}
   ammoCount: 5
-  noiseRadius: 5
+  noiseRadius: 8
 --- !u!135 &2152200397279163435
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 18
+  m_Radius: 8
   m_Center: {x: 0, y: 0.000000014901161, z: 0}
 --- !u!1 &4011227993378406944
 GameObject:

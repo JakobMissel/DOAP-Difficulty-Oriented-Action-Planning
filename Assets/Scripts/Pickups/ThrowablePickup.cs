@@ -5,7 +5,7 @@ public class ThrowablePickup : Pickup
     [Header("Throwable")]
     [SerializeField] GameObject thrownObjectPrefab;
     [SerializeField] int ammoCount = 5;
-    [SerializeField] float noiseRadius = 5f;
+    [SerializeField] float noiseRadius = 12f; // Increased from 5f for better usability
 
     protected override void Awake()
     {
