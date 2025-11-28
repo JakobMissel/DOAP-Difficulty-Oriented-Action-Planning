@@ -136,6 +136,7 @@ public class PlayerActions : MonoBehaviour
         tutorialCompletion += DebugTutorialCompleted;
         CheckpointManager.loadCheckpoint += CheckpointLoaded;
         playerEscaped += PlayerEscaped;
+        playerEscaped += TempFixForCapturedAtFadeToCutscene;
     }
 
     void OnDisable()
@@ -154,6 +155,7 @@ public class PlayerActions : MonoBehaviour
         tutorialCompletion -= DebugTutorialCompleted;
         CheckpointManager.loadCheckpoint -= CheckpointLoaded;
         playerEscaped -= PlayerEscaped;
+        playerEscaped -= TempFixForCapturedAtFadeToCutscene;
     }
 
     void CheckpointLoaded()
@@ -161,6 +163,12 @@ public class PlayerActions : MonoBehaviour
         canEscape = false;
         carriesPainting = false;
         isOnWall = false;
+    }
+
+    void TempFixForCapturedAtFadeToCutscene()
+    {
+        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponent<CapsuleCollider>().enabled = false;
     }
 
     void DebugTutorialCompleted()

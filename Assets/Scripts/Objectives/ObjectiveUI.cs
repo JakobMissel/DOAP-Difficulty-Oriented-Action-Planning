@@ -112,8 +112,7 @@ public class ObjectiveUI : MonoBehaviour
         // Show completion text
         if (currentObjective.isCompleted)
         {
-            ClearTextArea(middlePanel);
-            CreateObjectiveText($"{currentObjective.name} has been completed!");
+            DeactivateTextArea();
             yield break;
         }
         
