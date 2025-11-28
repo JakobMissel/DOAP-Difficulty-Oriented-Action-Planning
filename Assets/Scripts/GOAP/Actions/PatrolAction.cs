@@ -31,12 +31,17 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override void Start(IMonoAgent mono, Data data)
         {
+            Debug.Log($"[PatrolAction] Start called for {mono.Transform.name}");
+
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var animation = mono.Transform.GetComponent<GuardAnimation>();
             var audio = mono.Transform.GetComponent<ActionAudioBehaviour>();
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh)
+            {
+                Debug.LogWarning($"[PatrolAction] {mono.Transform.name} - NavMeshAgent invalid! agent={agent != null}, enabled={agent?.enabled}, onNavMesh={agent?.isOnNavMesh}");
                 return;
+            }
 
             // Animation handled by GuardAnimationController based on velocity
             audio?.PlayWalkLoop();
@@ -117,6 +122,15 @@ namespace Assets.Scripts.GOAP.Actions
 
         public override IActionRunState Perform(IMonoAgent mono, Data data, IActionContext ctx)
         {
+            // Debug log once per second to avoid spam
+            int guardId = mono.Transform.GetInstanceID();
+            if (!StuckTracking.ContainsKey(guardId) || Time.time - StuckTracking[guardId].TimeAtPosition > 1.0f)
+            {
+                if (StuckTracking.ContainsKey(guardId))
+                    StuckTracking[guardId].TimeAtPosition = Time.time;
+                Debug.Log($"[PatrolAction] Perform called for {mono.Transform.name}");
+            }
+
             // Immediately interrupt patrol when a laser alert is active so we can replan to GoToLaser
             if (LaserAlertSystem.WorldKeyActive)
                 return ActionRunState.Stop;
@@ -142,8 +156,7 @@ namespace Assets.Scripts.GOAP.Actions
                 Debug.LogWarning($"[PatrolAction] {mono.Transform.name} lost valid target!");
                 return ActionRunState.Stop;
             }
-
-            int guardId = mono.Transform.GetInstanceID();
+            
             
             // Check for stuck detection
             if (StuckTracking.ContainsKey(guardId))

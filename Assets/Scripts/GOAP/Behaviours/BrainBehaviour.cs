@@ -152,6 +152,8 @@ namespace Assets.Scripts.GOAP.Behaviours
                 typeof(Assets.Scripts.GOAP.GoToLaserGoal),
                 typeof(StandGuardGoal)
             });
+
+            Debug.Log($"[BrainBehaviour] {gameObject.name} - Goals requested. Provider enabled: {provider.enabled}, Agent enabled: {agent.enabled}, GameObject active: {gameObject.activeSelf}");
         }
 
         private void Update()

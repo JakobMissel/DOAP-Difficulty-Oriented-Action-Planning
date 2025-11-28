@@ -32,17 +32,50 @@ namespace GOAP.Behaviours
             CacheAgents();
         }
 
+        private void Start()
+        {
+            // Check tutorial state again in Start() in case ObjectivesManager wasn't ready in OnEnable()
+            if (ObjectivesManager.Instance != null)
+            {
+                if (ObjectivesManager.Instance.completedTutorial)
+                {
+                    Debug.Log("[GuardGoapTutorialGate] Tutorial already completed in Start(), enabling agents");
+                    EnableAgents();
+                }
+                else
+                {
+                    Debug.Log("[GuardGoapTutorialGate] Tutorial not completed in Start(), disabling agents");
+                    DisableAgents();
+                }
+            }
+            else
+            {
+                Debug.LogWarning("[GuardGoapTutorialGate] ObjectivesManager still null in Start() - guards may not behave correctly until tutorial system initializes");
+            }
+        }
+
         private void OnEnable()
         {
             PlayerActions.tutorialCompletion += OnTutorialCompleted;
 
-            // If the tutorial is already completed when we enable, just ensure guards are active.
-            if (ObjectivesManager.Instance != null && ObjectivesManager.Instance.completedTutorial)
+            // Wait for ObjectivesManager to initialize before making decisions
+            // If ObjectivesManager isn't ready yet, we'll wait for it to initialize properly
+            if (ObjectivesManager.Instance == null)
             {
+                // ObjectivesManager not initialized yet - let Start() handle initial state
+                Debug.Log("[GuardGoapTutorialGate] ObjectivesManager not ready in OnEnable, will check in Start()");
+                return;
+            }
+
+            // If the tutorial is already completed when we enable, just ensure guards are active.
+            if (ObjectivesManager.Instance.completedTutorial)
+            {
+                Debug.Log("[GuardGoapTutorialGate] Tutorial already completed, enabling agents");
                 EnableAgents();
             }
             else
             {
+                Debug.Log("[GuardGoapTutorialGate] Tutorial not completed, disabling agents");
                 DisableAgents();
             }
         }
@@ -78,10 +111,14 @@ namespace GOAP.Behaviours
 
         private void DisableAgents()
         {
+            Debug.Log($"[GuardGoapTutorialGate] Disabling {brains.Count} guards for tutorial");
             foreach (var r in brains)
             {
                 if (r.Root != null)
+                {
+                    Debug.Log($"[GuardGoapTutorialGate] Disabling guard: {r.Root.name}");
                     r.Root.SetActive(false);
+                }
 
                 // Components are disabled implicitly when the root is inactive, but
                 // we keep the explicit calls here in case root toggling is changed later.
@@ -101,10 +138,14 @@ namespace GOAP.Behaviours
 
         private void EnableAgents()
         {
+            Debug.Log($"[GuardGoapTutorialGate] Enabling {brains.Count} guards - tutorial completed");
             foreach (var r in brains)
             {
                 if (r.Root != null && !r.Root.activeSelf)
+                {
+                    Debug.Log($"[GuardGoapTutorialGate] Enabling guard: {r.Root.name}");
                     r.Root.SetActive(true);
+                }
 
                 if (r.ResetBehaviour != null)
                 {
@@ -123,6 +164,7 @@ namespace GOAP.Behaviours
                 if (r.Brain != null)
                     r.Brain.enabled = true;
             }
+            Debug.Log($"[GuardGoapTutorialGate] All guards enabled and ready");
         }
 
         private void OnTutorialCompleted()
