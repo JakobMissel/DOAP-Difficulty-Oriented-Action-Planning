@@ -134,12 +134,14 @@ public class MainMenu : MonoBehaviour
         // Subscribe to checkpoint load completion
         CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
         ObjectivesManager.objectiveStarted += BeginGameMusic;
+        PlayerActions.playerEscaped += MuteGameplayAudio;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         ObjectivesManager.objectiveStarted -= BeginGameMusic;
+        PlayerActions.playerEscaped -= MuteGameplayAudio;
     }
 
     private void Start()
