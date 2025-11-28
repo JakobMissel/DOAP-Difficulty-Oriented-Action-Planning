@@ -15,6 +15,7 @@ namespace Assets.Scripts.Logging
         [SerializeField] private string folderName = "Logs";
 
         private List<DdaLogData> ddaLogData = new List<DdaLogData>();
+        private float gameplayStartMoment = 0f;
 
         #region Functions where this gets data
         /// <summary>
@@ -64,6 +65,12 @@ namespace Assets.Scripts.Logging
         }
 #endif
 
+
+        private void OnEnable()
+        {
+            PlayerActions.tutorialCompletion += TutorialDone;
+        }
+
         /// <summary>
         /// Saves a log when the scene is unloaded or the logger is elsehow disabled
         /// </summary>
@@ -73,6 +80,16 @@ namespace Assets.Scripts.Logging
             if (Application.isPlaying)
 #endif
                 SaveLogAsCsv();
+
+            PlayerActions.tutorialCompletion -= TutorialDone;
+        }
+
+        /// <summary>
+        /// Remembers the time gameplay started
+        /// </summary>
+        private void TutorialDone()
+        {
+            gameplayStartMoment = Time.time;
         }
 
         /// <summary>
@@ -121,7 +138,7 @@ namespace Assets.Scripts.Logging
             // Write out the data
             for (int i = 0; i < ddaLogData.Count; i++)
             {
-                writer.WriteLine($"{ddaLogData[i].time:0.00};{ddaLogData[i].difficulty}");
+                writer.WriteLine($"{(ddaLogData[i].time - gameplayStartMoment).ToString("0.00")};{ddaLogData[i].difficulty.ToString("0.00")}");
             }
 
             // Close the writer
