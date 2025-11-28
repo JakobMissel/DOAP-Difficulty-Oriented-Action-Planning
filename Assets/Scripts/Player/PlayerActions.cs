@@ -99,6 +99,8 @@ public class PlayerActions : MonoBehaviour
     public bool carriesPainting;
     public bool canEscape;
     public bool isOnWall;
+    [SerializeField] public GameObject[] importantFix;
+    [SerializeField] public GameObject minorFix;
 
     Stopwatch stopwatch = new();
 

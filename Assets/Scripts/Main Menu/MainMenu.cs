@@ -95,7 +95,6 @@ public class MainMenu : MonoBehaviour
     private bool IsGameplaySceneLoaded => SceneManager.GetSceneByName(gameplaySceneName).isLoaded;
 
     bool gameStarted = false;
-    bool gameEnded = false;
 
     public static Action fadeToGameplayScene;
     public static void OnFadeToGameplayScene() => fadeToGameplayScene?.Invoke();
@@ -135,14 +134,14 @@ public class MainMenu : MonoBehaviour
         // Subscribe to checkpoint load completion
         CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
         ObjectivesManager.objectiveStarted += BeginGameMusic;
-        PlayerActions.playerEscaped += () => gameEnded = true;
+        PlayerActions.playerEscaped += () => gameplayMusicSource.enabled = false;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         ObjectivesManager.objectiveStarted -= BeginGameMusic;
-        PlayerActions.playerEscaped -= () => gameEnded = true;
+        PlayerActions.playerEscaped -= () => gameplayMusicSource.enabled = false;
     }
 
     private void Start()
@@ -449,7 +448,7 @@ public class MainMenu : MonoBehaviour
         StopMenuMusic();
         StopPauseMusicWithFadeOut();
         StopGameOverMusicWithFadeOut();
-        if (!isRetrying && gameStarted && !gameEnded)
+        if (!isRetrying && gameStarted)
         {
             UnmuteGameplayAudio();
         }

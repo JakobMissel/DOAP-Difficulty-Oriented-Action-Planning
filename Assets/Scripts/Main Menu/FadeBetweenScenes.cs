@@ -73,6 +73,7 @@ public class FadeBetweenScenes : MonoBehaviour
     {
         isFading = true;
         float timeScale = Time.timeScale;
+        fadeScreen.raycastTarget = true;
 
         // Ensure time scale is normal for fade out
         Time.timeScale = 1f;
@@ -126,5 +127,6 @@ public class FadeBetweenScenes : MonoBehaviour
         time = 0f;
         // Restore time scale
         Time.timeScale = timeScale;
+        fadeScreen.raycastTarget = false;
     }
 }

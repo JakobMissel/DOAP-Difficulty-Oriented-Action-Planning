@@ -23,11 +23,6 @@ public class ThrownObject : MonoBehaviour
     {
         if(hasCollided)
         {
-
-            
-            
-            Debug.LogWarning("RB VELOCITY MAG: " + rb.linearVelocity.magnitude);
-            
             // Slow down linear and rotation velocity after collision
             rb.angularVelocity = Vector3.Lerp(rb.angularVelocity, Vector3.zero, Time.deltaTime * 2f);
             rb.linearVelocity = Vector3.Lerp(rb.linearVelocity, Vector3.zero, Time.deltaTime * 2f);

@@ -326,9 +326,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3531266469462294931, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
+      propertyPath: m_text
+      value: '"Me, for real"'
+      objectReference: {fileID: 0}
     - target: {fileID: 4423908972134646990, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00033
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943759616707667676, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
+      propertyPath: m_text
+      value: 'Simply a self-portrait of the painter with a name that is quite on
+        the nose.         '
       objectReference: {fileID: 0}
     - target: {fileID: 6755166297669803107, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
       propertyPath: m_Name
@@ -906,9 +915,19 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.000045
       objectReference: {fileID: 0}
+    - target: {fileID: 2869383271536634411, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: The people depicted in the painting are stumped completely. This is
+        due to them being sure this was the nude beach, but there is no water any
+        where to be seen.
+      objectReference: {fileID: 0}
     - target: {fileID: 4929602436343730760, guid: d82204762da17834286b69344933c96a, type: 3}
       propertyPath: m_Name
       value: Painting_59
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949444066439056740, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: '"Confusion"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2437,6 +2456,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Painting_14
       objectReference: {fileID: 0}
+    - target: {fileID: 2030146652355307813, guid: 25b0ab013d696754f89cb0ca6b0dd5af, type: 3}
+      propertyPath: m_text
+      value: 'In search of great power, it was finally found. As the power was shared,
+        so was this painting.       '
+      objectReference: {fileID: 0}
     - target: {fileID: 2612621417772421122, guid: 25b0ab013d696754f89cb0ca6b0dd5af, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.00008333333
@@ -2488,6 +2512,10 @@ PrefabInstance:
     - target: {fileID: 3230837051184902201, guid: 25b0ab013d696754f89cb0ca6b0dd5af, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174230852592619114, guid: 25b0ab013d696754f89cb0ca6b0dd5af, type: 3}
+      propertyPath: m_text
+      value: '"Power"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3038,6 +3066,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 154729433396453821, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
+      propertyPath: m_text
+      value: '"Watermelon"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5379153272085888694, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
       propertyPath: m_Name
       value: Painting_24
@@ -3089,6 +3121,12 @@ PrefabInstance:
     - target: {fileID: 6428108457772449749, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00016
+      objectReference: {fileID: 0}
+    - target: {fileID: 7014453572431824626, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
+      propertyPath: m_text
+      value: 'Watermelons are grown in favorable climates from tropical to temperate
+        regions worldwide for its large edible fruit, which is a berry with a hard
+        rind and no internal divisions, and is botanically called a pepo.       '
       objectReference: {fileID: 0}
     - target: {fileID: 8603521588288455898, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3292,6 +3330,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 179.961
       objectReference: {fileID: 0}
+    - target: {fileID: 876381213424232115, guid: 11d81af546e241742b779d78cbf12dcb, type: 3}
+      propertyPath: m_text
+      value: 'A painting? PERRY THE PAINTING?! What are you doing here?      '
+      objectReference: {fileID: 0}
     - target: {fileID: 3031525104053559747, guid: 11d81af546e241742b779d78cbf12dcb, type: 3}
       propertyPath: m_Name
       value: Painting_35
@@ -3339,6 +3381,10 @@ PrefabInstance:
     - target: {fileID: 6328157173087575285, guid: 11d81af546e241742b779d78cbf12dcb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 8022148813405438460, guid: 11d81af546e241742b779d78cbf12dcb, type: 3}
+      propertyPath: m_text
+      value: '"Perry"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3421,6 +3467,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 2106148527980786729, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
+      propertyPath: m_text
+      value: '"Lawsuit"'
+      objectReference: {fileID: 0}
     - target: {fileID: 6187111657149152221, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
       propertyPath: m_LocalPosition.x
       value: 36.862
@@ -3468,6 +3518,11 @@ PrefabInstance:
     - target: {fileID: 6439921168425778072, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099354997130384230, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
+      propertyPath: m_text
+      value: "Is it just me, or does this painting kinda look like Porygon? There
+        even is a pok\xE9ball in the top right corner!     "
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3609,9 +3664,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4205204608252011660, guid: dd06444c4dadd5846997dab959c501fb, type: 3}
+      propertyPath: m_text
+      value: 'The painter of the painting didn''t really give it a name, so the intern
+        just made one up for it.          '
+      objectReference: {fileID: 0}
     - target: {fileID: 5563315732079782050, guid: dd06444c4dadd5846997dab959c501fb, type: 3}
       propertyPath: m_Name
       value: Painting_19
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423837904712369091, guid: dd06444c4dadd5846997dab959c501fb, type: 3}
+      propertyPath: m_text
+      value: '"Small snail"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5145,6 +5209,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 4296814353702824632, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
+      propertyPath: m_text
+      value: '"Accident"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5346927408425418776, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 44.66
@@ -5184,6 +5252,11 @@ PrefabInstance:
     - target: {fileID: 5346927408425418776, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403190845882879479, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
+      propertyPath: m_text
+      value: Nevermind, this actually looks like an accident. How did this even get
+        in here?
       objectReference: {fileID: 0}
     - target: {fileID: 6967586422661379280, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5387,9 +5460,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3531266469462294931, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
+      propertyPath: m_text
+      value: '"Me, for real"'
+      objectReference: {fileID: 0}
     - target: {fileID: 4423908972134646990, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00029
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943759616707667676, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
+      propertyPath: m_text
+      value: 'Simply a self-portrait of the painter with a name that is quite on
+        the nose.         '
       objectReference: {fileID: 0}
     - target: {fileID: 6755166297669803107, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
       propertyPath: m_Name
@@ -6861,6 +6943,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 2106148527980786729, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
+      propertyPath: m_text
+      value: '"Lawsuit"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5055859996748737089, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.010033
@@ -6912,6 +6998,11 @@ PrefabInstance:
     - target: {fileID: 6439921168425778072, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
       propertyPath: m_Name
       value: Painting_9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099354997130384230, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
+      propertyPath: m_text
+      value: "Is it just me, or does this painting kinda look like Porygon? There
+        even is a pok\xE9ball in the top right corner!     "
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8284,6 +8375,15 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.00009
       objectReference: {fileID: 0}
+    - target: {fileID: 2632854747159912131, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
+      propertyPath: m_text
+      value: Many people often confuse this paintings orientation. Replicas of this
+        painting is often hung up the wrong way.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184816027250899340, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
+      propertyPath: m_text
+      value: '"Flipped"'
+      objectReference: {fileID: 0}
     - target: {fileID: 7098973626279649951, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
       propertyPath: m_LocalScale.x
       value: 90
@@ -9332,6 +9432,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 807319113176818361, guid: 6c6be7b86cddbc74da632513d608add4, type: 3}
+      propertyPath: m_text
+      value: '"Dinner"'
+      objectReference: {fileID: 0}
     - target: {fileID: 3441553040433789071, guid: 6c6be7b86cddbc74da632513d608add4, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.0003
@@ -9347,6 +9451,11 @@ PrefabInstance:
     - target: {fileID: 5774920361805675729, guid: 6c6be7b86cddbc74da632513d608add4, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.000089
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514750421192787446, guid: 6c6be7b86cddbc74da632513d608add4, type: 3}
+      propertyPath: m_text
+      value: 'The two men dining together found out that they both equally hate AM-bidrag,
+        as it initially was a temporary solution to a problem seemingly long gone.   '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9413,7 +9522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1314942297740118359, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.055999763
+      value: 0.05600024
       objectReference: {fileID: 0}
     - target: {fileID: 1314942297740118359, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_LocalRotation.y
@@ -9606,6 +9715,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sticker_2
       objectReference: {fileID: 0}
+    - target: {fileID: 2168911420969787233, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: 'A priceless painting, justing hanging here safely guarded. Probably.                     '
+      objectReference: {fileID: 0}
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.025
@@ -9657,6 +9770,14 @@ PrefabInstance:
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218383319907799609, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035461890210363438, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: Amedeo Modigliani
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10182,6 +10303,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 4231052828154241305, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
+      propertyPath: m_text
+      value: '"Reflection"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5311170578505409222, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.00898
@@ -10229,6 +10354,11 @@ PrefabInstance:
     - target: {fileID: 5859133484053128847, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470078256298837590, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
+      propertyPath: m_text
+      value: "Its 3:15am. I'm not even tired at this point. I'm in the zone, writing
+        filler text for paintings in a replica of Mus\xE9e d'Art Moderne de Paris.         "
       objectReference: {fileID: 0}
     - target: {fileID: 7036653611129700209, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10650,9 +10780,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3070340083381981073, guid: cb8aa6768f80bfb40ae1038ca10b947c, type: 3}
+      propertyPath: m_text
+      value: '"Bird party"'
+      objectReference: {fileID: 0}
     - target: {fileID: 3314269267722352747, guid: cb8aa6768f80bfb40ae1038ca10b947c, type: 3}
       propertyPath: m_Name
       value: Painting_21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323791099733485790, guid: cb8aa6768f80bfb40ae1038ca10b947c, type: 3}
+      propertyPath: m_text
+      value: 'A group of different bird species foraging together for safety or a
+        party with a bird theme for a birthday or baby shower.     '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10732,7 +10871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1314942297740118359, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0170002
+      value: -0.017499926
       objectReference: {fileID: 0}
     - target: {fileID: 1314942297740118359, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_LocalRotation.y
@@ -10744,11 +10883,11 @@ PrefabInstance:
       objectReference: {fileID: 887939955}
     - target: {fileID: 1693503500864856439, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_Positions.Array.data[0].z
-      value: -0.98200035
+      value: -0.9825001
       objectReference: {fileID: 0}
     - target: {fileID: 1693503500864856439, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_Positions.Array.data[1].z
-      value: 0.98200035
+      value: 0.9825001
       objectReference: {fileID: 0}
     - target: {fileID: 2668331665146584990, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10764,7 +10903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5536902866415028782, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_Size.z
-      value: 1.9640007
+      value: 1.9650002
       objectReference: {fileID: 0}
     - target: {fileID: 8839093892983110762, guid: 0f9dfc61aa2eb6c448488f75c83de394, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11310,6 +11449,15 @@ PrefabInstance:
     - target: {fileID: 2228147088857819605, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00013
+      objectReference: {fileID: 0}
+    - target: {fileID: 2632854747159912131, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
+      propertyPath: m_text
+      value: Many people often confuse this paintings orientation. Replicas of this
+        painting is often hung up the wrong way.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184816027250899340, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
+      propertyPath: m_text
+      value: '"Flipped"'
       objectReference: {fileID: 0}
     - target: {fileID: 7098973626279649951, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12099,6 +12247,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3274068021604721077, guid: 2395d3ddcf8a3e5428439559ce2b2fdc, type: 3}
+      propertyPath: m_text
+      value: '"Avatar"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625627335070271226, guid: 2395d3ddcf8a3e5428439559ce2b2fdc, type: 3}
+      propertyPath: m_text
+      value: No no, yes, the one with the blue people living in the trees and stuff,
+        yes. I don't man, its kinda overrated.
+      objectReference: {fileID: 0}
     - target: {fileID: 7053385994369937340, guid: 2395d3ddcf8a3e5428439559ce2b2fdc, type: 3}
       propertyPath: m_Name
       value: Painting_1
@@ -12608,9 +12765,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3070340083381981073, guid: cb8aa6768f80bfb40ae1038ca10b947c, type: 3}
+      propertyPath: m_text
+      value: '"Bird party"'
+      objectReference: {fileID: 0}
     - target: {fileID: 3314269267722352747, guid: cb8aa6768f80bfb40ae1038ca10b947c, type: 3}
       propertyPath: m_Name
       value: Painting_33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5323791099733485790, guid: cb8aa6768f80bfb40ae1038ca10b947c, type: 3}
+      propertyPath: m_text
+      value: 'A group of different bird species foraging together for safety or a
+        party with a bird theme for a birthday or baby shower.     '
       objectReference: {fileID: 0}
     - target: {fileID: 8182060883765170681, guid: cb8aa6768f80bfb40ae1038ca10b947c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12789,6 +12955,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.00004
       objectReference: {fileID: 0}
+    - target: {fileID: 4296814353702824632, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
+      propertyPath: m_text
+      value: '"Accident"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5346927408425418776, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.995
@@ -12828,6 +12998,11 @@ PrefabInstance:
     - target: {fileID: 5346927408425418776, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403190845882879479, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
+      propertyPath: m_text
+      value: Nevermind, this actually looks like an accident. How did this even get
+        in here?
       objectReference: {fileID: 0}
     - target: {fileID: 7591283569090581060, guid: 1b166bbb8f900014aa400b3160d383d3, type: 3}
       propertyPath: m_Name
@@ -13322,6 +13497,15 @@ PrefabInstance:
     - target: {fileID: 2994758544020203679, guid: 60dcb8b4d6d602544b0acf55330cdc3b, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3366149676158042579, guid: 60dcb8b4d6d602544b0acf55330cdc3b, type: 3}
+      propertyPath: m_text
+      value: '"Inspiration"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5605603358574519964, guid: 60dcb8b4d6d602544b0acf55330cdc3b, type: 3}
+      propertyPath: m_text
+      value: 'It can also refer to the source of this motivation, which can be external
+        (like nature or art) or internal. Even if it looks like a rug from IKEA.       '
       objectReference: {fileID: 0}
     - target: {fileID: 8477595597575233467, guid: 60dcb8b4d6d602544b0acf55330cdc3b, type: 3}
       propertyPath: m_LocalScale.x
@@ -13836,6 +14020,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 4231052828154241305, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
+      propertyPath: m_text
+      value: '"Reflection"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5311170578505409222, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.00898
@@ -13883,6 +14071,11 @@ PrefabInstance:
     - target: {fileID: 5859133484053128847, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470078256298837590, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
+      propertyPath: m_text
+      value: "Its 3:15am. I'm not even tired at this point. I'm in the zone, writing
+        filler text for paintings in a replica of Mus\xE9e d'Art Moderne de Paris.         "
       objectReference: {fileID: 0}
     - target: {fileID: 7036653611129700209, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16002,6 +16195,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 2004995386455046859, guid: e08f1f806fd892c47a2512039afb882b, type: 3}
+      propertyPath: m_text
+      value: '"Say cheese!"'
+      objectReference: {fileID: 0}
     - target: {fileID: 4045057762584754094, guid: e08f1f806fd892c47a2512039afb882b, type: 3}
       propertyPath: m_LocalScale.x
       value: 80
@@ -16081,6 +16278,10 @@ PrefabInstance:
     - target: {fileID: 5149575801004405521, guid: e08f1f806fd892c47a2512039afb882b, type: 3}
       propertyPath: m_Name
       value: Painting_27
+      objectReference: {fileID: 0}
+    - target: {fileID: 8696100599803108740, guid: e08f1f806fd892c47a2512039afb882b, type: 3}
+      propertyPath: m_text
+      value: Often said by a photographer to encourage the subject to smile.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16303,6 +16504,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 545037793}
     m_Modifications:
+    - target: {fileID: 1190612202632903476, guid: 7ab7f4ff9aedb344ca98cfcb697a27a8, type: 3}
+      propertyPath: m_text
+      value: '"Water"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5408961303838905662, guid: 7ab7f4ff9aedb344ca98cfcb697a27a8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01687
@@ -16386,6 +16591,11 @@ PrefabInstance:
     - target: {fileID: 8113639620917870547, guid: 7ab7f4ff9aedb344ca98cfcb697a27a8, type: 3}
       propertyPath: m_Name
       value: Painting_31
+      objectReference: {fileID: 0}
+    - target: {fileID: 8356440897408048251, guid: 7ab7f4ff9aedb344ca98cfcb697a27a8, type: 3}
+      propertyPath: m_text
+      value: According to an ancient myth, water is liquid and not poisonous. Crazy,
+        I know, but if you are brave enough, go drink a glas of water.
       objectReference: {fileID: 0}
     - target: {fileID: 8702368364098716413, guid: 7ab7f4ff9aedb344ca98cfcb697a27a8, type: 3}
       propertyPath: m_LocalScale.x
@@ -17488,6 +17698,16 @@ PrefabInstance:
     - target: {fileID: 745136030684259223, guid: 2395d3ddcf8a3e5428439559ce2b2fdc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3274068021604721077, guid: 2395d3ddcf8a3e5428439559ce2b2fdc, type: 3}
+      propertyPath: m_text
+      value: '"Avatar"'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5625627335070271226, guid: 2395d3ddcf8a3e5428439559ce2b2fdc, type: 3}
+      propertyPath: m_text
+      value: 'No no, yes, the one with the blue people living in the trees and stuff,
+        yes. I don''t man, its kinda... Hey wait a minute, Is this painting up-side
+        down?       '
       objectReference: {fileID: 0}
     - target: {fileID: 7053385994369937340, guid: 2395d3ddcf8a3e5428439559ce2b2fdc, type: 3}
       propertyPath: m_Name
@@ -19213,6 +19433,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Painting_23
       objectReference: {fileID: 0}
+    - target: {fileID: 4512615093763763248, guid: 73556cfc5ce0906408e84afb01dcd4fe, type: 3}
+      propertyPath: m_text
+      value: 'While it can be unpleasant, boredom can also be a catalyst for creativity
+        and self-reflection by prompting you to seek more meaningful experiences. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6763819781892770687, guid: 73556cfc5ce0906408e84afb01dcd4fe, type: 3}
+      propertyPath: m_text
+      value: '"Boredom"'
+      objectReference: {fileID: 0}
     - target: {fileID: 7804807958810618060, guid: 73556cfc5ce0906408e84afb01dcd4fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42.776
@@ -20718,6 +20947,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Painting_20
       objectReference: {fileID: 0}
+    - target: {fileID: 2030146652355307813, guid: 25b0ab013d696754f89cb0ca6b0dd5af, type: 3}
+      propertyPath: m_text
+      value: 'In search of great power, it was finally found. As the power was shared,
+        so was this painting.       '
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174230852592619114, guid: 25b0ab013d696754f89cb0ca6b0dd5af, type: 3}
+      propertyPath: m_text
+      value: '"Power"'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20904,9 +21142,19 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2869383271536634411, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: The people depicted in the painting are stumped completely. This is
+        due to them being sure this was the nude beach, but there is no water any
+        where to be seen.
+      objectReference: {fileID: 0}
     - target: {fileID: 4929602436343730760, guid: d82204762da17834286b69344933c96a, type: 3}
       propertyPath: m_Name
       value: Painting_18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949444066439056740, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: '"Confusion"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21405,6 +21653,15 @@ PrefabInstance:
     - target: {fileID: 2531343024471864461, guid: e4fa90972487c274591dc399c65617f3, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00021
+      objectReference: {fileID: 0}
+    - target: {fileID: 4009524445282254155, guid: e4fa90972487c274591dc399c65617f3, type: 3}
+      propertyPath: m_text
+      value: Just a guy in the woods with a bell, living his best life. Many people
+        are jealous of this level of freedom.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114020193127324164, guid: e4fa90972487c274591dc399c65617f3, type: 3}
+      propertyPath: m_text
+      value: '"Bell man"'
       objectReference: {fileID: 0}
     - target: {fileID: 8878013970678584830, guid: e4fa90972487c274591dc399c65617f3, type: 3}
       propertyPath: m_Name
@@ -21955,9 +22212,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4205204608252011660, guid: dd06444c4dadd5846997dab959c501fb, type: 3}
+      propertyPath: m_text
+      value: 'The painter of the painting didn''t really give it a name, so the intern
+        just made one up for it.          '
+      objectReference: {fileID: 0}
     - target: {fileID: 5563315732079782050, guid: dd06444c4dadd5846997dab959c501fb, type: 3}
       propertyPath: m_Name
       value: Painting_38
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423837904712369091, guid: dd06444c4dadd5846997dab959c501fb, type: 3}
+      propertyPath: m_text
+      value: '"Snail"'
       objectReference: {fileID: 0}
     - target: {fileID: 7941131856355027613, guid: dd06444c4dadd5846997dab959c501fb, type: 3}
       propertyPath: m_LocalScale.x
@@ -22572,6 +22838,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sticker_3
       objectReference: {fileID: 0}
+    - target: {fileID: 2168911420969787233, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: 'A priceless painting, justing hanging here safely guarded. Probably.                     '
+      objectReference: {fileID: 0}
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.025
@@ -22623,6 +22893,10 @@ PrefabInstance:
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035461890210363438, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: Henri Matisse
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24986,6 +25260,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 108757239927647409, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
+      propertyPath: m_text
+      value: 'Brainstorming is a creativity technique in which a group of people
+        interact to suggest ideas spontaneously in response to a prompt.        '
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932072530937249411, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5.44
+      objectReference: {fileID: 0}
     - target: {fileID: 4174556392030639510, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.02267
@@ -25050,6 +25333,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7133578559679089662, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
+      propertyPath: m_text
+      value: '"Greenneedle"'
+      objectReference: {fileID: 0}
     - target: {fileID: 7617063077260266011, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0234
@@ -25077,6 +25364,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 2004995386455046859, guid: e08f1f806fd892c47a2512039afb882b, type: 3}
+      propertyPath: m_text
+      value: '"Say cheese!"'
+      objectReference: {fileID: 0}
     - target: {fileID: 4045057762584754094, guid: e08f1f806fd892c47a2512039afb882b, type: 3}
       propertyPath: m_LocalScale.x
       value: 70
@@ -25160,6 +25451,10 @@ PrefabInstance:
     - target: {fileID: 5149575801004405521, guid: e08f1f806fd892c47a2512039afb882b, type: 3}
       propertyPath: m_Name
       value: Painting_25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8696100599803108740, guid: e08f1f806fd892c47a2512039afb882b, type: 3}
+      propertyPath: m_text
+      value: Often said by a photographer to encourage the subject to smile.
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25756,9 +26051,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2243697444864341902, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_text
+      value: '"2gether"'
+      objectReference: {fileID: 0}
     - target: {fileID: 7581180219942979523, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
       propertyPath: m_Name
       value: Painting_12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961841333341212865, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_text
+      value: 'If found "2gether" is found together, a certain wealth can be given,
+        to open new doors.            '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27615,6 +27919,15 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.0004
       objectReference: {fileID: 0}
+    - target: {fileID: 3619115205142014811, guid: 319d68b2cb121b14da80bf3ca22f4f4b, type: 3}
+      propertyPath: m_text
+      value: 'Don''t worry about it, you really cannot make a mistake here and as
+        you know we don''t make mistakes, we have happy accidents.     '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855880041016331284, guid: 319d68b2cb121b14da80bf3ca22f4f4b, type: 3}
+      propertyPath: m_text
+      value: '"Accidents"'
+      objectReference: {fileID: 0}
     - target: {fileID: 8726298538024630841, guid: 319d68b2cb121b14da80bf3ca22f4f4b, type: 3}
       propertyPath: m_Name
       value: Painting_12
@@ -28590,6 +28903,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sticker
       objectReference: {fileID: 0}
+    - target: {fileID: 2168911420969787233, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: 'A priceless painting, justing hanging here safely guarded. Probably.                     '
+      objectReference: {fileID: 0}
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.025
@@ -28641,6 +28958,14 @@ PrefabInstance:
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6218383319907799609, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035461890210363438, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: Georges Braque
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28848,6 +29173,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 125120975170986959, guid: d93ecb4845c5c8d49ac06d09590a0de2, type: 3}
+      propertyPath: m_text
+      value: 'The painter found person with an extremely long neck. Following her
+        instinct, this painter had to document this amazing find.     '
+      objectReference: {fileID: 0}
     - target: {fileID: 3180148583161584154, guid: d93ecb4845c5c8d49ac06d09590a0de2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0086
@@ -28911,6 +29241,10 @@ PrefabInstance:
     - target: {fileID: 4472085759386517628, guid: d93ecb4845c5c8d49ac06d09590a0de2, type: 3}
       propertyPath: m_Name
       value: Painting_30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7116084440583111808, guid: d93ecb4845c5c8d49ac06d09590a0de2, type: 3}
+      propertyPath: m_text
+      value: '"Neeeeck"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29109,6 +29443,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 545037793}
     m_Modifications:
+    - target: {fileID: 4231052828154241305, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
+      propertyPath: m_text
+      value: '"Reflection"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5859133484053128847, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_LocalScale.x
       value: 120
@@ -29164,6 +29502,11 @@ PrefabInstance:
     - target: {fileID: 5859133484053128847, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6470078256298837590, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
+      propertyPath: m_text
+      value: "Its 2:15am. I'm not even tired at this point. I'm in the zone, writing
+        filler text for paintings in a replica of Mus\xE9e d'Art Moderne de Paris.         "
       objectReference: {fileID: 0}
     - target: {fileID: 7036653611129700209, guid: 3b92719a6fd8c5f48b559e50b3823321, type: 3}
       propertyPath: m_LocalPosition.x
@@ -29602,6 +29945,17 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.00011
       objectReference: {fileID: 0}
+    - target: {fileID: 3282968478014811518, guid: 848135f2cedfa5a41a1bf4f74a451c3c, type: 3}
+      propertyPath: m_text
+      value: 'Tiki-taka has been variously described as "a style of play based on
+        making your way to the back of the net through short passing and movement.      '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688784833480804913, guid: 848135f2cedfa5a41a1bf4f74a451c3c, type: 3}
+      propertyPath: m_text
+      value: '"Tiki-taka"
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 6509394726405663193, guid: 848135f2cedfa5a41a1bf4f74a451c3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31.133
@@ -29712,6 +30066,15 @@ PrefabInstance:
     - target: {fileID: 2228147088857819605, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00023
+      objectReference: {fileID: 0}
+    - target: {fileID: 2632854747159912131, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
+      propertyPath: m_text
+      value: Many people often confuse this paintings orientation. Replicas of this
+        painting is often hung up the wrong way.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184816027250899340, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
+      propertyPath: m_text
+      value: '"Flipped"'
       objectReference: {fileID: 0}
     - target: {fileID: 7098973626279649951, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30842,6 +31205,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1429993526597255712, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
   m_PrefabInstance: {fileID: 1912801021}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1351353850
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1351353851}
+  - component: {fileID: 1351353853}
+  - component: {fileID: 1351353852}
+  m_Layer: 0
+  m_Name: Cebu.099
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1351353851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351353850}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -7.4264207, y: 2.561368, z: 19.871883}
+  m_LocalScale: {x: 0.08476995, y: 0.19835047, z: 0.25514537}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 543450653483921880}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1351353852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351353850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b797c4b36a0c454fb2508a3ec039d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foo: {fileID: 0}
+  bar: 5
+  superImportant: 1
+--- !u!65 &1351353853
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351353850}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.84, y: 12.603952, z: 8.703883}
+  m_Center: {x: 0, y: 0.00000047683716, z: -0.014849186}
 --- !u!1 &1354077362
 GameObject:
   m_ObjectHideFlags: 0
@@ -31197,9 +31629,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 545037793}
     m_Modifications:
+    - target: {fileID: 1239831229327201979, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.78
+      objectReference: {fileID: 0}
     - target: {fileID: 4090223919849269044, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
       propertyPath: m_Name
       value: Painting_10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4187373444859116716, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
+      propertyPath: m_text
+      value: '"Go Santa, gooo!"'
       objectReference: {fileID: 0}
     - target: {fileID: 4254908299860456099, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31208,6 +31648,11 @@ PrefabInstance:
     - target: {fileID: 4254908299860456099, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.0146
+      objectReference: {fileID: 0}
+    - target: {fileID: 6440539115897969635, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
+      propertyPath: m_text
+      value: 'The hooded person lends his sleigh to Santa. Or so he thinks - the
+        hooded person is in reality giving his sleigh away to a random homeless person.       '
       objectReference: {fileID: 0}
     - target: {fileID: 6992971993291842244, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -31809,6 +32254,15 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.0001
       objectReference: {fileID: 0}
+    - target: {fileID: 4009524445282254155, guid: e4fa90972487c274591dc399c65617f3, type: 3}
+      propertyPath: m_text
+      value: Just a guy in the woods with a bell, living his best life. Many people
+        are jealous of this level of freedom.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6114020193127324164, guid: e4fa90972487c274591dc399c65617f3, type: 3}
+      propertyPath: m_text
+      value: '"Bell man"'
+      objectReference: {fileID: 0}
     - target: {fileID: 8878013970678584830, guid: e4fa90972487c274591dc399c65617f3, type: 3}
       propertyPath: m_Name
       value: Painting_16
@@ -31958,6 +32412,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 108757239927647409, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
+      propertyPath: m_text
+      value: Brainstorming is a creativity technique in which a group of people interact
+        to suggest ideas spontaneously in response to a prompt.
+      objectReference: {fileID: 0}
     - target: {fileID: 4174556392030639510, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.0005
@@ -32041,6 +32500,10 @@ PrefabInstance:
     - target: {fileID: 5809805821895815843, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133578559679089662, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
+      propertyPath: m_text
+      value: '"Brainstorm"'
       objectReference: {fileID: 0}
     - target: {fileID: 7617063077260266011, guid: f0a29e5ceb9cf914f979d7e71dd306b6, type: 3}
       propertyPath: m_LocalScale.x
@@ -32889,6 +33352,15 @@ PrefabInstance:
     - target: {fileID: 915250131195826837, guid: 4711031dea0795a478b1cf186d7a6775, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4456024438032208829, guid: 4711031dea0795a478b1cf186d7a6775, type: 3}
+      propertyPath: m_text
+      value: 'Don''t worry about reading the text on the paintings, it''s all just
+        boring nonsense. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6821571743363036402, guid: 4711031dea0795a478b1cf186d7a6775, type: 3}
+      propertyPath: m_text
+      value: '"1t''s okay"'
       objectReference: {fileID: 0}
     - target: {fileID: 8155891008356805505, guid: 4711031dea0795a478b1cf186d7a6775, type: 3}
       propertyPath: m_Name
@@ -34077,9 +34549,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 1239831229327201979, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.72
+      objectReference: {fileID: 0}
     - target: {fileID: 4090223919849269044, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
       propertyPath: m_Name
       value: Painting_32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4187373444859116716, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
+      propertyPath: m_text
+      value: '"Go Santa, go!"'
       objectReference: {fileID: 0}
     - target: {fileID: 4254908299860456099, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
       propertyPath: m_LocalScale.x
@@ -34104,6 +34584,11 @@ PrefabInstance:
     - target: {fileID: 4254908299860456099, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6440539115897969635, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
+      propertyPath: m_text
+      value: 'The hooded person lends his sleigh to Santa. Or so he thinks - the
+        hooded person is in reality giving his sleigh away to a random homeless person.                 '
       objectReference: {fileID: 0}
     - target: {fileID: 6992971993291842244, guid: 5c67ccc311804434f9725d36073d29c1, type: 3}
       propertyPath: m_LocalScale.x
@@ -35176,6 +35661,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vase 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3820647819188289494, guid: ac4c623c63e216b4baa173d1a1e1bd4b, type: 3}
+      propertyPath: bar
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3820647819188289494, guid: ac4c623c63e216b4baa173d1a1e1bd4b, type: 3}
+      propertyPath: foo
+      value: 
+      objectReference: {fileID: 1937725946539494612}
     - target: {fileID: 6823607536849697450, guid: ac4c623c63e216b4baa173d1a1e1bd4b, type: 3}
       propertyPath: m_LocalScale.x
       value: 50
@@ -36961,6 +37454,15 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.000059
       objectReference: {fileID: 0}
+    - target: {fileID: 3282968478014811518, guid: 848135f2cedfa5a41a1bf4f74a451c3c, type: 3}
+      propertyPath: m_text
+      value: 'Tiki-taka has been variously described as "a style of play based on
+        making your way to the back of the net through short passing and movement.      '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5688784833480804913, guid: 848135f2cedfa5a41a1bf4f74a451c3c, type: 3}
+      propertyPath: m_text
+      value: '"Tiki-taka"'
+      objectReference: {fileID: 0}
     - target: {fileID: 6509394726405663193, guid: 848135f2cedfa5a41a1bf4f74a451c3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.703
@@ -37321,9 +37823,19 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.00003
       objectReference: {fileID: 0}
+    - target: {fileID: 2869383271536634411, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: The people depicted in the painting are stumped completely. This is
+        due to them being sure this was the nude beach, but there is no water any
+        where to be seen.
+      objectReference: {fileID: 0}
     - target: {fileID: 4929602436343730760, guid: d82204762da17834286b69344933c96a, type: 3}
       propertyPath: m_Name
       value: Painting_42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949444066439056740, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: '"Confusion"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -37796,6 +38308,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sticker_4
       objectReference: {fileID: 0}
+    - target: {fileID: 2168911420969787233, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: 'A priceless painting, justing hanging here safely guarded. Probably.                     '
+      objectReference: {fileID: 0}
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.025
@@ -37848,6 +38364,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6218383319907799609, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035461890210363438, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: "Fernand \nL\xE9ger"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -37875,6 +38399,10 @@ PrefabInstance:
     - target: {fileID: 590757555872280931, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_Name
       value: Sticker_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2168911420969787233, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: 'A priceless painting, justing hanging here safely guarded. Probably.                     '
       objectReference: {fileID: 0}
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalScale.x
@@ -37927,6 +38455,10 @@ PrefabInstance:
     - target: {fileID: 2771094464192587334, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035461890210363438, guid: 070405b71f0c5b44f94044594631b70e, type: 3}
+      propertyPath: m_text
+      value: Pablo Picasso
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40110,6 +40642,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 545037793}
     m_Modifications:
+    - target: {fileID: 154729433396453821, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
+      propertyPath: m_text
+      value: '"Watermelon"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5379153272085888694, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
       propertyPath: m_Name
       value: Painting_24
@@ -40209,6 +40745,12 @@ PrefabInstance:
     - target: {fileID: 6428108457772449749, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7014453572431824626, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
+      propertyPath: m_text
+      value: 'Watermelons are grown in favorable climates from tropical to temperate
+        regions worldwide for its large edible fruit, which is a berry with a hard
+        rind and no internal divisions, and is botanically called a pepo.       '
       objectReference: {fileID: 0}
     - target: {fileID: 8603521588288455898, guid: 25c5c541a604e6a49acd032c2821daab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -42016,6 +42558,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180
       objectReference: {fileID: 0}
+    - target: {fileID: 2632854747159912131, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
+      propertyPath: m_text
+      value: Many people often confuse this paintings orientation. Replicas of this
+        painting is often hung up the wrong way.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184816027250899340, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
+      propertyPath: m_text
+      value: '"Flipped"'
+      objectReference: {fileID: 0}
     - target: {fileID: 7098973626279649951, guid: 63f94f3b30b75be408bd06a800aaac86, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5
@@ -42509,6 +43060,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2243697444864341902, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_text
+      value: '"2gether"'
+      objectReference: {fileID: 0}
     - target: {fileID: 2377591508640121853, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00011
@@ -42516,6 +43071,15 @@ PrefabInstance:
     - target: {fileID: 7581180219942979523, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
       propertyPath: m_Name
       value: Painting_28
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961841333341212865, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_text
+      value: 'If found "2gether" is found together, a certain wealth can be given,
+        to open new doors.        '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961841333341212865, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -43486,6 +44050,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2243697444864341902, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_text
+      value: '"2gether"'
+      objectReference: {fileID: 0}
     - target: {fileID: 2377591508640121853, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00011
@@ -43497,6 +44065,11 @@ PrefabInstance:
     - target: {fileID: 7581180219942979523, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
       propertyPath: m_Name
       value: Painting_42
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961841333341212865, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_text
+      value: 'If found "2gether" is found together, a certain wealth can be given,
+        to open new doors.        '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -44214,6 +44787,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2243697444864341902, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_text
+      value: '"2gether"'
+      objectReference: {fileID: 0}
     - target: {fileID: 2377591508640121853, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.000175
@@ -44269,6 +44846,11 @@ PrefabInstance:
     - target: {fileID: 7581180219942979523, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
       propertyPath: m_Name
       value: Painting_37
+      objectReference: {fileID: 0}
+    - target: {fileID: 8961841333341212865, guid: 1c63251b1a451174da234e12db6e8ccc, type: 3}
+      propertyPath: m_text
+      value: 'If found "2gether" is found together, a certain wealth can be given,
+        to open new doors.        '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -44354,9 +44936,19 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.000152
       objectReference: {fileID: 0}
+    - target: {fileID: 2869383271536634411, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: The people depicted in the painting are stumped completely. This is
+        due to them being sure this was the nude beach, but there is no water any
+        where to be seen.
+      objectReference: {fileID: 0}
     - target: {fileID: 4929602436343730760, guid: d82204762da17834286b69344933c96a, type: 3}
       propertyPath: m_Name
       value: Painting_58
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949444066439056740, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: '"Confusion"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -44462,9 +45054,19 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2869383271536634411, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: The people depicted in the painting are stumped completely. This is
+        due to them being sure this was the nude beach, but there is no water any
+        where to be seen.
+      objectReference: {fileID: 0}
     - target: {fileID: 4929602436343730760, guid: d82204762da17834286b69344933c96a, type: 3}
       propertyPath: m_Name
       value: Painting_21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949444066439056740, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: '"Confusion"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -44527,6 +45129,15 @@ PrefabInstance:
     - target: {fileID: 915250131195826837, guid: 4711031dea0795a478b1cf186d7a6775, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4456024438032208829, guid: 4711031dea0795a478b1cf186d7a6775, type: 3}
+      propertyPath: m_text
+      value: I wonder if anyone is actuallly reading these. If you read this, through
+        5 coins in the vase next to a painting similar to this.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6821571743363036402, guid: 4711031dea0795a478b1cf186d7a6775, type: 3}
+      propertyPath: m_text
+      value: '"1t''s okay"'
       objectReference: {fileID: 0}
     - target: {fileID: 8155891008356805505, guid: 4711031dea0795a478b1cf186d7a6775, type: 3}
       propertyPath: m_Name
@@ -45170,6 +45781,15 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3619115205142014811, guid: 319d68b2cb121b14da80bf3ca22f4f4b, type: 3}
+      propertyPath: m_text
+      value: 'Don''t worry about it, you really cannot make a mistake here and as
+        you know we don''t make mistakes, we have happy accidents.     '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855880041016331284, guid: 319d68b2cb121b14da80bf3ca22f4f4b, type: 3}
+      propertyPath: m_text
+      value: '"Accidents"'
+      objectReference: {fileID: 0}
     - target: {fileID: 8726298538024630841, guid: 319d68b2cb121b14da80bf3ca22f4f4b, type: 3}
       propertyPath: m_Name
       value: Painting_11
@@ -45525,9 +46145,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 807319113176818361, guid: 6c6be7b86cddbc74da632513d608add4, type: 3}
+      propertyPath: m_text
+      value: '"Dinner"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5107892460138359722, guid: 6c6be7b86cddbc74da632513d608add4, type: 3}
       propertyPath: m_Name
       value: Painting_13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7514750421192787446, guid: 6c6be7b86cddbc74da632513d608add4, type: 3}
+      propertyPath: m_text
+      value: 'The two men dining together found out that they both equally hate AM-bidrag,
+        as it initially was a temporary solution to a problem seemingly long gone.   '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45688,9 +46317,19 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2869383271536634411, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: The people depicted in the painting are stumped completely. This is
+        due to them being sure this was the nude beach, but there is no water any
+        where to be seen.
+      objectReference: {fileID: 0}
     - target: {fileID: 4929602436343730760, guid: d82204762da17834286b69344933c96a, type: 3}
       propertyPath: m_Name
       value: Painting_10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4949444066439056740, guid: d82204762da17834286b69344933c96a, type: 3}
+      propertyPath: m_text
+      value: '"Confusion"'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45776,6 +46415,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1133533847}
     m_Modifications:
+    - target: {fileID: 2106148527980786729, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
+      propertyPath: m_text
+      value: '"Lawsuit"'
+      objectReference: {fileID: 0}
     - target: {fileID: 5055859996748737089, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.010033
@@ -45827,6 +46470,11 @@ PrefabInstance:
     - target: {fileID: 6439921168425778072, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
       propertyPath: m_Name
       value: Painting_41
+      objectReference: {fileID: 0}
+    - target: {fileID: 9099354997130384230, guid: 90d82a167cda33141a20dff64eb09383, type: 3}
+      propertyPath: m_text
+      value: "Is it just me, or does this painting kinda look like Porygon? There
+        even is a pok\xE9ball in the top right corner!     "
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -46522,9 +47170,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3531266469462294931, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
+      propertyPath: m_text
+      value: '"Me, for real"'
+      objectReference: {fileID: 0}
     - target: {fileID: 4423908972134646990, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.00037
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943759616707667676, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
+      propertyPath: m_text
+      value: 'Simply a self-portrait of the painter with a name that is quite on
+        the nose.         '
       objectReference: {fileID: 0}
     - target: {fileID: 6755166297669803107, guid: 94a8c045fc557854dbcf0650f88ec5df, type: 3}
       propertyPath: m_Name
@@ -49232,6 +49889,7 @@ Transform:
   - {fileID: 977615933253539170}
   - {fileID: 4891294558258982708}
   - {fileID: 83694669882862096}
+  - {fileID: 1351353851}
   - {fileID: 2371282149677681544}
   - {fileID: 3961711313349341427}
   - {fileID: 7565610896233163679}
@@ -53583,6 +54241,8 @@ GameObject:
   - component: {fileID: 512038740146754870}
   - component: {fileID: 8715479567208207264}
   - component: {fileID: 8715479567208207265}
+  - component: {fileID: 8715479567208207267}
+  - component: {fileID: 8715479567208207266}
   m_Layer: 0
   m_Name: Cube.099
   m_TagString: Untagged
@@ -74390,6 +75050,42 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.9999999, y: 12.603952, z: 8.703883}
+  m_Center: {x: 0, y: 0.00000047683716, z: -0.014849186}
+--- !u!114 &8715479567208207266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937725946539494612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b797c4b36a0c454fb2508a3ec039d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foo: {fileID: 0}
+  bar: 5
+  superImportant: 1
+--- !u!65 &8715479567208207267
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937725946539494612}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.84, y: 12.603952, z: 8.703883}
   m_Center: {x: 0, y: 0.00000047683716, z: -0.014849186}
 --- !u!4 &8717746572090286169
 Transform:
