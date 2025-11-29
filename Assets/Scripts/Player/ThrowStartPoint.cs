@@ -3,36 +3,32 @@ using UnityEngine;
 public class ThrowStartPoint : MonoBehaviour
 {
     bool available = true;
-    [SerializeField] LayerMask wallLayer;
+    [SerializeField] string[] wallLayer = new[] {"Wall"};
 
     public bool IsAvailable()
     {
         return available;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (((1 << other.gameObject.layer) & wallLayer) != 0)
-        {
-            //Debug.LogWarning($"Throw point blocked by wall. {other.name}");
-            available = false;
-        }
-    }
-
     void OnTriggerStay(Collider other)
     {
-        if (((1 << other.gameObject.layer) & wallLayer) != 0)
+        foreach (var layer in wallLayer)
         {
-            //Debug.LogWarning($"Throw point blocked by wall. {other.name}");
-            available = false;
+            if (other.gameObject.layer.ToString().ToLower() == LayerMask.NameToLayer(layer).ToString().ToLower())
+            {
+                available = false;
+            }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (((1 << other.gameObject.layer) & wallLayer) != 0)
+        foreach (var layer in wallLayer)
         {
-            available = true;
+            if (other.gameObject.layer.ToString().ToLower() == LayerMask.NameToLayer(layer).ToString().ToLower())
+            {
+                available = true;
+            }
         }
     }
 }

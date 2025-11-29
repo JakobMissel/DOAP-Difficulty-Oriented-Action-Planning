@@ -72043,6 +72043,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.33597755
       objectReference: {fileID: 0}
+    - target: {fileID: 8923980640261349788, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: wallLayer.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8923980640261349788, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: 'wallLayer.Array.data[0]'
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 9059689017396462760, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: wallLayer.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9059689017396462760, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: 'wallLayer.Array.data[0]'
+      value: Wall
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

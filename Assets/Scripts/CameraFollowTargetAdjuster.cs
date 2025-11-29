@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CameraFollowTargetAdjuster : MonoBehaviour
 {
+    [SerializeField] string[] layerNames = new[] { "Wall" };
     [SerializeField] Vector3 startPosition = new(0.5f, 1.4f, 0);
     [SerializeField] Vector3 hitWallPosition = new(0, 1.4f, 0);
     [SerializeField] float moveTime = 1f;
@@ -31,17 +32,22 @@ public class CameraFollowTargetAdjuster : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        foreach (var layerName in layerNames)
         {
-            isInContactWithWall = true;  
+            if (other.gameObject.layer.ToString().ToLower() == LayerMask.NameToLayer(layerName).ToString().ToLower())
+            {
+                isInContactWithWall = true;
+            }
         }
     }
-
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        foreach (var layerName in layerNames)
         {
-            isInContactWithWall = false;
+            if (other.gameObject.layer.ToString().ToLower() == LayerMask.NameToLayer(layerName).ToString().ToLower())
+            {
+                isInContactWithWall = false;
+            }
         }
     }
 }

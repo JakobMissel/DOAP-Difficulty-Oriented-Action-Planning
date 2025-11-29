@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Sneak Sub-Objective
   m_EditorClassIdentifier: 
   isCompleted: 0
-  isActive: 1
+  isActive: 0
   descriptionText: 
-  goalText: Hold <color=#D1A050>[C]</color> while moving to sneak.
+  goalText: Hold <color=#D1A050>[C]</color> or <color=#D1A050>[CTRL]</color> while
+    moving to sneak.
   completionText: Sneaking produces less noise than running.
