@@ -25,22 +25,19 @@ public class FadeBetweenScenes : MonoBehaviour
     {
         MainMenu.fadeToGameplayScene += BeginFadeOut;
         PlayerActions.playerEscaped += BeginFadeOut;
-        SceneManager.sceneLoaded += (Scene scene, LoadSceneMode mode) => 
-        {
-            // Start fade in when a new scene is loaded
-            StartCoroutine(FadeIn());
-        };
+        SceneManager.sceneLoaded += HandleSceneLoaded;
     }
 
     void OnDisable()
     {
         MainMenu.fadeToGameplayScene -= BeginFadeOut;
         PlayerActions.playerEscaped -= BeginFadeOut;
-        SceneManager.sceneLoaded -= (Scene scene, LoadSceneMode mode) => 
-        {
-            // Start fade in when a new scene is loaded
-            StartCoroutine(FadeIn());
-        };
+        SceneManager.sceneLoaded -= HandleSceneLoaded;
+    }
+
+    private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StartCoroutine(FadeIn());
     }
 
     /// <summary>

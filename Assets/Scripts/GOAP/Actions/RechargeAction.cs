@@ -36,6 +36,9 @@ using Assets.Scripts.GOAP.Behaviours;
             // Show the recharging icon
             ShowRechargingIcon(mono.Transform, true);
 
+            // Turn off flashlight during recharge
+            SetFlashlightActive(mono.Transform, false);
+
             // Start recharging
             if (energy != null)
             {
@@ -98,6 +101,9 @@ using Assets.Scripts.GOAP.Behaviours;
             // Hide the recharging icon
             ShowRechargingIcon(mono.Transform, false);
 
+            // Turn flashlight back on after recharge
+            SetFlashlightActive(mono.Transform, true);
+
             // Resume movement
             if (navAgent != null)
             {
@@ -140,6 +146,28 @@ using Assets.Scripts.GOAP.Behaviours;
             else
             {
                 Debug.LogWarning($"[RechargeAction] {guardTransform.name} could not find Canvas/RechargingIcon");
+            }
+        }
+
+        /// <summary>
+        /// Enables or disables the guard's flashlight (spotlight)
+        /// </summary>
+        private void SetFlashlightActive(Transform guardTransform, bool active)
+        {
+            // Search for Light components in children (typically the flashlight/spotlight)
+            Light[] lights = guardTransform.GetComponentsInChildren<Light>();
+
+            if (lights != null && lights.Length > 0)
+            {
+                foreach (Light light in lights)
+                {
+                    light.enabled = active;
+                }
+                Debug.Log($"[RechargeAction] {guardTransform.name} flashlight(s) set to: {active} ({lights.Length} light(s) found)");
+            }
+            else
+            {
+                Debug.LogWarning($"[RechargeAction] {guardTransform.name} has no Light components in children!");
             }
         }
      }

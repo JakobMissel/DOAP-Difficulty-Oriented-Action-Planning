@@ -12,6 +12,25 @@ namespace Assets.Scripts.GOAP
     {
         private static GoapPersistence instance;
         private static bool applicationQuitting = false;
+        private static bool forceDestroyInstance = false;
+
+        public static void ForceDestroyInstance()
+        {
+            if (instance == null)
+                return;
+
+            forceDestroyInstance = true;
+            var go = instance.gameObject;
+            instance = null;
+            if (Application.isPlaying)
+            {
+                Object.Destroy(go);
+            }
+            else
+            {
+                Object.DestroyImmediate(go);
+            }
+        }
 
         private void Awake()
         {
@@ -42,22 +61,25 @@ namespace Assets.Scripts.GOAP
 
         private void OnDestroy()
         {
-            if (instance == this && !applicationQuitting)
+            if (instance == this)
             {
-                Debug.LogError($"[GoapPersistence] Singleton instance is being destroyed during gameplay!");
-                Debug.LogError($"[GoapPersistence] Current scene: {gameObject.scene.name}, Time: {Time.time}, Frame: {Time.frameCount}");
-                Debug.LogError($"[GoapPersistence] This suggests something is explicitly calling Destroy() on GOAPConfig!");
-
-                // Log all scenes currently loaded
-                for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+                if (!applicationQuitting && !forceDestroyInstance)
                 {
-                    var scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
-                    Debug.LogError($"[GoapPersistence] Loaded scene {i}: {scene.name}, isLoaded: {scene.isLoaded}");
+                    Debug.LogError($"[GoapPersistence] Singleton instance is being destroyed during gameplay!");
+                    Debug.LogError($"[GoapPersistence] Current scene: {gameObject.scene.name}, Time: {Time.time}, Frame: {Time.frameCount}");
+                    for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+                    {
+                        var scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(i);
+                        Debug.LogError($"[GoapPersistence] Loaded scene {i}: {scene.name}, isLoaded: {scene.isLoaded}");
+                    }
                 }
 
                 instance = null;
+                forceDestroyInstance = false;
+                return;
             }
-            else if (applicationQuitting)
+
+            if (applicationQuitting)
             {
                 Debug.Log("[GoapPersistence] Destroyed during application quit - this is normal.");
             }

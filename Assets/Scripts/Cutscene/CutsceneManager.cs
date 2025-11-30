@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using Assets.Scripts.Systems;
 
 namespace Assets.Scripts.Cutscene
 {
@@ -74,13 +75,43 @@ namespace Assets.Scripts.Cutscene
                     IntroCutsceneDone();
                     break;
                 case CutsceneSelect.Outro:
-                    // Load main menu
-                    SceneManager.LoadScene(0);
+                    OutroCutsceneDone();
                     break;
                 default:
                     break;
             }
 
+        }
+
+        /// <summary>
+        /// Returns to main menu after outro cutscene by completely reloading the game
+        /// This ensures a fresh state identical to when the game first starts
+        /// </summary>
+        private void OutroCutsceneDone()
+        {
+            Debug.Log("[CutsceneManager] Outro cutscene complete, performing complete game reset");
+
+            GameResetService.ResetPersistentSystems();
+
+            if (global::MainMenu.Instance != null)
+            {
+                Debug.Log("[CutsceneManager] Destroying persistent MainMenu canvas to ensure clean reload");
+
+                // Find the root canvas that was marked as DontDestroyOnLoad
+                Transform canvasRoot = global::MainMenu.Instance.transform;
+                while (canvasRoot.parent != null)
+                {
+                    canvasRoot = canvasRoot.parent;
+                }
+
+                // Destroy the entire persistent canvas hierarchy
+                Destroy(canvasRoot.gameObject);
+                Debug.Log($"[CutsceneManager] Destroyed {canvasRoot.name} - scene will now reload fresh");
+            }
+
+            // Now load scene 0 in Single mode - this will give a completely fresh start
+            // Since we destroyed the persistent canvas, the new scene will create fresh instances
+            SceneManager.LoadScene(0, LoadSceneMode.Single);
         }
 
         private void DisableEnvironmentLighting()

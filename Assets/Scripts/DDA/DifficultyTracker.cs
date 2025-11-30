@@ -428,5 +428,19 @@ namespace Assets.Scripts.DDA
             return newPercent;
         }
 #endregion
+
+        public static void HardReset()
+        {
+            hasBeenCalled = false;
+            actualDifficulties.Clear();
+            effectiveDifficulties.Clear();
+            unweightedPlayerActionDifficulties = null;
+            pde = null;
+            ede = null;
+            testingMode = false;
+            testingDifficulty01 = 0f;
+            CalledNow();
+        }
     }
 }
+

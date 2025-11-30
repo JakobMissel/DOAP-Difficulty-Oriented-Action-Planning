@@ -158,6 +158,14 @@ public class PlayerActions : MonoBehaviour
         playerEscaped -= TempFixForCapturedAtFadeToCutscene;
     }
 
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
+
     void CheckpointLoaded()
     {
         canEscape = false;
@@ -181,6 +189,17 @@ public class PlayerActions : MonoBehaviour
     {
         stopwatch.Stop();
         Debug.LogWarning($"[{Time.time}] Tutorial completed in {stopwatch.Elapsed}");
+    }
+
+    void Update()
+    {
+        // TESTING SHORTCUT: Press F9 to instantly win the game
+        if (Input.GetKeyDown(KeyCode.F9))
+        {
+            Debug.LogWarning("[PlayerActions] ========== F9 PRESSED - TRIGGERING WIN CONDITION FOR TESTING ==========");
+            canEscape = true;
+            OnPlayerEscaped();
+        }
     }
 
     void DebugMove(bool obj)

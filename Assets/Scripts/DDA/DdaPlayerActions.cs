@@ -293,5 +293,19 @@ namespace Assets.Scripts.DDA
             }
         }
 #endif
+
+        public void ResetRunData()
+        {
+            startMoment = 0f;
+            tutorialEnded = false;
+            timesCaptured = 0;
+            lastPaintingStealingTime = -1f;
+#if UNITY_EDITOR
+            if (isTestingDdaPlayerActions)
+            {
+                UpdateDdaTestUI();
+            }
+#endif
+        }
     }
 }

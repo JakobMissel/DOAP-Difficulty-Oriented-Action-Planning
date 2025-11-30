@@ -28,6 +28,8 @@ namespace Assets.Scripts.GOAP.Actions
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
+            agent.stoppingDistance = 0.25f;
+            agent.autoBraking = false;
 
             // Start tracking evasion time for this guard
             int guardId = mono.Transform.GetInstanceID();
@@ -39,7 +41,7 @@ namespace Assets.Scripts.GOAP.Actions
             var agent = mono.Transform.GetComponent<NavMeshAgent>();
             var sight = mono.Transform.GetComponent<GuardSight>();
 
-            if (cachedPlayer == null)
+            if (cachedPlayer == null || !cachedPlayer.gameObject.activeInHierarchy)
                 cachedPlayer = GameObject.FindGameObjectWithTag("Player")?.transform;
 
             if (agent == null || !agent.enabled || !agent.isOnNavMesh || data.Target == null || !data.Target.IsValid())
@@ -54,8 +56,41 @@ namespace Assets.Scripts.GOAP.Actions
                 return ActionRunState.Stop;
             }
 
-            // Chase the player - collision detection (GuardCatchTrigger) will handle the catch
-            agent.SetDestination(data.Target.Position);
+            Vector3 targetPosition = data.Target.Position;
+            if (cachedPlayer != null)
+            {
+                targetPosition = cachedPlayer.position;
+            }
+
+            Vector3 navTarget = targetPosition;
+            if (!NavMesh.SamplePosition(targetPosition, out var hit, 1.5f, NavMesh.AllAreas))
+            {
+                var fallback = data.Target.Position;
+                if (NavMesh.SamplePosition(fallback, out var fallbackHit, 1.5f, NavMesh.AllAreas))
+                {
+                    navTarget = fallbackHit.position;
+                }
+                else
+                {
+                    Debug.LogWarning($"[PursuitAction] {mono.Transform.name} failed to sample NavMesh near target, stopping pursuit.");
+                    return ActionRunState.Stop;
+                }
+            }
+            else
+            {
+                navTarget = hit.position;
+            }
+
+            float distance = Vector3.Distance(agent.transform.position, navTarget);
+            if (distance <= agent.stoppingDistance + 0.1f)
+            {
+                agent.ResetPath();
+            }
+            else
+            {
+                agent.SetDestination(navTarget);
+            }
+
             agent.isStopped = false;
             agent.updateRotation = true;
 

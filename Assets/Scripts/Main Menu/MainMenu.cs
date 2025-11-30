@@ -134,18 +134,122 @@ public class MainMenu : MonoBehaviour
         // Subscribe to checkpoint load completion
         CheckpointManager.loadCheckpoint += OnCheckpointLoaded;
         ObjectivesManager.objectiveStarted += BeginGameMusic;
-        PlayerActions.playerEscaped += () => gameplayMusicSource.enabled = false;
+        PlayerActions.playerEscaped += OnPlayerEscapedDisableGameplayMusic;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
         ObjectivesManager.objectiveStarted -= BeginGameMusic;
-        PlayerActions.playerEscaped -= () => gameplayMusicSource.enabled = false;
+        PlayerActions.playerEscaped -= OnPlayerEscapedDisableGameplayMusic;
+    }
+
+    private void OnPlayerEscapedDisableGameplayMusic()
+    {
+        if (gameplayMusicSource)
+        {
+            gameplayMusicSource.enabled = false;
+        }
     }
 
     private void Start()
     {
+        Debug.Log($"[MainMenu] ========== START CALLED on {gameObject.name} ==========");
+        Debug.Log($"[MainMenu] Instance check - This: {this.GetInstanceID()}, Singleton: {Instance?.GetInstanceID()}");
+
+        // FIRST: Immediately hide all secondary panels to ensure clean state
+        // This must happen before any other logic to prevent overlapping UI
+        Debug.Log($"[MainMenu] Panel references - Main: {mainPanel != null}, Credits: {creditsPanel != null}, Difficulty: {difficultyPanel != null}, Pause: {pausePanel != null}, GameOver: {gameOverPanel != null}");
+
+        if (creditsPanel)
+        {
+            creditsPanel.SetActive(false);
+            Debug.Log($"[MainMenu] CreditsPanel deactivated - Active: {creditsPanel.activeSelf}");
+        }
+        else
+        {
+            Debug.LogWarning("[MainMenu] CreditsPanel reference is NULL!");
+        }
+
+        if (difficultyPanel)
+        {
+            difficultyPanel.SetActive(false);
+            Debug.Log($"[MainMenu] DifficultyPanel deactivated - Active: {difficultyPanel.activeSelf}");
+        }
+        else
+        {
+            Debug.LogWarning("[MainMenu] DifficultyPanel reference is NULL!");
+        }
+
+        if (pausePanel)
+        {
+            pausePanel.SetActive(false);
+            Debug.Log($"[MainMenu] PausePanel deactivated - Active: {pausePanel.activeSelf}");
+        }
+        else
+        {
+            Debug.LogWarning("[MainMenu] PausePanel reference is NULL!");
+        }
+
+        if (gameOverPanel)
+        {
+            gameOverPanel.SetActive(false);
+            Debug.Log($"[MainMenu] GameOverPanel deactivated - Active: {gameOverPanel.activeSelf}");
+        }
+        else
+        {
+            Debug.LogWarning("[MainMenu] GameOverPanel reference is NULL!");
+        }
+
+        // Ensure main panel is visible for normal startup
+        if (mainPanel)
+        {
+            mainPanel.SetActive(true);
+            Debug.Log($"[MainMenu] MainPanel activated - Active: {mainPanel.activeSelf}");
+        }
+        else
+        {
+            Debug.LogWarning("[MainMenu] MainPanel reference is NULL!");
+        }
+
+        Debug.Log("[MainMenu] Initial panel state set - only MainPanel should be visible");
+
+        // CRITICAL: Ensure EventSystem exists for button clicks
+        var eventSystem = UnityEngine.EventSystems.EventSystem.current;
+        if (eventSystem == null)
+        {
+            Debug.LogWarning("[MainMenu] No EventSystem found! Creating one...");
+            var eventSystemObj = new GameObject("EventSystem");
+            eventSystemObj.AddComponent<UnityEngine.EventSystems.EventSystem>();
+            eventSystemObj.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+            Debug.Log("[MainMenu] EventSystem created");
+        }
+        else
+        {
+            Debug.Log($"[MainMenu] EventSystem found: {eventSystem.gameObject.name}");
+        }
+
+        // CRITICAL: Ensure FadeScreen isn't blocking input AND is transparent for main menu
+        var fadeScreen = GameObject.Find("FadeScreen")?.GetComponent<UnityEngine.UI.Image>();
+        if (fadeScreen != null)
+        {
+            if (fadeScreen.raycastTarget)
+            {
+                fadeScreen.raycastTarget = false;
+                Debug.Log("[MainMenu] FadeScreen raycasts disabled to unblock main menu input");
+            }
+
+            if (fadeScreen.color.a > 0f)
+            {
+                fadeScreen.color = new Color(0, 0, 0, 0);
+                Debug.Log("[MainMenu] FadeScreen color reset to transparent for main menu");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("[MainMenu] FadeScreen not found!");
+        }
+
         // Find player reference
         player = GameObject.FindGameObjectWithTag(playerTag);
 
@@ -161,7 +265,7 @@ public class MainMenu : MonoBehaviour
 
         // Setup button listeners
         SetupButtonListeners();
-        
+
         // Ensure canvas is properly configured for input
         EnsureCanvasConfiguration();
         ConfigureDecorativeOverlays();
@@ -222,11 +326,6 @@ public class MainMenu : MonoBehaviour
             ddaToggle.isOn = true; // Default to DDA enabled
             OnDDAToggleChanged(ddaToggle.isOn);
         }
-
-        // Hide all secondary panels initially
-        if (difficultyPanel) difficultyPanel.SetActive(false);
-        if (pausePanel) pausePanel.SetActive(false);
-        if (gameOverPanel) gameOverPanel.SetActive(false);
     }
 
     private void Update()
@@ -258,8 +357,13 @@ public class MainMenu : MonoBehaviour
 
     public void ShowMenu()
     {
+        ShowMenu(shouldUnloadGameplay: false);
+    }
+
+    public void ShowMenu(bool shouldUnloadGameplay)
+    {
         isGamePaused = true;
-        
+
         SetGameplayInputActive(false);
         // Show the main menu
         if (mainPanel) mainPanel.SetActive(true);
@@ -276,7 +380,7 @@ public class MainMenu : MonoBehaviour
 
         // Pause the game
         // Time.timeScale = 0f;
-        
+
         // Mute gameplay audio and play menu music
         MuteGameplayAudio();
         PlayMenuMusic();
@@ -290,6 +394,13 @@ public class MainMenu : MonoBehaviour
         // Unlock and show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        // Only unload gameplay scene if explicitly requested (e.g., after winning the game)
+        if (shouldUnloadGameplay && IsGameplaySceneLoaded)
+        {
+            Debug.Log("[MainMenu] Unloading gameplay scene to ensure clean state for next game");
+            UnloadGameplayScene();
+        }
     }
 
     public void ShowPauseMenu()
@@ -632,15 +743,30 @@ public class MainMenu : MonoBehaviour
     {
         if (IsGameplaySceneLoaded)
         {
-            Debug.Log("[MainMenu] Gameplay scene already loaded, resuming");
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(gameplaySceneName));
-            HideMenu();
+            Debug.Log("[MainMenu] Gameplay scene already loaded - unloading it first to start fresh");
+            UnloadGameplayScene();
+            // After unloading completes, we'll load it fresh
+            StartCoroutine(WaitForUnloadThenLoadGameplay());
             return;
         }
 
         isTransitioningToGameplay = true;
         HideMenu();
         Debug.Log($"[MainMenu] Loading gameplay scene '{gameplaySceneName}' (additive)");
+        SceneManager.LoadSceneAsync(gameplaySceneName, LoadSceneMode.Additive);
+    }
+
+    private System.Collections.IEnumerator WaitForUnloadThenLoadGameplay()
+    {
+        // Wait for unload to complete
+        while (IsGameplaySceneLoaded)
+        {
+            yield return null;
+        }
+
+        Debug.Log("[MainMenu] Old gameplay scene unloaded, loading fresh gameplay scene");
+        isTransitioningToGameplay = true;
+        HideMenu();
         SceneManager.LoadSceneAsync(gameplaySceneName, LoadSceneMode.Additive);
     }
 
