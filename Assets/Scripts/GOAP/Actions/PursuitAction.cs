@@ -25,6 +25,9 @@ namespace Assets.Scripts.GOAP.Actions
 
             audio?.PlayWalkLoop();
 
+            // Ensure flashlight is on when pursuing (defensive - in case recharge didn't turn it back on)
+            SetFlashlightActive(mono.Transform, true);
+
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
@@ -105,7 +108,7 @@ namespace Assets.Scripts.GOAP.Actions
             // Mark that this guard should reset to closest waypoint when returning to patrol
             var patrolAction = typeof(PatrolAction);
             var guardId = mono.Transform.GetInstanceID();
-            
+
             // Access the static dictionary via reflection to set the reset flag
             var fieldInfo = patrolAction.GetField("GuardNeedsReset", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
             if (fieldInfo != null)
@@ -115,6 +118,23 @@ namespace Assets.Scripts.GOAP.Actions
                 {
                     dict[guardId] = true;
                     Debug.Log($"[PursuitAction] {mono.Transform.name} marked to reset patrol to closest waypoint");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enables or disables the guard's flashlight (spotlight)
+        /// </summary>
+        private void SetFlashlightActive(Transform guardTransform, bool active)
+        {
+            // Search for Light components in children (typically the flashlight/spotlight)
+            Light[] lights = guardTransform.GetComponentsInChildren<Light>();
+
+            if (lights != null && lights.Length > 0)
+            {
+                foreach (Light light in lights)
+                {
+                    light.enabled = active;
                 }
             }
         }

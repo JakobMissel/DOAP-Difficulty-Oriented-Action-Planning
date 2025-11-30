@@ -61,6 +61,9 @@ namespace Assets.Scripts.GOAP.Actions
             animation?.Run();
             audio?.PlayWalkLoop();
 
+            // Ensure flashlight is on when investigating laser (defensive - in case recharge didn't turn it back on)
+            SetFlashlightActive(mono.Transform, true);
+
             agent.isStopped = false;
             agent.updateRotation = true;
             agent.updatePosition = true;
@@ -309,6 +312,23 @@ namespace Assets.Scripts.GOAP.Actions
             // Ensure alert is cleared when action ends
             LaserAlertSystem.ClearWorldKey();
             audio?.StopWalkLoop();
+        }
+
+        /// <summary>
+        /// Enables or disables the guard's flashlight (spotlight)
+        /// </summary>
+        private void SetFlashlightActive(Transform guardTransform, bool active)
+        {
+            // Search for Light components in children (typically the flashlight/spotlight)
+            Light[] lights = guardTransform.GetComponentsInChildren<Light>();
+
+            if (lights != null && lights.Length > 0)
+            {
+                foreach (Light light in lights)
+                {
+                    light.enabled = active;
+                }
+            }
         }
 
         // The action class itself must be stateless!
