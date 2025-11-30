@@ -74,8 +74,7 @@ namespace Assets.Scripts.Cutscene
                     IntroCutsceneDone();
                     break;
                 case CutsceneSelect.Outro:
-                    // Load main menu
-                    SceneManager.LoadScene(0);
+                    OutroCutsceneDone();
                     break;
                 default:
                     break;
@@ -142,6 +141,18 @@ namespace Assets.Scripts.Cutscene
             ObjectivesManager.Instance.StartObjective();
 
             playerInput.currentActionMap?.Enable();
+        }
+
+        private void OutroCutsceneDone()
+        {
+            /*
+            // Disabled due to some issue with loading the main menu twice.
+            // Instead just quits the game
+            // Load main menu
+            SceneManager.LoadScene(0);
+            */
+            Debug.Log("Quit the game as a result of the end cutscene finishing");
+            Application.Quit();
         }
     }
 
