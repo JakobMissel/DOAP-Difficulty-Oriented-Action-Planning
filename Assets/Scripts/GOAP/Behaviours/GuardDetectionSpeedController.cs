@@ -49,6 +49,7 @@ namespace Assets.Scripts.GOAP.Behaviours
         // Track current action state
         private bool isInvestigatingLaser = false;
         private bool isInvestigatingNoise = false;
+        private bool isPursuingPlayer = false;
 
         private void Awake()
         {
@@ -98,13 +99,20 @@ namespace Assets.Scripts.GOAP.Behaviours
                 SetTargetSpeed(laserInvestigationSpeed, "Investigating Laser");
                 return;
             }
-            
+
             if (isInvestigatingNoise)
             {
                 SetTargetSpeed(noiseInvestigationSpeed, "Investigating Noise");
                 return;
             }
-            
+
+            // Check if manually pursuing player (e.g., from laser detection)
+            if (isPursuingPlayer)
+            {
+                SetTargetSpeed(spottedSpeed, "Pursuing Player");
+                return;
+            }
+
             bool canSee = sight.CanSeePlayer();
             bool isSpotted = sight.PlayerSpotted();
             
@@ -205,6 +213,19 @@ namespace Assets.Scripts.GOAP.Behaviours
             if (debugMode)
             {
                 Debug.Log($"[GuardDetectionSpeedController] {name} investigating noise: {investigating}");
+            }
+        }
+
+        /// <summary>
+        /// Set when the guard is manually pursuing the player (not through GuardSight detection)
+        /// Used when actions manually detect player (e.g., laser search radius check)
+        /// </summary>
+        public void SetPursuingPlayer(bool pursuing)
+        {
+            isPursuingPlayer = pursuing;
+            if (debugMode)
+            {
+                Debug.Log($"[GuardDetectionSpeedController] {name} pursuing player: {pursuing}");
             }
         }
 

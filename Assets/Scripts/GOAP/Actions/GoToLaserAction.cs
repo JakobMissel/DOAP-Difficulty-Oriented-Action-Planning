@@ -168,6 +168,14 @@ namespace Assets.Scripts.GOAP.Actions
                             // Immediately stop searching and start running toward player
                             data.SearchComplete = true;
 
+                            // Reset speed to pursuit speed (no longer investigating laser, now pursuing player)
+                            var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
+                            if (speedController != null)
+                            {
+                                speedController.SetInvestigatingLaser(false);
+                                speedController.SetPursuingPlayer(true);
+                            }
+
                             // Clear forced search animation and switch to Run
                             var animController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardAnimationController>();
                             if (animController != null)
@@ -197,6 +205,14 @@ namespace Assets.Scripts.GOAP.Actions
 
                     // DON'T clear the laser alert yet - keep it active so the goal remains valid
                     // We'll clear it when we arrive at the captured location
+
+                    // Reset speed to pursuit speed (no longer investigating laser, now pursuing player)
+                    var speedController = mono.Transform.GetComponent<Assets.Scripts.GOAP.Behaviours.GuardDetectionSpeedController>();
+                    if (speedController != null)
+                    {
+                        speedController.SetInvestigatingLaser(false);
+                        speedController.SetPursuingPlayer(true);
+                    }
 
                     // Start moving to captured location
                     agent.isStopped = false;
@@ -281,6 +297,7 @@ namespace Assets.Scripts.GOAP.Actions
             if (speedController != null)
             {
                 speedController.SetInvestigatingLaser(false);
+                speedController.SetPursuingPlayer(false);
             }
 
             // Clear forced animation state to resume velocity-based animations
