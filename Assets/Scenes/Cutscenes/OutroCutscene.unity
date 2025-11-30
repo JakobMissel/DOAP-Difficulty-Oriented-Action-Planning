@@ -2306,10 +2306,10 @@ MonoBehaviour:
         z: 0.11950129
       Rotation:
         value:
-          x: 0.53241473
-          y: -0.20542347
-          z: -0.21849157
-          w: 0.79157895
+          x: 0.5324148
+          y: -0.20542353
+          z: -0.21849158
+          w: 0.7915789
     - Position:
         x: -0.4
         y: -0.54
@@ -13571,7 +13571,7 @@ MonoBehaviour:
   subtitleFills:
   - Yesterday night, the Museum of Modern Art in Paris was robbed
   - "\u2500 the paintings have been reported to have a combined"
-  - value of over 100 million euros
+  - value of more than 100 million euros
   - That robbery there?
   - Done by yours truly
   - Jean-Michel Corvez hasn't paid me my share yet,
