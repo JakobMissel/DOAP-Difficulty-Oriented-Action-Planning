@@ -2116,6 +2116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 117141222}
   - component: {fileID: 117141223}
+  - component: {fileID: 117141224}
   m_Layer: 0
   m_Name: StandGuardPoint5
   m_TagString: Untagged
@@ -2161,6 +2162,22 @@ MonoBehaviour:
   anglePointSize: 0.3
   showLabels: 1
   showViewArc: 1
+--- !u!114 &117141224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117141221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5143715f2ae557247ba75f4410986772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  painting: {fileID: 2132751787}
+  autoFindNearestPainting: 0
+  searchRadius: 10
+  showDebugLogs: 0
 --- !u!1001 &119704003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4238,6 +4255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 220155446}
   - component: {fileID: 220155447}
+  - component: {fileID: 220155448}
   m_Layer: 0
   m_Name: StandGuardPoint4
   m_TagString: Untagged
@@ -4283,6 +4301,22 @@ MonoBehaviour:
   anglePointSize: 0.3
   showLabels: 1
   showViewArc: 1
+--- !u!114 &220155448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220155445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5143715f2ae557247ba75f4410986772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  painting: {fileID: 1270496608}
+  autoFindNearestPainting: 0
+  searchRadius: 10
+  showDebugLogs: 0
 --- !u!1 &220976938
 GameObject:
   m_ObjectHideFlags: 0
@@ -6529,6 +6563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 346794024}
   - component: {fileID: 346794025}
+  - component: {fileID: 346794026}
   m_Layer: 0
   m_Name: StandGuardPoint2
   m_TagString: Untagged
@@ -6574,6 +6609,22 @@ MonoBehaviour:
   anglePointSize: 0.3
   showLabels: 1
   showViewArc: 1
+--- !u!114 &346794026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346794023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5143715f2ae557247ba75f4410986772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  painting: {fileID: 2073421735}
+  autoFindNearestPainting: 0
+  searchRadius: 10
+  showDebugLogs: 0
 --- !u!1 &349792077
 GameObject:
   m_ObjectHideFlags: 0
@@ -10671,6 +10722,7 @@ GameObject:
   m_Component:
   - component: {fileID: 559039646}
   - component: {fileID: 559039647}
+  - component: {fileID: 559039648}
   m_Layer: 0
   m_Name: StandGuardPoint1
   m_TagString: Untagged
@@ -10716,6 +10768,22 @@ MonoBehaviour:
   anglePointSize: 0.3
   showLabels: 1
   showViewArc: 1
+--- !u!114 &559039648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559039645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5143715f2ae557247ba75f4410986772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  painting: {fileID: 7329053345898139053}
+  autoFindNearestPainting: 0
+  searchRadius: 10
+  showDebugLogs: 0
 --- !u!1001 &565169554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15583,8 +15651,16 @@ PrefabInstance:
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: drainRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: spotlight
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5571413653655331725, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
+      propertyPath: rechargeRate
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5763740727464481890, guid: ba15977b298b6e94a8a19b371d512005, type: 3}
       propertyPath: m_Volume
@@ -25142,6 +25218,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1178617014}
   - component: {fileID: 1178617015}
+  - component: {fileID: 1178617016}
   m_Layer: 0
   m_Name: StandGuardPoint3
   m_TagString: Untagged
@@ -25187,6 +25264,22 @@ MonoBehaviour:
   anglePointSize: 0.3
   showLabels: 1
   showViewArc: 1
+--- !u!114 &1178617016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178617013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5143715f2ae557247ba75f4410986772, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  painting: {fileID: 2102789698}
+  autoFindNearestPainting: 0
+  searchRadius: 10
+  showDebugLogs: 0
 --- !u!1 &1179752756
 GameObject:
   m_ObjectHideFlags: 0
@@ -29138,6 +29231,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6db0b3f997174fc4f8e88e522de62f2b, type: 3}
+--- !u!1 &1270496608 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8502565187402675515, guid: 6db0b3f997174fc4f8e88e522de62f2b, type: 3}
+  m_PrefabInstance: {fileID: 1270496607}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1272944102
 GameObject:
   m_ObjectHideFlags: 0
@@ -38636,11 +38734,11 @@ PrefabInstance:
       objectReference: {fileID: 7329053345898139052}
     - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
       propertyPath: completedTutorial
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6111951887104273761, guid: 07964add20aa716409350bc44b737c07, type: 3}
       propertyPath: startFromFirstObjective
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -47126,6 +47224,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02eed41c910e95948ac6b19f85d068ee, type: 3}
+--- !u!1 &2073421735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8664790796403646270, guid: 02eed41c910e95948ac6b19f85d068ee, type: 3}
+  m_PrefabInstance: {fileID: 2073421734}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2074542095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47502,6 +47605,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f283d4e670d8a7646a14d41a00542e71, type: 3}
+--- !u!1 &2102789698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6655915915483577842, guid: f283d4e670d8a7646a14d41a00542e71, type: 3}
+  m_PrefabInstance: {fileID: 2102789697}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2105245298
 GameObject:
   m_ObjectHideFlags: 0
@@ -48044,6 +48152,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02aff7596c607c449981437f270e865d, type: 3}
+--- !u!1 &2132751787 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2916502899299865950, guid: 02aff7596c607c449981437f270e865d, type: 3}
+  m_PrefabInstance: {fileID: 2132751786}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2134084737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70078,12 +70191,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4850288735026430459, guid: 2b4d1033aeffdff42b9a43ec7b2b94c0, type: 3}
   m_PrefabInstance: {fileID: 7329053345898139051}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7329053345898139053}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c1d3de44f4d60647bbe0aaf0513dd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &7329053345898139053 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8374694883643649507, guid: 2b4d1033aeffdff42b9a43ec7b2b94c0, type: 3}
+  m_PrefabInstance: {fileID: 7329053345898139051}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7331741613393295490
 GameObject:
   m_ObjectHideFlags: 0
