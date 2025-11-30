@@ -903,6 +903,20 @@ public class MainMenu : MonoBehaviour
         isRetrying = false;
         Debug.Log("[MainMenu] Checkpoint loaded, retry complete");
         GameOverManager.Instance?.ResetGameOver();
+
+        // Refresh StandGuardPoints after a short delay to ensure paintings are reactivated first
+        // This is necessary because event handler order is not guaranteed
+        StartCoroutine(RefreshGuardPointsDelayed());
+    }
+
+    private System.Collections.IEnumerator RefreshGuardPointsDelayed()
+    {
+        // Wait a frame to ensure all checkpoint restoration has completed
+        yield return null;
+        yield return null; // Wait one more frame to be safe
+
+        Debug.Log("[MainMenu] Refreshing guard points after checkpoint load");
+        Assets.Scripts.GOAP.Behaviours.StandGuardPointPaintingLink.RefreshAllGuardPoints();
     }
 
     private void UnloadGameplayScene()

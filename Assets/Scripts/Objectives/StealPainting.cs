@@ -168,9 +168,13 @@ public class StealPainting : MonoBehaviour
         {
             wallPainting.SetActive(true);
             wallPainting = null;
+
+            // Refresh guard points after reactivating painting
+            // This ensures StandGuardPoints linked to this painting are re-enabled
+            Assets.Scripts.GOAP.Behaviours.StandGuardPointPaintingLink.RefreshAllGuardPoints();
         }
         if (playerPaintingPosition.transform.childCount > 2)
-        { 
+        {
             Destroy(playerPaintingPosition.transform.GetChild(2).gameObject);
             currentPainting = null;
             currentPaintingName = "";

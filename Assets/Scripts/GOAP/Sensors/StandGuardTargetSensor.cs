@@ -132,8 +132,16 @@ namespace Assets.Scripts.GOAP.Sensors
 
             foreach (var point in cachedGuardPoints)
             {
-                if (point != null)
+                if (point != null && point.activeInHierarchy)
                 {
+                    // Check if this guard point has a painting link and if the painting is still active
+                    var paintingLink = point.GetComponent<Assets.Scripts.GOAP.Behaviours.StandGuardPointPaintingLink>();
+                    if (paintingLink != null && !paintingLink.IsPaintingActive())
+                    {
+                        // Painting has been stolen, skip this guard point
+                        continue;
+                    }
+
                     Vector3 pointPos = point.transform.position;
                     
                     // Calculate 2D distance (ignore Y-axis)
