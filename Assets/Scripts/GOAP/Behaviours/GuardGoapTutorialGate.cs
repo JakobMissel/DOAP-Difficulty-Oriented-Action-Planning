@@ -147,11 +147,9 @@ namespace GOAP.Behaviours
                     r.Root.SetActive(true);
                 }
 
-                if (r.ResetBehaviour != null)
-                {
-                    // Ensure a clean starting state when waking up
-                    r.ResetBehaviour.ResetGuard();
-                }
+                // DON'T call ResetGuard() here - it causes guards to teleport to spawn
+                // ResetGuard() should only be called on checkpoint reload, not tutorial completion
+                // Guards should start from their current position when first enabled
 
                 if (r.NavAgent != null)
                 {
