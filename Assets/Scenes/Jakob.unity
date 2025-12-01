@@ -72129,6 +72129,10 @@ PrefabInstance:
       propertyPath: interactImage
       value: 
       objectReference: {fileID: 229157726}
+    - target: {fileID: 4603397739281048612, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
+      propertyPath: sneakNoiseRadius
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5535205840818440892, guid: 7bf3ee7aeffdf044bbbc04a35c15996f, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7070978
