@@ -10,6 +10,9 @@ Special Thanks To:
 - https://rigmodels.com/model.php?view=woman_in_a_strict_gray_suit_and_blouse-3d-model__5e741ba406df43daaecf28e3442537cb&searchkeyword=woman&manualsearch=1
 - https://rigmodels.com/model.php?view=a_woman_in_a_tight_suit_as_a_vampire-3d-model__7eb3b4ac0674457786fcb499e1a2bddf&searchkeyword=woman&manualsearch=1
 
+SketchFab - Creative Commons 4.0: Toon Baby [Who's Your Daddy!?] 
+- https://sketchfab.com/3d-models/toon-baby-whos-your-daddy-c9438329c90a490589835701ea842662
+
 Particle Sprite Effects.
 - https://www.kenney.nl/assets/particle-pack
 
@@ -36,7 +39,6 @@ Interactable Paintings Unsplash - Free to use under the Unsplash License.
 - https://unsplash.com/photos/arhzLwMIBwo
 - https://unsplash.com/photos/uKu_NsNNZwY
 - https://unsplash.com/photos/7FR4e8n2AGI
-
 
 Non-Interactable Paintings Unsplash - Free to use under the Unsplash License.
 - https://unsplash.com/photos/blue-yellow-and-red-abstract-painting-zZPeoLxLRyM
